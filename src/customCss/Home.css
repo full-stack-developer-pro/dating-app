@@ -1,0 +1,476 @@
+.top_banner {
+    background: linear-gradient(rgba(146, 109, 205, 0.3), rgba(146, 109, 205, 0.6)), url(../images/dating-banner.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.content_sec {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+.content_sec h1 {
+    color: #fff;
+    font-size: 72px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    line-height: 75px;
+}
+
+.content_sec p {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+.main_button {
+    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    ;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 15px 45px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    box-shadow: 5px 5px 0px 0px #FF72A7;
+}
+
+.main_button:hover {
+    box-shadow: -5px -5px 0px 0px #FF72A7;
+    transition: 0.5s;
+}
+
+.main_buttonTwo {
+    background: linear-gradient(to right, #f397ba, #FF72A7);
+    ;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 15px 45px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    box-shadow: 5px 5px 0px 0px #8C6DCB;
+}
+
+.main_buttonTwo:hover {
+    box-shadow: -5px -5px 0px 0px #8C6DCB;
+    transition: 0.5s;
+}
+
+.main_button i {
+    font-size: 14px;
+    margin-left: 7px;
+    position: relative;
+    top: 1px;
+}
+
+.main_buttonTwo i {
+    font-size: 14px;
+    margin-left: 7px;
+    position: relative;
+    top: 1px;
+}
+
+.heartOne {
+    position: absolute;
+    width: 60px;
+    animation: random 2s linear infinite;
+    left: 10%;
+    transform: rotate(-20deg);
+    bottom: 15%;
+}
+
+.heartTwo {
+    position: absolute;
+    width: 60px;
+    animation: random 2s linear infinite;
+    right: 10%;
+    transform: rotate(20deg);
+    top: 15%;
+}
+
+.main_navbar {
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+}
+
+.navbar_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1270px;
+    margin: auto;
+    padding: 15px 5px;
+}
+
+.navbarL {
+    width: 50%;
+}
+
+.navbarL img {
+    width: 130px;
+}
+
+.navbarR {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: right;
+}
+
+.navbarR button {
+    display: inline !important;
+    margin: 0 !important;
+}
+
+.navbarR button.main_buttonTwo {
+    margin-right: 25px !important;
+}
+
+.profiles_section {
+    margin: 0px 0px;
+    padding: 60px 15px;
+    background: url(../images/abstractTwo.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.main_title {
+    text-align: center;
+    font-size: 42px;
+    position: relative;
+    display: inline;
+    margin: auto;
+}
+
+.main_title::before {
+    content: '';
+    position: absolute;
+    width: 30%;
+    height: 5px;
+    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    top: 50%;
+    left: -35%;
+}
+
+.main_title::after {
+    content: '';
+    position: absolute;
+    width: 30%;
+    height: 5px;
+    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    top: 50%;
+    right: -35%;
+}
+
+.profiles_mainSec {
+    text-align: center;
+}
+
+.profile_flex {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.profile_inner {
+    width: 23%;
+    margin: 1%;
+    background: #fff;
+    border: 1px solid #c2c2c2;
+    border-radius: 10px;
+    position: relative;
+}
+
+.profile_inner img {
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.gender_ico_f {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    background: #fff;
+    border-radius: 50%;
+    padding: 3px 11px;
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.5);
+
+}
+
+.gender_ico_m {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    background: #fff;
+    border-radius: 50%;
+    padding: 3px 9px;
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.5);
+
+}
+
+.gender_ico_f i.fa-venus {
+    color: #FF72A7;
+    font-size: 16px;
+}
+
+.gender_ico_m i.fa-mars {
+    color: #8C6DCB;
+    font-size: 16px;
+}
+
+.profile_body {
+    padding: 20px;
+}
+
+.profile_body h5 {
+    margin: 0;
+}
+
+.profile_body h6.f-gender {
+    color: #FF72A7;
+    margin: 0;
+}
+
+.profile_body p.profile_location {
+    margin: 0;
+    margin-top: 5px;
+    border-bottom: 1px dashed #c2c2c2;
+    padding-bottom: 10px;
+}
+
+.profile_body p.profile_location i {
+    margin-right: 4px;
+    color: #8C6DCB;
+    font-size: 13px;
+}
+
+.profile_body p.profile_description {
+    margin: 0;
+    border-bottom: 1px dashed #c2c2c2;
+    padding: 10px 0px;
+    font-size: 14px;
+}
+
+.profile_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.chat_now {
+    flex: 1;
+    margin-right: 15px;
+    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    ;
+    color: #fff;
+    outline: none;
+    border: none;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.add_friend {
+    background: ghostwhite;
+    border: 1px solid #8C6DCB;
+    border-radius: 50%;
+    padding: 5px 9px 7px 9px;
+}
+
+.add_friend i {
+    color: #9D6DD3;
+    font-size: 13px;
+}
+
+.load_more {
+    margin-top: 35px;
+}
+
+.about_section {
+    padding: 60px 15px;
+    background: #f4f0fd;
+}
+
+.about_flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.about_flexL {
+    width: 50%;
+    padding: 30px;
+}
+
+.about_flexL img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.about_flexR {
+    width: 50%;
+    padding: 30px;
+}
+.how_it_works{
+    padding: 60px 15px;
+    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+}
+.how_it_worksInner{
+    text-align: center;
+}
+.how_it_worksInner img{
+    width: 100%;
+    margin-top: 25px;
+}
+.how_it_worksInner .main_title {
+    color: #fff;
+}
+
+.how_it_worksInner .main_title::before {
+    background: linear-gradient(to right, #fff, ghostwhite);
+}
+
+.how_it_worksInner .main_title::after {
+    background: linear-gradient(to right, #fff, ghostwhite);
+}
+.footer_main{
+    text-align: center;
+    background: ghostwhite;
+    padding: 25px;
+}
+.footer_main p{
+    margin: 0;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 767px) {
+    .content_sec {
+        padding: 10px;
+    }
+
+    .content_sec h1 {
+        color: #fff;
+        font-size: 48px;
+        line-height: 52px;
+    }
+
+    .content_sec p {
+        font-size: 15px;
+    }
+
+    .main_button {
+        font-size: 14px;
+        padding: 10px 25px;
+    }
+
+    .main_button i {
+        font-size: 10px;
+        position: relative;
+        top: 0;
+    }
+
+    .main_buttonTwo {
+        font-size: 14px;
+        padding: 10px 25px;
+    }
+
+    .main_buttonTwo i {
+        font-size: 10px;
+        position: relative;
+        top: 0;
+    }
+
+    .navbarL img {
+        width: 90px;
+    }
+
+    .navbar_flex {
+        padding: 15px 15px;
+    }
+
+    .profile_inner {
+        width: 98%;
+    }
+
+    .main_title {
+        text-align: center;
+        font-size: 28px;
+        position: relative;
+        display: inline;
+        margin: auto;
+    }
+
+    .main_title::before {
+        display: none;
+    }
+
+    .main_title::after {
+        display: none;
+    }
+
+    .navbarL {
+        width: 30%;
+    }
+
+    .navbarR {
+        width: 70%;
+    }
+    .about_flex {
+       
+        flex-direction: column;
+    }
+    
+    .about_flexL {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .about_flexR {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 992px) {
+    .profile_inner {
+        width: 48%;
+    }
+}
+
+@keyframes random {
+    0% {
+        width: 60px
+    }
+
+    50% {
+        width: 75px;
+    }
+
+    100% {
+        width: 60px
+    }
+}
