@@ -198,7 +198,7 @@ const Navbar = () => {
                           />
                           <label for="floatingInput">Date of Birth</label>
                         </div>
-                        <div className="form_field mb-3">
+                        <div className="form_field country mb-3">
                           <ReactFlagsSelect
                             selected={selected}
                             onSelect={(code) => setSelected(code)}
