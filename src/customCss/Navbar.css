@@ -1,0 +1,172 @@
+.main_signUp {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup_popup {
+    background: url(../images/signBack.jpg);
+    margin: auto;
+    text-align: center;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 20px;
+    position: relative;
+    min-width: 800px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.signup_topBar {
+    max-width: 300px;
+    display: flex;
+    justify-content: space-between;
+    margin: 40px auto 40px auto;
+}
+
+.signup_topBar span {
+    background: #c7c7c7;
+    color: #333333;
+    font-size: 20px;
+    padding: 5px 14px;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+    z-index: 999;
+}
+
+.signup_topBar span.active {
+    background: #8C6DCB;
+    color: #fff;
+}
+
+.signup_topBar span.one {
+    padding: 5px 17px;
+}
+
+.signup_topBar span::before {
+    content: '';
+    position: absolute;
+    /* background: linear-gradient(to right, #9D6DD3, #FF72A7); */
+    background: #c7c7c7;
+    width: 232% !important;
+    height: 3px;
+    top: 45%;
+    right: 100%;
+}
+
+.signup_topBar span:last-of-type:before {
+    content: '';
+    position: absolute;
+    /* background: linear-gradient(to right, #9D6DD3, #FF72A7); */
+    background: #c7c7c7;
+    width: 220% !important;
+    height: 3px;
+    top: 45%;
+    right: 100%;
+}
+
+.signup_topBar span.active::before {
+    content: '';
+    position: absolute;
+    background: linear-gradient(to right, #9D6DD3, #FF72A7);
+    width: 225%;
+    height: 3px;
+    top: 45%;
+    right: 100%;
+}
+
+.signup_topBar span:first-of-type:before {
+    display: none;
+}
+
+
+.signup_topBar span.three {
+    padding: 5px 15px;
+}
+
+.close_icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dfdfdf;
+    border: none;
+    border-radius: 50%;
+    padding: 7px 12px;
+    color: rgb(158, 66, 49);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.signup_buttons {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup_formSec {
+    text-align: left;
+}
+
+.form_field {
+    margin-top: 15px;
+}
+
+.form_field p {
+    margin-bottom: 5px;
+}
+
+.ReactFlagsSelect-module_selectBtn__19wW7 {
+    background: #fff;
+}
+
+.signup_buttons button {
+    margin: 0;
+}
+
+.signup_buttons button:first-of-type {
+    margin-right: 25px;
+}
+
+.signup_buttons button:first-of-type i {
+    margin-right: 7px;
+}
+
+.hobbies-list {
+    display: flex;
+    padding: 0px 3px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.interset {
+    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    color: #fff;
+    font-size: 14px;
+    margin-right: 10px;
+    padding: 3px 12px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+}
+
+.interset i {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+@media screen and (max-width: 850px) {
+    .signup_popup {
+        min-width: 90%;
+    }
+}
