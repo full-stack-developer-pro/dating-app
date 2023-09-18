@@ -164,9 +164,114 @@
     cursor: pointer;
     font-size: 11px;
 }
+.error_bar{
+    background: rgb(216, 82, 58);
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.error_bar p{
+    margin: 0;
+}
+.forgot_pass{
+    text-align: center;
+    color: #333333;
+    margin: 0px;
+    font-weight: 600;
+    position: absolute;
+    left: 25px;
+    bottom: 25px;
+}
+.op{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 30px;
+    margin-bottom: 25px;
+}
+.opL img{
+    width: 100%;
+}
+.opL{
+    width: 20%;
+}
+.opR{
+    text-align: left;
+    padding-left: 15px;
+}
+.order_sec input{
+    height: 22px;
+    width: 22px;
+}
+.orders_inner{
+    text-align: left;
+}
 
+.orders_inner table tbody tr .item img{
+width: 20%;
+}
+.orders_inner table tbody tr .item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.orders_inner table{
+    border-collapse: collapse;
+    border: 1px solid #dfdfdf
+}
+.orders_inner table thead {
+    background: #02224E;
+}
+.orders_inner table thead th{
+    padding: 5px;
+    color: #fff;
+}
+.orders_inner table tbody td{
+    padding: 5px ;
+}
+table,thead,tbody,tr,td,th{
+    border: 1px solid #dfdfdf;
+}
+
+.orders_inner table tbody tr .item p{
+   width: 80%;
+   margin-left: 25px;
+}
+.order_button{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    max-width: 500px;
+    margin: 25px auto 0px auto;
+}
+.order_button button:first-of-type{
+    background: #fff;
+    color: #02224E;
+    border: 2px solid #02224E;
+    padding: 8px 25px;
+    border-radius: 5px;
+    min-width: 150px;
+}
+.order_button button:last-of-type{
+    background: #02224E;
+    color: #fff;
+    border: 2px solid #02224E;
+    padding: 8px 25px;
+    border-radius: 5px;
+    min-width: 150px;
+}
+
+/* .order_sec .form-check{
+    align-items: center;
+    display: flex;
+} */
 @media screen and (max-width: 850px) {
     .signup_popup {
         min-width: 90%;
+    }
+    .forgot_pass{
+        position: static;
     }
 }

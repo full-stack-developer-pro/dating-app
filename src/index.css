@@ -6,15 +6,70 @@ body {
   padding: 0;
   font-family: 'Outfit', sans-serif;
 }
-button, span, a {
+
+button,
+span,
+a {
   font-family: 'Outfit', sans-serif;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Outfit', sans-serif;
   font-weight: 600 !important;
 }
 
-div{
+div {
   font-family: 'Outfit', sans-serif;
+}
+
+.profile_bannerSec {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../src/images/profile_b.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  min-height: 45vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 100px;
+}
+
+.profile_bannerSec .container {
+  text-align: center;
+}
+
+.profile_bannerSec h1 {
+  color: #fff;
+  font-size: 72px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  line-height: 75px;
+  margin-bottom: 15px;
+}
+
+.profile_bannerSec span {
+  font-size: 20px;
+  color: #fff;
+}
+
+.main_pageSec {
+  padding: 40px 10px;
+  background: url(../src/images/abstractTwo.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@media screen and (max-width: 767px) {
+  .profile_bannerSec h1 {
+    color: #fff;
+    font-size: 48px;
+    line-height: 52px;
+  }
 }

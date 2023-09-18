@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Navbar from "../common/Navbar";
 import "../customCss/Profile.css";
 import "../customCss/Home.css";
@@ -7,6 +7,9 @@ import Verified from "../images/verified.jpg";
 import Footer from "../common/Footer";
 
 const Profile = () => {
+  useEffect(() => {
+    document.title = "Profile"
+},[])
   return (
     <>
       <Navbar />
