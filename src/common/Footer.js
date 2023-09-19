@@ -21,27 +21,27 @@ const Footer = () => {
               <h4>Important Links</h4>
               <ul>
                 <li>
-                  <Link to="">
+                  <Link to="/about-us">
                     <i class="fas fa-circle"></i>About Us
                   </Link>
                 </li>
                 <li>
-                  <Link to="">
+                  <Link to="/blogs">
                     <i class="fas fa-circle"></i>Blogs
                   </Link>
                 </li>
                 <li>
-                  <Link to="">
+                  <Link to="/contact-us">
                     <i class="fas fa-circle"></i>Contact Us
                   </Link>
                 </li>
                 <li>
-                  <Link to="">
+                  <Link to="/privacy-policy">
                     <i class="fas fa-circle"></i>Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="">
+                  <Link to="/terms-conditions">
                     <i class="fas fa-circle"></i>Terms &amp; Conditions
                   </Link>
                 </li>
