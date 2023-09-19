@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../customCss/Home.css";
 import Heart from "../images/heart.png";
 import Navbar from "../common/Navbar";
@@ -11,6 +11,9 @@ import Steps from "../images/steps.png";
 import Footer from "../common/Footer";
 
 const Home = () => {
+  useEffect(() => {
+ window.scrollTo(0,0)
+  },[])
   return (
     <>
       <Navbar />

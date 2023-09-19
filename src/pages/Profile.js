@@ -9,6 +9,7 @@ import Footer from "../common/Footer";
 const Profile = () => {
   useEffect(() => {
     document.title = "Profile"
+    window.scrollTo(0,0)
 },[])
   return (
     <>

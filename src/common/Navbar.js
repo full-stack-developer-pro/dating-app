@@ -5,6 +5,7 @@ import "../customCss/Navbar.css";
 import TimezoneSelect from "react-timezone-select";
 import Hobby from "../pages/Hobby";
 import OP from "../images/dating-banner.jpg";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [signup, setSignUp] = useState(false);
@@ -117,7 +118,9 @@ const Navbar = () => {
       <div className="main_navbar">
         <div className="navbar_flex">
           <div className="navbarL">
+          <Link to="/">
             <img src={Logo} alt="" />
+            </Link>
           </div>
           <div className="navbarR">
             <button className="main_buttonTwo" onClick={() => setLogin(true)}>

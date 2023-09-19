@@ -6,6 +6,7 @@ import About from "../images/about.jpg";
 const AboutUs = () => {
   useEffect(() => {
     document.title = "About Us";
+    window.scrollTo(0,0);
   }, []);
   return (
     <>

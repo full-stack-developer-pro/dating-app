@@ -1,0 +1,65 @@
+.main_contactSection {
+    padding: 50px 10px;
+}
+
+.contact_right {
+    background: #EFF7FD;
+    padding: 40px;
+    border-radius: 25px;
+    height: 450px;
+}
+
+.social_bar a {
+    color: inherit;
+    margin-right: 10px;
+}
+
+.social_bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.social_bar a i {
+    font-size: 22px;
+}
+
+.social_bar a i:hover {
+    transform: translateY(10px);
+    transition: 0.3s;
+}
+
+.social_bar a i.fa-facebook-f {
+    background: #1877F2;
+    color: #fff;
+    padding: 7px 13px;
+    border-radius: 50%;
+}
+
+.social_bar a i.fa-twitter {
+    background: #00acee;
+    color: #fff;
+    padding: 7px 7px;
+    border-radius: 50%;
+}
+
+.social_bar a i.fa-instagram {
+    background: #962fbf;
+    color: #fff;
+    padding: 7px 9px;
+    border-radius: 50%;
+}
+
+.social_bar a i.fa-linkedin-in {
+    background: #0072b1;
+    color: #fff;
+    padding: 7px 9px;
+    border-radius: 50%;
+}
+
+.social_bar a i.fa-snapchat-ghost {
+    background: #c9c509;
+    color: #fff;
+    padding: 7px 7px;
+    border-radius: 50%;
+}

@@ -6,6 +6,10 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
+import Blogs from "./pages/Blogs";
+import SingleBlog from "./pages/SingleBlog";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 
 
 export default function App() {
@@ -16,6 +20,10 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/single-blog" element={<SingleBlog />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-conditions" element={<TermsConditions />} />
       </Routes>
     </BrowserRouter>
   );

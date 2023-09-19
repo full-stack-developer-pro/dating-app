@@ -12,6 +12,9 @@ span,
 a {
   font-family: 'Outfit', sans-serif;
 }
+a{
+  text-decoration: none !important;
+}
 
 h1,
 h2,
@@ -51,6 +54,9 @@ div {
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   line-height: 75px;
   margin-bottom: 15px;
+}
+.profile_bannerSec h2 {
+  color: #fff;
 }
 
 .profile_bannerSec span {
