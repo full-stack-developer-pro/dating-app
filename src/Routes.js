@@ -10,6 +10,7 @@ import Blogs from "./pages/Blogs";
 import SingleBlog from "./pages/SingleBlog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
+import Chats from "./pages/Chat";
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/single-blog" element={<SingleBlog />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/chats" element={<Chats />} />
       </Routes>
     </BrowserRouter>
   );

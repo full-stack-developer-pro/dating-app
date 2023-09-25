@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../images/dating-logo.png";
+import Logo from "../images/mature_friends_logo.jpeg";
 import { Link } from "react-router-dom";
 import '../customCss/Footer.css'
 

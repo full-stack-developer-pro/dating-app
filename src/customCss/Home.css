@@ -31,7 +31,7 @@
 }
 
 .main_button {
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    background: linear-gradient(to right, #D057A6, #a83a82);
     ;
     color: #fff;
     font-size: 16px;
@@ -43,17 +43,16 @@
     align-items: center;
     justify-content: center;
     margin: auto;
-    box-shadow: 5px 5px 0px 0px #FF72A7;
+    box-shadow: 5px 5px 0px 0px #8E6DCC;
 }
 
 .main_button:hover {
-    box-shadow: -5px -5px 0px 0px #FF72A7;
+    box-shadow: -5px -5px 0px 0px #8E6DCC;
     transition: 0.5s;
 }
 
 .main_buttonTwo {
-    background: linear-gradient(to right, #f397ba, #FF72A7);
-    ;
+    background: linear-gradient(to right, #8C6DCB, #714fb4);
     color: #fff;
     font-size: 16px;
     border: none;
@@ -64,11 +63,11 @@
     align-items: center;
     justify-content: center;
     margin: auto;
-    box-shadow: 5px 5px 0px 0px #8C6DCB;
+    box-shadow: 5px 5px 0px 0px #D057A6;
 }
 
 .main_buttonTwo:hover {
-    box-shadow: -5px -5px 0px 0px #8C6DCB;
+    box-shadow: -5px -5px 0px 0px #D057A6;
     transition: 0.5s;
 }
 
@@ -124,7 +123,7 @@
 }
 
 .navbarL img {
-    width: 130px;
+    width: 160px;
 }
 
 .navbarR {
@@ -166,7 +165,7 @@
     position: absolute;
     width: 30%;
     height: 5px;
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    background: linear-gradient(to right, #D057A6, #a83a82);
     top: 50%;
     left: -35%;
 }
@@ -176,7 +175,7 @@
     position: absolute;
     width: 30%;
     height: 5px;
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    background: linear-gradient(to right, #D057A6, #a83a82);
     top: 50%;
     right: -35%;
 }
@@ -264,7 +263,7 @@
 
 .profile_body p.profile_location i {
     margin-right: 4px;
-    color: #8C6DCB;
+    color: #D057A6;
     font-size: 13px;
 }
 
@@ -285,7 +284,7 @@
 .chat_now {
     flex: 1;
     margin-right: 15px;
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    background: linear-gradient(to right, #D057A6, #a83a82);
     ;
     color: #fff;
     outline: none;
@@ -296,13 +295,13 @@
 
 .add_friend {
     background: ghostwhite;
-    border: 1px solid #8C6DCB;
+    border: 1px solid #D057A6;
     border-radius: 50%;
     padding: 5px 9px 7px 9px;
 }
 
 .add_friend i {
-    color: #9D6DD3;
+    color: #D057A6;
     font-size: 13px;
 }
 
@@ -338,7 +337,7 @@
 
 .how_it_works {
     padding: 60px 15px;
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    background: linear-gradient(to right, #D057A6, #a83a82);
 }
 
 .how_it_worksInner {
