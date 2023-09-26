@@ -11,12 +11,14 @@ import SingleBlog from "./pages/SingleBlog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import Chats from "./pages/Chat";
+import NotFound from "./pages/NotFound";
 
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about-us" element={<AboutUs />} />

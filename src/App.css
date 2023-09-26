@@ -1,0 +1,32 @@
+.not_found {
+    padding: 50px;
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.not_found img {
+    width: 50%;
+}
+
+.not_found .not_logo {
+    margin-bottom: 15px;
+    width: 240px;
+}
+
+.not_found button {
+    margin-top: 25px;
+}
+
+@media screen and (max-width: 1092px) {
+    .not_found img {
+        width: 100%;
+    }
+
+    .not_found .not_logo {
+        width: 180px;
+    }
+}
