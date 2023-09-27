@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import "../customCss/Home.css";
 import Heart from "../images/heart.png";
+import HeartTwo from "../images/heartTwo.png";
 import Navbar from "../common/Navbar";
 import ProfileOne from "../images/profile1.jpg";
 import ProfileTwo from "../images/profile2.jpg";
@@ -29,7 +30,7 @@ const Home = () => {
           <button className="main_button">
             Explore<i class="fas fa-chevron-right"></i>
           </button>
-          <img src={Heart} alt="" className="heartOne" />
+          <img src={HeartTwo} alt="" className="heartOne" />
         </div>
       </div>
       <section className="profiles_section">
