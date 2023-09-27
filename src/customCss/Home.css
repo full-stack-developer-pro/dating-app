@@ -43,16 +43,16 @@
     align-items: center;
     justify-content: center;
     margin: auto;
-    box-shadow: 5px 5px 0px 0px #8E6DCC;
+    box-shadow: 5px 5px 0px 0px #300243;
 }
 
 .main_button:hover {
-    box-shadow: -5px -5px 0px 0px #8E6DCC;
+    box-shadow: -5px -5px 0px 0px #300243;
     transition: 0.5s;
 }
 
 .main_buttonTwo {
-    background: linear-gradient(to right, #8C6DCB, #714fb4);
+    background: linear-gradient(to right, #300243, #15021b);
     color: #fff;
     font-size: 16px;
     border: none;
@@ -284,7 +284,7 @@
 .chat_now {
     flex: 1;
     margin-right: 15px;
-    background: linear-gradient(to right, #D057A6, #a83a82);
+    background: linear-gradient(to right, #300243, #15021b);
     ;
     color: #fff;
     outline: none;
@@ -337,7 +337,7 @@
 
 .how_it_works {
     padding: 60px 15px;
-    background: linear-gradient(to right, #D057A6, #a83a82);
+    background: linear-gradient(to right, #300243, #15021b);;
 }
 
 .how_it_worksInner {
