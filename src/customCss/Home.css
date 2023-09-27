@@ -280,10 +280,14 @@
     justify-content: space-between;
     margin-top: 15px;
 }
+.profile_buttons a{
+    display: block;
+    margin-right: 15px;
+    flex: 1 1;
+}
 
 .chat_now {
     flex: 1;
-    margin-right: 15px;
     background: linear-gradient(to right, #300243, #15021b);
     ;
     color: #fff;
@@ -291,6 +295,7 @@
     border: none;
     padding: 7px;
     border-radius: 5px;
+    width: 100%;
 }
 
 .add_friend {

@@ -10,6 +10,7 @@ import ProfileFour from "../images/profile4.jpg";
 import About from "../images/about.jpg";
 import Steps from "../images/steps.png";
 import Footer from "../common/Footer";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   useEffect(() => {
@@ -57,7 +58,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>
@@ -82,7 +83,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>
@@ -107,7 +108,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>
@@ -132,7 +133,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>
@@ -157,7 +158,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>
@@ -182,7 +183,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>
@@ -207,7 +208,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>
@@ -232,7 +233,7 @@ const Home = () => {
                   sit.
                 </p>
                 <div className="profile_buttons">
-                  <button className="chat_now">Start Chat</button>
+                  <Link to="/chats"><button className="chat_now">Start Chat</button></Link>
                   <button className="add_friend">
                     <i class="fas fa-user-plus"></i>
                   </button>

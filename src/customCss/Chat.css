@@ -18,7 +18,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-    background: #8C6DCB;
+    background: linear-gradient(90deg,#d057a6,#a83a82);
 }
 .chat_topL{
     width: 20%;
@@ -173,17 +173,17 @@
 }
 
 .chat_expBody::-webkit-scrollbar-thumb {
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);;
+    background: linear-gradient(90deg,#300243,#15021b);
     border-radius: 10px;
 }
 
 .chat_expBody::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);;
+    background: linear-gradient(90deg,#300243,#15021b);
 }
 
 .text_message {
     display: inline-block;
-    background: linear-gradient(to right, #9D6DD3, #8C6DCB);
+    background: linear-gradient(90deg,#300243,#15021b);
     color: #fff;
     margin: 0;
     padding: 5px 15px 5px 15px;
