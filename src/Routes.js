@@ -12,6 +12,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import Chats from "./pages/Chat";
 import NotFound from "./pages/NotFound";
+import SingleLProfile from "./pages/SingleLProfile";
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
       <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/single-profile" element={<SingleLProfile />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/blogs" element={<Blogs />} />

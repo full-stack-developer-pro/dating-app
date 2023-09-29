@@ -6,8 +6,13 @@ import TimezoneSelect from "react-timezone-select";
 import Hobby from "../pages/Hobby";
 import OP from "../images/dating-banner.jpg";
 import { Link } from "react-router-dom";
+import AuthService from "../services/auth.service";
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [signup, setSignUp] = useState(false);
   const [login, setLogin] = useState(false);
   const [stepOne, setStepOne] = useState(true);
@@ -98,7 +103,8 @@ const Navbar = () => {
       setStepThree(true);
     }
   };
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (
       height === "" ||
       weight === "" ||
@@ -110,11 +116,63 @@ const Navbar = () => {
     ) {
       setShowError(true);
     } else {
-      alert("Form Submitted Successfully !!!");
-    }
+          const data = {};
+            data.is_fake = false;
+            data.name = name;
+            data.username = username;
+            data.email = email;
+            data.password = password;
+            data.gender = gender;
+            data.birthdate = dob;
+            data.description = description;
+            data.country = country;
+            data.city = city;
+            data.postcode = postal;
+            data.timezone = timezone;
+            data.height = height;
+            data.weight = weight;
+            data.eye_color = eyecolor;
+            data.hair_color = haircolor;
+            data.hair_length = hairlength;
+            data.marital_status = maritalstatus;
+            data.interests = hobbies;
+            data.credits = 200;
+            data.free_message = "Hello,world!";
+            data.is_verified = true;
+            data.is_flagged = false;
+
+          setLoading(true);
+          await AuthService.register(data).then(
+            () => {
+              setLoading(false);
+              toast.success('Profile create successfully!', {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              // navigate('/login-page')
+    
+              // buttonref1.current.click();
+            },
+            (error) => {
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.msg) ||
+                error.message ||
+                error.toString();
+    
+              setLoading(false);
+              toast.error(resMessage, {
+                position: toast.POSITION.TOP_RIGHT
+              });
+            });
+
+
+    
+      }
   };
   return (
     <>
+    <ToastContainer/>
       <div className="main_navbar">
         <div className="navbar_flex">
           <div className="navbarL">
@@ -130,368 +188,7 @@ const Navbar = () => {
               Signup<i class="fas fa-user"></i>
             </button>
           </div>
-          {signup && (
-            <div className="main_signUp">
-              <div className="signup_popup">
-                <button className="close_icon" onClick={() => setSignUp(false)}>
-                  <i class="fas fa-times"></i>
-                </button>
-                <div className="signup_inner">
-                  <h2>Create Account</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Cras commodo ex eget sodales fringill.
-                  </p>
-                  <div className="signup_formSec">
-                    <form>
-                      {showError && (
-                        <div className="error_bar">
-                          <p>Please Fill out All fields !!</p>
-                        </div>
-                      )}
-                      {stepOne && (
-                        <div className="firstStep">
-                          <div className="signup_topBar">
-                            <span className="one active">1</span>
-                            <span className="two">2</span>
-                            <span className="three">3</span>
-                          </div>
-
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setUsername(e.target.value)}
-                            />
-                            <label for="floatingInput">Username</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setName(e.target.value)}
-                            />
-                            <label for="floatingInput">Your Name</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="email"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <label for="floatingInput">Email</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="password"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <label for="floatingInput">Password</label>
-                          </div>
-                          <div class="form-floating">
-                            <textarea
-                              class="form-control"
-                              placeholder=""
-                              id="floatingTextarea2"
-                              style={{ height: "100px" }}
-                              onChange={(e) => setDescription(e.target.value)}
-                            ></textarea>
-                            <label for="floatingTextarea2">Description</label>
-                          </div>
-                          <div className="signup_buttons">
-                            <button
-                              className="main_button next_button"
-                              onClick={handleShowTwo}
-                            >
-                              Next<i class="fas fa-long-arrow-alt-right"></i>
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {stepTwo && (
-                        <div className="secondStep">
-                          <div className="signup_topBar">
-                            <span className="one active">1</span>
-                            <span className="two active">2</span>
-                            <span className="three">3</span>
-                          </div>
-                          <div className="form_field mb-3">
-                            <p>
-                              <strong>Gender</strong>
-                            </p>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="gender"
-                                id="gender_male"
-                                value="male"
-                                checked={gender === "male"}
-                                onChange={handleGenderChange}
-                              />
-                              <label class="form-check-label" for="gender_male">
-                                Male
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="gender"
-                                id="gender_female"
-                                value="female"
-                                checked={gender === "female"}
-                                onChange={handleGenderChange}
-                              />
-                              <label
-                                class="form-check-label"
-                                for="gender_female"
-                              >
-                                Female
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="gender"
-                                id="gender_other"
-                                value="other"
-                                checked={gender === "other"}
-                                onChange={handleGenderChange}
-                              />
-                              <label
-                                class="form-check-label"
-                                for="gender_other"
-                              >
-                                Other
-                              </label>
-                            </div>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="date"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setDob(e.target.value)}
-                            />
-                            <label for="floatingInput">Date of Birth</label>
-                          </div>
-                          <div className="form_field country mb-3">
-                            <ReactFlagsSelect
-                              selected={country}
-                              onSelect={(code) => setCountry(code)}
-                              required
-                            />
-                          </div>
-                          <div className="form_field row mb-3">
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  onChange={(e) => setCity(e.target.value)}
-                                />
-                                <label for="floatingInput">City</label>
-                              </div>
-                            </div>
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  onChange={(e) => setPostal(e.target.value)}
-                                />
-                                <label for="floatingInput">Postal Code</label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="form_field mb-3">
-                            <p>Select Timezone</p>
-                            <TimezoneSelect
-                              value={timezone}
-                              onChange={setTimezone}
-                              required
-                            />
-                          </div>
-                          <div className="signup_buttons">
-                            <button
-                              className="main_button back_button"
-                              onClick={handleShowOne}
-                            >
-                              <i class="fas fa-long-arrow-alt-left"></i> Back
-                            </button>
-                            <button
-                              className="main_button next_button"
-                              onClick={handleShowThree}
-                            >
-                              Next <i class="fas fa-long-arrow-alt-right"></i>
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {stepThree && (
-                        <div className="thirdStep">
-                          <div className="signup_topBar">
-                            <span className="one active">1</span>
-                            <span className="two active">2</span>
-                            <span className="three active">3</span>
-                          </div>
-                          <div className="form-field row mb-3">
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  required
-                                  onChange={(e) => setHeight(e.target.value)}
-                                />
-                                <label for="floatingInput">Height</label>
-                              </div>
-                            </div>
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  required
-                                  onChange={(e) => setWeight(e.target.value)}
-                                />
-                                <label for="floatingInput">Weight</label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="form-field row mb-3">
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  required
-                                  onChange={(e) => setEyeColor(e.target.value)}
-                                />
-                                <label for="floatingInput">Eye Color</label>
-                              </div>
-                            </div>
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  required
-                                  onChange={(e) => setHairColor(e.target.value)}
-                                />
-                                <label for="floatingInput">Hair Color</label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="form-field row mb-3">
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  required
-                                  onChange={(e) =>
-                                    setHairLength(e.target.value)
-                                  }
-                                />
-                                <label for="floatingInput">Hair Length</label>
-                              </div>
-                            </div>
-                            <div className="col-sm-6">
-                              <div class="form-floating mb-3">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder=""
-                                  required
-                                  onChange={(e) =>
-                                    setMaritalStatus(e.target.value)
-                                  }
-                                />
-                                <label for="floatingInput">
-                                  Marital Status
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="form_field mb-3">
-                            <div className="hobbies-list">
-                              {hobbies.map((hobby, index) => (
-                                <Hobby
-                                  key={index}
-                                  hobby={hobby}
-                                  onDelete={() => handleDelete(index)}
-                                />
-                              ))}
-                            </div>
-                            <div class="form-floating mb-3">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder="name@example.com"
-                                value={inputValue}
-                                onChange={handleInputChange}
-                                onKeyPress={handleKeyPress}
-                                required
-                              />
-                              <label for="floatingInput">Interests</label>
-                            </div>
-                          </div>
-                          <div className="signup_buttons">
-                            <button
-                              className="main_button back_button"
-                              onClick={handleShowTwo}
-                            >
-                              <i class="fas fa-long-arrow-alt-left"></i> Back
-                            </button>
-                            <button
-                              className="main_button next_button"
-                              onClick={handleSubmit}
-                            >
-                              Submit
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          
           {login && (
             <div className="main_signUp main_login">
               <div className="signup_popup">

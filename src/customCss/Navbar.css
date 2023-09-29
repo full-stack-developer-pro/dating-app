@@ -15,33 +15,56 @@
     background: url(../images/signBack.jpg);
     margin: auto;
     text-align: center;
-    max-width: 500px;
-    padding: 30px;
+    padding: 25px;
     border-radius: 20px;
     position: relative;
-    min-width: 800px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-
+.form-floating>.form-control, .form-floating>.form-control-plaintext, .form-floating>.form-select{
+    height: 50px;
+    min-height: 50px;
+    font-size: 14px;
+}
+.form-floating>label{
+    font-size: 14px;
+    padding: 15px;
+}
+.form-check{
+    display: inline-block;
+    margin-right: 10px;
+}
+.form-check label{
+    margin-right: 7px;
+}
+.form-check-input:checked{
+    background-color: #D057A6;
+    border-color: #D057A6;
+}
+.signup_buttons button{
+    font-size: 14px;
+    padding: 10px 25px;
+}
 .signup_topBar {
     max-width: 300px;
     display: flex;
-    justify-content: space-between;
-    margin: 40px auto 40px auto;
+    justify-content: space-evenly;
+    margin: 20px auto 20px auto;
 }
-
+.signup_inner h2{
+    font-size: 22px;
+}
 .signup_topBar span {
     background: #c7c7c7;
     color: #333333;
-    font-size: 20px;
-    padding: 5px 14px;
+    font-size: 12px;
+    padding: 5px 10px 0px 10px;
     border-radius: 50%;
     display: block;
     position: relative;
-    z-index: 999;
+    z-index: 0;
 }
 
 .signup_topBar span.active {
@@ -50,7 +73,10 @@
 }
 
 .signup_topBar span.one {
-    padding: 5px 17px;
+    padding: 5px 11px 3px 11px;
+}
+.signup_topBar span.three {
+    padding: 5px 10px 3px 10px;
 }
 
 .signup_topBar span::before {
@@ -58,10 +84,11 @@
     position: absolute;
     /* background: linear-gradient(to right, #9D6DD3, #FF72A7); */
     background: #c7c7c7;
-    width: 232% !important;
+    width: 244% !important;
     height: 3px;
     top: 45%;
     right: 100%;
+    display: none;
 }
 
 .signup_topBar span:last-of-type:before {
@@ -69,10 +96,11 @@
     position: absolute;
     /* background: linear-gradient(to right, #9D6DD3, #FF72A7); */
     background: #c7c7c7;
-    width: 220% !important;
+    width: 238% !important;
     height: 3px;
     top: 45%;
     right: 100%;
+    display: none;
 }
 
 .signup_topBar span.active::before {
@@ -83,6 +111,7 @@
     height: 3px;
     top: 45%;
     right: 100%;
+    display: none;
 }
 
 .signup_topBar span:first-of-type:before {
@@ -90,9 +119,7 @@
 }
 
 
-.signup_topBar span.three {
-    padding: 5px 15px;
-}
+
 
 .close_icon {
     position: absolute;
@@ -108,7 +135,7 @@
 }
 
 .signup_buttons {
-    margin-top: 30px;
+    margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,6 +201,7 @@
 }
 .error_bar p{
     margin: 0;
+    font-size: 14px;
 }
 .forgot_pass{
     text-align: center;
