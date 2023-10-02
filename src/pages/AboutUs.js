@@ -1,13 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
 import About from "../images/about.jpg";
+import DataService from "../services/data.service";
 
 const AboutUs = () => {
+  const [data, setData] = useState({});
+  const [html, setHTML] = useState({__html: ""});
+  const [html2, setHTML2] = useState({__html: ""});
   useEffect(() => {
     document.title = "About Us";
     window.scrollTo(0,0);
+    getData();
   }, []);
+  const getData = () => {
+    DataService.getAboutUs().then((data) => {
+        if(data.data.data.length>0){
+            setData(data?.data?.data[0])
+            setHTML({__html: data?.data?.data[0]?.description})
+            setHTML2({__html: data?.data?.data[0]?.description2})
+        }   
+    });
+}
   return (
     <>
       <Navbar />

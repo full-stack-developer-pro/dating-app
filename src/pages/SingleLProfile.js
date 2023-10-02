@@ -19,7 +19,6 @@ const SingleLProfile = () => {
   return (
     <>
       <Navbar />
-      
       <section className="profile_bannerSec">
         <div className="container">
           <h1>User Profile</h1>
@@ -88,7 +87,6 @@ const SingleLProfile = () => {
                 </div>
               </div>
               <button className="send_m">Send Message<i class="fas fa-paper-plane"></i></button>
-     
             </div>
             <div className="single_pR">
               <div className="search_formSec">
