@@ -20,6 +20,8 @@ import "../customCss/Navbar.css";
 import TimezoneSelect from "react-timezone-select";
 import Hobby from "../pages/Hobby";
 import News from "../images/newsletter.png";
+import DatingCouple from '../images/datingAppCouple.png'
+import DatingGirl from '../images/datingAppGirl.png'
 
 const Home = () => {
   useEffect(() => {
@@ -613,7 +615,7 @@ const Home = () => {
             </div>
           </div>
           <div className="content_sec">
-            <img src={Heart} alt="" className="heartTwo" />
+            {/* <img src={Heart} alt="" className="heartTwo" /> */}
             <h1>Lorem ipsum dolor sit amet consectetur</h1>
             <p>
               Sed blandit eleifend hendrerit. Integer pulvinar congue
@@ -623,7 +625,7 @@ const Home = () => {
             <button className="main_button">
               Explore<i class="fas fa-chevron-right"></i>
             </button>
-            <img src={HeartTwo} alt="" className="heartOne" />
+            {/* <img src={HeartTwo} alt="" className="heartOne" /> */}
           </div>
         </div>
       </div>
@@ -631,7 +633,7 @@ const Home = () => {
         <div className="container">
           <div className="about_flex">
             <div className="about_flexL">
-              <img src={About} alt="" />
+              <img src={DatingCouple} alt="" />
             </div>
             <div className="about_flexR">
               <h2>Mauris non nulla faucibus</h2>
@@ -990,7 +992,7 @@ const Home = () => {
               <button className="main_button">Register</button>
             </div>
             <div className="about_flexL">
-              <img src={About} alt="" />
+              <img src={DatingGirl} alt="" />
             </div>
             
           </div>

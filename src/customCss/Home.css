@@ -1,5 +1,5 @@
 .top_banner {
-    background: linear-gradient(rgba(146, 109, 205, 0), rgba(146, 109, 205, 0)), url(../images/date_bg.png);
+    background: linear-gradient(to right, #300243, #15021b);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -158,7 +158,7 @@
 
 .active_profilesSec {
     padding: 60px 15px;
-    background: url(../images/abstractTwo.jpg);
+    background: linear-gradient(to right, #300243, #15021b);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -483,6 +483,7 @@
 .most_visited {
     padding: 60px 10px;
     text-align: center;
+    background: linear-gradient(to right, #300243, #15021b);
 }
 
 .most_visitedFlex {
@@ -504,7 +505,7 @@
 
 .become_part {
     padding: 60px 0px;
-    background: #ffe7f6;
+    background: linear-gradient(to right, #300243, #15021b);
 }
 
 .become_flex {
@@ -549,6 +550,7 @@
     position: relative;
     display: inline;
     margin: auto;
+    color: #fff;
 }
 
 .main_title::before {
@@ -708,7 +710,7 @@
 
 .about_section {
     padding: 60px 15px;
-    background: #f4f0fd;
+    background: linear-gradient(to right, #300243, #15021b);
 }
 
 .about_flex {
@@ -730,6 +732,12 @@
 .about_flexR {
     width: 50%;
     padding: 30px;
+}
+.about_flexR h2{
+    color: #fff;
+}
+.about_flexR p{
+    color: #fff;
 }
 
 .about_flexR button {
