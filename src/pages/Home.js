@@ -22,9 +22,11 @@ import Hobby from "../pages/Hobby";
 import News from "../images/newsletter.png";
 import DatingCouple from '../images/datingAppCouple.png'
 import DatingGirl from '../images/datingAppGirl.png'
+import HowIt from '../images/how_it.jpg'
 
 const Home = () => {
   useEffect(() => {
+    document.title = "Home"
     window.scrollTo(0, 0);
   }, []);
   const navigate = useNavigate();
@@ -1233,7 +1235,7 @@ const Home = () => {
         <div className="container">
           <div className="how_it_worksInner">
             <h2 className="main_title">How It Works</h2>
-            <img src={Steps} alt="" />
+            <img src={HowIt} alt="" />
           </div>
         </div>
       </section>

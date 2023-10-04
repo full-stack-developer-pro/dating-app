@@ -1,5 +1,5 @@
 .top_banner {
-    background: linear-gradient(to right, #300243, #15021b);
+    background: linear-gradient(#30024383, #15021ba8), url(../images/date_bg.png);;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
