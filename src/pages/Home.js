@@ -220,7 +220,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="top_banner">
+      <div className="top_banner" id="signup">
         <div className="top_bannerInner">
           <div className="signup_sec">
             <div className="signup_popup">
@@ -677,39 +677,53 @@ const Home = () => {
               </ul>
               <h4>Who is Online</h4>
               <div className="online_profiles">
+              <Link to="/chats">
                 <div className="onlineInner">
                   <img src={ProfileOne} alt="" />
                   <i class="fas fa-circle"></i>
                 </div>
+                </Link>
+                <Link to="/chats">
                 <div className="onlineInner">
                   <img src={ProfileThree} alt="" />
                   <i class="fas fa-circle"></i>
                 </div>
+                </Link>
+                <Link to="/chats">
                 <div className="onlineInner">
                   <img src={ProfileFour} alt="" />
                   <i class="fas fa-circle"></i>
                 </div>
+                </Link>
               </div>
             </div>
             <div className="activeM">
               <h3>Recently Joined</h3>
               <div className="active_recent">
+              <Link to="/single-profile">
                 <div className="active_rInner">
                   <img src={ProfileOne} alt="" />
                   <h4>Jessica M.</h4>
                 </div>
+                </Link>
+                <Link to="/single-profile">
                 <div className="active_rInner">
                   <img src={ProfileTwo} alt="" />
                   <h4>Emily W.</h4>
                 </div>
+                </Link>
+                <Link to="/single-profile">
                 <div className="active_rInner">
                   <img src={ProfileThree} alt="" />
                   <h4>Jessica M.</h4>
                 </div>
+                </Link>
+                <Link to="/single-profile">
                 <div className="active_rInner">
                   <img src={ProfileFour} alt="" />
                   <h4>Emily W.</h4>
                 </div>
+                </Link>
               </div>
               <div className="active_mainProfile">
                 <div className="active_mainFlex">
@@ -730,7 +744,9 @@ const Home = () => {
                 </div>
                 <div className="active_actionSec">
                   <button>
+                  <Link to="/single-profile">
                     View<i class="fas fa-eye"></i>
+                    </Link>
                   </button>
                   <button>
                     Like<i class="fas fa-thumbs-up"></i>
@@ -739,7 +755,9 @@ const Home = () => {
                     Send Flirt<i class="fas fa-heart"></i>
                   </button>
                   <button>
+                  <Link to="/chats">
                     Send Message<i class="fas fa-comment-alt"></i>
+                    </Link>
                   </button>
                 </div>
               </div>
@@ -761,9 +779,13 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="active_actionSec">
+                
                   <button>
+                  <Link to="/single-profile">
                     View<i class="fas fa-eye"></i>
+                    </Link>
                   </button>
+                  
                   <button>
                     Like<i class="fas fa-thumbs-up"></i>
                   </button>
@@ -771,7 +793,9 @@ const Home = () => {
                     Send Flirt<i class="fas fa-heart"></i>
                   </button>
                   <button>
+                  <Link to="/chats">
                     Send Message<i class="fas fa-comment-alt"></i>
+                    </Link>
                   </button>
                 </div>
               </div>
@@ -794,7 +818,9 @@ const Home = () => {
                 </div>
                 <div className="active_actionSec">
                   <button>
+                  <Link to="/single-profile">
                     View<i class="fas fa-eye"></i>
+                    </Link>
                   </button>
                   <button>
                     Like<i class="fas fa-thumbs-up"></i>
@@ -803,11 +829,13 @@ const Home = () => {
                     Send Flirt<i class="fas fa-heart"></i>
                   </button>
                   <button>
+                  <Link to="/chats">
                     Send Message<i class="fas fa-comment-alt"></i>
+                    </Link>
                   </button>
                 </div>
               </div>
-              <button className="main_button my-4">
+              <button className="main_button my-4" onClick={() => window.location.href = "/#signup"}>
                 Create Account<i class="fas fa-long-arrow-alt-right"></i>
               </button>
             </div>
@@ -932,7 +960,7 @@ const Home = () => {
                     <p>125646</p>
                   </div>
                 </div>
-                <button className="main_button">
+                <button className="main_button" onClick={() => window.location.href = "/#signup"}>
                   Join Now<i class="fas fa-long-arrow-alt-right"></i>
                 </button>
               </div>
@@ -966,7 +994,7 @@ const Home = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
                 a lacus nec lacus mollis condimentum in id justo.
               </p>
-              <button className="main_button">Register</button>
+              <button className="main_button" onClick={() => window.location.href = "/#signup"}>Register</button>
             </div>
           </div>
         </div>
@@ -991,7 +1019,7 @@ const Home = () => {
                 tortor, ac tristique sem ex eget lectus. Etiam sed erat magna.
                 Nam in mi scelerisque, commodo lacus et, facilisis nibh.
               </p>
-              <button className="main_button">Register</button>
+              <button className="main_button" onClick={() => window.location.href = "/#signup"}>Register</button>
             </div>
             <div className="about_flexL">
               <img src={DatingGirl} alt="" />

@@ -44,9 +44,9 @@ const ContactUs = () => {
                 <p>The Mall, St. James's, London SW1Y 5AH, United Kingdom</p>
                 <h4>Information</h4>
                 <p>
-                  <strong>Phone Number</strong> : +254 743 022 022
+                  <strong>Phone Number</strong> : +123 456 789 0134
                   <br />
-                  <strong>Email</strong> : wecare@yourbasket.co.ke
+                  <strong>Email</strong> : wecare@datingapp.com
                 </p>
                 <h4>Connect with Us</h4>
                 <div className="social_bar">

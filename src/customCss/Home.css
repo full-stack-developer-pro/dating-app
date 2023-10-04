@@ -17,7 +17,7 @@
     justify-content: center;
     max-width: 1270px;
     margin: auto;
-    padding: 20px 20px;
+    padding: 100px 20px 20px 20px;
 }
 
 .signup_sec {
@@ -27,6 +27,10 @@
 .content_sec {
     width: 70%;
     padding: 10px 40px;
+    padding-left: 10%;
+}
+.content_sec button{
+    margin: 0;
 }
 
 .content_sec h1 {
@@ -203,10 +207,15 @@
     padding-bottom: 25px;
     border-bottom: 1px solid #dfdfdf;
 }
-
-.active_rInner {
+.active_recent a{
+    color: inherit;
     width: 23%;
     margin: 1%;
+}
+
+.active_rInner {
+    width: 100%;
+    margin: 0%;
     background: ghostwhite;
     border-radius: 5px;
     border: 1px solid #dfdfdf;
@@ -302,6 +311,15 @@
     align-items: center;
     justify-content: space-between;
 }
+.active_actionSec button a{
+    display: block;
+    width: auto;
+    color: inherit;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
 .active_actionSec button:last-of-type {
     width: 31%;
@@ -348,10 +366,16 @@
     align-items: center;
     justify-content: space-between;
 }
-
-.onlineInner {
+.onlineInner a{
     width: 31%;
     margin-right: 2%;
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+.onlineInner {
+    width: 100%;
+    margin-right: 0%;
     text-align: center;
     position: relative;
     margin-bottom: 20px;
@@ -757,6 +781,8 @@
 .how_it_worksInner img {
     width: 100%;
     margin-top: 25px;
+    height: 550px;
+    object-fit: cover;
 }
 
 .how_it_worksInner .main_title {
@@ -844,6 +870,9 @@
 }
 
 @media screen and (max-width: 767px) {
+    .content_sec button{
+        margin: auto;
+    }
     .about_section {
         padding: 20px 10px;
     }
@@ -938,7 +967,7 @@
         flex-wrap: wrap;
     }
 
-    .active_rInner {
+    .active_rInner a{
         width: 48%;
     }
 

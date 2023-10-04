@@ -8,6 +8,7 @@ import ProfileTwo from "../images/profile2.jpg";
 import ProfileThree from "../images/profile3.jpg";
 import ProfileFour from "../images/profile4.jpg";
 import ReactFlagsSelect from "react-flags-select";
+import { Link } from "react-router-dom";
 
 const SingleLProfile = () => {
   const [country, setCountry] = useState("");
@@ -45,18 +46,24 @@ const SingleLProfile = () => {
               </div>
               <h4>Who is Online</h4>
               <div className="online_profiles">
+              <Link to="/chats">
                 <div className="onlineInner">
                   <img src={ProfileOne} alt="" />
                   <i class="fas fa-circle"></i>
                 </div>
+                </Link>
+                <Link to="/chats">
                 <div className="onlineInner">
                   <img src={ProfileThree} alt="" />
                   <i class="fas fa-circle"></i>
                 </div>
+                </Link>
+                <Link to="/chats">
                 <div className="onlineInner">
                   <img src={ProfileFour} alt="" />
                   <i class="fas fa-circle"></i>
                 </div>
+                </Link>
               </div>
             </div>
             <div className="single_pM">

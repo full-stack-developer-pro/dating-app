@@ -54,10 +54,10 @@ const Footer = () => {
                 London SW1Y 5AH, United Kingdom
               </p>
               <p>
-                <i class="fas fa-phone"></i>+254 743 022 022
+                <i class="fas fa-phone"></i>+123 456 789 0134
               </p>
               <p>
-                <i class="far fa-envelope"></i>wecare@yourbasket.co.ke
+                <i class="far fa-envelope"></i>wecare@datingapp.com
               </p>
               <h5>Connect with Us</h5>
               <div className="social_bar">
