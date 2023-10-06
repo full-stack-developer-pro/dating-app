@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-const API_URL = (process.env.NODE_ENV != 'production' ? "http://3.21.169.178:3000/" : "http://3.21.169.178:3000/");
+const API_URL = (process.env.NODE_ENV != 'production' ? "https://dating-app-backend-xyrj.onrender.com/" : "https://dating-app-backend-xyrj.onrender.com/");
 
 const register = (data) => {
   return axios.post(API_URL + "api/user/signup", data);

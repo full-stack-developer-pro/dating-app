@@ -176,17 +176,18 @@ const Home = () => {
       data.description = description;
       data.country = country;
       data.city = city;
+      data.age = age;
       data.postcode = postal;
       data.timezone = timezone;
-      data.height = height;
-      data.weight = weight;
+      data.height = parseInt(height);
+      data.weight = parseInt(weight);
       data.eye_color = eyecolor;
       data.hair_color = haircolor;
       data.hair_length = hairlength;
       data.marital_status = maritalstatus;
       data.interests = hobbies;
       data.credits = 200;
-      data.free_message = "Hello,world!";
+      data.free_message = "Hello world";
       data.is_verified = true;
       data.is_flagged = false;
 
