@@ -19,11 +19,27 @@ axios.interceptors.response.use(function (response) {
     }
     return Promise.reject(error);
   });
+
   const getAboutUs = () => {
     return axios.get(API_URL + "api/admin/getAboutAs");
   };
-
+  const getContactUs = () => {
+    return axios.get(API_URL + "api/admin/getcontactAs");
+  };
+  const getSocialLinks = () => {
+    return axios.get(API_URL + "api/admin/getSocialLinks");
+  };
+  const getPrivacyPoicy = () => {
+    return axios.get(API_URL + "api/admin/getPolicy&Privacy");
+  };
+  const getTermsConditions = () => {
+    return axios.get(API_URL + "api/admin/getTerms&Condition");
+  };
   const DataService = {
     getAboutUs,
+    getContactUs,
+    getSocialLinks,
+    getPrivacyPoicy,
+    getTermsConditions
   }
   export default DataService;

@@ -29,6 +29,7 @@ const Home = () => {
     document.title = "Home"
     window.scrollTo(0, 0);
   }, []);
+  const today = new Date().toISOString().split('T')[0];
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [signup, setSignUp] = useState(false);
@@ -426,6 +427,7 @@ const Home = () => {
                           id="floatingInput"
                           placeholder=""
                           required
+                          max={today}
                           onChange={(e) => setDob(e.target.value)}
                         />
                         <label for="floatingInput">Date of Birth</label>

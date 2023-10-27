@@ -1,9 +1,31 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Logo from "../images/mature_friends_logo.jpeg";
 import { Link } from "react-router-dom";
 import '../customCss/Footer.css'
+import DataService from "../services/data.service";
 
 const Footer = () => {
+  const [contactData, setContactData] = useState([])
+  const [socialLinks, setSocialLinks] = useState([])
+
+
+  const getContactData = async() => {
+    await DataService.getContactUs().then((data) => {
+      const catData = data.data.data[0];
+        setContactData(catData)
+    });
+}
+const getSocialLinks = async() => {
+  await DataService.getSocialLinks().then((data) => {
+    const catData = data.data.data[0];
+      setSocialLinks(catData);
+  });
+}
+
+    useEffect(() => {
+        getContactData();
+        getSocialLinks();
+      },[])
   return (
     <>
       <div className="footer_main">
@@ -50,32 +72,31 @@ const Footer = () => {
             <div className="footer_contact">
               <h4>Contact Us</h4>
               <p>
-                <i class="fas fa-map-marker-alt"></i>The Mall, St. James's,
-                London SW1Y 5AH, United Kingdom
+                <i class="fas fa-map-marker-alt"></i>{contactData?.address}
               </p>
               <p>
-                <i class="fas fa-phone"></i>+123 456 789 0134
+                <i class="fas fa-phone"></i>{contactData?.phoneNumber}
               </p>
               <p>
-                <i class="far fa-envelope"></i>wecare@datingapp.com
+                <i class="far fa-envelope"></i>{contactData?.email}
               </p>
               <h5>Connect with Us</h5>
               <div className="social_bar">
-                <Link to="">
-                  <i class="fab fa-facebook-f"></i>
-                </Link>
-                <Link to="">
-                  <i class="fab fa-twitter"></i>
-                </Link>
-                <Link to="">
-                  <i class="fab fa-instagram"></i>
-                </Link>
-                <Link to="">
-                  <i class="fab fa-linkedin-in"></i>
-                </Link>
-                <Link to="">
-                  <i class="fab fa-snapchat-ghost"></i>
-                </Link>
+              <Link to={socialLinks?.facebook}>
+                    <i class="fab fa-facebook-f"></i>
+                  </Link>
+                  <Link to={socialLinks?.twitter}>
+                    <i class="fab fa-twitter"></i>
+                  </Link>
+                  <Link to={socialLinks?.instagram}>
+                    <i class="fab fa-instagram"></i>
+                  </Link>
+                  <Link to={socialLinks?.linkedin}>
+                    <i class="fab fa-linkedin-in"></i>
+                  </Link>
+                  <Link to={socialLinks?.snapchat}>
+                    <i class="fab fa-snapchat-ghost"></i>
+                  </Link>
               </div>
             </div>
           </div>

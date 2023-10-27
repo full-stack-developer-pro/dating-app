@@ -1,14 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
 import "../customCss/ContactUs.css";
 import { Link } from "react-router-dom";
+import DataService from "../services/data.service";
 
 const ContactUs = () => {
-  useEffect(() => {
-    document.title = "Contact Us";
-    window.scrollTo(0,0)
-  }, []);
+  const [contactData, setContactData] = useState([])
+  const [socialLinks, setSocialLinks] = useState([])
+
+
+  const getContactData = async() => {
+    await DataService.getContactUs().then((data) => {
+      const catData = data.data.data[0];
+        setContactData(catData)
+    });
+}
+const getSocialLinks = async() => {
+  await DataService.getSocialLinks().then((data) => {
+    const catData = data.data.data[0];
+      setSocialLinks(catData);
+  });
+}
+const mapUrl = `https://maps.google.com/maps?q=${contactData.lat},${contactData.long}&z=12&output=embed`;
+
+    useEffect(() => {
+        document.title = "Contact Us"
+        window.scrollTo(0,0);
+        getContactData();
+        getSocialLinks();
+      },[])
   return (
     <>
       <Navbar />
@@ -24,16 +45,16 @@ const ContactUs = () => {
             <div className="col-sm-7">
               <div class="mapouter">
                 <div class="gmap_canvas">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158857.83988653394!2d-0.26640295916129586!3d51.528739805084825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2sin!4v1695099943051!5m2!1sen!2sin"
-                    width="100%"
+                <iframe
+                  width="100%"
                     height="450"
                     title="gmaps"
                     allowfullscreen=""
                     loading="lazy"
+                    src={mapUrl}
                     referrerpolicy="no-referrer-when-downgrade"
                     style={{ borderRadius: "25px" }}
-                  ></iframe>
+                ></iframe>
                 </div>
               </div>
             </div>
@@ -41,28 +62,28 @@ const ContactUs = () => {
               <div className="contact_right">
                 <h2>Contact Us</h2>
                 <h4>Address</h4>
-                <p>The Mall, St. James's, London SW1Y 5AH, United Kingdom</p>
+                <p>{contactData?.address}</p>
                 <h4>Information</h4>
                 <p>
-                  <strong>Phone Number</strong> : +123 456 789 0134
+                  <strong>Phone Number</strong> : {contactData?.phoneNumber}
                   <br />
-                  <strong>Email</strong> : wecare@datingapp.com
+                  <strong>Email</strong> : {contactData?.email}
                 </p>
                 <h4>Connect with Us</h4>
                 <div className="social_bar">
-                  <Link to="">
+                  <Link to={socialLinks?.facebook}>
                     <i class="fab fa-facebook-f"></i>
                   </Link>
-                  <Link to="">
+                  <Link to={socialLinks?.twitter}>
                     <i class="fab fa-twitter"></i>
                   </Link>
-                  <Link to="">
+                  <Link to={socialLinks?.instagram}>
                     <i class="fab fa-instagram"></i>
                   </Link>
-                  <Link to="">
+                  <Link to={socialLinks?.linkedin}>
                     <i class="fab fa-linkedin-in"></i>
                   </Link>
-                  <Link to="">
+                  <Link to={socialLinks?.snapchat}>
                     <i class="fab fa-snapchat-ghost"></i>
                   </Link>
                 </div>
