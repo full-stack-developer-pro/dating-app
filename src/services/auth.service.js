@@ -8,15 +8,14 @@ const register = (data) => {
 
 const login = (username, password) => {
   return axios
-    .post(API_URL + "api/users/authorize", {
+    .post(API_URL + "api/user/Login", {
       email:username,
       password,
-      role:"user"
     })
     .then((response) => {
-      if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        localStorage.setItem("token", JSON.stringify(response.data.token));
+      if (response.data.data.aceesToken) {
+        localStorage.setItem("d_user", JSON.stringify(response.data.data.user._id));
+        localStorage.setItem("d_userToken", JSON.stringify(response.data.data.aceesToken));
       }
       return response.data;
     });
@@ -24,31 +23,31 @@ const login = (username, password) => {
 
 
 const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("d_user");
   return axios.post(API_URL + "signout").then((response) => {
     return response.data;
   });
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  return JSON.parse(localStorage.getItem("d_user"));
 };
 
 const getCurrentUserTokken = () => {
-  return JSON.parse(localStorage.getItem("token"));
+  return JSON.parse(localStorage.getItem("d_userToken"));
 };
 
-const socialLogin = (data) => {
-  return axios
-    .post(API_URL + "api/users/authorize/social", data)
-    .then((response) => {
-      if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        localStorage.setItem("token", JSON.stringify(response.data.token));
-      }
-      return response.data;
-    });
-};
+// const socialLogin = (data) => {
+//   return axios
+//     .post(API_URL + "api/users/authorize/social", data)
+//     .then((response) => {
+//       if (response.data.d_userToken) {
+//         localStorage.setItem("d_user", JSON.stringify(response.data.user));
+//         localStorage.setItem("d_userToken", JSON.stringify(response.data.d_userToken));
+//       }
+//       return response.data;
+//     });
+// };
 
 const AuthService = {
   register,
@@ -56,7 +55,7 @@ const AuthService = {
   logout,
   getCurrentUser,
   getCurrentUserTokken,
-  socialLogin
+  // socialLogin
 }
 
 export default AuthService;

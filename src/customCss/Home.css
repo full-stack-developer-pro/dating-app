@@ -239,6 +239,22 @@
     margin: 1%;
     background: ghostwhite;
     margin-bottom: 15px;
+    position: relative;
+}
+.active_mainProfile .add_friend{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(to right, #D057A6, #a83a82);
+    border-radius: 4px;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 13px;
+}
+.active_mainProfile .add_friend i{
+    margin-left: 5px;
+    color: #fff;
+    font-size: 12px;
 }
 
 .active_mainFlex {

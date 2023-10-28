@@ -9,7 +9,7 @@
 .main_blogFlex {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
     flex-wrap: wrap;
 }

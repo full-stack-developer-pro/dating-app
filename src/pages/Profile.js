@@ -1,16 +1,27 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "../common/Navbar";
 import "../customCss/Profile.css";
 import "../customCss/Home.css";
 import ProfileOne from "../images/profile1.jpg";
 import Verified from "../images/verified.jpg";
 import Footer from "../common/Footer";
+import DataService from "../services/data.service";
+import moment from "moment";
 
 const Profile = () => {
+  const [profile, getProfile] = useState([]);
+  const userId = JSON.parse(localStorage.getItem("d_user"))
+
+  const getUserProfile = async () => {
+    await DataService.getSingleProfile(userId).then((data) => {
+      getProfile(data?.data?.data);
+    });
+  };
   useEffect(() => {
     document.title = "Profile"
     window.scrollTo(0,0)
-},[])
+    getUserProfile();
+},[userId])
   return (
     <>
       <Navbar />
@@ -33,23 +44,19 @@ const Profile = () => {
               <div className="profile_title">
                 <div className="d-flex align-items-center justify-content-between">
                   <h2>
-                    Emily Jackson<i className="fas fa-circle"></i>
+                   {profile?.name}<i className="fas fa-circle"></i>
                   </h2>
                   <button
                     className="main_button"
                     style={{ margin: "0", padding: "10px 35px" }}
                   >
-                    Chat Now<i class="far fa-comments"></i>
+                    Edit Profile<i class="fas fa-pencil-alt"></i>
                   </button>
                 </div>
                 <p>
-                  <i class="fas fa-map-marker-alt"></i> London
+                  <i class="fas fa-map-marker-alt"></i> {profile?.city}, {profile?.country}
                 </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  ut imperdiet est. Fusce lobortis iaculis neque at dignissim.
-                  Cras aliquet erat sed egestas sagittis.
-                </p>
+                <p>{profile?.description}</p>
               </div>
             </div>
           </div>
@@ -64,42 +71,42 @@ const Profile = () => {
                     <i class="fas fa-envelope"></i> Email
                   </p>
                   <p>:</p>
-                  <p>emily@dopmail.com</p>
+                  <p>{profile?.email}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-user"></i> Gender
                   </p>
                   <p>:</p>
-                  <p>Female</p>
+                  <p>{profile?.gender==="male" ? "Male" : profile?.gender === "female" ? "Female" : "Other"}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-birthday-cake"></i> Birth Date
                   </p>
                   <p>:</p>
-                  <p>01 Jan. 1987</p>
+                  <p>{moment(profile?.birthdate).format('LL')}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-map-marker-alt"></i> City
                   </p>
                   <p>:</p>
-                  <p>London, 121101</p>
+                  <p>{profile?.city}, {profile?.postcode}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-clock"></i> Timezone
                   </p>
                   <p>:</p>
-                  <p>UTC + 9.30</p>
+                  <p>{profile?.timezone?.label}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-text-height"></i> Height
                   </p>
                   <p>:</p>
-                  <p>5'6"</p>
+                  <p>{profile?.height}</p>
                 </div>
               </div>
               <div className="profile_dFlexR">
@@ -108,42 +115,42 @@ const Profile = () => {
                     <i class="fas fa-weight"></i> Weight
                   </p>
                   <p>:</p>
-                  <p>50Kg</p>
+                  <p>{profile?.weight}Kg</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-eye"></i> Eye Color
                   </p>
                   <p>:</p>
-                  <p>Brown</p>
+                  <p>{profile?.eye_color}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-tint"></i> Hair Color
                   </p>
                   <p>:</p>
-                  <p>Black</p>
+                  <p>{profile?.hair_color}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fab fa-servicestack"></i> Hair Length
                   </p>
                   <p>:</p>
-                  <p>Long</p>
+                  <p>{profile?.hair_length}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-ring"></i> Marital Status
                   </p>
                   <p>:</p>
-                  <p>Single</p>
+                  <p>{profile?.marital_status}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-futbol"></i> Interests
                   </p>
                   <p>:</p>
-                  <p>Music, Travel</p>
+                  <p>{profile?.interests && profile?.interests.length>0 ? profile?.interests?.map((item,i) => {return(item+", ")}) : ''}</p>
                 </div>
               </div>
             </div>

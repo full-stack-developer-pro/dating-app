@@ -20,16 +20,20 @@ import "../customCss/Navbar.css";
 import TimezoneSelect from "react-timezone-select";
 import Hobby from "../pages/Hobby";
 import News from "../images/newsletter.png";
-import DatingCouple from '../images/datingAppCouple.png'
-import DatingGirl from '../images/datingAppGirl.png'
-import HowIt from '../images/how_it.jpg'
+import DatingCouple from "../images/datingAppCouple.png";
+import DatingGirl from "../images/datingAppGirl.png";
+import HowIt from "../images/how_it.jpg";
+import DataService from "../services/data.service";
 
 const Home = () => {
+  const auth = AuthService.getCurrentUser();
   useEffect(() => {
-    document.title = "Home"
+    document.title = "Home";
     window.scrollTo(0, 0);
+    getAllUsers();
   }, []);
-  const today = new Date().toISOString().split('T')[0];
+  const userId = JSON.parse(localStorage.getItem("d_user"))
+  const today = new Date().toISOString().split("T")[0];
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [signup, setSignUp] = useState(false);
@@ -41,6 +45,8 @@ const Home = () => {
   const [showError, setShowError] = useState(false);
   const [hide, setHide] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [users, setUsers] = useState([]);
+
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -196,12 +202,12 @@ const Home = () => {
       await AuthService.register(data).then(
         () => {
           setLoading(false);
-          toast.success("Profile create successfully!", {
+          toast.success("Profile create successfully! Please Login Now", {
             position: toast.POSITION.TOP_RIGHT,
           });
-          // navigate('/login-page')
-
-          // buttonref1.current.click();
+          setTimeout(() => {
+            window.location.reload();
+          },2000)
         },
         (error) => {
           const resMessage =
@@ -219,406 +225,467 @@ const Home = () => {
       );
     }
   };
+
+
+  const getAllUsers = async () => {
+    await DataService.getAllUsers().then((data) => {
+      setUsers(data?.data?.data);
+    });
+  };
+
+  const addFriend = async (id) => {
+      const data = {};
+       data.friendId = id;
+      setLoading(true);
+      await DataService.addMyFriend(userId,data).then(
+        () => {
+          setLoading(false);
+          toast.success("Friend Added Successfully!!", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          // setTimeout(() => {
+          //   window.location.reload();
+          // },2000)
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.msg) ||
+            error.message ||
+            error.toString();
+
+          setLoading(false);
+          toast.error(resMessage, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      );
+    
+  };
+  const [profile, getProfile] = useState([]);
+
+  const getUserProfile = async () => {
+    await DataService.getSingleProfile(userId).then((data) => {
+      getProfile(data?.data?.data);
+    });
+  };
+  useEffect(() => {
+    if(userId){
+      getUserProfile();
+    }
+},[userId])
+
   return (
     <>
       <Navbar />
       <div className="top_banner" id="signup">
         <div className="top_bannerInner">
-          <div className="signup_sec">
-            <div className="signup_popup">
-              <div className="signup_inner">
-                <h2>Create Account</h2>
-                <div className="signup_formSec">
-                  {showError && (
-                    <div className="error_bar">
-                      <p>Please Fill out All fields !!</p>
-                    </div>
-                  )}
-                  {stepOne && (
-                    <div className="firstStep">
-                      <div className="signup_topBar">
-                        <span className="one active">1</span>
-                        <span className="two">2</span>
-                        <span className="three">3</span>
-                        <span className="four">4</span>
+          {auth ? (
+            ""
+          ) : (
+            <div className="signup_sec">
+              <div className="signup_popup">
+                <div className="signup_inner">
+                  <h2>Create Account</h2>
+                  <div className="signup_formSec">
+                    {showError && (
+                      <div className="error_bar">
+                        <p>Please Fill out All fields !!</p>
                       </div>
-                      <div className="form_field mb-3">
-                        <p>
-                          <strong>My Gender</strong>
-                        </p>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="gender_male"
-                            value="male"
-                            checked={gender === "male"}
-                            onChange={handleGenderChange}
-                          />
-                          <label class="form-check-label" for="gender_male">
-                            Male
-                          </label>
+                    )}
+                    {stepOne && (
+                      <div className="firstStep">
+                        <div className="signup_topBar">
+                          <span className="one active">1</span>
+                          <span className="two">2</span>
+                          <span className="three">3</span>
+                          <span className="four">4</span>
                         </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="gender_female"
-                            value="female"
-                            checked={gender === "female"}
-                            onChange={handleGenderChange}
-                          />
-                          <label class="form-check-label" for="gender_female">
-                            Female
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="gender_other"
-                            value="other"
-                            checked={gender === "other"}
-                            onChange={handleGenderChange}
-                          />
-                          <label class="form-check-label" for="gender_other">
-                            Other
-                          </label>
-                        </div>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="floatingInput"
-                          placeholder=""
-                          required
-                          onChange={(e) => setAge(e.target.value)}
-                        />
-                        <label for="floatingInput">My Age</label>
-                      </div>
-                      <div className="form_field country mb-3">
-                        <label>
-                          <strong>My Location</strong>
-                        </label>
-                        <ReactFlagsSelect
-                          selected={country}
-                          onSelect={(code) => setCountry(code)}
-                          required
-                        />
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                          checked={isChecked}
-                          onChange={handleCheckboxChange}
-                        />
-                        <label class="form-check-label" for="flexCheckDefault">
-                          I confirm that my age is 18+
-                        </label>
-                      </div>
-                      <div className="signup_buttons">
-                        <button
-                          className="main_button next_button"
-                          onClick={handleShowTwo}
-                        >
-                          Next<i class="fas fa-long-arrow-alt-right"></i>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {stepTwo && (
-                    <div className="secondStep">
-                      <div className="signup_topBar">
-                        <span className="one active">1</span>
-                        <span className="two active">2</span>
-                        <span className="three">3</span>
-                        <span className="four">4</span>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="floatingInput"
-                          placeholder=""
-                          required
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <label for="floatingInput">Username</label>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="floatingInput"
-                          placeholder=""
-                          required
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                        <label for="floatingInput">Your Name</label>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="floatingInput"
-                          placeholder=""
-                          required
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <label for="floatingInput">Email</label>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="floatingInput"
-                          placeholder=""
-                          required
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <label for="floatingInput">Password</label>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <textarea
-                          class="form-control"
-                          placeholder=""
-                          id="floatingTextarea2"
-                          style={{ height: "100px" }}
-                          onChange={(e) => setDescription(e.target.value)}
-                        ></textarea>
-                        <label for="floatingTextarea2">Description</label>
-                      </div>
-
-                      <div className="signup_buttons">
-                        <button
-                          className="main_button back_button"
-                          onClick={handleBackOne}
-                        >
-                          <i class="fas fa-long-arrow-alt-left"></i> Back
-                        </button>
-                        <button
-                          className="main_button next_button"
-                          onClick={handleShowThree}
-                        >
-                          Next <i class="fas fa-long-arrow-alt-right"></i>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {stepThree && (
-                    <div className="thirdStep">
-                      <div className="signup_topBar">
-                        <span className="one active">1</span>
-                        <span className="two active">2</span>
-                        <span className="three active">3</span>
-                        <span className="four">4</span>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input
-                          type="date"
-                          class="form-control"
-                          id="floatingInput"
-                          placeholder=""
-                          required
-                          max={today}
-                          onChange={(e) => setDob(e.target.value)}
-                        />
-                        <label for="floatingInput">Date of Birth</label>
-                      </div>
-
-                      <div className="form_field row mb-3">
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
+                        <div className="form_field mb-3">
+                          <p>
+                            <strong>My Gender</strong>
+                          </p>
+                          <div class="form-check">
                             <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              onChange={(e) => setCity(e.target.value)}
+                              class="form-check-input"
+                              type="radio"
+                              name="gender"
+                              id="gender_male"
+                              value="male"
+                              checked={gender === "male"}
+                              onChange={handleGenderChange}
                             />
-                            <label for="floatingInput">City</label>
+                            <label class="form-check-label" for="gender_male">
+                              Male
+                            </label>
                           </div>
-                        </div>
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
+                          <div class="form-check">
                             <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              onChange={(e) => setPostal(e.target.value)}
+                              class="form-check-input"
+                              type="radio"
+                              name="gender"
+                              id="gender_female"
+                              value="female"
+                              checked={gender === "female"}
+                              onChange={handleGenderChange}
                             />
-                            <label for="floatingInput">Postal Code</label>
+                            <label class="form-check-label" for="gender_female">
+                              Female
+                            </label>
                           </div>
-                        </div>
-                      </div>
-                      <div className="form_field mb-3">
-                        <p>Select Timezone</p>
-                        <TimezoneSelect
-                          value={timezone}
-                          onChange={setTimezone}
-                          required
-                        />
-                      </div>
-                      <div className="signup_buttons">
-                        <button
-                          className="main_button back_button"
-                          onClick={handleBackTwo}
-                        >
-                          <i class="fas fa-long-arrow-alt-left"></i> Back
-                        </button>
-                        <button
-                          className="main_button next_button"
-                          onClick={handleShowFour}
-                        >
-                          Next <i class="fas fa-long-arrow-alt-right"></i>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {stepFour && (
-                    <div className="fourthStep">
-                      <div className="signup_topBar">
-                        <span className="one active">1</span>
-                        <span className="two active">2</span>
-                        <span className="three active">3</span>
-                        <span className="four active">4</span>
-                      </div>
-                      <div className="form-field row mb-3">
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
+                          <div class="form-check">
                             <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setHeight(e.target.value)}
+                              class="form-check-input"
+                              type="radio"
+                              name="gender"
+                              id="gender_other"
+                              value="other"
+                              checked={gender === "other"}
+                              onChange={handleGenderChange}
                             />
-                            <label for="floatingInput">Height</label>
+                            <label class="form-check-label" for="gender_other">
+                              Other
+                            </label>
                           </div>
-                        </div>
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setWeight(e.target.value)}
-                            />
-                            <label for="floatingInput">Weight</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="form-field row mb-3">
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setEyeColor(e.target.value)}
-                            />
-                            <label for="floatingInput">Eye Color</label>
-                          </div>
-                        </div>
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setHairColor(e.target.value)}
-                            />
-                            <label for="floatingInput">Hair Color</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="form-field row mb-3">
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setHairLength(e.target.value)}
-                            />
-                            <label for="floatingInput">Hair Length</label>
-                          </div>
-                        </div>
-                        <div className="col-sm-6">
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder=""
-                              required
-                              onChange={(e) => setMaritalStatus(e.target.value)}
-                            />
-                            <label for="floatingInput">Marital Status</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="form_field mb-3">
-                        <div className="hobbies-list">
-                          {hobbies.map((hobby, index) => (
-                            <Hobby
-                              key={index}
-                              hobby={hobby}
-                              onDelete={() => handleDelete(index)}
-                            />
-                          ))}
                         </div>
                         <div class="form-floating mb-3">
                           <input
                             type="text"
                             class="form-control"
                             id="floatingInput"
-                            placeholder="name@example.com"
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            onKeyPress={handleKeyPress}
+                            placeholder=""
+                            required
+                            onChange={(e) => setAge(e.target.value)}
+                          />
+                          <label for="floatingInput">My Age</label>
+                        </div>
+                        <div className="form_field country mb-3">
+                          <label>
+                            <strong>My Location</strong>
+                          </label>
+                          <ReactFlagsSelect
+                            selected={country}
+                            onSelect={(code) => setCountry(code)}
                             required
                           />
-                          <label for="floatingInput">Interests</label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                            checked={isChecked}
+                            onChange={handleCheckboxChange}
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            I confirm that my age is 18+
+                          </label>
+                        </div>
+                        <div className="signup_buttons">
+                          <button
+                            className="main_button next_button"
+                            onClick={handleShowTwo}
+                          >
+                            Next<i class="fas fa-long-arrow-alt-right"></i>
+                          </button>
                         </div>
                       </div>
-                      <div className="signup_buttons">
-                        <button
-                          className="main_button back_button"
-                          onClick={handleBackThree}
-                        >
-                          <i class="fas fa-long-arrow-alt-left"></i> Back
-                        </button>
-                        <button
-                          className="main_button next_button"
-                          onClick={handleSubmit}
-                        >
-                          Submit
-                        </button>
+                    )}
+                    {stepTwo && (
+                      <div className="secondStep">
+                        <div className="signup_topBar">
+                          <span className="one active">1</span>
+                          <span className="two active">2</span>
+                          <span className="three">3</span>
+                          <span className="four">4</span>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="floatingInput"
+                            placeholder=""
+                            required
+                            onChange={(e) => setUsername(e.target.value)}
+                          />
+                          <label for="floatingInput">Username</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="floatingInput"
+                            placeholder=""
+                            required
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                          <label for="floatingInput">Your Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="floatingInput"
+                            placeholder=""
+                            required
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                          <label for="floatingInput">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="floatingInput"
+                            placeholder=""
+                            required
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                          <label for="floatingInput">Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <textarea
+                            class="form-control"
+                            placeholder=""
+                            id="floatingTextarea2"
+                            style={{ height: "100px" }}
+                            onChange={(e) => setDescription(e.target.value)}
+                          ></textarea>
+                          <label for="floatingTextarea2">Description</label>
+                        </div>
+
+                        <div className="signup_buttons">
+                          <button
+                            className="main_button back_button"
+                            onClick={handleBackOne}
+                          >
+                            <i class="fas fa-long-arrow-alt-left"></i> Back
+                          </button>
+                          <button
+                            className="main_button next_button"
+                            onClick={handleShowThree}
+                          >
+                            Next <i class="fas fa-long-arrow-alt-right"></i>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                    {stepThree && (
+                      <div className="thirdStep">
+                        <div className="signup_topBar">
+                          <span className="one active">1</span>
+                          <span className="two active">2</span>
+                          <span className="three active">3</span>
+                          <span className="four">4</span>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="floatingInput"
+                            placeholder=""
+                            required
+                            max={today}
+                            onChange={(e) => setDob(e.target.value)}
+                          />
+                          <label for="floatingInput">Date of Birth</label>
+                        </div>
+
+                        <div className="form_field row mb-3">
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                onChange={(e) => setCity(e.target.value)}
+                              />
+                              <label for="floatingInput">City</label>
+                            </div>
+                          </div>
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                onChange={(e) => setPostal(e.target.value)}
+                              />
+                              <label for="floatingInput">Postal Code</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="form_field mb-3">
+                          <p>Select Timezone</p>
+                          <TimezoneSelect
+                            value={timezone}
+                            onChange={setTimezone}
+                            required
+                          />
+                        </div>
+                        <div className="signup_buttons">
+                          <button
+                            className="main_button back_button"
+                            onClick={handleBackTwo}
+                          >
+                            <i class="fas fa-long-arrow-alt-left"></i> Back
+                          </button>
+                          <button
+                            className="main_button next_button"
+                            onClick={handleShowFour}
+                          >
+                            Next <i class="fas fa-long-arrow-alt-right"></i>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                    {stepFour && (
+                      <div className="fourthStep">
+                        <div className="signup_topBar">
+                          <span className="one active">1</span>
+                          <span className="two active">2</span>
+                          <span className="three active">3</span>
+                          <span className="four active">4</span>
+                        </div>
+                        <div className="form-field row mb-3">
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                onChange={(e) => setHeight(e.target.value)}
+                              />
+                              <label for="floatingInput">Height</label>
+                            </div>
+                          </div>
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                onChange={(e) => setWeight(e.target.value)}
+                              />
+                              <label for="floatingInput">Weight</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="form-field row mb-3">
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                onChange={(e) => setEyeColor(e.target.value)}
+                              />
+                              <label for="floatingInput">Eye Color</label>
+                            </div>
+                          </div>
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                onChange={(e) => setHairColor(e.target.value)}
+                              />
+                              <label for="floatingInput">Hair Color</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="form-field row mb-3">
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                onChange={(e) => setHairLength(e.target.value)}
+                              />
+                              <label for="floatingInput">Hair Length</label>
+                            </div>
+                          </div>
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                onChange={(e) =>
+                                  setMaritalStatus(e.target.value)
+                                }
+                              />
+                              <label for="floatingInput">Marital Status</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="form_field mb-3">
+                          <div className="hobbies-list">
+                            {hobbies.map((hobby, index) => (
+                              <Hobby
+                                key={index}
+                                hobby={hobby}
+                                onDelete={() => handleDelete(index)}
+                              />
+                            ))}
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder="name@example.com"
+                              value={inputValue}
+                              onChange={handleInputChange}
+                              onKeyPress={handleKeyPress}
+                              required
+                            />
+                            <label for="floatingInput">Interests</label>
+                          </div>
+                        </div>
+                        <div className="signup_buttons">
+                          <button
+                            className="main_button back_button"
+                            onClick={handleBackThree}
+                          >
+                            <i class="fas fa-long-arrow-alt-left"></i> Back
+                          </button>
+                          <button
+                            className="main_button next_button"
+                            onClick={handleSubmit}
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
+
           <div className="content_sec">
             {/* <img src={Heart} alt="" className="heartTwo" /> */}
             <h1>Lorem ipsum dolor sit amet consectetur</h1>
@@ -680,75 +747,90 @@ const Home = () => {
               </ul>
               <h4>Who is Online</h4>
               <div className="online_profiles">
-              <Link to="/chats">
-                <div className="onlineInner">
-                  <img src={ProfileOne} alt="" />
-                  <i class="fas fa-circle"></i>
-                </div>
+                <Link to="/chats">
+                  <div className="onlineInner">
+                    <img src={ProfileOne} alt="" />
+                    <i class="fas fa-circle"></i>
+                  </div>
                 </Link>
                 <Link to="/chats">
-                <div className="onlineInner">
-                  <img src={ProfileThree} alt="" />
-                  <i class="fas fa-circle"></i>
-                </div>
+                  <div className="onlineInner">
+                    <img src={ProfileThree} alt="" />
+                    <i class="fas fa-circle"></i>
+                  </div>
                 </Link>
                 <Link to="/chats">
-                <div className="onlineInner">
-                  <img src={ProfileFour} alt="" />
-                  <i class="fas fa-circle"></i>
-                </div>
+                  <div className="onlineInner">
+                    <img src={ProfileFour} alt="" />
+                    <i class="fas fa-circle"></i>
+                  </div>
                 </Link>
               </div>
             </div>
             <div className="activeM">
               <h3>Recently Joined</h3>
               <div className="active_recent">
-              <Link to="/single-profile">
-                <div className="active_rInner">
-                  <img src={ProfileOne} alt="" />
-                  <h4>Jessica M.</h4>
-                </div>
+                <Link to="/single-profile">
+                  <div className="active_rInner">
+                    <img src={ProfileOne} alt="" />
+                    <h4>Jessica M.</h4>
+                  </div>
                 </Link>
                 <Link to="/single-profile">
-                <div className="active_rInner">
-                  <img src={ProfileTwo} alt="" />
-                  <h4>Emily W.</h4>
-                </div>
+                  <div className="active_rInner">
+                    <img src={ProfileTwo} alt="" />
+                    <h4>Emily W.</h4>
+                  </div>
                 </Link>
                 <Link to="/single-profile">
-                <div className="active_rInner">
-                  <img src={ProfileThree} alt="" />
-                  <h4>Jessica M.</h4>
-                </div>
+                  <div className="active_rInner">
+                    <img src={ProfileThree} alt="" />
+                    <h4>Jessica M.</h4>
+                  </div>
                 </Link>
                 <Link to="/single-profile">
-                <div className="active_rInner">
-                  <img src={ProfileFour} alt="" />
-                  <h4>Emily W.</h4>
-                </div>
+                  <div className="active_rInner">
+                    <img src={ProfileFour} alt="" />
+                    <h4>Emily W.</h4>
+                  </div>
                 </Link>
               </div>
-              <div className="active_mainProfile">
+              {users && users.length > 0 ? 
+                users.map((item,i) => {
+                  return(
+                    <>
+                    {
+                      item?._id !== userId ? (
+               
+                          <>
+                          <div className="active_mainProfile">
                 <div className="active_mainFlex">
                   <div className="active_mainL">
                     <img src={ProfileOne} alt="" />
                   </div>
                   <div className="active_mainR">
-                    <h4>Emily Wilson</h4>
-                    <span className="active_age">28~F</span>
+                    <h4>{item?.name}</h4>
+                    <span className="active_age">{item?.age}~{item?.gender==="male" ? "M" : item?.gender === "female" ? "F" : "Other"}</span>
                     <span>
-                      <i class="fas fa-map-marker-alt"></i>London
+                      <i class="fas fa-map-marker-alt"></i>{item?.city}, {item?.country}
                     </span>
+                    {auth  ? 
+                      <button className="add_friend" onClick={() => addFriend(item?._id)}>
+                      Add Friend <i class="fas fa-user-plus"></i>
+                    </button>
+                    :
+                      ''
+                    }
+                   
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipiscing elit
-                      dolor sit.
+                      {item?.description}
                     </p>
                   </div>
                 </div>
                 <div className="active_actionSec">
                   <button>
-                  <Link to="/single-profile">
-                    View<i class="fas fa-eye"></i>
+                    <Link to="/single-profile">
+                      View<i class="fas fa-eye"></i>
                     </Link>
                   </button>
                   <button>
@@ -758,87 +840,24 @@ const Home = () => {
                     Send Flirt<i class="fas fa-heart"></i>
                   </button>
                   <button>
-                  <Link to="/chats">
-                    Send Message<i class="fas fa-comment-alt"></i>
+                    <Link to="/chats">
+                      Send Message<i class="fas fa-comment-alt"></i>
                     </Link>
                   </button>
                 </div>
               </div>
-              <div className="active_mainProfile">
-                <div className="active_mainFlex">
-                  <div className="active_mainL">
-                    <img src={ProfileTwo} alt="" />
-                  </div>
-                  <div className="active_mainR">
-                    <h4>Emily Wilson</h4>
-                    <span className="active_age">28~F</span>
-                    <span>
-                      <i class="fas fa-map-marker-alt"></i>London
-                    </span>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipiscing elit
-                      dolor sit.
-                    </p>
-                  </div>
-                </div>
-                <div className="active_actionSec">
-                
-                  <button>
-                  <Link to="/single-profile">
-                    View<i class="fas fa-eye"></i>
-                    </Link>
-                  </button>
-                  
-                  <button>
-                    Like<i class="fas fa-thumbs-up"></i>
-                  </button>
-                  <button>
-                    Send Flirt<i class="fas fa-heart"></i>
-                  </button>
-                  <button>
-                  <Link to="/chats">
-                    Send Message<i class="fas fa-comment-alt"></i>
-                    </Link>
-                  </button>
-                </div>
-              </div>
-              <div className="active_mainProfile">
-                <div className="active_mainFlex">
-                  <div className="active_mainL">
-                    <img src={ProfileFour} alt="" />
-                  </div>
-                  <div className="active_mainR">
-                    <h4>Emily Wilson</h4>
-                    <span className="active_age">28~F</span>
-                    <span>
-                      <i class="fas fa-map-marker-alt"></i>London
-                    </span>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipiscing elit
-                      dolor sit.
-                    </p>
-                  </div>
-                </div>
-                <div className="active_actionSec">
-                  <button>
-                  <Link to="/single-profile">
-                    View<i class="fas fa-eye"></i>
-                    </Link>
-                  </button>
-                  <button>
-                    Like<i class="fas fa-thumbs-up"></i>
-                  </button>
-                  <button>
-                    Send Flirt<i class="fas fa-heart"></i>
-                  </button>
-                  <button>
-                  <Link to="/chats">
-                    Send Message<i class="fas fa-comment-alt"></i>
-                    </Link>
-                  </button>
-                </div>
-              </div>
-              <button className="main_button my-4" onClick={() => window.location.href = "/#signup"}>
+                          </>
+                      ) : ""
+                    }
+                    
+                    </>
+                  )
+                }) : <p>No Data Found</p>
+              }
+              <button
+                className="main_button my-4"
+                onClick={() => (window.location.href = "/#signup")}
+              >
                 Create Account<i class="fas fa-long-arrow-alt-right"></i>
               </button>
             </div>
@@ -963,7 +982,10 @@ const Home = () => {
                     <p>125646</p>
                   </div>
                 </div>
-                <button className="main_button" onClick={() => window.location.href = "/#signup"}>
+                <button
+                  className="main_button"
+                  onClick={() => (window.location.href = "/#signup")}
+                >
                   Join Now<i class="fas fa-long-arrow-alt-right"></i>
                 </button>
               </div>
@@ -997,7 +1019,12 @@ const Home = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
                 a lacus nec lacus mollis condimentum in id justo.
               </p>
-              <button className="main_button" onClick={() => window.location.href = "/#signup"}>Register</button>
+              <button
+                className="main_button"
+                onClick={() => (window.location.href = "/#signup")}
+              >
+                Register
+              </button>
             </div>
           </div>
         </div>
@@ -1005,7 +1032,6 @@ const Home = () => {
       <section className="about_section">
         <div className="container">
           <div className="about_flex">
-            
             <div className="about_flexR">
               <h2>Mauris non nulla faucibus</h2>
               <p>
@@ -1022,12 +1048,16 @@ const Home = () => {
                 tortor, ac tristique sem ex eget lectus. Etiam sed erat magna.
                 Nam in mi scelerisque, commodo lacus et, facilisis nibh.
               </p>
-              <button className="main_button" onClick={() => window.location.href = "/#signup"}>Register</button>
+              <button
+                className="main_button"
+                onClick={() => (window.location.href = "/#signup")}
+              >
+                Register
+              </button>
             </div>
             <div className="about_flexL">
               <img src={DatingGirl} alt="" />
             </div>
-            
           </div>
         </div>
       </section>

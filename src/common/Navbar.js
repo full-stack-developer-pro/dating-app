@@ -11,8 +11,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const auth = AuthService.getCurrentUser();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [signup, setSignUp] = useState(false);
   const [login, setLogin] = useState(false);
   const [stepOne, setStepOne] = useState(true);
@@ -23,10 +24,10 @@ const Navbar = () => {
 
   //Fields States Here
 
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
   const [gender, setGender] = useState("male");
   const [dob, setDob] = useState("");
@@ -170,6 +171,45 @@ const Navbar = () => {
     
       }
   };
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setMessage("");
+    setLoading(true);
+      AuthService.login(username, password).then(
+        () => {
+          toast.success("Login Successfull!!")
+          setTimeout(() => {
+            navigate("/profile");
+            window.location.reload();
+          },2000)
+         
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+            toast.error(resMessage, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          setLoading(false);
+          setMessage(resMessage);
+        }
+      );
+  };
+  const logout = (e) => {
+    localStorage.removeItem("d_user");
+    localStorage.removeItem("d_userToken");
+    navigate("/");
+    window.location.reload();
+  }
   return (
     <>
     <ToastContainer/>
@@ -181,12 +221,25 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="navbarR">
-            <button className="main_buttonTwo" onClick={() => setLogin(true)}>
+          {auth ?  
+          <>
+          <button className="main_buttonTwo" onClick={() => navigate("/profile")}>
+              My Profile<i class="fas fa-user"></i>
+            </button> 
+            <button className="main_button" onClick={logout}>
+              Logout<i class="fas fa-sign-in-alt"></i>
+            </button>
+            </>
+            : 
+            <><button className="main_buttonTwo" onClick={() => setLogin(true)}>
               Login<i class="fas fa-sign-in-alt"></i>
             </button>
             <button className="main_button" onClick={() => window.location.href = "/#signup"}>
               Signup<i class="fas fa-user"></i>
-            </button>
+            </button></>
+            }
+            
+
           </div>
           
           {login && (
@@ -214,6 +267,7 @@ const Navbar = () => {
                           class="form-control"
                           id="floatingInput"
                           placeholder=""
+                          onChange={(e) => setUsername(e.target.value)}
                         />
                         <label for="floatingInput">Email address</label>
                       </div>
@@ -223,12 +277,13 @@ const Navbar = () => {
                           class="form-control"
                           id="floatingPassword"
                           placeholder="Password"
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                         <label for="floatingPassword">Password</label>
                       </div>
                       <p className="forgot_pass">Forgot Password</p>
                       <div className="form_field">
-                        <button className="main_button">Submit</button>
+                        <button className="main_button" onClick={handleLogin}>Submit</button>
                       </div>
                     </form>
                   </div>

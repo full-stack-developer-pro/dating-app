@@ -13,6 +13,8 @@ import TermsConditions from "./pages/TermsConditions";
 import Chats from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 import SingleLProfile from "./pages/SingleLProfile";
+import { RestrictedAccess } from "./private-component/RestrictedAccess";
+
 
 
 export default function App() {
@@ -21,15 +23,17 @@ export default function App() {
       <Routes>
       <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/single-profile" element={<SingleLProfile />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/single-blog" element={<SingleBlog />} />
+        <Route path="/single-blog/:id" element={<SingleBlog />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route element={<RestrictedAccess />}>
+        <Route path="/profile" element={<Profile />} />
         <Route path="/chats" element={<Chats />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

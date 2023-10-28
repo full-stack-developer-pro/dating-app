@@ -35,11 +35,31 @@ axios.interceptors.response.use(function (response) {
   const getTermsConditions = () => {
     return axios.get(API_URL + "api/admin/getTerms&Condition");
   };
+  const getAllBlogs = () => {
+    return axios.get(API_URL + "api/admin/getBlog");
+  };
+  const getOneBlog = (id) => {
+    return axios.get(API_URL + "api/admin/getOneBlog/"+id);
+  };
+  const getSingleProfile = (id) => {
+    return axios.get(API_URL + "api/user/getDetailsById/"+id);
+  };
+  const getAllUsers = () => {
+    return axios.get(API_URL + "api/user/getAllUserByAdmin");
+  };
+  const addMyFriend = (id,data) => {
+    return axios.post(API_URL + "api/addFriend/"+id,data);
+  };
   const DataService = {
     getAboutUs,
     getContactUs,
     getSocialLinks,
     getPrivacyPoicy,
-    getTermsConditions
+    getTermsConditions,
+    getAllBlogs,
+    getOneBlog,
+    getSingleProfile,
+    getAllUsers,
+    addMyFriend
   }
   export default DataService;
