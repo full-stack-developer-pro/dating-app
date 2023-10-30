@@ -8,10 +8,10 @@ import Footer from "../common/Footer";
 import DataService from "../services/data.service";
 import moment from "moment";
 import LoadingBar from 'react-top-loading-bar'
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const ref = useRef(null)
-  
   const [profile, getProfile] = useState([]);
   const userId = JSON.parse(localStorage.getItem("d_user"))
 
@@ -22,7 +22,7 @@ const Profile = () => {
     });
   };
   useEffect(() => {
-    document.title = "Profile"
+    document.title = "Edit Profile"
     window.scrollTo(0,0)
     getUserProfile();
     ref.current.continuousStart()
@@ -37,6 +37,7 @@ const Profile = () => {
           <span>Home / Profile</span>
         </div>
       </section>
+
       <section className="main_proflieSec">
         <div className="container">
           <div className="profileFlex">
@@ -52,12 +53,14 @@ const Profile = () => {
                   <h2>
                    {profile?.name}<i className="fas fa-circle"></i>
                   </h2>
+                  <Link to={"/edit-profile"}>
                   <button
                     className="main_button"
                     style={{ margin: "0", padding: "10px 35px" }}
                   >
                     Edit Profile<i class="fas fa-pencil-alt"></i>
                   </button>
+                  </Link>
                 </div>
                 <p>
                   <i class="fas fa-map-marker-alt"></i> {profile?.city}, {profile?.country}

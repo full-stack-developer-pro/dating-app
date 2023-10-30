@@ -24,19 +24,18 @@ import DatingCouple from "../images/datingAppCouple.png";
 import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
-import LoadingBar from 'react-top-loading-bar'
-
+import LoadingBar from "react-top-loading-bar";
 
 const Home = () => {
-  const ref = useRef(null)
+  const ref = useRef(null);
   const auth = AuthService.getCurrentUser();
   useEffect(() => {
     document.title = "Home";
     window.scrollTo(0, 0);
-    ref.current.continuousStart()
+    ref.current.continuousStart();
     getAllUsers();
   }, []);
-  const userId = JSON.parse(localStorage.getItem("d_user"))
+  const userId = JSON.parse(localStorage.getItem("d_user"));
   const today = new Date().toISOString().split("T")[0];
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -50,7 +49,6 @@ const Home = () => {
   const [hide, setHide] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [users, setUsers] = useState([]);
-
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -211,7 +209,7 @@ const Home = () => {
           });
           setTimeout(() => {
             window.location.reload();
-          },2000)
+          }, 2000);
         },
         (error) => {
           const resMessage =
@@ -230,43 +228,40 @@ const Home = () => {
     }
   };
 
-
   const getAllUsers = async () => {
     await DataService.getAllUsers().then((data) => {
       setUsers(data?.data?.data);
-      ref.current.complete()
+      ref.current.complete();
     });
   };
 
   const addFriend = async (id) => {
-      const data = {};
-       data.friendId = id;
-      setLoading(true);
-      await DataService.addMyFriend(userId,data).then(
-        () => {
-          setLoading(false);
-          toast.success("Friend Added Successfully!!", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-          // setTimeout(() => {
-          //   window.location.reload();
-          // },2000)
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.msg) ||
-            error.message ||
-            error.toString();
+    const data = {};
+    data.friendId = id;
+    setLoading(true);
+    await DataService.addMyFriend(userId, data).then(
+      () => {
+        setLoading(false);
+        toast.success("Friend Added Successfully!!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        getAllUsers();
+        // setTimeout(() => {
+        //   window.location.reload();
+        // },2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.msg) ||
+          error.message ||
+          error.toString();
 
-          setLoading(false);
-          toast.error(resMessage, {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        }
-      );
-    
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
   };
   const [profile, getProfile] = useState([]);
 
@@ -276,15 +271,15 @@ const Home = () => {
     });
   };
   useEffect(() => {
-    if(userId){
+    if (userId) {
       getUserProfile();
     }
-},[userId])
+  }, [userId]);
 
   return (
     <>
       <Navbar />
-      <LoadingBar color='#C952A0' ref={ref} height={5} shadow={true} />
+      <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="top_banner" id="signup">
         <div className="top_bannerInner">
           {auth ? (
@@ -801,65 +796,86 @@ const Home = () => {
                   </div>
                 </Link>
               </div>
-              {users && users.length > 0 ? 
-                users.map((item,i) => {
-                  return(
+
+              {users && users.length > 0 ? (
+                users.map((item, i) => {
+                  return (
                     <>
-                    {
-                      item?._id !== userId ? (
-               
-                          <>
+                      {item?._id !== userId ? (
+                        <>
                           <div className="active_mainProfile">
-                <div className="active_mainFlex">
-                  <div className="active_mainL">
-                    <img src={ProfileOne} alt="" />
-                  </div>
-                  <div className="active_mainR">
-                    <h4>{item?.name}</h4>
-                    <span className="active_age">{item?.age}~{item?.gender==="male" ? "M" : item?.gender === "female" ? "F" : "Other"}</span>
-                    <span>
-                      <i class="fas fa-map-marker-alt"></i>{item?.city}, {item?.country}
-                    </span>
-                    {auth  ? 
-                      <button className="add_friend" onClick={() => addFriend(item?._id)}>
-                      Add Friend <i class="fas fa-user-plus"></i>
-                    </button>
-                    :
-                      ''
-                    }
-                   
-                    <p>
-                      {item?.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="active_actionSec">
-                  <button>
-                    <Link to="/single-profile">
-                      View<i class="fas fa-eye"></i>
-                    </Link>
-                  </button>
-                  <button>
-                    Like<i class="fas fa-thumbs-up"></i>
-                  </button>
-                  <button>
-                    Send Flirt<i class="fas fa-heart"></i>
-                  </button>
-                  <button>
-                    <Link to="/chats">
-                      Send Message<i class="fas fa-comment-alt"></i>
-                    </Link>
-                  </button>
-                </div>
-              </div>
-                          </>
-                      ) : ""
-                    }
-                    
+                            <div className="active_mainFlex">
+                              <div className="active_mainL">
+                                <img src={ProfileOne} alt="" />
+                              </div>
+                              <div className="active_mainR">
+                                <h4>{item?.name}</h4>
+                                <span className="active_age">
+                                  {item?.age}~
+                                  {item?.gender === "male"
+                                    ? "M"
+                                    : item?.gender === "female"
+                                    ? "F"
+                                    : "Other"}
+                                </span>
+                                <span>
+                                  <i class="fas fa-map-marker-alt"></i>
+                                  {item?.city}, {item?.country}
+                                </span>
+                                <br />
+                                {profile?.friends?.map((op) =>
+                                  op?.friends === item?._id ? (
+                                    <button
+                                      className="add_friend already_friend"
+                                      key={op._id}
+                                    >
+                                      Remove Friend
+                                      <i class="fas fa-user-minus"></i>
+                                    </button>
+                                  ) : 
+                                    <button
+                                      className="add_friend"
+                                      onClick={() => addFriend(item?._id)}
+                                      key={op._id}
+                                    >
+                                      Add Friend
+                                      <i className="fas fa-user-plus"></i>
+                                    </button>
+                                  
+                                )}
+
+                                <p>{item?.description}</p>
+                              </div>
+                            </div>
+                            <div className="active_actionSec">
+                              <button>
+                                <Link to="/single-profile">
+                                  View<i class="fas fa-eye"></i>
+                                </Link>
+                              </button>
+                              <button>
+                                Like<i class="fas fa-thumbs-up"></i>
+                              </button>
+                              <button>
+                                Send Flirt<i class="fas fa-heart"></i>
+                              </button>
+                              <button>
+                                <Link to="/chats">
+                                  Send Message<i class="fas fa-comment-alt"></i>
+                                </Link>
+                              </button>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </>
-                  )
-                }) : <p>No Data Found</p>
-              }
+                  );
+                })
+              ) : (
+                <p>No Data Found</p>
+              )}
               <button
                 className="main_button my-4"
                 onClick={() => (window.location.href = "/#signup")}

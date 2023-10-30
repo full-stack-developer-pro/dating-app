@@ -13,6 +13,7 @@ import TermsConditions from "./pages/TermsConditions";
 import Chats from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 import SingleLProfile from "./pages/SingleLProfile";
+import EditProfile from "./pages/EditProfile";
 import { RestrictedAccess } from "./private-component/RestrictedAccess";
 
 
@@ -33,6 +34,7 @@ export default function App() {
         <Route element={<RestrictedAccess />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/chats" element={<Chats />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>
