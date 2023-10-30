@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../customCss/Home.css";
 import Heart from "../images/heart.png";
 import HeartTwo from "../images/heartTwo.png";
@@ -24,12 +24,16 @@ import DatingCouple from "../images/datingAppCouple.png";
 import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
+import LoadingBar from 'react-top-loading-bar'
+
 
 const Home = () => {
+  const ref = useRef(null)
   const auth = AuthService.getCurrentUser();
   useEffect(() => {
     document.title = "Home";
     window.scrollTo(0, 0);
+    ref.current.continuousStart()
     getAllUsers();
   }, []);
   const userId = JSON.parse(localStorage.getItem("d_user"))
@@ -230,6 +234,7 @@ const Home = () => {
   const getAllUsers = async () => {
     await DataService.getAllUsers().then((data) => {
       setUsers(data?.data?.data);
+      ref.current.complete()
     });
   };
 
@@ -279,6 +284,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
+      <LoadingBar color='#C952A0' ref={ref} height={5} shadow={true} />
       <div className="top_banner" id="signup">
         <div className="top_bannerInner">
           {auth ? (

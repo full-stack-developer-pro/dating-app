@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Navbar from "../common/Navbar";
 import "../customCss/Profile.css";
 import "../customCss/Home.css";
@@ -7,24 +7,30 @@ import Verified from "../images/verified.jpg";
 import Footer from "../common/Footer";
 import DataService from "../services/data.service";
 import moment from "moment";
+import LoadingBar from 'react-top-loading-bar'
 
 const Profile = () => {
+  const ref = useRef(null)
+  
   const [profile, getProfile] = useState([]);
   const userId = JSON.parse(localStorage.getItem("d_user"))
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
       getProfile(data?.data?.data);
+      ref.current.complete()
     });
   };
   useEffect(() => {
     document.title = "Profile"
     window.scrollTo(0,0)
     getUserProfile();
+    ref.current.continuousStart()
 },[userId])
   return (
     <>
       <Navbar />
+      <LoadingBar color='#C952A0' ref={ref} height={5} shadow={true} />
       <section className="profile_bannerSec">
         <div className="container">
           <h1>My Profile</h1>
