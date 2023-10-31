@@ -33,7 +33,7 @@ export default function App() {
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route element={<RestrictedAccess />}>
         <Route path="/profile" element={<Profile />} />
-        <Route path="/chats" element={<Chats />} />
+        <Route path="/chats/:id" element={<Chats />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         </Route>
       </Routes>

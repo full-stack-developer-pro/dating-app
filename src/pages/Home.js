@@ -860,7 +860,7 @@ const Home = () => {
                                 Send Flirt<i class="fas fa-heart"></i>
                               </button>
                               <button>
-                                <Link to="/chats">
+                                <Link to={"/chats/"+item._id}>
                                   Send Message<i class="fas fa-comment-alt"></i>
                                 </Link>
                               </button>
