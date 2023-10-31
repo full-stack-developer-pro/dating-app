@@ -246,16 +246,38 @@ const Home = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
         getAllUsers();
-        // setTimeout(() => {
-        //   window.location.reload();
-        // },2000)
+        getUserProfile()
       },
       (error) => {
         const resMessage =
           (error.response && error.response.data && error.response.data.msg) ||
           error.message ||
           error.toString();
-
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
+  };
+  const removeFriend = async (id) => {
+    const data = {};
+    data.friendId = id;
+    setLoading(true);
+    await DataService.removeMyFriend(userId, data).then(
+      () => {
+        setLoading(false);
+        toast.success("Friend Removed Successfully!!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        getAllUsers();
+        getUserProfile();
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.msg) ||
+          error.message ||
+          error.toString();
         setLoading(false);
         toast.error(resMessage, {
           position: toast.POSITION.TOP_RIGHT,
@@ -799,79 +821,71 @@ const Home = () => {
 
               {users && users.length > 0 ? (
                 users.map((item, i) => {
-                  return (
-                    <>
-                      {item?._id !== userId ? (
-                        <>
-                          <div className="active_mainProfile">
-                            <div className="active_mainFlex">
-                              <div className="active_mainL">
-                                <img src={ProfileOne} alt="" />
-                              </div>
-                              <div className="active_mainR">
-                                <h4>{item?.name}</h4>
-                                <span className="active_age">
-                                  {item?.age}~
-                                  {item?.gender === "male"
-                                    ? "M"
-                                    : item?.gender === "female"
-                                    ? "F"
-                                    : "Other"}
-                                </span>
-                                <span>
-                                  <i class="fas fa-map-marker-alt"></i>
-                                  {item?.city}, {item?.country}
-                                </span>
-                                <br />
-                                {profile?.friends?.map((op) =>
-                                  op?.friends === item?._id ? (
-                                    <button
-                                      className="add_friend already_friend"
-                                      key={op._id}
-                                    >
-                                      Remove Friend
-                                      <i class="fas fa-user-minus"></i>
-                                    </button>
-                                  ) : 
-                                    <button
-                                      className="add_friend"
-                                      onClick={() => addFriend(item?._id)}
-                                      key={op._id}
-                                    >
-                                      Add Friend
-                                      <i className="fas fa-user-plus"></i>
-                                    </button>
-                                  
-                                )}
-
-                                <p>{item?.description}</p>
-                              </div>
-                            </div>
-                            <div className="active_actionSec">
-                              <button>
-                                <Link to="/single-profile">
-                                  View<i class="fas fa-eye"></i>
-                                </Link>
-                              </button>
-                              <button>
-                                Like<i class="fas fa-thumbs-up"></i>
-                              </button>
-                              <button>
-                                Send Flirt<i class="fas fa-heart"></i>
-                              </button>
-                              <button>
-                                <Link to="/chats">
-                                  Send Message<i class="fas fa-comment-alt"></i>
-                                </Link>
-                              </button>
-                            </div>
+                  if (item?._id !== userId) {
+                    const isFriend = profile?.friends?.some(
+                      (op) => op?.friends === item?._id
+                    );
+                    return (
+                      <div className="active_mainProfile" key={i}>
+                        <div className="active_mainFlex">
+                          <div className="active_mainL">
+                            <img src={ProfileOne} alt="" />
                           </div>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </>
-                  );
+                          <div className="active_mainR">
+                            <h4>{item?.name}</h4>
+                            <span className="active_age">
+                              {item?.age}~
+                              {item?.gender === "male"
+                                ? "M"
+                                : item?.gender === "female"
+                                ? "F"
+                                : "Other"}
+                            </span>
+                            <span>
+                              <i className="fas fa-map-marker-alt"></i>
+                              {item?.city}, {item?.country}
+                            </span>
+                            <br />
+                            {isFriend ? (
+                              <button className="add_friend already_friend"
+                              onClick={() => removeFriend(item?._id)}>
+                                Remove Friend
+                                <i className="fas fa-user-minus"></i>
+                              </button>
+                            ) : (
+                              <button
+                                className="add_friend"
+                                onClick={() => addFriend(item?._id)}
+                              >
+                                Add Friend
+                                <i className="fas fa-user-plus"></i>
+                              </button>
+                            )}
+                            <p>{item?.description}</p>
+                          </div>
+                        </div>
+                        <div className="active_actionSec">
+                          <button>
+                            <Link to="/single-profile">
+                              View<i className="fas fa-eye"></i>
+                            </Link>
+                          </button>
+                          <button>
+                            Like<i className="fas fa-thumbs-up"></i>
+                          </button>
+                          <button>
+                            Send Flirt<i className="fas fa-heart"></i>
+                          </button>
+                          <button>
+                            <Link to="/chats">
+                              Send Message<i className="fas fa-comment-alt"></i>
+                            </Link>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null; // Skip rendering for the user's own profile
                 })
               ) : (
                 <p>No Data Found</p>

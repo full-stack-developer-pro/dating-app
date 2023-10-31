@@ -8,6 +8,8 @@ import Footer from "../common/Footer";
 import DataService from "../services/data.service";
 import moment from "moment";
 import LoadingBar from "react-top-loading-bar";
+import { ToastContainer, toast } from "react-toastify";
+
 // import { useParams } from "react-router-dom";
 
 import { Link } from "react-router-dom";
@@ -19,6 +21,8 @@ const Profile = () => {
 
   const [profile, getProfile] = useState([]);
   const [addFriend, setAddFriend] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
@@ -34,10 +38,9 @@ const Profile = () => {
       setAddFriend(data?.data?.data);
     });
   };
-  console.log(addFriend);
 
   useEffect(() => {
-    document.title = "Edit Profile";
+    document.title = "Profile";
     window.scrollTo(0, 0);
     getUserProfile();
     getAllFriend();
@@ -196,6 +199,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          {addFriend?.friends?.length > 0 ? <h2 className="text-center mt-5 mb-4">My Friends</h2> : ""}
           <div className="allFriend-column">
             {addFriend && addFriend?.friends?.length > 0 ? (
               addFriend?.friends?.map((item, i) => {
@@ -222,18 +226,7 @@ const Profile = () => {
                           </span>
                           <br />
 
-                          <button className="add_friend already_friend">
-                            Remove Friend
-                            <i class="fas fa-user-minus"></i>
-                          </button>
-
-                          <button
-                            className="add_friend"
-                            onClick={() => addFriend(item?._id)}
-                          >
-                            Add Friend
-                            <i className="fas fa-user-plus"></i>
-                          </button>
+                         
                           <p>{item?.description}</p>
                         </div>
                       </div>
