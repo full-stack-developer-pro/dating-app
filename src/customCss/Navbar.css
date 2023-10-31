@@ -40,8 +40,8 @@
     margin-right: 7px;
 }
 .form-check-input:checked{
-    background-color: #D057A6;
-    border-color: #D057A6;
+    background-color: #ef48b5;
+    border-color: #ef48b5;
 }
 .signup_buttons button{
     font-size: 14px;
@@ -68,7 +68,7 @@
 }
 
 .signup_topBar span.active {
-    background: #D057A6;
+    background: #ef48b5;
     color: #fff;
 }
 
