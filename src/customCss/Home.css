@@ -47,7 +47,7 @@
 }
 
 .main_button {
-    background: linear-gradient(to right, #D057A6, #a83a82);
+    background: linear-gradient(to right, #ef48b5, #F209E1);
     ;
     color: #fff;
     font-size: 16px;
@@ -79,11 +79,11 @@
     align-items: center;
     justify-content: center;
     margin: auto;
-    box-shadow: 5px 5px 0px 0px #D057A6;
+    box-shadow: 5px 5px 0px 0px #ef48b5;
 }
 
 .main_buttonTwo:hover {
-    box-shadow: -5px -5px 0px 0px #D057A6;
+    box-shadow: -5px -5px 0px 0px #ef48b5;
     transition: 0.5s;
 }
 
@@ -139,7 +139,7 @@
 }
 
 .navbarL img {
-    width: 160px;
+    width: 200px;
 }
 
 .navbarR {
@@ -245,7 +245,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    background: linear-gradient(to right, #D057A6, #a83a82);
+    background: linear-gradient(to right, #ef48b5, #F209E1);
     border-radius: 4px;
     padding: 5px 10px;
     color: #fff;
@@ -293,12 +293,12 @@
     display: inline-block;
     margin-right: 15px;
     font-weight: 600;
-    color: #D057A6;
+    color: #ef48b5;
 }
 
 .active_mainR span i {
     margin-right: 3px;
-    color: #D057A6;
+    color: #ef48b5;
     font-size: 12px;
 }
 
@@ -325,7 +325,7 @@
 }
 
 .active_actionSec button {
-    background: linear-gradient(to right, #D057A6, #a83a82);
+    background: linear-gradient(to right, #ef48b5, #F209E1);
     padding: 7px 8px;
     border: none;
     color: #fff;
@@ -368,7 +368,7 @@
 
 .active_secFlex .activeL ul li i {
     margin-right: 7px;
-    color: #D057A6;
+    color: #ef48b5;
     margin-right: 7px;
     margin-top: 5px;
 }
@@ -457,7 +457,7 @@
 }
 
 .search_formSec .form-check .form-check-input:checked~label {
-    color: #D057A6;
+    color: #ef48b5;
 }
 
 .search_formSec h4 {
@@ -609,7 +609,7 @@
     position: absolute;
     width: 30%;
     height: 5px;
-    background: linear-gradient(to right, #D057A6, #a83a82);
+    background: linear-gradient(to right, #ef48b5, #F209E1);
     top: 50%;
     left: -35%;
 }
@@ -619,7 +619,7 @@
     position: absolute;
     width: 30%;
     height: 5px;
-    background: linear-gradient(to right, #D057A6, #a83a82);
+    background: linear-gradient(to right, #ef48b5, #F209E1);
     top: 50%;
     right: -35%;
 }
@@ -707,7 +707,7 @@
 
 .profile_body p.profile_location i {
     margin-right: 4px;
-    color: #D057A6;
+    color: #ef48b5;
     font-size: 13px;
 }
 
@@ -745,13 +745,13 @@
 
 .add_friend {
     background: ghostwhite;
-    border: 1px solid #D057A6;
+    border: 1px solid #ef48b5;
     border-radius: 50%;
     padding: 5px 9px 7px 9px;
 }
 
 .add_friend i {
-    color: #D057A6;
+    color: #ef48b5;
     font-size: 13px;
 }
 
@@ -857,14 +857,14 @@
 }
 
 .single_lockOpen span.single_age {
-    color: #D057A6;
+    color: #ef48b5;
     font-weight: 600;
     margin-right: 10px;
 }
 
 .single_lockOpen span i {
     font-size: 13px;
-    color: #D057A6;
+    color: #ef48b5;
 }
 
 .single_lockOpen button.view_full {
@@ -887,7 +887,7 @@
 
 .single_actionFlex button {
     width: 30%;
-    background: #D057A6;
+    background: #ef48b5;
     padding: 5px 5px;
     color: #fff;
     border: none;

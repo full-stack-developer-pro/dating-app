@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactFlagsSelect from "react-flags-select";
-import Logo from "../images/mature_friends_logo.jpeg";
+import Logo from "../images/dating-app-logo.png";
 import "../customCss/Navbar.css";
 import TimezoneSelect from "react-timezone-select";
 import Hobby from "../pages/Hobby";
