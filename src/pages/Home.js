@@ -852,6 +852,7 @@ const Home = () => {
                                 Remove Friend
                                 <i className="fas fa-user-minus"></i>
                               </button>
+
                             ) : (
                               <button
                                 className="add_friend"
@@ -859,6 +860,7 @@ const Home = () => {
                               >
                                 Add Friend
                                 <i className="fas fa-user-plus"></i>
+
                               </button>
                             )}
                             <p>{item?.description}</p>
@@ -877,9 +879,9 @@ const Home = () => {
                             Send Flirt<i className="fas fa-heart"></i>
                           </button>
                           <button>
-                            <Link to="/chats">
-                              Send Message<i className="fas fa-comment-alt"></i>
-                            </Link>
+                            <Link to={"/chats/"+item._id}>
+                                  Send Message<i class="fas fa-comment-alt"></i>
+                                </Link>
                           </button>
                         </div>
                       </div>
