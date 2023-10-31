@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../common/Navbar";
 import "../customCss/Profile.css";
 import "../customCss/Home.css";
@@ -7,30 +7,46 @@ import Verified from "../images/verified.jpg";
 import Footer from "../common/Footer";
 import DataService from "../services/data.service";
 import moment from "moment";
-import LoadingBar from 'react-top-loading-bar'
+import LoadingBar from "react-top-loading-bar";
+// import { useParams } from "react-router-dom";
+
 import { Link } from "react-router-dom";
+// const auth = AuthService.getCurrentUser();
 
 const Profile = () => {
-  const ref = useRef(null)
+  const ref = useRef(null);
+  // const params = useParams();
+
   const [profile, getProfile] = useState([]);
-  const userId = JSON.parse(localStorage.getItem("d_user"))
+  const [addFriend, setAddFriend] = useState([]);
+
+  const userId = JSON.parse(localStorage.getItem("d_user"));
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
       getProfile(data?.data?.data);
-      ref.current.complete()
+      ref.current.complete();
     });
   };
+
+  const getAllFriend = async () => {
+    await DataService.getAllFriend(userId).then((data) => {
+      setAddFriend(data?.data?.data);
+    });
+  };
+  console.log(addFriend);
+
   useEffect(() => {
-    document.title = "Edit Profile"
-    window.scrollTo(0,0)
+    document.title = "Edit Profile";
+    window.scrollTo(0, 0);
     getUserProfile();
-    ref.current.continuousStart()
-},[userId])
+    getAllFriend();
+    ref.current.continuousStart();
+  }, [userId]);
   return (
     <>
       <Navbar />
-      <LoadingBar color='#C952A0' ref={ref} height={5} shadow={true} />
+      <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <section className="profile_bannerSec">
         <div className="container">
           <h1>My Profile</h1>
@@ -51,19 +67,21 @@ const Profile = () => {
               <div className="profile_title">
                 <div className="d-flex align-items-center justify-content-between">
                   <h2>
-                   {profile?.name}<i className="fas fa-circle"></i>
+                    {profile?.name}
+                    <i className="fas fa-circle"></i>
                   </h2>
                   <Link to={"/edit-profile"}>
-                  <button
-                    className="main_button"
-                    style={{ margin: "0", padding: "10px 35px" }}
-                  >
-                    Edit Profile<i class="fas fa-pencil-alt"></i>
-                  </button>
+                    <button
+                      className="main_button"
+                      style={{ margin: "0", padding: "10px 35px" }}
+                    >
+                      Edit Profile<i class="fas fa-pencil-alt"></i>
+                    </button>
                   </Link>
                 </div>
                 <p>
-                  <i class="fas fa-map-marker-alt"></i> {profile?.city}, {profile?.country}
+                  <i class="fas fa-map-marker-alt"></i> {profile?.city},{" "}
+                  {profile?.country}
                 </p>
                 <p>{profile?.description}</p>
               </div>
@@ -87,21 +105,29 @@ const Profile = () => {
                     <i class="fas fa-user"></i> Gender
                   </p>
                   <p>:</p>
-                  <p>{profile?.gender==="male" ? "Male" : profile?.gender === "female" ? "Female" : "Other"}</p>
+                  <p>
+                    {profile?.gender === "male"
+                      ? "Male"
+                      : profile?.gender === "female"
+                        ? "Female"
+                        : "Other"}
+                  </p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-birthday-cake"></i> Birth Date
                   </p>
                   <p>:</p>
-                  <p>{moment(profile?.birthdate).format('LL')}</p>
+                  <p>{moment(profile?.birthdate).format("LL")}</p>
                 </div>
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-map-marker-alt"></i> City
                   </p>
                   <p>:</p>
-                  <p>{profile?.city}, {profile?.postcode}</p>
+                  <p>
+                    {profile?.city}, {profile?.postcode}
+                  </p>
                 </div>
                 <div className="profileEntry">
                   <p>
@@ -159,10 +185,87 @@ const Profile = () => {
                     <i class="fas fa-futbol"></i> Interests
                   </p>
                   <p>:</p>
-                  <p>{profile?.interests && profile?.interests.length>0 ? profile?.interests?.map((item,i) => {return(item+", ")}) : ''}</p>
+                  <p>
+                    {profile?.interests && profile?.interests.length > 0
+                      ? profile?.interests?.map((item, i) => {
+                        return item + ", ";
+                      })
+                      : ""}
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
+          <div className="allFriend-column">
+            {addFriend && addFriend?.friends?.length > 0 ? (
+              addFriend?.friends?.map((item, i) => {
+                return (
+                  <>
+                    <div className="active_mainProfile">
+                      <div className="active_mainFlex">
+                        <div className="active_mainL">
+                          <img src={ProfileOne} alt="" />
+                        </div>
+                        <div className="active_mainR">
+                          <h4>{item?.friends?.name}</h4>
+                          <span className="active_age">
+                            {item?.friends?.age}~
+                            {item?.friends?.gender === "male"
+                              ? "M"
+                              : item?.friends?.gender === "female"
+                                ? "F"
+                                : "Other"}
+                          </span>
+                          <span>
+                            <i class="fas fa-map-marker-alt"></i>
+                            {item?.friends?.city}, {item?.friends?.country}
+                          </span>
+                          <br />
+
+                          <button className="add_friend already_friend">
+                            Remove Friend
+                            <i class="fas fa-user-minus"></i>
+                          </button>
+
+                          <button
+                            className="add_friend"
+                            onClick={() => addFriend(item?._id)}
+                          >
+                            Add Friend
+                            <i className="fas fa-user-plus"></i>
+                          </button>
+                          <p>{item?.description}</p>
+                        </div>
+                      </div>
+                      <div className="active_actionSec">
+                      {/* <div className="allFriend-button"> */}
+                        <button className="allFriend-btn1">
+                          <Link to="/single-profile">
+                            View<i class="fas fa-eye"></i>
+                          </Link>
+                        </button>
+                        <button className="allFriend-btn2">
+                          Like<i class="fas fa-thumbs-up"></i>
+                        </button>
+                        {/* </div> */}
+                        {/* <div className="allFriend-button"> */}
+                        <button className="allFriend-btn3">
+                          Send Flirt<i class="fas fa-heart"></i>
+                        </button>
+                        <button className="allFriend-btn4">
+                          <Link to="/chats">
+                            Send Message<i class="fas fa-comment-alt"></i>
+                          </Link>
+                        </button>
+                        </div>
+                      {/* </div> */}
+                    </div>
+                  </>
+                );
+              })
+            ) : (
+              <p>not found</p>
+            )}
           </div>
         </div>
       </section>

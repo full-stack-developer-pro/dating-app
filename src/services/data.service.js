@@ -50,6 +50,10 @@ axios.interceptors.response.use(function (response) {
   const addMyFriend = (id,data) => {
     return axios.post(API_URL + "api/addFriend/"+id,data);
   };
+  const getAllFriend = (id) =>{
+    return axios.get(API_URL + "api/user/getAllFriends/"+id);
+
+  }
   const DataService = {
     getAboutUs,
     getContactUs,
@@ -60,6 +64,7 @@ axios.interceptors.response.use(function (response) {
     getOneBlog,
     getSingleProfile,
     getAllUsers,
-    addMyFriend
+    addMyFriend,
+    getAllFriend
   }
   export default DataService;

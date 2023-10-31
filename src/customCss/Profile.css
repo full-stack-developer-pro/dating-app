@@ -181,7 +181,32 @@
         border-right: 6px solid #FF72A7;
     }
 }
-
+.allFriend-column {
+    display: flex;
+    flex-wrap: wrap;
+}
+.allFriend-column .active_mainProfile {
+    width: 31%;
+}
+.allFriend-column .active_actionSec {
+    flex-wrap: wrap;
+}
+.allFriend-column .allFriend-btn1 {
+    width: 48%;
+    margin: 1%;
+}
+.allFriend-column .allFriend-btn2 {
+    width: 48%;
+    margin: 1%;
+}
+.allFriend-column .allFriend-btn3 {
+    width: 48%;
+    margin: 1%;
+}
+.allFriend-column .allFriend-btn4 {
+    width: 48% !important;
+    margin: 1%;
+}
 @media screen and (max-width: 767px) {
 
     .profileFlex {
@@ -236,6 +261,25 @@
 
     .verified_badge img {
         width: 70px;
+    }
+    .allFriend-column .active_mainProfile {
+        width: 100%;
+    }
+    .allFriend-column .allFriend-btn1 {
+        width: 48% !important;   
+        margin: 1% !important;  
+    }
+    .allFriend-column .allFriend-btn2 {
+        width: 48% !important; 
+        margin: 1% !important;  
+    }
+    .allFriend-column .allFriend-btn3 {
+        width: 98% !important;
+        margin: 1% !important;
+    }
+    .allFriend-column .allFriend-btn4 {
+        width: 98% !important;
+        margin: 1%;
     }
 
 
