@@ -62,6 +62,12 @@ axios.interceptors.response.use(function (response) {
   const searchUsers = (gender, country) =>{
     return axios.get(API_URL + "api/user/getList?gender="+gender+"&country="+country);
   }
+  const getChatBox = (myId, yourId) =>{
+    return axios.get(API_URL + "api/user/getChat?senderId="+myId+"&receiverId="+yourId);
+  }
+  const getAllChats = (id) =>{
+    return axios.get(API_URL + "api/user/chatted?userId="+id);
+  }
   const DataService = {
     UpdateProfile,
     getAboutUs,
@@ -76,6 +82,8 @@ axios.interceptors.response.use(function (response) {
     addMyFriend,
     removeMyFriend,
     getAllFriend,
-    searchUsers
+    searchUsers,
+    getChatBox,
+    getAllChats
   }
   export default DataService;
