@@ -181,6 +181,9 @@
     background: linear-gradient(90deg,#300243,#15021b);
 }
 
+.chat_right .text_message{
+    background: linear-gradient(90deg,#ef48b5,#F209E1);
+}
 .text_message {
     display: inline-block;
     background: linear-gradient(90deg,#300243,#15021b);
