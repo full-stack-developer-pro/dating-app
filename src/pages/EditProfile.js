@@ -11,6 +11,7 @@ import LoadingBar from "react-top-loading-bar";
 import TimezoneSelect from "react-timezone-select";
 import ReactFlagsSelect from "react-flags-select";
 import HobbyEdit from "./HobbyEdit";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -23,30 +24,47 @@ const EditProfile = () => {
   const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
   const [gender, setGender] = useState("male");
+  const [birthdate, setBirthdate] = useState("");
   const [age, setAge] = useState("male");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
-  const [postal, setPostal] = useState("");
+  const [postcode, setPostcode] = useState("");
   const [timezone, setTimezone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
-  const [eyecolor, setEyeColor] = useState("");
-  const [haircolor, setHairColor] = useState("");
-  const [hairlength, setHairLength] = useState("");
-  const [maritalstatus, setMaritalStatus] = useState("");
+  const [eye_color, setEyeColor] = useState("");
+  const [hair_color, setHairColor] = useState("");
+  const [hair_length, setHairLength] = useState("");
+  const [marital_status, setMaritalStatus] = useState("");
+  const [interests, setInterests] = useState("");
   const [hobbies, setHobbies] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [profile, getProfile] = useState([]);
+  const [loading, setLoading] = useState(false)
   const userId = JSON.parse(localStorage.getItem("d_user"));
+
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
       getProfile(data?.data?.data);
       setGender(data?.data?.data?.gender)
       setCountry(data?.data?.data?.country)
       setUsername(data?.data?.data?.username)
+      setDescription(data?.data?.data?.description)
+      let sDate = data?.data?.data?.birthdate.split("T");
+      setBirthdate(sDate[0])
+      setName(data?.data?.data?.name)
+      setCity(data?.data?.data?.city)
+      setPostcode(data?.data?.data?.postcode)
+      setHeight(data?.data?.data?.height)
+      setWeight(data?.data?.data?.weight)
+      setEyeColor(data?.data?.data?.eye_color)
+      setHairColor(data?.data?.data?.hair_color)
+      setHairLength(data?.data?.data?.hair_length)
+      setMaritalStatus(data?.data?.data?.marital_status)
+      setHobbies(data?.data?.data?.interests)
       ref.current.complete();
     });
   };
@@ -69,12 +87,63 @@ const EditProfile = () => {
     newHobbies.splice(index, 1);
     setHobbies(newHobbies);
   };
+
+
+
   useEffect(() => {
     document.title = "Profile";
     window.scrollTo(0, 0);
     getUserProfile();
     ref.current.continuousStart();
   }, [userId]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = new FormData();
+    data.append("gender", gender);
+    data.append("country", country);
+    data.append("username",username);
+    data.append("description", description);
+    data.append("description", description);
+    data.append("birthdate", birthdate);
+    data.append("name", name);
+    data.append("city", city);
+    data.append("postcode", postcode);
+    data.append("height", height);
+    data.append("weight", weight);
+    data.append("hair_color", hair_color);
+    data.append("eye_color", eye_color);
+    data.append("hair_length", hair_length);
+    data.append("marital_status", marital_status);
+    data.append("interests", hobbies);
+    DataService.UpdateProfile(userId, data).then(
+      () => {
+        toast.success('Profile updated successfully!', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+        // setLoading(false);
+        // setTimeout(function(){
+        //     window.location.reload();
+        // }, 1500)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.msg) ||
+          error.message ||
+          error.toString();
+
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT
+        });
+      }
+    );
+
+  };
+
   return (
     <>
       <Navbar />
@@ -86,6 +155,7 @@ const EditProfile = () => {
         </div>
       </section>
       <section className="editProfile">
+        <form onSubmit={handleSubmit}> 
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
@@ -154,7 +224,7 @@ const EditProfile = () => {
           </div>
           <div className="row">
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
@@ -167,24 +237,24 @@ const EditProfile = () => {
                 <label for="floatingInput">Username</label>
               </div>
             </div>
-          <div className="col-sm-6">
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingInput"
-                placeholder=""
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <label for="floatingInput">Your Name</label>
+            <div className="col-sm-6">
+              <div class="edit_profile mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder=""
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <label for="floatingInput">Your Name</label>
+              </div>
             </div>
-          </div>
           </div>
           <div className="row">
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="email"
                   class="form-control"
@@ -198,7 +268,7 @@ const EditProfile = () => {
               </div>
             </div>
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="password"
                   class="form-control"
@@ -214,19 +284,20 @@ const EditProfile = () => {
           </div>
           <div className="row">
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <textarea
                   class="form-control"
                   placeholder=""
                   id="floatingTextarea2"
                   style={{ height: "100px" }}
+                  value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
                 <label for="floatingTextarea2">Description</label>
               </div>
             </div>
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="date"
                   class="form-control"
@@ -234,7 +305,8 @@ const EditProfile = () => {
                   placeholder=""
                   required
                   max={today}
-                  onChange={(e) => setDob(e.target.value)}
+                  value={birthdate}
+                  onChange={(e) => setBirthdate(e.target.value)}
                 />
                 <label for="floatingInput">Date of Birth</label>
               </div>
@@ -242,25 +314,27 @@ const EditProfile = () => {
           </div>
           <div className="form_field row mb-3">
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
+                  value={city}
                   onChange={(e) => setCity(e.target.value)}
                 />
                 <label for="floatingInput">City</label>
               </div>
             </div>
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
-                  onChange={(e) => setPostal(e.target.value)}
+                  value={postcode}
+                  onChange={(e) => setPostcode(e.target.value)}
                 />
                 <label for="floatingInput">Postal Code</label>
               </div>
@@ -280,26 +354,28 @@ const EditProfile = () => {
           </div>
           <div className="form-field row mb-3">
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
                   required
+                  value={height}
                   onChange={(e) => setHeight(e.target.value)}
                 />
                 <label for="floatingInput">Height</label>
               </div>
             </div>
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
                   required
+                  value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                 />
                 <label for="floatingInput">Weight</label>
@@ -308,26 +384,28 @@ const EditProfile = () => {
           </div>
           <div className="form-field row mb-3">
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
                   required
+                  value={eye_color}
                   onChange={(e) => setEyeColor(e.target.value)}
                 />
                 <label for="floatingInput">Eye Color</label>
               </div>
             </div>
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
                   required
+                  value={hair_color}
                   onChange={(e) => setHairColor(e.target.value)}
                 />
                 <label for="floatingInput">Hair Color</label>
@@ -336,26 +414,28 @@ const EditProfile = () => {
           </div>
           <div className="form-field row mb-3">
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
                   required
+                  value={hair_length}
                   onChange={(e) => setHairLength(e.target.value)}
                 />
                 <label for="floatingInput">Hair Length</label>
               </div>
             </div>
             <div className="col-sm-6">
-              <div class="form-floating mb-3">
+              <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
                   placeholder=""
                   required
+                  value={marital_status}
                   onChange={(e) => setMaritalStatus(e.target.value)}
                 />
                 <label for="floatingInput">Marital Status</label>
@@ -372,7 +452,7 @@ const EditProfile = () => {
                 />
               ))}
             </div>
-            <div class="form-floating mb-3">
+            <div class="edit_profile mb-3">
               <input
                 type="text"
                 class="form-control"
@@ -385,8 +465,12 @@ const EditProfile = () => {
               />
               <label for="floatingInput">Interests</label>
             </div>
+            <div className="buttton_update">
+              <button class="main_button" type="submit" onClick={handleSubmit}>Update profile</button>
+            </div>
           </div>
         </div>
+        </form>
       </section>
       {/* <section className="main_proflieSec">
         <div className="container">
