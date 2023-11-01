@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../customCss/Home.css";
 import "../customCss/SingleL.css";
 import Navbar from "../common/Navbar";
@@ -8,18 +8,37 @@ import ProfileTwo from "../images/profile2.jpg";
 import ProfileThree from "../images/profile3.jpg";
 import ProfileFour from "../images/profile4.jpg";
 import ReactFlagsSelect from "react-flags-select";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import DataService from "../services/data.service";
+import LoadingBar from "react-top-loading-bar";
+
 
 const SingleLProfile = () => {
+  const params = useParams();
+  const ref = useRef(null);
   const [country, setCountry] = useState("");
+  const [profile, getProfile] = useState([]);
+
+  const getUserProfile = async () => {
+    await DataService.getSingleProfile(params.id).then((data) => {
+      getProfile(data?.data?.data);
+      ref.current.complete();
+    });
+  };
+
+
 
   useEffect(() => {
+    ref.current.continuousStart();
     document.title = "Profile";
     window.scrollTo(0, 0);
+    getUserProfile();
+
   }, []);
   return (
     <>
       <Navbar />
+      <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <section className="profile_bannerSec">
         <div className="container">
           <h1>User Profile</h1>
@@ -32,10 +51,10 @@ const SingleLProfile = () => {
             <div className="single_pL">
               <div className="single_lockOpen">
                 <img src={ProfileOne} alt="" />
-                <h5>Jessica M.</h5>
-                <span className="single_age">28 ~ F</span>
+                <h5>{profile?.name}</h5>
+                <span className="single_age" style={{textTransform : 'capitalize'}}>{profile?.age} ~ {profile?.gender}</span>
                 <span>
-                  <i class="fas fa-map-marker-alt"></i> London
+                  <i class="fas fa-map-marker-alt"></i> {profile?.city}, {profile?.country}
                 </span>
                 <button className="view_full">View Full Profile</button>
                 <div className="single_actionFlex">

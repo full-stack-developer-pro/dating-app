@@ -55,7 +55,9 @@ axios.interceptors.response.use(function (response) {
   };
   const getAllFriend = (id) =>{
     return axios.get(API_URL + "api/user/getAllFriends/"+id);
-
+  }
+  const searchUsers = (gender, country) =>{
+    return axios.get(API_URL + "api/user/getList?gender="+gender+"&country="+country);
   }
   const DataService = {
     getAboutUs,
@@ -69,6 +71,7 @@ axios.interceptors.response.use(function (response) {
     getAllUsers,
     addMyFriend,
     removeMyFriend,
-    getAllFriend
+    getAllFriend,
+    searchUsers
   }
   export default DataService;

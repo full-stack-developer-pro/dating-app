@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import SingleLProfile from "./pages/SingleLProfile";
 import EditProfile from "./pages/EditProfile";
 import { RestrictedAccess } from "./private-component/RestrictedAccess";
+import SearchResults from "./pages/SearchResults";
 
 
 
@@ -24,13 +25,16 @@ export default function App() {
       <Routes>
       <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
-        <Route path="/single-profile" element={<SingleLProfile />} />
+        <Route path="/single-profile/:id" element={<SingleLProfile />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/single-blog/:id" element={<SingleBlog />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/search-results/:gender/:location" element={<SearchResults />} />
+        <Route path="/search-results/:gender" element={<SearchResults />} />
+        <Route path="/search-results/:location" element={<SearchResults />} />
         <Route element={<RestrictedAccess />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/chats/:id" element={<Chats />} />
