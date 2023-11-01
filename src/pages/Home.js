@@ -846,7 +846,8 @@ const Home = () => {
                               {item?.city}, {item?.country}
                             </span>
                             <br />
-                            {isFriend ? (
+                            {auth ?  
+                            isFriend ? (
                               <button className="add_friend already_friend"
                               onClick={() => removeFriend(item?._id)}>
                                 Remove Friend
@@ -862,13 +863,14 @@ const Home = () => {
                                 <i className="fas fa-user-plus"></i>
 
                               </button>
-                            )}
+                            )
+                            : ''}
                             <p>{item?.description}</p>
                           </div>
                         </div>
                         <div className="active_actionSec">
                           <button>
-                            <Link to="/single-profile">
+                            <Link to={'/single-profile/'+item._id}>
                               View<i className="fas fa-eye"></i>
                             </Link>
                           </button>
