@@ -44,6 +44,9 @@ axios.interceptors.response.use(function (response) {
   const getSingleProfile = (id) => {
     return axios.get(API_URL + "api/user/getDetailsById/"+id);
   };
+  const UpdateProfile= (id,data) => {
+    return axios.put(API_URL + "api/user/update/"+id,data);
+  };
   const getAllUsers = () => {
     return axios.get(API_URL + "api/user/getAllUserByAdmin");
   };
@@ -60,6 +63,7 @@ axios.interceptors.response.use(function (response) {
     return axios.get(API_URL + "api/user/getList?gender="+gender+"&country="+country);
   }
   const DataService = {
+    UpdateProfile,
     getAboutUs,
     getContactUs,
     getSocialLinks,

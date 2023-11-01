@@ -10,7 +10,7 @@ import Footer from "../common/Footer";
 
 const Chats = () => {
     const params = useParams()
-    const socket = io("https://dating-app-backend-xyrj.onrender.com:3000");
+    const socket = io("https://dating-app-backend-xyrj.onrender.com");
     const bottomRef = useRef(null);
     const [allChat, setAllChat] = useState([]);
     const [filteredData, setfilteredData] = useState([]);
