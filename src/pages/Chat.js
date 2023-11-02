@@ -176,14 +176,13 @@ const Chats = () => {
     useEffect(() => {
         ref.current.continuousStart();
         getChatList();
-        getExpandedChat(); 
     }, []);
 
     useEffect(() => {
         getExpandedChat();
-    }, [expandedChatMessages]);
+    }, []);
     // useEffect(() => {
-    //     ref.current.continuousStart();
+    //     ref.current.continuousStart();what's the issue? 
     //     getChatList();
     // }, []);
     // useEffect(() => {
