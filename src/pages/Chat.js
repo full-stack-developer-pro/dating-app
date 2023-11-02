@@ -89,27 +89,34 @@ const Chats = () => {
         e.preventDefault();
         // if (credits > 0) {
 
-            const data = {
-                senderId: user_id,
-                receiverId: params.id,
-                message: message,
-                // createdBy: user_id,
-            };
-            socket.emit("chat_message", data);
-            // UserProfile()
-            setTimeout(() => {
-                getExpandedChat();
-            }, 1000);
-            setMessage("");
+        const data = {
+            senderId: user_id,
+            receiverId: params.id,
+            message: message,
+            // createdBy: user_id,
+        };
+        socket.emit("chat_message", data);
+        // UserProfile()
+        setTimeout(() => {
+            getExpandedChat();
+        }, 1000);
+        setMessage("");
         // } else {
-            // alert('Insufficient credits')
-            // socket.emit('chat_error', alert('Insufficient credits'))
+        // alert('Insufficient credits')
+        // socket.emit('chat_error', alert('Insufficient credits'))
         // }
     };
 
 
 
-    socket.on("new_message",  getExpandedChat());
+    socket.on("new_message", (data) => {
+        setTimeout(() => {
+            getExpandedChat();
+        }, 1000);
+        console.log("Received message:", data);
+        expandChat(data.chat_id);
+        console.log(data);
+    });
 
 
     const setUser = () => {
@@ -167,9 +174,12 @@ const Chats = () => {
     };
     useEffect(() => {
         ref.current.continuousStart();
-        getExpandedChat();
         getChatList();
     }, []);
+    useEffect(() => {
+        getExpandedChat();
+
+    }, [expandedChatMessages])
 
     return (
         <>
