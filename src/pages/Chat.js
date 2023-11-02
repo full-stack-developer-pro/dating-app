@@ -176,13 +176,12 @@ const Chats = () => {
     useEffect(() => {
         ref.current.continuousStart();
         getChatList();
-        getExpandedChat(); // Load expanded chat messages initially.
+        getExpandedChat(); 
     }, []);
 
-    // Consolidate these two useEffect hooks into one.
     useEffect(() => {
         getExpandedChat();
-    }, [user_id, params.id]);
+    }, [expandedChatMessages]);
     // useEffect(() => {
     //     ref.current.continuousStart();
     //     getChatList();
