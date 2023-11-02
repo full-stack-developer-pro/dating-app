@@ -26,7 +26,6 @@ import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
 
-
 const SearchResults = () => {
   const [users, setUsers] = useState([]);
   const ref = useRef(null);
@@ -35,123 +34,149 @@ const SearchResults = () => {
   const [profile, getProfile] = useState([]);
   const [country, setCountry] = useState("");
   const auth = AuthService.getCurrentUser();
+  const [gender, setGender] = useState("male");
 
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
       getProfile(data?.data?.data);
-    });
-  };
-  const searchData = async () => {
-    await DataService.searchUsers("male",country).then((data) => {
-        setUsers(data?.data?.data)
       ref.current.complete();
     });
   };
+  const searchData = async () => {
+    await DataService.searchUsers(gender, country).then(
+      (data) => {
+        setUsers(data?.data?.data);
+        ref.current.complete();
+        toast.success("Data Searched");
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.msg) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error("No Results Found with Selected Country & Gender!");
+        setUsers([]);
+      }
+    );
+  };
   useEffect(() => {
-   searchData();
-   ref.current.continuousStart();
-  },[])
-  useEffect(() => {
+    ref.current.continuousStart();
     if (userId) {
       getUserProfile();
     }
   }, [userId]);
 
-    
-      const addFriend = async (id) => {
-        const data = {};
-        data.friendId = id;
-        setLoading(true);
-        await DataService.addMyFriend(userId, data).then(
-          () => {
-            setLoading(false);
-            toast.success("Friend Added Successfully!!", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-            searchData()
-            getUserProfile()
-          },
-          (error) => {
-            const resMessage =
-              (error.response && error.response.data && error.response.data.msg) ||
-              error.message ||
-              error.toString();
-            setLoading(false);
-            toast.error(resMessage, {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          }
-        );
-      };
-      const removeFriend = async (id) => {
-        const data = {};
-        data.friendId = id;
-        setLoading(true);
-        await DataService.removeMyFriend(userId, data).then(
-          () => {
-            setLoading(false);
-            toast.success("Friend Removed Successfully!!", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-            searchData()
-            getUserProfile();
-          },
-          (error) => {
-            const resMessage =
-              (error.response && error.response.data && error.response.data.msg) ||
-              error.message ||
-              error.toString();
-            setLoading(false);
-            toast.error(resMessage, {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          }
-        );
-      };
+  const addFriend = async (id) => {
+    const data = {};
+    data.friendId = id;
+    setLoading(true);
+    await DataService.addMyFriend(userId, data).then(
+      () => {
+        setLoading(false);
+        toast.success("Friend Added Successfully!!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        searchData();
+        getUserProfile();
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.msg) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
+  };
+  const removeFriend = async (id) => {
+    const data = {};
+    data.friendId = id;
+    setLoading(true);
+    await DataService.removeMyFriend(userId, data).then(
+      () => {
+        setLoading(false);
+        toast.success("Friend Removed Successfully!!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        searchData();
+        getUserProfile();
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.msg) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
+  };
   return (
     <>
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-        <section className="active_profilesSec">
+      <section className="active_profilesSec">
         <div className="container">
           <div className="active_secFlex">
-          <div className="activeR">
+            <div className="activeR">
               <div className="search_formSec">
                 <h4>Quick Search</h4>
                 <div className="search_gender">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderAll"
-                      checked
-                    />
-                    <label class="form-check-label" for="search_genderAll">
-                      All
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderMale"
-                    />
-                    <label class="form-check-label" for="search_genderMale">
-                      Male
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderFemale"
-                    />
-                    <label class="form-check-label" for="search_genderFemale">
-                      Female
-                    </label>
+                  <div className="form_field mb-3">
+                    <p>
+                      <strong>My Gender</strong>
+                    </p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_male"
+                        value="male"
+                        checked={gender === "male"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_male">
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_female"
+                        value="female"
+                        checked={gender === "female"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_female">
+                        Female
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_other"
+                        value="other"
+                        checked={gender === "other"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_other">
+                        Other
+                      </label>
+                    </div>
                   </div>
                 </div>
                 <div className="form_field country mb-3">
@@ -244,7 +269,7 @@ const SearchResults = () => {
                 </button>
               </div>
             </div>
-            <div className="activeM" style={{flex: '1'}}>
+            <div className="activeM" style={{ flex: "1" }}>
               <h3>Recently Joined</h3>
               <div className="active_recent">
                 <Link to="/single-profile">
@@ -300,31 +325,33 @@ const SearchResults = () => {
                               {item?.city}, {item?.country}
                             </span>
                             <br />
-                            {auth ?  
-                            isFriend ? (
-                              <button className="add_friend already_friend"
-                              onClick={() => removeFriend(item?._id)}>
-                                Remove Friend
-                                <i className="fas fa-user-minus"></i>
-                              </button>
-
+                            {auth ? (
+                              isFriend ? (
+                                <button
+                                  className="add_friend already_friend"
+                                  onClick={() => removeFriend(item?._id)}
+                                >
+                                  Remove Friend
+                                  <i className="fas fa-user-minus"></i>
+                                </button>
+                              ) : (
+                                <button
+                                  className="add_friend"
+                                  onClick={() => addFriend(item?._id)}
+                                >
+                                  Add Friend
+                                  <i className="fas fa-user-plus"></i>
+                                </button>
+                              )
                             ) : (
-                              <button
-                                className="add_friend"
-                                onClick={() => addFriend(item?._id)}
-                              >
-                                Add Friend
-                                <i className="fas fa-user-plus"></i>
-
-                              </button>
-                            )
-                            : ''}
+                              ""
+                            )}
                             <p>{item?.description}</p>
                           </div>
                         </div>
                         <div className="active_actionSec">
                           <button>
-                            <Link to={'/single-profile/'+item._id}>
+                            <Link to={"/single-profile/" + item._id}>
                               View<i className="fas fa-eye"></i>
                             </Link>
                           </button>
@@ -335,9 +362,9 @@ const SearchResults = () => {
                             Send Flirt<i className="fas fa-heart"></i>
                           </button>
                           <button>
-                            <Link to={"/chats/"+item._id}>
-                                  Send Message<i class="fas fa-comment-alt"></i>
-                                </Link>
+                            <Link to={"/chats/" + item._id}>
+                              Send Message<i class="fas fa-comment-alt"></i>
+                            </Link>
                           </button>
                         </div>
                       </div>
@@ -355,12 +382,11 @@ const SearchResults = () => {
                 Create Account<i class="fas fa-long-arrow-alt-right"></i>
               </button>
             </div>
-           
           </div>
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default SearchResults
+export default SearchResults;

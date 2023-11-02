@@ -11,9 +11,11 @@ import ReactFlagsSelect from "react-flags-select";
 import { Link, useParams } from "react-router-dom";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
+import { useNavigate } from "react-router-dom";
 
 
 const SingleLProfile = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const ref = useRef(null);
   const [country, setCountry] = useState("");
@@ -163,7 +165,7 @@ const SingleLProfile = () => {
                     required
                   />
                 </div>
-                <button className="search_submit">
+                <button className="search_submit"  onClick={() => navigate("/search-results")}>
                   Search<i class="fas fa-search"></i>
                 </button>
               </div>

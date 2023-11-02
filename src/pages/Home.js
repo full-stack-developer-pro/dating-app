@@ -79,6 +79,10 @@ const Home = () => {
   const [hobbies, setHobbies] = useState([]);
 
   const [inputValue, setInputValue] = useState("");
+  const [topBanner, setTopBanner] = useState([]);
+  const [middleBanner, setMiddleBanner] = useState([]);
+  const [secondLastBanner, setSecondLastBanner] = useState([]);
+  const [lastBanner, setlLastBanner] = useState([]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -246,7 +250,7 @@ const Home = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
         getAllUsers();
-        getUserProfile()
+        getUserProfile();
       },
       (error) => {
         const resMessage =
@@ -298,11 +302,52 @@ const Home = () => {
     }
   }, [userId]);
 
+  const getTop = async () => {
+    await DataService.getTopBanner().then((data) => {
+      setTopBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
+  const getMiddle = async () => {
+    await DataService.getMiddleBanner().then((data) => {
+      setMiddleBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
+  const getSecondLast = async () => {
+    await DataService.getSecondLastBanner().then((data) => {
+      setSecondLastBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
+  const getLast = async () => {
+    await DataService.getLastBanner().then((data) => {
+      setlLastBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
+  useEffect(() => {
+    getTop();
+    getMiddle();
+    getSecondLast();
+    getLast();
+  }, []);
+
   return (
     <>
       <Navbar />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-      <div className="top_banner" id="signup">
+      <div
+        className="top_banner"
+        id="signup"
+        style={{
+          background:
+            "linear-gradient(#30024346, #15021b69), url(http://localhost:3000/static/media/dating_app_banner.0a197b0f28dea7feff30.jpg)",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "50%",
+        }}
+      >
         <div className="top_bannerInner">
           {auth ? (
             ""
@@ -711,12 +756,8 @@ const Home = () => {
 
           <div className="content_sec">
             {/* <img src={Heart} alt="" className="heartTwo" /> */}
-            <h1>Lorem ipsum dolor sit amet consectetur</h1>
-            <p>
-              Sed blandit eleifend hendrerit. Integer pulvinar congue
-              sollicitudin. Ut tincidunt, ligula vel vulputate congue, ex libero
-              tristique magna, eu posuere urna nulla at orci.
-            </p>
+            <h1>{topBanner?.heading}</h1>
+            <p dangerouslySetInnerHTML={{ __html: topBanner?.description }}></p>
             <button className="main_button">
               Explore<i class="fas fa-chevron-right"></i>
             </button>
@@ -728,24 +769,23 @@ const Home = () => {
         <div className="container">
           <div className="about_flex">
             <div className="about_flexL">
-              <img src={DatingCouple} alt="" />
+              {middleBanner?.images?.length > 0 ? (
+                <img
+                  src={
+                    "https://dating-app-backend-xyrj.onrender.com/" +
+                    middleBanner?.images[0]?.path
+                  }
+                  alt=""
+                />
+              ) : (
+                <img src={DatingCouple} alt="" />
+              )}
             </div>
             <div className="about_flexR">
-              <h2>Mauris non nulla faucibus</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                a lacus nec lacus mollis condimentum in id justo. Pellentesque
-                eleifend, magna sit amet laoreet euismod, turpis mauris posuere
-                tortor, ac tristique sem ex eget lectus. Etiam sed erat magna.
-                Nam in mi scelerisque, commodo lacus et, facilisis nibh.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                a lacus nec lacus mollis condimentum in id justo. Pellentesque
-                eleifend, magna sit amet laoreet euismod, turpis mauris posuere
-                tortor, ac tristique sem ex eget lectus. Etiam sed erat magna.
-                Nam in mi scelerisque, commodo lacus et, facilisis nibh.
-              </p>
+              <h2>{middleBanner?.heading}</h2>
+              <p
+                dangerouslySetInnerHTML={{ __html: middleBanner?.description }}
+              ></p>
             </div>
           </div>
         </div>
@@ -846,31 +886,33 @@ const Home = () => {
                               {item?.city}, {item?.country}
                             </span>
                             <br />
-                            {auth ?  
-                            isFriend ? (
-                              <button className="add_friend already_friend"
-                              onClick={() => removeFriend(item?._id)}>
-                                Remove Friend
-                                <i className="fas fa-user-minus"></i>
-                              </button>
-
+                            {auth ? (
+                              isFriend ? (
+                                <button
+                                  className="add_friend already_friend"
+                                  onClick={() => removeFriend(item?._id)}
+                                >
+                                  Remove Friend
+                                  <i className="fas fa-user-minus"></i>
+                                </button>
+                              ) : (
+                                <button
+                                  className="add_friend"
+                                  onClick={() => addFriend(item?._id)}
+                                >
+                                  Add Friend
+                                  <i className="fas fa-user-plus"></i>
+                                </button>
+                              )
                             ) : (
-                              <button
-                                className="add_friend"
-                                onClick={() => addFriend(item?._id)}
-                              >
-                                Add Friend
-                                <i className="fas fa-user-plus"></i>
-
-                              </button>
-                            )
-                            : ''}
+                              ""
+                            )}
                             <p>{item?.description}</p>
                           </div>
                         </div>
                         <div className="active_actionSec">
                           <button>
-                            <Link to={'/single-profile/'+item._id}>
+                            <Link to={"/single-profile/" + item._id}>
                               View<i className="fas fa-eye"></i>
                             </Link>
                           </button>
@@ -881,9 +923,9 @@ const Home = () => {
                             Send Flirt<i className="fas fa-heart"></i>
                           </button>
                           <button>
-                            <Link to={"/chats/"+item._id}>
-                                  Send Message<i class="fas fa-comment-alt"></i>
-                                </Link>
+                            <Link to={"/chats/" + item._id}>
+                              Send Message<i class="fas fa-comment-alt"></i>
+                            </Link>
                           </button>
                         </div>
                       </div>
@@ -950,7 +992,10 @@ const Home = () => {
                     required
                   />
                 </div>
-                <button className="search_submit">
+                <button
+                  className="search_submit"
+                  onClick={() => navigate("/search-results")}
+                >
                   Search<i class="fas fa-search"></i>
                 </button>
               </div>
@@ -1073,21 +1118,12 @@ const Home = () => {
         <div className="container">
           <div className="about_flex">
             <div className="about_flexR">
-              <h2>Mauris non nulla faucibus</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                a lacus nec lacus mollis condimentum in id justo. Pellentesque
-                eleifend, magna sit amet laoreet euismod, turpis mauris posuere
-                tortor, ac tristique sem ex eget lectus. Etiam sed erat magna.
-                Nam in mi scelerisque, commodo lacus et, facilisis nibh.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                a lacus nec lacus mollis condimentum in id justo. Pellentesque
-                eleifend, magna sit amet laoreet euismod, turpis mauris posuere
-                tortor, ac tristique sem ex eget lectus. Etiam sed erat magna.
-                Nam in mi scelerisque, commodo lacus et, facilisis nibh.
-              </p>
+              <h2>{secondLastBanner?.heading}</h2>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: secondLastBanner?.description,
+                }}
+              ></p>
               <button
                 className="main_button"
                 onClick={() => (window.location.href = "/#signup")}
@@ -1096,7 +1132,17 @@ const Home = () => {
               </button>
             </div>
             <div className="about_flexL">
-              <img src={DatingGirl} alt="" />
+              {secondLastBanner?.images?.length > 0 ? (
+                <img
+                  src={
+                    "https://dating-app-backend-xyrj.onrender.com/" +
+                    secondLastBanner?.images[0]?.path
+                  }
+                  alt=""
+                />
+              ) : (
+                <img src={DatingGirl} alt="" />
+              )}
             </div>
           </div>
         </div>
@@ -1335,8 +1381,18 @@ const Home = () => {
       <section className="how_it_works">
         <div className="container">
           <div className="how_it_worksInner">
-            <h2 className="main_title">How It Works</h2>
-            <img src={HowIt} alt="" />
+            <h2 className="main_title">{lastBanner?.heading}</h2>
+            {lastBanner?.images?.length > 0 ? (
+              <img
+                src={
+                  "https://dating-app-backend-xyrj.onrender.com/" +
+                  lastBanner?.images[0]?.path
+                }
+                alt=""
+              />
+            ) : (
+              <img src={HowIt} alt="" />
+            )}
           </div>
         </div>
       </section>

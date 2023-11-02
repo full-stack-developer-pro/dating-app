@@ -68,6 +68,18 @@ axios.interceptors.response.use(function (response) {
   const getAllChats = (id) =>{
     return axios.get(API_URL + "api/user/chatted?userId="+id);
   }
+  const getTopBanner = () =>{
+    return axios.get(API_URL + "api/admin/getTopBanner");
+  }
+  const getMiddleBanner = () =>{
+    return axios.get(API_URL + "api/admin/getMiddleBanner");
+  }
+  const getSecondLastBanner = () =>{
+    return axios.get(API_URL + "api/admin/getSecondLastBanner");
+  }
+  const getLastBanner = () =>{
+    return axios.get(API_URL + "api/admin/geLastBanner");
+  }
   const DataService = {
     UpdateProfile,
     getAboutUs,
@@ -84,6 +96,10 @@ axios.interceptors.response.use(function (response) {
     getAllFriend,
     searchUsers,
     getChatBox,
-    getAllChats
+    getAllChats,
+    getTopBanner,
+    getMiddleBanner,
+    getSecondLastBanner,
+    getLastBanner
   }
   export default DataService;

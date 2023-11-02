@@ -32,9 +32,9 @@ export default function App() {
         <Route path="/single-blog/:id" element={<SingleBlog />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
-        <Route path="/search-results/:gender/:location" element={<SearchResults />} />
-        <Route path="/search-results/:gender" element={<SearchResults />} />
-        <Route path="/search-results/:location" element={<SearchResults />} />
+        <Route path="/search-results" element={<SearchResults />} />
+        {/* <Route path="/search-results/:gender" element={<SearchResults />} /> */}
+        {/* <Route path="/search-results/:location" element={<SearchResults />} /> */}
         <Route element={<RestrictedAccess />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/chats/:id" element={<Chats />} />
