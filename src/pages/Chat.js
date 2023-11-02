@@ -131,7 +131,7 @@ const Chats = () => {
     }, []);
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [expandedChatMessages]);
+    }, []);
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 950) {
