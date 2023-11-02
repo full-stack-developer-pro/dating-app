@@ -172,14 +172,25 @@ const Chats = () => {
         navigate("/chats/" + id);
         window.location.reload();
     };
+
     useEffect(() => {
         ref.current.continuousStart();
         getChatList();
+        getExpandedChat(); // Load expanded chat messages initially.
     }, []);
+
+    // Consolidate these two useEffect hooks into one.
     useEffect(() => {
         getExpandedChat();
+    }, [user_id, params.id]);
+    // useEffect(() => {
+    //     ref.current.continuousStart();
+    //     getChatList();
+    // }, []);
+    // useEffect(() => {
+    //     getExpandedChat();
 
-    }, [expandedChatMessages])
+    // }, [expandedChatMessages])
 
     return (
         <>
