@@ -109,14 +109,7 @@ const Chats = () => {
 
 
 
-    socket.on("new_message", (data) => {
-        setTimeout(() => {
-            getExpandedChat();
-        }, 1000);
-        console.log("Received message:", data);
-        expandChat(data.chat_id);
-        console.log(data);
-    });
+    socket.on("new_message",  getExpandedChat());
 
 
     const setUser = () => {
