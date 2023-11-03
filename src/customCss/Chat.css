@@ -1,7 +1,11 @@
 .chat_sec {
     min-height: 60vh;
 }
-
+span.bonus {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0D860D;
+}
 .chat_flex {
     display: flex;
     justify-content: center;
@@ -308,12 +312,21 @@
     border-radius: 10px;
 }
 .payments_inner{
-    background: #fff;
     max-width: 85%;
-    width: 85%;
+    width: 100%;
     margin: auto;
     padding: 40px 20px;
+    border-radius: 10px;
 }
+.payment_bg {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
 @media screen and (max-width: 950px) {
     .chat_flexL {
         width: 100%;

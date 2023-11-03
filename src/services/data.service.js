@@ -83,7 +83,11 @@ axios.interceptors.response.use(function (response) {
   const getMembers = () =>{
     return axios.get(API_URL + "api/user/memberStatic");
   }
+  const getPackages = () =>{
+    return axios.get(API_URL + "api/admin/getCredit");
+  }
   const DataService = {
+    getPackages,
     getMembers,
     UpdateProfile,
     getAboutUs,
