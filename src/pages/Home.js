@@ -65,6 +65,7 @@ const Home = () => {
   const [age, setAge] = useState("male");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
+  const [searchCountry, setSearchCountry] = useState("");
   const [city, setCity] = useState("");
   const [postal, setPostal] = useState("");
   const [timezone, setTimezone] = useState(
@@ -83,6 +84,16 @@ const Home = () => {
   const [middleBanner, setMiddleBanner] = useState([]);
   const [secondLastBanner, setSecondLastBanner] = useState([]);
   const [lastBanner, setlLastBanner] = useState([]);
+  const [selectedGender, setSelectGender] = useState("All")
+  const [members, setMembers] = useState([])
+
+  const HandleSelection = (e) => {
+    setSelectGender(e.target.value)
+  }
+  const myStateData = {
+    key1: selectedGender,
+    key2: searchCountry,
+  };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -326,11 +337,21 @@ const Home = () => {
       ref.current.complete();
     });
   };
+  const getTotalMembers = async () => {
+    await DataService.getMembers().then((data) => {
+      setMembers(data?.data);
+    });
+  };
+  useEffect(() => {
+    getTotalMembers()
+  }, []);
+
   useEffect(() => {
     getTop();
     getMiddle();
     getSecondLast();
     getLast();
+    getTotalMembers()
   }, []);
 
   return (
@@ -379,7 +400,7 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                              id="gender_male"
+                              
                               value="male"
                               checked={gender === "male"}
                               onChange={handleGenderChange}
@@ -393,7 +414,7 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                              id="gender_female"
+                            
                               value="female"
                               checked={gender === "female"}
                               onChange={handleGenderChange}
@@ -407,7 +428,7 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                              id="gender_other"
+                            
                               value="other"
                               checked={gender === "other"}
                               onChange={handleGenderChange}
@@ -878,8 +899,8 @@ const Home = () => {
                               {item?.gender === "male"
                                 ? "M"
                                 : item?.gender === "female"
-                                ? "F"
-                                : "Other"}
+                                  ? "F"
+                                  : "Other"}
                             </span>
                             <span>
                               <i className="fas fa-map-marker-alt"></i>
@@ -947,39 +968,53 @@ const Home = () => {
               <div className="search_formSec">
                 <h4>Quick Search</h4>
                 <div className="search_gender">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderAll"
-                      checked
-                    />
-                    <label class="form-check-label" for="search_genderAll">
-                      All
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderMale"
-                    />
-                    <label class="form-check-label" for="search_genderMale">
-                      Male
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderFemale"
-                    />
-                    <label class="form-check-label" for="search_genderFemale">
-                      Female
-                    </label>
+                <div className="form_field mb-3">
+                    <p>
+                      <strong>My Gender</strong>
+                    </p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_other"
+                        value="other"
+                        checked={selectedGender === "All"}
+                        onChange={HandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_other">
+                        All
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_male"
+                        value="male"
+                        checked={selectedGender === "male"}
+                        onChange={HandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_male">
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_female"
+                        value="female"
+                        checked={selectedGender === "female"}
+                        onChange={HandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_female">
+                        Female
+                      </label>
+                    </div>
+                   
                   </div>
                 </div>
                 <div className="form_field country mb-3">
@@ -987,17 +1022,20 @@ const Home = () => {
                     <strong>Select Location</strong>
                   </label>
                   <ReactFlagsSelect
-                    selected={country}
-                    onSelect={(code) => setCountry(code)}
+                    selected={searchCountry}
+                    onSelect={(code) => setSearchCountry(code)}
                     required
                   />
                 </div>
-                <button
+                <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}>
+                  Search<i class="fas fa-search"></i>
+                </Link>
+                {/* <button
                   className="search_submit"
                   onClick={() => navigate("/search-results")}
                 >
                   Search<i class="fas fa-search"></i>
-                </button>
+                </button> */}
               </div>
               <div className="member_stats">
                 <h4>Member Statistics</h4>
@@ -1009,7 +1047,7 @@ const Home = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>12101</p>
+                    <p>{members.totalMembers}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -1020,7 +1058,7 @@ const Home = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>768</p>
+                    <p>{members.activeMembers}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -1031,7 +1069,7 @@ const Home = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>52</p>
+                    <p>{members.membersJoinedToday}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -1042,7 +1080,7 @@ const Home = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>26</p>
+                    <p>{members.menJoinedToday}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -1053,7 +1091,7 @@ const Home = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>26</p>
+                    <p>{members.womenJoinedToday}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -1064,7 +1102,7 @@ const Home = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>125646</p>
+                    <p>{members.messagesSentToday}</p>
                   </div>
                 </div>
                 <button

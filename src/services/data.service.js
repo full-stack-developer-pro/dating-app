@@ -80,7 +80,11 @@ axios.interceptors.response.use(function (response) {
   const getLastBanner = () =>{
     return axios.get(API_URL + "api/admin/geLastBanner");
   }
+  const getMembers = () =>{
+    return axios.get(API_URL + "api/user/memberStatic");
+  }
   const DataService = {
+    getMembers,
     UpdateProfile,
     getAboutUs,
     getContactUs,
