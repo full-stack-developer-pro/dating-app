@@ -1,7 +1,7 @@
 import React from "react";
 import NotImage from "../images/notfound.jpg";
 import { Link } from "react-router-dom";
-import Logo from "../images/mature_friends_logo.jpeg";
+import Logo from "../images/dating-app-logo-dark.jpg";
 
 const NotFound = () => {
   return (

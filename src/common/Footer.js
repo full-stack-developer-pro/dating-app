@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import Logo from "../images/mature_friends_logo.jpeg";
+import Logo from "../images/dating-app-logo-dark.jpg";
 import { Link } from "react-router-dom";
 import '../customCss/Footer.css'
 import DataService from "../services/data.service";
