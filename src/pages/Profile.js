@@ -246,7 +246,7 @@ const Profile = () => {
                           Send Flirt<i class="fas fa-heart"></i>
                         </button>
                         <button className="allFriend-btn4">
-                          <Link to="/chats">
+                          <Link to={"/chats/" + item._id}>
                             Send Message<i class="fas fa-comment-alt"></i>
                           </Link>
                         </button>

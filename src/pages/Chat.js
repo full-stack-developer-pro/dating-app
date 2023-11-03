@@ -25,6 +25,7 @@ const Chats = () => {
   const [profile, setProfile] = useState([]);
   const [personalProfile, setPersonalProfile] = useState([]);
   const [payments, setPayments] = useState(false);
+  const [packages, setPackages] = useState([]);
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
@@ -177,6 +178,18 @@ const Chats = () => {
     getExpandedChat();
   }, []);
 
+  const getPlans = async () => {
+    await DataService.getPackages().then((data) => {
+      setPackages(data?.data?.data);
+
+    });
+  };
+  console.log(packages)
+  useEffect(() => {
+    getPlans()
+  }, [])
+
+
   return (
     <>
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
@@ -185,28 +198,30 @@ const Chats = () => {
           <div className="payments_inner">
             <div className="container">
               <div className="payments_flexOne">
-                <div className="payments_plan">
-                  <h2>400</h2>
-                  <h4>Credits</h4>
-                  <hr />
-                  <h3>Just For</h3>
-                  <p>
-                    <span>£7.99</span>
-                  </p>
-                  <hr />
-                  <button className="main_button">Purchase Now</button>
+                <div className="payment_bg">
+                  {
+                    packages?.length > 0 ? packages?.map((item) => {
+                      return (
+                        <>
+                          <div className="payments_plan">
+                            <h2>{item.credits}</h2>
+                            <span className="bonus">{item.bonus}</span>
+                            <h4>credits</h4>
+                            <hr />
+                            <h3>Just For</h3>
+                            <p>
+                              <span>{item.currency} {item.price}</span>
+                            </p>
+                            <hr />
+                            <button className="main_button">Purchase Now</button>
+                          </div>
+                        </>
+                      )
+                    }) : ""
+                  }
+
                 </div>
-                <div className="payments_plan">
-                  <h2>1000</h2>
-                  <h4>Credits</h4>
-                  <hr />
-                  <h3>Just For</h3>
-                  <p>
-                    <span>£17.99</span>
-                  </p>
-                  <hr />
-                  <button className="main_button">Purchase Now</button>
-                </div>
+
               </div>
             </div>
           </div>
