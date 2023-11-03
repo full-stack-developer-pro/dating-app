@@ -25,6 +25,7 @@ import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
+import { useLocation } from 'react-router-dom';
 
 const SearchResults = () => {
   const [users, setUsers] = useState([]);
@@ -35,6 +36,51 @@ const SearchResults = () => {
   const [country, setCountry] = useState("");
   const auth = AuthService.getCurrentUser();
   const [gender, setGender] = useState("male");
+  const [members, setMembers] = useState([])
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  // Access the state data
+  const param1 = queryParams.get('param1');
+  const param2 = queryParams.get('param2');
+
+  useEffect(()=>{
+    setGender(param1)
+    setCountry(param2)
+    // searchData();
+
+  },[])
+  const getTotalMembers = async () => {
+    await DataService.getMembers().then((data) => {
+      setMembers(data?.data);
+    });
+  };
+  useEffect(() => {
+    getTotalMembers()
+  }, []);
+
+  const getsearchData = async () => {
+    await DataService.searchUsers(param1, param2).then(
+      (data) => {
+        setUsers(data?.data?.data);
+        ref.current.complete();
+        toast.success("Data Searched");
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.msg) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error("No Results Found with Selected Country & Gender!");
+        setUsers([]);
+      }
+    );
+  };
+  useEffect(() => {
+    getsearchData()
+  }, []);
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -169,8 +215,8 @@ const SearchResults = () => {
                         type="radio"
                         name="gender"
                         id="gender_other"
-                        value="other"
-                        checked={gender === "other"}
+                        value="All"
+                        checked={gender === "All"}
                         onChange={handleGenderChange}
                       />
                       <label class="form-check-label" for="gender_other">
@@ -203,7 +249,7 @@ const SearchResults = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>12101</p>
+                    <p>{members.totalMembers}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -214,7 +260,7 @@ const SearchResults = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>768</p>
+                    <p>{members.activeMembers}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -225,7 +271,7 @@ const SearchResults = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>52</p>
+                    <p>{members.membersJoinedToday}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -236,7 +282,7 @@ const SearchResults = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>26</p>
+                    <p>{members.menJoinedToday}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -247,7 +293,7 @@ const SearchResults = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>26</p>
+                    <p>{members.womenJoinedToday}</p>
                   </div>
                 </div>
                 <div className="stats_flex">
@@ -258,7 +304,7 @@ const SearchResults = () => {
                     <p>~</p>
                   </div>
                   <div className="statsR">
-                    <p>125646</p>
+                    <p>{members.messagesSentToday}</p>
                   </div>
                 </div>
                 <button

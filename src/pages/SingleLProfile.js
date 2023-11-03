@@ -18,8 +18,20 @@ const SingleLProfile = () => {
   const navigate = useNavigate();
   const params = useParams();
   const ref = useRef(null);
-  const [country, setCountry] = useState("");
   const [profile, getProfile] = useState([]);
+  const [searchCountry, setSearchCountry] = useState("");
+  const [selectedGender, setSelectGender] = useState("All")
+  const [isChecked, setIsChecked] = useState(false);
+
+
+  const HandleSelection = (e) => {
+    setSelectGender(e.target.value)
+  }
+  const myStateData = {
+    key1: selectedGender,
+    key2: searchCountry,
+  };
+
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(params.id).then((data) => {
@@ -120,39 +132,53 @@ const SingleLProfile = () => {
               <div className="search_formSec">
                 <h4>Quick Search</h4>
                 <div className="search_gender">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderAll"
-                      checked
-                    />
-                    <label class="form-check-label" for="search_genderAll">
-                      All
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderMale"
-                    />
-                    <label class="form-check-label" for="search_genderMale">
-                      Male
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="search_genderFemale"
-                    />
-                    <label class="form-check-label" for="search_genderFemale">
-                      Female
-                    </label>
+                <div className="form_field mb-3">
+                    <p>
+                      <strong>My Gender</strong>
+                    </p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_other"
+                        value="other"
+                        checked={selectedGender === "All"}
+                        onChange={HandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_other">
+                        All
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_male"
+                        value="male"
+                        checked={selectedGender === "male"}
+                        onChange={HandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_male">
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_female"
+                        value="female"
+                        checked={selectedGender === "female"}
+                        onChange={HandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_female">
+                        Female
+                      </label>
+                    </div>
+                   
                   </div>
                 </div>
                 <div className="form_field country mb-3">
@@ -160,14 +186,14 @@ const SingleLProfile = () => {
                     <strong>Select Location</strong>
                   </label>
                   <ReactFlagsSelect
-                    selected={country}
-                    onSelect={(code) => setCountry(code)}
+                    selected={searchCountry}
+                    onSelect={(code) => setSearchCountry(code)}
                     required
                   />
                 </div>
-                <button className="search_submit"  onClick={() => navigate("/search-results")}>
+                <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}>
                   Search<i class="fas fa-search"></i>
-                </button>
+                </Link>
               </div>
               <div className="recently_joined">
                 <h3>Members Near You</h3>
