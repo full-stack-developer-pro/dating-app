@@ -13,25 +13,30 @@
     min-height: 100vh;
     overflow-y: scroll;
 }
-.chat_topFlex{
+
+.chat_topFlex {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-    background: linear-gradient(90deg,#ef48b5,#F209E1);
+    background: linear-gradient(90deg, #ef48b5, #F209E1);
 }
-.chat_topL{
+
+.chat_topL {
     width: 20%;
 }
-.chat_topL button{
+
+.chat_topL button {
     background: #fff;
     border: none;
     border-radius: 50%;
     padding: 10px 15px;
 }
-.chat_topR{
+
+.chat_topR {
     width: 80%;
 }
+
 .searchBar {
     /* background: #8D6DCB;
     border-bottom: 2px solid #f7f7f7;
@@ -173,20 +178,21 @@
 }
 
 .chat_expBody::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg,#300243,#15021b);
+    background: linear-gradient(90deg, #300243, #15021b);
     border-radius: 10px;
 }
 
 .chat_expBody::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg,#300243,#15021b);
+    background: linear-gradient(90deg, #300243, #15021b);
 }
 
-.chat_right .text_message{
-    background: linear-gradient(90deg,#ef48b5,#F209E1);
+.chat_right .text_message {
+    background: linear-gradient(90deg, #ef48b5, #F209E1);
 }
+
 .text_message {
     display: inline-block;
-    background: linear-gradient(90deg,#300243,#15021b);
+    background: linear-gradient(90deg, #300243, #15021b);
     color: #fff;
     margin: 0;
     padding: 5px 15px 5px 15px;
@@ -278,6 +284,36 @@
     display: none;
 }
 
+
+.payments_popup{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.payments_flexOne{
+    display: flex;
+    justify-content: center;
+}
+.payments_flexOne .payments_plan{
+    width: 23%;
+    margin: 1%;
+    text-align: center;
+    padding: 60px 20px;
+    background: #dfdfdf;
+    border-radius: 10px;
+}
+.payments_inner{
+    background: #fff;
+    max-width: 85%;
+    width: 85%;
+    margin: auto;
+    padding: 40px 20px;
+}
 @media screen and (max-width: 950px) {
     .chat_flexL {
         width: 100%;
