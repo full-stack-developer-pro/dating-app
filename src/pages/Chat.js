@@ -7,8 +7,11 @@ import { io } from "socket.io-client";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
+// import { useHistory } from 'react-router-dom';
+
 
 const Chats = () => {
+
   const params = useParams();
   const ref = useRef(null);
   const socket = io("https://dating-app-backend-xyrj.onrender.com");
@@ -26,6 +29,10 @@ const Chats = () => {
   const [personalProfile, setPersonalProfile] = useState([]);
   const [payments, setPayments] = useState(false);
   const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // const history = useHistory();
+
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
@@ -84,6 +91,42 @@ const Chats = () => {
   //   socket.on('chat_message', (data) => {expandChat(data.id)});
 
   let user_id = JSON.parse(localStorage.getItem("d_user"));
+
+  // payment
+
+  const handlePayment = (price) => {
+    setMessage("");
+    const data = {};
+    data.userId = user_id
+    data.amount = price
+    DataService.GeneratePayment(data).then(
+      (response) => {
+        if (response.data.success) {
+          toast("Link generated successfully!");
+          const paymentUrl = response.data.data.url;
+          window.location.href = paymentUrl; 
+        } else {
+          toast("Failed to generate the payment link.");
+        }
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.msg) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
+
+  };
+
+  // payment
+
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -213,7 +256,7 @@ const Chats = () => {
                               <span>{item.currency} {item.price}</span>
                             </p>
                             <hr />
-                            <button className="main_button">Purchase Now</button>
+                            <button className="main_button" onClick={() => handlePayment(item.price)}>Purchase Now</button>
                           </div>
                         </>
                       )
