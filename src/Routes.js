@@ -16,6 +16,7 @@ import SingleLProfile from "./pages/SingleLProfile";
 import EditProfile from "./pages/EditProfile";
 import { RestrictedAccess } from "./private-component/RestrictedAccess";
 import SearchResults from "./pages/SearchResults";
+import Payments from "./pages/Payment";
 
 
 
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/chats/:id" element={<Chats />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/thank-you" element={<Payments />} />
         </Route>
       </Routes>
     </BrowserRouter>
