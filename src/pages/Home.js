@@ -25,8 +25,11 @@ import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
+import { io } from "socket.io-client";
 
 const Home = () => {
+  const socket = io("https://dating-app-backend-xyrj.onrender.com");
+
   const ref = useRef(null);
   const auth = AuthService.getCurrentUser();
   useEffect(() => {
@@ -49,6 +52,7 @@ const Home = () => {
   const [hide, setHide] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState();
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -354,6 +358,42 @@ const Home = () => {
     getTotalMembers()
   }, []);
 
+
+
+  let user_id = JSON.parse(localStorage.getItem("d_user"));
+  const sendFlirt = (e,_id) => {
+    // e.preventDefault();
+    const data = {
+      senderId: user_id,
+      receiverId: _id,
+      message: "😃",
+      // flirtMessage: flirtMessage
+    };
+    socket.emit("chat_message", data);
+    // socket.on('chat_error', { message: 'Insufficient credits' });
+    setTimeout(() => {
+    }, 1000);
+    setMessage("");
+  };
+  socket.on("chat_error", (message) => {
+    toast.error(message.message);
+    setTimeout(() => {
+    }, 2000);
+  });
+
+  socket.on("new_message", (data) => {
+    setTimeout(() => {
+    }, 1000);
+    console.log("Received message:", data);
+    console.log(data);
+  });
+
+  const setUser = () => {
+    let user_id = JSON.parse(localStorage.getItem("d_user"));
+    socket.emit("user_added", user_id);
+  };
+
+
   return (
     <>
       <Navbar />
@@ -400,7 +440,7 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                              
+
                               value="male"
                               checked={gender === "male"}
                               onChange={handleGenderChange}
@@ -414,7 +454,7 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                            
+
                               value="female"
                               checked={gender === "female"}
                               onChange={handleGenderChange}
@@ -428,7 +468,7 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                            
+
                               value="other"
                               checked={gender === "other"}
                               onChange={handleGenderChange}
@@ -940,8 +980,8 @@ const Home = () => {
                           <button>
                             Like<i className="fas fa-thumbs-up"></i>
                           </button>
-                          <button>
-                            Send Flirt<i className="fas fa-heart"></i>
+                          <button onClick={()=>sendFlirt(item._id)}>
+                            Send Flirt<i className="fas fa-heart" ></i>
                           </button>
                           <button>
                             <Link to={"/chats/" + item._id}>
@@ -968,7 +1008,7 @@ const Home = () => {
               <div className="search_formSec">
                 <h4>Quick Search</h4>
                 <div className="search_gender">
-                <div className="form_field mb-3">
+                  <div className="form_field mb-3">
                     <p>
                       <strong>My Gender</strong>
                     </p>
@@ -1014,7 +1054,7 @@ const Home = () => {
                         Female
                       </label>
                     </div>
-                   
+
                   </div>
                 </div>
                 <div className="form_field country mb-3">
