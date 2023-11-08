@@ -8,7 +8,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
 // import { useHistory } from 'react-router-dom';
-
+// import EmojiPicker from 'emoji-picker-react';
 
 const Chats = () => {
 
@@ -104,7 +104,7 @@ const Chats = () => {
         if (response.data.success) {
           toast("Link generated successfully!");
           const paymentUrl = response.data.data.url;
-          window.location.href = paymentUrl; 
+          window.location.href = paymentUrl;
         } else {
           toast("Failed to generate the payment link.");
         }
@@ -134,6 +134,7 @@ const Chats = () => {
       senderId: user_id,
       receiverId: params.id,
       message: message,
+      // flirtMessage: flirtMessage
     };
     socket.emit("chat_message", data);
     // socket.on('chat_error', { message: 'Insufficient credits' });
@@ -419,6 +420,7 @@ const Chats = () => {
               <div className="chat_footer">
                 <form onSubmit={sendMessage}>
                   <div className="chat_footer_flex">
+                  {/* <EmojiPicker /> */}
                     <input
                       type="text"
                       placeholder="Type Your Message ..."

@@ -17,7 +17,7 @@ const Payments = () => {
   const navigate = useNavigate();
 
 
-  const handlePayment = (price) => {
+  const handlePayment = () => {
     setMessage("");
     const data = {};
     data.userId = user_id

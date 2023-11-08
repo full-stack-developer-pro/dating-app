@@ -87,12 +87,16 @@ const getPackages = () => {
   return axios.get(API_URL + "api/admin/getAllCredit");
 }
 const GeneratePayment = (data) => {
-  return axios.post(API_URL + "api/payment/generate-link" , data);
+  return axios.post(API_URL + "api/payment/generate-link", data);
 };
 const verifyPayment = (data) => {
-  return axios.post(API_URL + "api/payment/verify-payment" , data);
+  return axios.post(API_URL + "api/payment/verify-payment", data);
+};
+const UploadProfileImage = (id, data) => {
+  return axios.post(API_URL + "api/uploadGalleryImages/" + id, data);
 };
 const DataService = {
+  UploadProfileImage,
   verifyPayment,
   GeneratePayment,
   getPackages,
