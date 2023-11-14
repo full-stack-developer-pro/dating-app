@@ -88,12 +88,12 @@ const Home = () => {
   const [middleBanner, setMiddleBanner] = useState([]);
   const [secondLastBanner, setSecondLastBanner] = useState([]);
   const [lastBanner, setlLastBanner] = useState([]);
-  const [selectedGender, setSelectGender] = useState("All")
-  const [members, setMembers] = useState([])
+  const [selectedGender, setSelectGender] = useState("All");
+  const [members, setMembers] = useState([]);
 
   const HandleSelection = (e) => {
-    setSelectGender(e.target.value)
-  }
+    setSelectGender(e.target.value);
+  };
   const myStateData = {
     key1: selectedGender,
     key2: searchCountry,
@@ -347,7 +347,7 @@ const Home = () => {
     });
   };
   useEffect(() => {
-    getTotalMembers()
+    getTotalMembers();
   }, []);
 
   useEffect(() => {
@@ -355,13 +355,11 @@ const Home = () => {
     getMiddle();
     getSecondLast();
     getLast();
-    getTotalMembers()
+    getTotalMembers();
   }, []);
 
-
-
   let user_id = JSON.parse(localStorage.getItem("d_user"));
-  const sendFlirt = (e,_id) => {
+  const sendFlirt = (e, _id) => {
     // e.preventDefault();
     const data = {
       senderId: user_id,
@@ -371,19 +369,16 @@ const Home = () => {
     };
     socket.emit("chat_message", data);
     // socket.on('chat_error', { message: 'Insufficient credits' });
-    setTimeout(() => {
-    }, 1000);
+    setTimeout(() => {}, 1000);
     setMessage("");
   };
   socket.on("chat_error", (message) => {
     toast.error(message.message);
-    setTimeout(() => {
-    }, 2000);
+    setTimeout(() => {}, 2000);
   });
 
   socket.on("new_message", (data) => {
-    setTimeout(() => {
-    }, 1000);
+    setTimeout(() => {}, 1000);
     console.log("Received message:", data);
     console.log(data);
   });
@@ -393,7 +388,6 @@ const Home = () => {
     socket.emit("user_added", user_id);
   };
 
-
   return (
     <>
       <Navbar />
@@ -402,8 +396,7 @@ const Home = () => {
         className="top_banner"
         id="signup"
         style={{
-          background:
-            "linear-gradient(#30024346, #15021b69), url(http://localhost:3000/static/media/dating_app_banner.0a197b0f28dea7feff30.jpg)",
+          background: `linear-gradient(#30024346, #15021b69), url(${DatingCouple})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "50%",
@@ -440,7 +433,6 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-
                               value="male"
                               checked={gender === "male"}
                               onChange={handleGenderChange}
@@ -454,7 +446,6 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-
                               value="female"
                               checked={gender === "female"}
                               onChange={handleGenderChange}
@@ -468,7 +459,6 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-
                               value="other"
                               checked={gender === "other"}
                               onChange={handleGenderChange}
@@ -833,8 +823,7 @@ const Home = () => {
               {middleBanner?.images?.length > 0 ? (
                 <img
                   src={
-                    "https://dating-app-backend-xyrj.onrender.com/" +
-                    middleBanner?.images[0]?.path
+                    "http://51.20.124.172:3000/" + middleBanner?.images[0]?.path
                   }
                   alt=""
                 />
@@ -939,8 +928,8 @@ const Home = () => {
                               {item?.gender === "male"
                                 ? "M"
                                 : item?.gender === "female"
-                                  ? "F"
-                                  : "Other"}
+                                ? "F"
+                                : "Other"}
                             </span>
                             <span>
                               <i className="fas fa-map-marker-alt"></i>
@@ -980,8 +969,8 @@ const Home = () => {
                           <button>
                             Like<i className="fas fa-thumbs-up"></i>
                           </button>
-                          <button onClick={()=>sendFlirt(item._id)}>
-                            Send Flirt<i className="fas fa-heart" ></i>
+                          <button onClick={() => sendFlirt(item._id)}>
+                            Send Flirt<i className="fas fa-heart"></i>
                           </button>
                           <button>
                             <Link to={"/chats/" + item._id}>
@@ -1054,7 +1043,6 @@ const Home = () => {
                         Female
                       </label>
                     </div>
-
                   </div>
                 </div>
                 <div className="form_field country mb-3">
@@ -1067,7 +1055,10 @@ const Home = () => {
                     required
                   />
                 </div>
-                <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}>
+                <Link
+                  className="search_submit"
+                  to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
+                >
                   Search<i class="fas fa-search"></i>
                 </Link>
                 {/* <button
@@ -1213,7 +1204,7 @@ const Home = () => {
               {secondLastBanner?.images?.length > 0 ? (
                 <img
                   src={
-                    "https://dating-app-backend-xyrj.onrender.com/" +
+                    "http://51.20.124.172:3000/" +
                     secondLastBanner?.images[0]?.path
                   }
                   alt=""
@@ -1462,10 +1453,7 @@ const Home = () => {
             <h2 className="main_title">{lastBanner?.heading}</h2>
             {lastBanner?.images?.length > 0 ? (
               <img
-                src={
-                  "https://dating-app-backend-xyrj.onrender.com/" +
-                  lastBanner?.images[0]?.path
-                }
+                src={"http://51.20.124.172:3000/" + lastBanner?.images[0]?.path}
                 alt=""
               />
             ) : (

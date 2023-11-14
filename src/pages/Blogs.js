@@ -41,7 +41,7 @@ const Blogs = () => {
                             {item?.images.length>0 ? (
                               <img
                                 src={
-                                  "https://dating-app-backend-xyrj.onrender.com/" +
+                                  "http://51.20.124.172:3000/" +
                                   item?.images[0]?.path
                                 }
                                 alt=""
