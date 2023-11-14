@@ -1,7 +1,7 @@
 import axios from "axios";
 import AuthService from "./auth.service";
 
-const API_URL = (process.env.NODE_ENV != 'production' ? "https://dating-app-backend-xyrj.onrender.com/" : "https://dating-app-backend-xyrj.onrender.com/");
+const API_URL = (process.env.NODE_ENV != 'production' ? "http://51.20.124.172:3000/" : "http://51.20.124.172:3000/");
 
 axios.interceptors.request.use(function (config) {
   const token = AuthService.getCurrentUserTokken();
