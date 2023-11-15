@@ -360,17 +360,21 @@ const Home = () => {
 
   let user_id = JSON.parse(localStorage.getItem("d_user"));
   const sendFlirt = (e, _id) => {
-    // e.preventDefault();
-    const data = {
-      senderId: user_id,
-      receiverId: _id,
-      message: "😃",
-      // flirtMessage: flirtMessage
-    };
-    socket.emit("chat_message", data);
-    // socket.on('chat_error', { message: 'Insufficient credits' });
-    setTimeout(() => {}, 1000);
-    setMessage("");
+    if (auth) {
+      // e.preventDefault();
+      const data = {
+        senderId: user_id,
+        receiverId: _id,
+        message: "😃",
+        // flirtMessage: flirtMessage
+      };
+      socket.emit("chat_message", data);
+      // socket.on('chat_error', { message: 'Insufficient credits' });
+      setTimeout(() => {}, 1000);
+      setMessage("");
+    } else {
+      toast.error("Please Login First !!");
+    }
   };
   socket.on("chat_error", (message) => {
     toast.error(message.message);
@@ -809,7 +813,10 @@ const Home = () => {
             {/* <img src={Heart} alt="" className="heartTwo" /> */}
             <h1>{topBanner?.heading}</h1>
             <p dangerouslySetInnerHTML={{ __html: topBanner?.description }}></p>
-            <button className="main_button">
+            <button
+              className="main_button"
+              onClick={() => navigate("/search-results")}
+            >
               Explore<i class="fas fa-chevron-right"></i>
             </button>
             {/* <img src={HeartTwo} alt="" className="heartOne" /> */}
@@ -972,11 +979,13 @@ const Home = () => {
                           <button onClick={() => sendFlirt(item._id)}>
                             Send Flirt<i className="fas fa-heart"></i>
                           </button>
-                          <button>
-                            <Link to={"/chats/" + item._id}>
-                              Send Message<i class="fas fa-comment-alt"></i>
-                            </Link>
-                          </button>
+                          {auth && (
+                            <button>
+                              <Link to={"/chats/" + item._id}>
+                                Send Message<i class="fas fa-comment-alt"></i>
+                              </Link>
+                            </button>
+                          )}
                         </div>
                       </div>
                     );
@@ -1136,12 +1145,14 @@ const Home = () => {
                     <p>{members.messagesSentToday}</p>
                   </div>
                 </div>
+                {!auth && 
                 <button
                   className="main_button"
                   onClick={() => (window.location.href = "/#signup")}
                 >
                   Join Now<i class="fas fa-long-arrow-alt-right"></i>
                 </button>
+                }
               </div>
             </div>
           </div>
