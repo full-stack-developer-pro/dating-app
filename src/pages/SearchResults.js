@@ -307,12 +307,14 @@ const SearchResults = () => {
                     <p>{members.messagesSentToday}</p>
                   </div>
                 </div>
+                {!auth && 
                 <button
                   className="main_button"
                   onClick={() => (window.location.href = "/#signup")}
                 >
                   Join Now<i class="fas fa-long-arrow-alt-right"></i>
                 </button>
+                }
               </div>
             </div>
             <div className="activeM" style={{ flex: "1" }}>
@@ -421,12 +423,14 @@ const SearchResults = () => {
               ) : (
                 <p>No Data Found</p>
               )}
+              {!auth && 
               <button
                 className="main_button my-4"
                 onClick={() => (window.location.href = "/#signup")}
               >
                 Create Account<i class="fas fa-long-arrow-alt-right"></i>
               </button>
+              }
             </div>
           </div>
         </div>
