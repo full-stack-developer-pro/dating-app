@@ -234,9 +234,10 @@ const Navbar = () => {
             <><button className="main_buttonTwo" onClick={() => setLogin(true)}>
               Login<i class="fas fa-sign-in-alt"></i>
             </button>
-            <button className="main_button" onClick={() => window.location.href = "/#signup"}>
+            {/* <button className="main_button" onClick={() => window.location.href = "/#signup"}>
               Signup<i class="fas fa-user"></i>
-            </button></>
+            </button> */}
+            </>
             }
             
 
