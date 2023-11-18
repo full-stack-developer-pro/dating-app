@@ -95,6 +95,9 @@ const verifyPayment = (data) => {
 const UploadProfileImage = (id, data) => {
   return axios.post(API_URL + "api/uploadGalleryImages/" + id, data);
 };
+const getCities = () => {
+  return axios.get("http://api.geonames.org/searchJSON?country=GB&featureClass=P&username=ingenioushitech2580");
+}
 const DataService = {
   UploadProfileImage,
   verifyPayment,
@@ -121,6 +124,7 @@ const DataService = {
   getMiddleBanner,
   getSecondLastBanner,
   getLastBanner,
+  getCities
 
 }
 export default DataService;
