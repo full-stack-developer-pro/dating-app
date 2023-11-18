@@ -77,6 +77,73 @@
     margin-top: 15px;
 }
 
+
+
+.footer_FSec {
+    background: url(../images/abstractTwo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 60px 10px 0px 10px;
+}
+
+.footer_FFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer_FFlex ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer_FFlex ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+
+.footer_FFlex ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.footer_FFlex ul li a i {
+    color: #ef48b5;
+    margin-right: 7px;
+}
+
+.footer_FL {
+    width: 33%;
+    padding-right: 5%;
+}
+
+.footer_FM {
+    width: 33%;
+    padding-right: 5%;
+}
+
+.footer_FR {
+    width: 33%;
+}
+
+.footer_FL img {
+    width: 160px;
+    margin-bottom: 20px;
+}
+
+.footer_bottomBar {
+    text-align: center;
+    border-top: 1px solid #000;
+    margin-top: 40px;
+    padding: 15px 0px;
+}
+
+.footer_bottomBar p {
+    margin: 0;
+}
 @media screen and (max-width: 662px) {
     .footer_flex {
         flex-wrap: wrap;
@@ -97,5 +164,72 @@
     .footer_contact {
         width: 100%;
         text-align: left;
+    }
+
+    .footer_FSec {
+        background: url(../images/abstractTwo.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        padding: 60px 10px 0px 10px;
+    }
+
+    .footer_FFlex {
+        flex-direction: column;
+    }
+
+    .footer_FFlex ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .footer_FFlex ul li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2px;
+    }
+
+    .footer_FFlex ul li a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .footer_FFlex ul li a i {
+        color: #ef48b5;
+        margin-right: 7px;
+    }
+
+    .footer_FL {
+        width: 100%;
+        padding-right: 0%;
+        margin-bottom: 20px;
+    }
+
+    .footer_FM {
+        width: 100%;
+        padding-right: 0%;
+        margin-bottom: 20px;
+    }
+
+    .footer_FR {
+        width: 100%;
+    }
+
+    .footer_FL img {
+        width: 160px;
+        margin-bottom: 20px;
+    }
+
+    .footer_bottomBar {
+        text-align: center;
+        border-top: 1px solid #000;
+        margin-top: 40px;
+        padding: 15px 0px;
+    }
+
+    .footer_bottomBar p {
+        margin: 0;
     }
 }

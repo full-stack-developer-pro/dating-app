@@ -89,10 +89,14 @@ const Home = () => {
   const [secondLastBanner, setSecondLastBanner] = useState([]);
   const [lastBanner, setlLastBanner] = useState([]);
   const [selectedGender, setSelectGender] = useState("All");
+  const [selectedGenderSearch, setSelectedGenderSearch] = useState("All");
   const [members, setMembers] = useState([]);
 
   const HandleSelection = (e) => {
     setSelectGender(e.target.value);
+  };
+  const SearchHandleSelection = (e) => {
+    setSelectedGenderSearch(e.target.value);
   };
   const myStateData = {
     key1: selectedGender,
@@ -370,7 +374,7 @@ const Home = () => {
       };
       socket.emit("chat_message", data);
       // socket.on('chat_error', { message: 'Insufficient credits' });
-      setTimeout(() => { }, 1000);
+      setTimeout(() => {}, 1000);
       setMessage("");
     } else {
       toast.error("Please Login First !!");
@@ -378,11 +382,11 @@ const Home = () => {
   };
   socket.on("chat_error", (message) => {
     toast.error(message.message);
-    setTimeout(() => { }, 2000);
+    setTimeout(() => {}, 2000);
   });
 
   socket.on("new_message", (data) => {
-    setTimeout(() => { }, 1000);
+    setTimeout(() => {}, 1000);
     console.log("Received message:", data);
     console.log(data);
   });
@@ -815,9 +819,9 @@ const Home = () => {
             <p dangerouslySetInnerHTML={{ __html: topBanner?.description }}></p>
             <button
               className="main_button"
-              onClick={() => navigate("/search-results")}
+              onClick={() => (window.location.href = "/#signup")}
             >
-              Explore<i class="fas fa-chevron-right"></i>
+              Join Free Now!<i class="fas fa-chevron-right"></i>
             </button>
             {/* <img src={HeartTwo} alt="" className="heartOne" /> */}
           </div>
@@ -935,8 +939,8 @@ const Home = () => {
                                 {item?.gender === "male"
                                   ? "M"
                                   : item?.gender === "female"
-                                    ? "F"
-                                    : "Other"}
+                                  ? "F"
+                                  : "Other"}
                               </span>
                               <span>
                                 <i className="fas fa-map-marker-alt"></i>
@@ -1015,13 +1019,13 @@ const Home = () => {
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="gender"
-                        id="gender_other"
-                        value="other"
-                        checked={selectedGender === "All"}
-                        onChange={HandleSelection}
+                        name="searchgender"
+                        id="gender_all_search"
+                        value="all"
+                        checked={selectedGenderSearch === "all"}
+                        onChange={SearchHandleSelection}
                       />
-                      <label class="form-check-label" for="gender_other">
+                      <label class="form-check-label" for="gender_all_search">
                         All
                       </label>
                     </div>
@@ -1029,13 +1033,13 @@ const Home = () => {
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="gender"
-                        id="gender_male"
+                        name="searchgender"
+                        id="gender_male_search"
                         value="male"
-                        checked={selectedGender === "male"}
-                        onChange={HandleSelection}
+                        checked={selectedGenderSearch === "male"}
+                        onChange={SearchHandleSelection}
                       />
-                      <label class="form-check-label" for="gender_male">
+                      <label class="form-check-label" for="gender_male_search">
                         Male
                       </label>
                     </div>
@@ -1043,13 +1047,13 @@ const Home = () => {
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="gender"
-                        id="gender_female"
+                        name="searchgender"
+                        id="gender_female_search"
                         value="female"
-                        checked={selectedGender === "female"}
-                        onChange={HandleSelection}
+                        checked={selectedGenderSearch === "female"}
+                        onChange={SearchHandleSelection}
                       />
-                      <label class="form-check-label" for="gender_female">
+                      <label class="form-check-label" for="gender_female_search">
                         Female
                       </label>
                     </div>
@@ -1197,7 +1201,7 @@ const Home = () => {
                 className="main_button"
                 onClick={() => (window.location.href = "/#signup")}
               >
-                Register
+                Join For Free Here Right Now
               </button>
             </div>
             <div className="about_flexL">
