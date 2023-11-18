@@ -370,7 +370,7 @@ const Home = () => {
       };
       socket.emit("chat_message", data);
       // socket.on('chat_error', { message: 'Insufficient credits' });
-      setTimeout(() => {}, 1000);
+      setTimeout(() => { }, 1000);
       setMessage("");
     } else {
       toast.error("Please Login First !!");
@@ -378,11 +378,11 @@ const Home = () => {
   };
   socket.on("chat_error", (message) => {
     toast.error(message.message);
-    setTimeout(() => {}, 2000);
+    setTimeout(() => { }, 2000);
   });
 
   socket.on("new_message", (data) => {
-    setTimeout(() => {}, 1000);
+    setTimeout(() => { }, 1000);
     console.log("Received message:", data);
     console.log(data);
   });
@@ -413,7 +413,7 @@ const Home = () => {
             <div className="signup_sec">
               <div className="signup_popup">
                 <div className="signup_inner">
-                  <h2>Create Account</h2>
+                  <h2>Sign Up Free!</h2>
                   <div className="signup_formSec">
                     {showError && (
                       <div className="error_bar">
@@ -851,7 +851,7 @@ const Home = () => {
         <div className="container">
           <div className="active_secFlex">
             <div className="activeL">
-              <ul>
+              {/* <ul>
                 <li>
                   <i class="fas fa-check-circle"></i>100% Secure
                 </li>
@@ -864,7 +864,7 @@ const Home = () => {
                 <li>
                   <i class="fas fa-check-circle"></i>Free Contact
                 </li>
-              </ul>
+              </ul> */}
               <h4>Who is Online</h4>
               <div className="online_profiles">
                 <Link to="/chats">
@@ -915,91 +915,92 @@ const Home = () => {
                   </div>
                 </Link>
               </div>
-
-              {users && users.length > 0 ? (
-                users.map((item, i) => {
-                  if (item?._id !== userId) {
-                    const isFriend = profile?.friends?.some(
-                      (op) => op?.friends === item?._id
-                    );
-                    return (
-                      <div className="active_mainProfile" key={i}>
-                        <div className="active_mainFlex">
-                          <div className="active_mainL">
-                            <img src={ProfileOne} alt="" />
-                          </div>
-                          <div className="active_mainR">
-                            <h4>{item?.name}</h4>
-                            <span className="active_age">
-                              {item?.age}~
-                              {item?.gender === "male"
-                                ? "M"
-                                : item?.gender === "female"
-                                ? "F"
-                                : "Other"}
-                            </span>
-                            <span>
-                              <i className="fas fa-map-marker-alt"></i>
-                              {item?.city}, {item?.country}
-                            </span>
-                            <br />
-                            {auth ? (
-                              isFriend ? (
-                                <button
-                                  className="add_friend already_friend"
-                                  onClick={() => removeFriend(item?._id)}
-                                >
-                                  Remove Friend
-                                  <i className="fas fa-user-minus"></i>
-                                </button>
+              <div className="active_mainArea">
+                {users && users.length > 0 ? (
+                  users.map((item, i) => {
+                    if (item?._id !== userId) {
+                      const isFriend = profile?.friends?.some(
+                        (op) => op?.friends === item?._id
+                      );
+                      return (
+                        <div className="active_mainProfile" key={i}>
+                          <div className="active_mainFlex">
+                            <div className="active_mainL">
+                              <img src={ProfileOne} alt="" />
+                            </div>
+                            <div className="active_mainR">
+                              <h4>{item?.name}</h4>
+                              <span className="active_age">
+                                {item?.age}~
+                                {item?.gender === "male"
+                                  ? "M"
+                                  : item?.gender === "female"
+                                    ? "F"
+                                    : "Other"}
+                              </span>
+                              <span>
+                                <i className="fas fa-map-marker-alt"></i>
+                                {item?.city}, {item?.country}
+                              </span>
+                              <br />
+                              {auth ? (
+                                isFriend ? (
+                                  <button
+                                    className="add_friend already_friend"
+                                    onClick={() => removeFriend(item?._id)}
+                                  >
+                                    Remove Friend
+                                    <i className="fas fa-user-minus"></i>
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="add_friend"
+                                    onClick={() => addFriend(item?._id)}
+                                  >
+                                    Add Friend
+                                    <i className="fas fa-user-plus"></i>
+                                  </button>
+                                )
                               ) : (
-                                <button
-                                  className="add_friend"
-                                  onClick={() => addFriend(item?._id)}
-                                >
-                                  Add Friend
-                                  <i className="fas fa-user-plus"></i>
-                                </button>
-                              )
-                            ) : (
-                              ""
-                            )}
-                            <p>{item?.description}</p>
+                                ""
+                              )}
+                              <p>{item?.description}</p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="active_actionSec">
-                          <button>
-                            <Link to={"/single-profile/" + item._id}>
-                              View<i className="fas fa-eye"></i>
-                            </Link>
-                          </button>
-                          <button>
-                            Like<i className="fas fa-thumbs-up"></i>
-                          </button>
-                          <button onClick={() => sendFlirt(item._id)}>
-                            Send Flirt<i className="fas fa-heart"></i>
-                          </button>
-                          {auth && (
+                          <div className="active_actionSec">
                             <button>
-                              <Link to={"/chats/" + item._id}>
-                                Send Message<i class="fas fa-comment-alt"></i>
+                              <Link to={"/single-profile/" + item._id}>
+                                View<i className="fas fa-eye"></i>
                               </Link>
                             </button>
-                          )}
+                            <button>
+                              Like<i className="fas fa-thumbs-up"></i>
+                            </button>
+                            <button onClick={() => sendFlirt(item._id)}>
+                              Send Flirt<i className="fas fa-heart"></i>
+                            </button>
+                            {auth && (
+                              <button>
+                                <Link to={"/chats/" + item._id}>
+                                  Send Message<i class="fas fa-comment-alt"></i>
+                                </Link>
+                              </button>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  }
-                  return null; // Skip rendering for the user's own profile
-                })
-              ) : (
-                <p>No Data Found</p>
-              )}
+                      );
+                    }
+                    return null; // Skip rendering for the user's own profile
+                  })
+                ) : (
+                  <p>No Data Found</p>
+                )}
+              </div>
               <button
                 className="main_button my-4"
                 onClick={() => (window.location.href = "/#signup")}
               >
-                Create Account<i class="fas fa-long-arrow-alt-right"></i>
+                Sign Up Free!<i class="fas fa-long-arrow-alt-right"></i>
               </button>
             </div>
             <div className="activeR">
@@ -1059,6 +1060,7 @@ const Home = () => {
                     <strong>Select Location</strong>
                   </label>
                   <ReactFlagsSelect
+                    placeholder="Select a Town or City"
                     selected={searchCountry}
                     onSelect={(code) => setSearchCountry(code)}
                     required
@@ -1077,7 +1079,7 @@ const Home = () => {
                   Search<i class="fas fa-search"></i>
                 </button> */}
               </div>
-              <div className="member_stats">
+              {/* <div className="member_stats">
                 <h4>Member Statistics</h4>
                 <div className="stats_flex">
                   <div className="statsL">
@@ -1145,34 +1147,21 @@ const Home = () => {
                     <p>{members.messagesSentToday}</p>
                   </div>
                 </div>
-                {!auth && 
-                <button
-                  className="main_button"
-                  onClick={() => (window.location.href = "/#signup")}
-                >
-                  Join Now<i class="fas fa-long-arrow-alt-right"></i>
-                </button>
+                {!auth &&
+                  <button
+                    className="main_button"
+                    onClick={() => (window.location.href = "/#signup")}
+                  >
+                    Join Now<i class="fas fa-long-arrow-alt-right"></i>
+                  </button>
                 }
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </section>
-      <section className="most_visited">
-        <div className="container">
-          <h2 className="main_title">Most Visited Locations</h2>
-          <div className="most_visitedFlex">
-            <span>America</span>
-            <span>India</span>
-            <span>Australia</span>
-            <span>Egypt</span>
-            <span>Russia</span>
-            <span>Canada</span>
-            <span>United Kingdom</span>
-          </div>
-        </div>
-      </section>
-      <section className="become_part">
+
+      {/* <section className="become_part">
         <div className="container">
           <div className="become_flex">
             <div className="becomeL">
@@ -1193,7 +1182,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="about_section">
         <div className="container">
           <div className="about_flex">
@@ -1458,7 +1447,7 @@ const Home = () => {
         </div>
       </section> */}
 
-      <section className="how_it_works">
+      {/* <section className="how_it_works">
         <div className="container">
           <div className="how_it_worksInner">
             <h2 className="main_title">{lastBanner?.heading}</h2>
@@ -1472,7 +1461,7 @@ const Home = () => {
             )}
           </div>
         </div>
-      </section>
+      </section> */}
       <Footer />
     </>
   );
