@@ -91,6 +91,12 @@ const Home = () => {
   const [selectedGender, setSelectGender] = useState("All");
   const [selectedGenderSearch, setSelectedGenderSearch] = useState("All");
   const [members, setMembers] = useState([]);
+  const [displayCount, setDisplayCount] = useState(6);
+
+
+  const handleViewAllClick = () => {
+    setDisplayCount(users.length);
+  };
 
   const HandleSelection = (e) => {
     setSelectGender(e.target.value);
@@ -374,7 +380,7 @@ const Home = () => {
       };
       socket.emit("chat_message", data);
       // socket.on('chat_error', { message: 'Insufficient credits' });
-      setTimeout(() => {}, 1000);
+      setTimeout(() => { }, 1000);
       setMessage("");
     } else {
       toast.error("Please Login First !!");
@@ -382,11 +388,11 @@ const Home = () => {
   };
   socket.on("chat_error", (message) => {
     toast.error(message.message);
-    setTimeout(() => {}, 2000);
+    setTimeout(() => { }, 2000);
   });
 
   socket.on("new_message", (data) => {
-    setTimeout(() => {}, 1000);
+    setTimeout(() => { }, 1000);
     console.log("Received message:", data);
     console.log(data);
   });
@@ -410,6 +416,7 @@ const Home = () => {
           backgroundPosition: "50%",
         }}
       >
+
         <div className="top_bannerInner">
           {auth ? (
             ""
@@ -855,42 +862,55 @@ const Home = () => {
         <div className="container">
           <div className="active_secFlex">
             <div className="activeL">
-              {/* <ul>
-                <li>
-                  <i class="fas fa-check-circle"></i>100% Secure
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>Instant Messaging
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>Verified Persons
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i>Free Contact
-                </li>
-              </ul> */}
-              <h4>Who is Online</h4>
-              <div className="online_profiles">
-                <Link to="/chats">
-                  <div className="onlineInner">
-                    <img src={ProfileOne} alt="" />
-                    <i class="fas fa-circle"></i>
-                  </div>
-                </Link>
-                <Link to="/chats">
-                  <div className="onlineInner">
-                    <img src={ProfileThree} alt="" />
-                    <i class="fas fa-circle"></i>
-                  </div>
-                </Link>
-                <Link to="/chats">
-                  <div className="onlineInner">
-                    <img src={ProfileFour} alt="" />
-                    <i class="fas fa-circle"></i>
-                  </div>
-                </Link>
+              <div className="activeL_bg">
+                <ul>
+                  <li>
+                    <i class="fas fa-check-circle"></i>Find real local sex contacts
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i>Find other Causal sex & hookups
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i>100% discreet, safe & Secure
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i>Instant Messaging
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i>Verified Persons
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i>Free Contact
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle"></i>100% anonymous
+                  </li>
+                </ul>
+                <h4>Who is Online</h4>
+                <div className="online_profiles">
+                  <Link to="/chats">
+                    <div className="onlineInner">
+                      <img src={ProfileOne} alt="" />
+                      <i class="fas fa-circle"></i>
+                    </div>
+                  </Link>
+                  <Link to="/chats">
+                    <div className="onlineInner">
+                      <img src={ProfileThree} alt="" />
+                      <i class="fas fa-circle"></i>
+                    </div>
+                  </Link>
+                  <Link to="/chats">
+                    <div className="onlineInner">
+                      <img src={ProfileFour} alt="" />
+                      <i class="fas fa-circle"></i>
+                    </div>
+                  </Link>
+                </div>
               </div>
             </div>
+
+
             <div className="activeM">
               <h3>Recently Joined</h3>
               <div className="active_recent">
@@ -921,77 +941,82 @@ const Home = () => {
               </div>
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
-                  users.map((item, i) => {
+                  users.slice(0, displayCount).map((item, i) => {
                     if (item?._id !== userId) {
                       const isFriend = profile?.friends?.some(
                         (op) => op?.friends === item?._id
                       );
                       return (
-                        <div className="active_mainProfile" key={i}>
-                          <div className="active_mainFlex">
-                            <div className="active_mainL">
-                              <img src={ProfileOne} alt="" />
-                            </div>
-                            <div className="active_mainR">
-                              <h4>{item?.name}</h4>
-                              <span className="active_age">
-                                {item?.age}~
-                                {item?.gender === "male"
-                                  ? "M"
-                                  : item?.gender === "female"
-                                  ? "F"
-                                  : "Other"}
-                              </span>
-                              <span>
-                                <i className="fas fa-map-marker-alt"></i>
-                                {item?.city}, {item?.country}
-                              </span>
-                              <br />
-                              {auth ? (
-                                isFriend ? (
-                                  <button
-                                    className="add_friend already_friend"
-                                    onClick={() => removeFriend(item?._id)}
-                                  >
-                                    Remove Friend
-                                    <i className="fas fa-user-minus"></i>
-                                  </button>
+                        <>
+
+                          <div className="active_mainProfile" key={i}>
+                            <div className="active_mainFlex">
+                              <div className="active_mainL">
+                                <img src={ProfileOne} alt="" />
+                              </div>
+                              <div className="active_mainR">
+                                <h4>{item?.name}</h4>
+                                <span className="active_age">
+                                  {item?.age}~
+                                  {item?.gender === "male"
+                                    ? "M"
+                                    : item?.gender === "female"
+                                      ? "F"
+                                      : "Other"}
+                                </span>
+                                <span>
+                                  <i className="fas fa-map-marker-alt"></i>
+                                  {item?.city}, {item?.country}
+                                </span>
+                                <br />
+                                {auth ? (
+                                  isFriend ? (
+                                    <button
+                                      className="add_friend already_friend"
+                                      onClick={() => removeFriend(item?._id)}
+                                    >
+                                      Remove Friend
+                                      <i className="fas fa-user-minus"></i>
+                                    </button>
+                                  ) : (
+                                    <button
+                                      className="add_friend"
+                                      onClick={() => addFriend(item?._id)}
+                                    >
+                                      Add Friend
+                                      <i className="fas fa-user-plus"></i>
+                                    </button>
+                                  )
                                 ) : (
-                                  <button
-                                    className="add_friend"
-                                    onClick={() => addFriend(item?._id)}
-                                  >
-                                    Add Friend
-                                    <i className="fas fa-user-plus"></i>
-                                  </button>
-                                )
-                              ) : (
-                                ""
-                              )}
-                              <p>{item?.description}</p>
+                                  ""
+                                )}
+                                <p>{item?.description}</p>
+                              </div>
                             </div>
-                          </div>
-                          <div className="active_actionSec">
-                            <button>
-                              <Link to={"/single-profile/" + item._id}>
-                                View<i className="fas fa-eye"></i>
-                              </Link>
-                            </button>
-                            <button>
-                              Like<i className="fas fa-thumbs-up"></i>
-                            </button>
-                            <button onClick={() => sendFlirt(item._id)}>
-                              Send Flirt<i className="fas fa-heart"></i>
-                            </button>
-                            {auth && (
+                            <div className="active_actionSec">
                               <button>
-                                <Link to={"/chats/" + item._id}>
-                                  Send Message<i class="fas fa-comment-alt"></i>
+                                <Link to={"/single-profile/" + item._id}>
+                                  View<i className="fas fa-eye"></i>
                                 </Link>
                               </button>
-                            )}
+                              <button>
+                                Like<i className="fas fa-thumbs-up"></i>
+                              </button>
+                              <button onClick={() => sendFlirt(item._id)}>
+                                Send Flirt<i className="fas fa-heart"></i>
+                              </button>
+                              {auth && (
+                                <button>
+                                  <Link to={"/chats/" + item._id}>
+                                    Send Message<i class="fas fa-comment-alt"></i>
+                                  </Link>
+                                </button>
+                              )}
+                            </div>
                           </div>
-                        </div>
+
+                        </>
+
                       );
                     }
                     return null; // Skip rendering for the user's own profile
@@ -1000,166 +1025,192 @@ const Home = () => {
                   <p>No Data Found</p>
                 )}
               </div>
+              {/*              
               <button
                 className="main_button my-4"
                 onClick={() => (window.location.href = "/#signup")}
               >
                 Sign Up Free!<i class="fas fa-long-arrow-alt-right"></i>
-              </button>
+              </button> */}
+
+              {users && users.length > displayCount && (
+                <button className="main_button my-4" onClick={handleViewAllClick}>View All</button>
+              )
+              }
             </div>
+
+
             <div className="activeR">
-              <div className="search_formSec">
-                <h4>Quick Search</h4>
-                <div className="search_gender">
-                  <div className="form_field mb-3">
-                    <p>
-                      <strong>My Gender</strong>
-                    </p>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="searchgender"
-                        id="gender_all_search"
-                        value="all"
-                        checked={selectedGenderSearch === "all"}
-                        onChange={SearchHandleSelection}
-                      />
-                      <label class="form-check-label" for="gender_all_search">
-                        All
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="searchgender"
-                        id="gender_male_search"
-                        value="male"
-                        checked={selectedGenderSearch === "male"}
-                        onChange={SearchHandleSelection}
-                      />
-                      <label class="form-check-label" for="gender_male_search">
-                        Male
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="searchgender"
-                        id="gender_female_search"
-                        value="female"
-                        checked={selectedGenderSearch === "female"}
-                        onChange={SearchHandleSelection}
-                      />
-                      <label class="form-check-label" for="gender_female_search">
-                        Female
-                      </label>
+              <div className="activeL_bg">
+
+                <div className="search_formSec">
+                  <h4>Quick Search</h4>
+                  <div className="search_gender">
+                    <div className="form_field mb-3">
+                      <p>
+                        <strong>My Gender</strong>
+                      </p>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="searchgender"
+                          id="gender_all_search"
+                          value="all"
+                          checked={selectedGenderSearch === "all"}
+                          onChange={SearchHandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_all_search">
+                          All
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="searchgender"
+                          id="gender_male_search"
+                          value="male"
+                          checked={selectedGenderSearch === "male"}
+                          onChange={SearchHandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_male_search">
+                          Male
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="searchgender"
+                          id="gender_female_search"
+                          value="female"
+                          checked={selectedGenderSearch === "female"}
+                          onChange={SearchHandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_female_search">
+                          Female
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="form_field country mb-3">
-                  <label>
-                    <strong>Select Location</strong>
-                  </label>
-                  <ReactFlagsSelect
-                    placeholder="Select a Town or City"
-                    selected={searchCountry}
-                    onSelect={(code) => setSearchCountry(code)}
-                    required
-                  />
-                </div>
-                <Link
-                  className="search_submit"
-                  to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
-                >
-                  Search<i class="fas fa-search"></i>
-                </Link>
-                {/* <button
+                  <div className="form_field country mb-3">
+                    <label>
+                      <strong>Select Location</strong>
+                    </label>
+                    <ReactFlagsSelect
+                      placeholder="Select a Town or City"
+                      selected={searchCountry}
+                      onSelect={(code) => setSearchCountry(code)}
+                      required
+                    />
+                  </div>
+                  <Link
+                    className="search_submit"
+                    to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
+                  >
+                    Search<i class="fas fa-search"></i>
+                  </Link>
+                  {/* <button
                   className="search_submit"
                   onClick={() => navigate("/search-results")}
                 >
                   Search<i class="fas fa-search"></i>
                 </button> */}
+                </div>
+                <div className="member_stats">
+                  <h4>Member Statistics</h4>
+                  <div className="stats_flex">
+                    <div className="statsL">
+                      <p>Total Members</p>
+                    </div>
+                    <div className="statsM">
+                      <p>~</p>
+                    </div>
+                    <div className="statsR">
+                      <p>{members.totalMembers}</p>
+                    </div>
+                  </div>
+                  <div className="stats_flex">
+                    <div className="statsL">
+                      <p>Active Members</p>
+                    </div>
+                    <div className="statsM">
+                      <p>~</p>
+                    </div>
+                    <div className="statsR">
+                      <p>{members.activeMembers}</p>
+                    </div>
+                  </div>
+                  <div className="stats_flex">
+                    <div className="statsL">
+                      <p>Joined Today</p>
+                    </div>
+                    <div className="statsM">
+                      <p>~</p>
+                    </div>
+                    <div className="statsR">
+                      <p>{members.membersJoinedToday}</p>
+                    </div>
+                  </div>
+                  <div className="stats_flex">
+                    <div className="statsL">
+                      <p>Men Joined Today</p>
+                    </div>
+                    <div className="statsM">
+                      <p>~</p>
+                    </div>
+                    <div className="statsR">
+                      <p>{members.menJoinedToday}</p>
+                    </div>
+                  </div>
+                  <div className="stats_flex">
+                    <div className="statsL">
+                      <p>Women Joined Today</p>
+                    </div>
+                    <div className="statsM">
+                      <p>~</p>
+                    </div>
+                    <div className="statsR">
+                      <p>{members.womenJoinedToday}</p>
+                    </div>
+                  </div>
+                  <div className="stats_flex">
+                    <div className="statsL">
+                      <p>Messages Sent Today</p>
+                    </div>
+                    <div className="statsM">
+                      <p>~</p>
+                    </div>
+                    <div className="statsR">
+                      <p>{members.messagesSentToday}</p>
+                    </div>
+                  </div>
+                  {!auth &&
+                    <button
+                      className="main_button"
+                      onClick={() => (window.location.href = "/#signup")}
+                    >
+                      Join Now<i class="fas fa-long-arrow-alt-right"></i>
+                    </button>
+                  }
+                </div>
               </div>
-              {/* <div className="member_stats">
-                <h4>Member Statistics</h4>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Total Members</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.totalMembers}</p>
-                  </div>
+
+              <div className="activeL_bg" style={{marginTop:"10px"}}>
+                <div className="member_stats">
+                  <h4>Popular searchs</h4>
                 </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Active Members</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.activeMembers}</p>
-                  </div>
+                <div className="locations_area">
+                  <p>Afghanistan</p>
+                  <p>Albania</p>
+                  <p>Algeria</p>
+                  <p>American Samoa</p>
+                  <p>Australia</p>
+                  <p>Antigua and Barbuda</p>
                 </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Joined Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.membersJoinedToday}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Men Joined Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.menJoinedToday}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Women Joined Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.womenJoinedToday}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Messages Sent Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.messagesSentToday}</p>
-                  </div>
-                </div>
-                {!auth &&
-                  <button
-                    className="main_button"
-                    onClick={() => (window.location.href = "/#signup")}
-                  >
-                    Join Now<i class="fas fa-long-arrow-alt-right"></i>
-                  </button>
-                }
-              </div> */}
+              </div>
+   
             </div>
           </div>
         </div>

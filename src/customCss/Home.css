@@ -10,6 +10,19 @@
     align-items: center;
     justify-content: center;
 }
+
+.locations_area {
+    display: flex;
+    flex-wrap: wrap;
+}
+.locations_area p {
+    background: #ddd;
+    margin-right: 10px;
+    padding: 0px 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
 .active_mainArea{
     display: flex;
     align-items: center;
@@ -181,11 +194,12 @@
 
 .active_secFlex .activeL {
     width: 20%;
+    box-shadow: 0px 0px 3px -5px rgba(0, 0, 0, 0.5);
+}
+.activeL_bg {
     background: #fff;
     padding: 20px;
     border-radius: 15px;
-    ;
-    box-shadow: 0px 0px 3px -5px rgba(0, 0, 0, 0.5);
 }
 
 .active_secFlex .activeM {
@@ -433,10 +447,6 @@
 
 .active_secFlex .activeR {
     width: 25%;
-    background: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    ;
     box-shadow: 0px 0px 3px -5px rgba(0, 0, 0, 0.5);
 }
 
@@ -501,8 +511,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
     border-bottom: 1px dashed #dfdfdf;
 }
 
