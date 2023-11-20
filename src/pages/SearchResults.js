@@ -174,6 +174,8 @@ const SearchResults = () => {
         <div className="container">
           <div className="active_secFlex">
             <div className="activeR">
+            <div className="activeL_bg">
+              
               <div className="search_formSec">
                 <h4>Quick Search</h4>
                 <div className="search_gender">
@@ -239,6 +241,8 @@ const SearchResults = () => {
                   Search<i class="fas fa-search"></i>
                 </button>
               </div>
+              </div>
+{/*               
               <div className="member_stats">
                 <h4>Member Statistics</h4>
                 <div className="stats_flex">
@@ -315,7 +319,7 @@ const SearchResults = () => {
                   Join Now<i class="fas fa-long-arrow-alt-right"></i>
                 </button>
                 }
-              </div>
+              </div> */}
             </div>
             <div className="activeM" style={{ flex: "1" }}>
               <h3>Recently Joined</h3>
