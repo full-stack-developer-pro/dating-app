@@ -228,7 +228,7 @@ const Home = () => {
       data.free_message = "Hello world";
       data.is_verified = true;
       data.is_flagged = false;
-
+      data.photo = "https://example.com/path/to/photo.jpg";
       setLoading(true);
       await AuthService.register(data).then(
         () => {
@@ -368,39 +368,39 @@ const Home = () => {
     getTotalMembers();
   }, []);
 
-  let user_id = JSON.parse(localStorage.getItem("d_user"));
-  const sendFlirt = (e, _id) => {
-    if (auth) {
-      // e.preventDefault();
-      const data = {
-        senderId: user_id,
-        receiverId: _id,
-        message: "😃",
-        // flirtMessage: flirtMessage
-      };
-      socket.emit("chat_message", data);
-      // socket.on('chat_error', { message: 'Insufficient credits' });
-      setTimeout(() => { }, 1000);
-      setMessage("");
-    } else {
-      toast.error("Please Login First !!");
-    }
-  };
-  socket.on("chat_error", (message) => {
-    toast.error(message.message);
-    setTimeout(() => { }, 2000);
-  });
+  // let user_id = JSON.parse(localStorage.getItem("d_user"));
+  // const sendFlirt = (e, _id) => {
+  //   if (auth) {
+  //     // e.preventDefault();
+  //     const data = {
+  //       senderId: user_id,
+  //       receiverId: _id,
+  //       message: "😃",
+  //       // flirtMessage: flirtMessage
+  //     };
+  //     socket.emit("chat_message", data);
+  //     // socket.on('chat_error', { message: 'Insufficient credits' });
+  //     setTimeout(() => { }, 1000);
+  //     setMessage("");
+  //   } else {
+  //     toast.error("Please Login First !!");
+  //   }
+  // };
+  // socket.on("chat_error", (message) => {
+  //   toast.error(message.message);
+  //   setTimeout(() => { }, 2000);
+  // });
 
-  socket.on("new_message", (data) => {
-    setTimeout(() => { }, 1000);
-    console.log("Received message:", data);
-    console.log(data);
-  });
+  // socket.on("new_message", (data) => {
+  //   setTimeout(() => { }, 1000);
+  //   console.log("Received message:", data);
+  //   console.log(data);
+  // });
 
-  const setUser = () => {
-    let user_id = JSON.parse(localStorage.getItem("d_user"));
-    socket.emit("user_added", user_id);
-  };
+  // const setUser = () => {
+  //   let user_id = JSON.parse(localStorage.getItem("d_user"));
+  //   socket.emit("user_added", user_id);
+  // };
 
   return (
     <>
@@ -863,7 +863,7 @@ const Home = () => {
           <div className="active_secFlex">
             <div className="activeL">
               <div className="activeL_bg">
-                <ul>
+                {/* <ul>
                   <li>
                     <i class="fas fa-check-circle"></i>Find real local sex contacts
                   </li>
@@ -885,7 +885,7 @@ const Home = () => {
                   <li>
                     <i class="fas fa-check-circle"></i>100% anonymous
                   </li>
-                </ul>
+                </ul> */}
                 <h4>Who is Online</h4>
                 <div className="online_profiles">
                   <Link to="/chats">
@@ -1002,9 +1002,9 @@ const Home = () => {
                               <button>
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button>
-                              <button onClick={() => sendFlirt(item._id)}>
+                              {/* <button onClick={() => sendFlirt(item._id)}>
                                 Send Flirt<i className="fas fa-heart"></i>
-                              </button>
+                              </button> */}
                               {auth && (
                                 <button>
                                   <Link to={"/chats/" + item._id}>
@@ -1057,7 +1057,7 @@ const Home = () => {
                           name="searchgender"
                           id="gender_all_search"
                           value="all"
-                          checked={selectedGenderSearch === "all"}
+                          checked={selectedGenderSearch === "sd"}
                           onChange={SearchHandleSelection}
                         />
                         <label class="form-check-label" for="gender_all_search">
@@ -1071,7 +1071,7 @@ const Home = () => {
                           name="searchgender"
                           id="gender_male_search"
                           value="male"
-                          checked={selectedGenderSearch === "male"}
+                          checked={selectedGenderSearch === "sd"}
                           onChange={SearchHandleSelection}
                         />
                         <label class="form-check-label" for="gender_male_search">
@@ -1085,7 +1085,7 @@ const Home = () => {
                           name="searchgender"
                           id="gender_female_search"
                           value="female"
-                          checked={selectedGenderSearch === "female"}
+                          checked={selectedGenderSearch === "sdd"}
                           onChange={SearchHandleSelection}
                         />
                         <label class="form-check-label" for="gender_female_search">
@@ -1118,7 +1118,7 @@ const Home = () => {
                   Search<i class="fas fa-search"></i>
                 </button> */}
                 </div>
-                <div className="member_stats">
+                {/* <div className="member_stats">
                   <h4>Member Statistics</h4>
                   <div className="stats_flex">
                     <div className="statsL">
@@ -1194,10 +1194,10 @@ const Home = () => {
                       Join Now<i class="fas fa-long-arrow-alt-right"></i>
                     </button>
                   }
-                </div>
+                </div> */}
               </div>
 
-              <div className="activeL_bg" style={{marginTop:"10px"}}>
+              {/* <div className="activeL_bg" style={{marginTop:"10px"}}>
                 <div className="member_stats">
                   <h4>Popular searchs</h4>
                 </div>
@@ -1209,8 +1209,8 @@ const Home = () => {
                   <p>Australia</p>
                   <p>Antigua and Barbuda</p>
                 </div>
-              </div>
-   
+              </div> */}
+
             </div>
           </div>
         </div>
@@ -1269,8 +1269,13 @@ const Home = () => {
               )}
             </div>
           </div>
+          <div className="new_line">
+          <p style={{color:"white",marginTop:"10px", marginBottom:"10px"}}>Persons appearing in photographs and videos may not be actual members. Other data for illustrative purposes only. MilfHub.co.uk does not conduct criminal background screening of its members.</p>
+        </div>
         </div>
       </section>
+
+   
       {/* <section className="profiles_section">
         <div className="container">
           <div className="profiles_mainSec">
