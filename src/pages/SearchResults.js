@@ -38,6 +38,7 @@ const SearchResults = () => {
   const [gender, setGender] = useState("male");
   const [members, setMembers] = useState([])
 
+  const [cities, setCities] = useState([]);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
@@ -45,6 +46,11 @@ const SearchResults = () => {
   const param1 = queryParams.get('param1');
   const param2 = queryParams.get('param2');
 
+  const getCity = async () => {
+    await DataService.getCities().then((data) => {
+      setCities(data?.data?.data);
+    });
+  };
   useEffect(()=>{
     setGender(param1)
     setCountry(param2)
@@ -57,6 +63,7 @@ const SearchResults = () => {
     });
   };
   useEffect(() => {
+    getCity()
     getTotalMembers()
   }, []);
 
@@ -64,6 +71,7 @@ const SearchResults = () => {
     await DataService.searchUsers(param1, param2).then(
       (data) => {
         setUsers(data?.data?.data);
+        console.log(data?.data?.data)
         ref.current.complete();
         toast.success("Data Searched");
       },
@@ -318,11 +326,20 @@ const SearchResults = () => {
                   <label>
                     <strong>Select Location</strong>
                   </label>
-                  <ReactFlagsSelect
+                  <select id="citySelect" value={country} onChange={(e)=>setCountry(e.target.value)}>
+                            <option value="">Select a City/Town</option>
+                            {cities.map((city, index) => (
+                              <option key={index} value={city.city}>
+                                {city.city}
+                              </option>
+                            ))}
+                          </select>
+
+                  {/* <ReactFlagsSelect
                     selected={country}
                     onSelect={(code) => setCountry(code)}
                     required
-                  />
+                  /> */}
                 </div>
                 <div className="button_search">
                 <button className="search_submit" onClick={searchData}>

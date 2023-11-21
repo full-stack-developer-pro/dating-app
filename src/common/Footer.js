@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../images/dating-app-logo-dark.jpg";
+import Logo from "../images/dating-app-logo.png";
 import { Link } from "react-router-dom";
 import "../customCss/Footer.css";
 import DataService from "../services/data.service";
@@ -107,6 +107,9 @@ const Footer = () => {
             </div>
           </div>
           <div className="footer_bottomBar">
+          <div className="new_line">
+            <p style={{ color: "white", marginTop: "10px", marginBottom: "10px" }}>Persons appearing in photographs and videos may not be actual members. Other data for illustrative purposes only. MilfHub.co.uk does not conduct criminal background screening of its members.</p>
+          </div>
             <p>
               Disclaimer: This website contains adult material, all members and
               persons appearing on this site have contractually represented to

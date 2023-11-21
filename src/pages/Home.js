@@ -44,6 +44,8 @@ const Home = () => {
   const today = new Date().toISOString().split("T")[0];
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [cities, setCities] = useState([]);
+
   const [signup, setSignUp] = useState(false);
   const [login, setLogin] = useState(false);
   const [stepOne, setStepOne] = useState(true);
@@ -55,7 +57,6 @@ const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState();
-  const [cities, setCities] = useState();
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -359,18 +360,23 @@ const Home = () => {
       setMembers(data?.data);
     });
   };
+  const getCity = async () => {
+    await DataService.getCities().then((data) => {
+      setCities(data?.data?.data);
+    });
+  };
 
-
+console.log(cities)
 
 
 
   useEffect(() => {
+    getCity()
+
     getTotalMembers();
   }, []);
 
   useEffect(() => {
-
-
     getTop();
     getMiddle();
     getSecondLast();
@@ -504,15 +510,24 @@ const Home = () => {
                           />
                           <label for="floatingInput">My Age</label>
                         </div>
-                        <div className="form_field country mb-3">
+                        <div className="form_field country mb-3 new_city">
                           <label>
                             <strong>My Location</strong>
                           </label>
-                          <ReactFlagsSelect
+                          <select id="citySelect" onChange={(e)=>setCountry(e.target.value)}>
+                            <option value="">Select a City/Town</option>
+                            {cities.map((city, index) => (
+                              <option key={index} value={city.city}>
+                                {city.city}
+                              </option>
+                            ))}
+                          </select>
+
+                          {/* <ReactFlagsSelect
                             selected={country}
                             onSelect={(code) => setCountry(code)}
                             required
-                          />
+                          /> */}
                         </div>
                         <div class="form-check">
                           <input
@@ -923,81 +938,89 @@ const Home = () => {
 
             <div className="activeM">
               <div className="search_formSec">
-                  <h4>Quick Search</h4>
+                <h4>Quick Search</h4>
 
-                  <div className="search_main">
-                <div className="search_gender_inner">
+                <div className="search_main">
+                  <div className="search_gender_inner">
 
-                      <p>
-                        <strong>My Gender</strong>
-                      </p>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="searchgender"
-                          id="gender_all_search"
-                          value="all"
-                          checked={selectedGenderSearch === "all"}
-                          onChange={SearchHandleSelection}
-                        />
-                        <label class="form-check-label" for="gender_all_search">
-                          All
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="searchgender"
-                          id="gender_male_search"
-                          value="male"
-                          checked={selectedGenderSearch === "male"}
-                          onChange={SearchHandleSelection}
-                        />
-                        <label class="form-check-label" for="gender_male_search">
-                          Male
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="searchgender"
-                          id="gender_female_search"
-                          value="female"
-                          checked={selectedGenderSearch === "female"}
-                          onChange={SearchHandleSelection}
-                        />
-                        <label class="form-check-label" for="gender_female_search">
-                          Female
-                        </label>
-                      </div>
-                 
+                    <p>
+                      <strong>My Gender</strong>
+                    </p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="searchgender"
+                        id="gender_all_search"
+                        value="all"
+                        checked={selectedGenderSearch === "all"}
+                        onChange={SearchHandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_all_search">
+                        All
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="searchgender"
+                        id="gender_male_search"
+                        value="male"
+                        checked={selectedGenderSearch === "male"}
+                        onChange={SearchHandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_male_search">
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="searchgender"
+                        id="gender_female_search"
+                        value="female"
+                        checked={selectedGenderSearch === "female"}
+                        onChange={SearchHandleSelection}
+                      />
+                      <label class="form-check-label" for="gender_female_search">
+                        Female
+                      </label>
+                    </div>
+
                   </div>
-                  <div className="form_field country mb-3 search_m">
+                  <div className="form_field country mb-3 search_m ">
                     <label>
                       <strong>Select Location</strong>
                     </label>
-                    <ReactFlagsSelect
+                    <select id="citySelect" onChange={(e)=>setSearchCountry(e.target.value)}>
+                            <option value="">Select a City/Town</option>
+                            {cities.map((city, index) => (
+                              <option key={index} value={city.city}>
+                                {city.city}
+                              </option>
+                            ))}
+                          </select>
+                    {/* <ReactFlagsSelect
                       placeholder="Select a Town or City"
                       selected={searchCountry}
                       onSelect={(code) => setSearchCountry(code)}
                       required
-                    />
+                    /> */}
                   </div>
                   <div className="button_search">
-                  <Link
-                    className="search_submit"
-                    to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
-                  >
-                    Search<i class="fas fa-search"></i>
-                  </Link>
+                    <Link
+                      className="search_submit"
+                      to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
+                    >
+                      Search<i class="fas fa-search"></i>
+                    </Link>
                   </div>
                 </div>
 
-                 
-                </div>
+
+              </div>
               {/* <h3>Recently Joined</h3>
               <div className="active_recent">
                 <Link to="/single-profile">
@@ -1349,13 +1372,11 @@ const Home = () => {
               )}
             </div>
           </div>
-          <div className="new_line">
-          <p style={{color:"white",marginTop:"10px", marginBottom:"10px"}}>Persons appearing in photographs and videos may not be actual members. Other data for illustrative purposes only. MilfHub.co.uk does not conduct criminal background screening of its members.</p>
-        </div>
+         
         </div>
       </section>
 
-   
+
       {/* <section className="profiles_section">
         <div className="container">
           <div className="profiles_mainSec">
