@@ -96,7 +96,7 @@ const UploadProfileImage = (id, data) => {
   return axios.post(API_URL + "api/uploadGalleryImages/" + id, data);
 };
 const getCities = () => {
-  return axios.get("http://api.geonames.org/searchJSON?country=GB&featureClass=P&username=ingenioushitech2580");
+  return axios.get(API_URL +"api/getCountryCities/GB");
 }
 const DataService = {
   UploadProfileImage,
