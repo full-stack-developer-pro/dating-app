@@ -179,6 +179,7 @@ const SearchResults = () => {
              
 
 
+
               </div> */}
 {/*               
               <div className="member_stats">
@@ -262,6 +263,7 @@ const SearchResults = () => {
             <div className="activeM" style={{ flex: "1" }}>
             <div className="search_formSec">
                 <h4>Quick Search</h4>
+                
                 
                 <div className="search_main">
                 <div className="search_gender_inner">
