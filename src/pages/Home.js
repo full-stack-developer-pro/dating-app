@@ -26,6 +26,7 @@ import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
 import { io } from "socket.io-client";
+import axios from "axios";
 
 const Home = () => {
   const socket = io("https://dating-app-backend-xyrj.onrender.com");
@@ -39,6 +40,7 @@ const Home = () => {
     getAllUsers();
   }, []);
   const userId = JSON.parse(localStorage.getItem("d_user"));
+
   const today = new Date().toISOString().split("T")[0];
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -53,6 +55,7 @@ const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState();
+  const [cities, setCities] = useState();
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -356,11 +359,18 @@ const Home = () => {
       setMembers(data?.data);
     });
   };
+
+
+
+
+
   useEffect(() => {
     getTotalMembers();
   }, []);
 
   useEffect(() => {
+
+
     getTop();
     getMiddle();
     getSecondLast();
@@ -861,9 +871,9 @@ const Home = () => {
       <section className="active_profilesSec">
         <div className="container">
           <div className="active_secFlex">
-            <div className="activeL">
+            {/* <div className="activeL">
               <div className="activeL_bg">
-                {/* <ul>
+                <ul>
                   <li>
                     <i class="fas fa-check-circle"></i>Find real local sex contacts
                   </li>
@@ -885,7 +895,7 @@ const Home = () => {
                   <li>
                     <i class="fas fa-check-circle"></i>100% anonymous
                   </li>
-                </ul> */}
+                </ul>
                 <h4>Who is Online</h4>
                 <div className="online_profiles">
                   <Link to="/chats">
@@ -908,11 +918,87 @@ const Home = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </div> */}
 
 
             <div className="activeM">
-              <h3>Recently Joined</h3>
+              <div className="search_formSec">
+                  <h4>Quick Search</h4>
+
+                  <div className="search_main">
+                <div className="search_gender_inner">
+
+                      <p>
+                        <strong>My Gender</strong>
+                      </p>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="searchgender"
+                          id="gender_all_search"
+                          value="all"
+                          checked={selectedGenderSearch === "all"}
+                          onChange={SearchHandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_all_search">
+                          All
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="searchgender"
+                          id="gender_male_search"
+                          value="male"
+                          checked={selectedGenderSearch === "male"}
+                          onChange={SearchHandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_male_search">
+                          Male
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="searchgender"
+                          id="gender_female_search"
+                          value="female"
+                          checked={selectedGenderSearch === "female"}
+                          onChange={SearchHandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_female_search">
+                          Female
+                        </label>
+                      </div>
+                 
+                  </div>
+                  <div className="form_field country mb-3 search_m">
+                    <label>
+                      <strong>Select Location</strong>
+                    </label>
+                    <ReactFlagsSelect
+                      placeholder="Select a Town or City"
+                      selected={searchCountry}
+                      onSelect={(code) => setSearchCountry(code)}
+                      required
+                    />
+                  </div>
+                  <div className="button_search">
+                  <Link
+                    className="search_submit"
+                    to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
+                  >
+                    Search<i class="fas fa-search"></i>
+                  </Link>
+                  </div>
+                </div>
+
+                 
+                </div>
+              {/* <h3>Recently Joined</h3>
               <div className="active_recent">
                 <Link to="/single-profile">
                   <div className="active_rInner">
@@ -938,7 +1024,7 @@ const Home = () => {
                     <h4>Emily W.</h4>
                   </div>
                 </Link>
-              </div>
+              </div> */}
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
                   users.slice(0, displayCount).map((item, i) => {
@@ -1040,7 +1126,7 @@ const Home = () => {
             </div>
 
 
-            <div className="activeR">
+            {/* <div className="activeR">
               <div className="activeL_bg">
 
                 <div className="search_formSec">
@@ -1057,7 +1143,7 @@ const Home = () => {
                           name="searchgender"
                           id="gender_all_search"
                           value="all"
-                          checked={selectedGenderSearch === "sd"}
+                          checked={selectedGenderSearch === "all"}
                           onChange={SearchHandleSelection}
                         />
                         <label class="form-check-label" for="gender_all_search">
@@ -1071,7 +1157,7 @@ const Home = () => {
                           name="searchgender"
                           id="gender_male_search"
                           value="male"
-                          checked={selectedGenderSearch === "sd"}
+                          checked={selectedGenderSearch === "male"}
                           onChange={SearchHandleSelection}
                         />
                         <label class="form-check-label" for="gender_male_search">
@@ -1085,7 +1171,7 @@ const Home = () => {
                           name="searchgender"
                           id="gender_female_search"
                           value="female"
-                          checked={selectedGenderSearch === "sdd"}
+                          checked={selectedGenderSearch === "female"}
                           onChange={SearchHandleSelection}
                         />
                         <label class="form-check-label" for="gender_female_search">
@@ -1111,14 +1197,9 @@ const Home = () => {
                   >
                     Search<i class="fas fa-search"></i>
                   </Link>
-                  {/* <button
-                  className="search_submit"
-                  onClick={() => navigate("/search-results")}
-                >
-                  Search<i class="fas fa-search"></i>
-                </button> */}
+                 
                 </div>
-                {/* <div className="member_stats">
+                <div className="member_stats">
                   <h4>Member Statistics</h4>
                   <div className="stats_flex">
                     <div className="statsL">
@@ -1194,10 +1275,10 @@ const Home = () => {
                       Join Now<i class="fas fa-long-arrow-alt-right"></i>
                     </button>
                   }
-                </div> */}
+                </div>
               </div>
 
-              {/* <div className="activeL_bg" style={{marginTop:"10px"}}>
+              <div className="activeL_bg" style={{marginTop:"10px"}}>
                 <div className="member_stats">
                   <h4>Popular searchs</h4>
                 </div>
@@ -1209,9 +1290,8 @@ const Home = () => {
                   <p>Australia</p>
                   <p>Antigua and Barbuda</p>
                 </div>
-              </div> */}
-
-            </div>
+              </div>
+            </div> */}
           </div>
         </div>
       </section>

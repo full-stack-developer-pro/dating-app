@@ -173,75 +173,13 @@ const SearchResults = () => {
       <section className="active_profilesSec">
         <div className="container">
           <div className="active_secFlex">
-            <div className="activeR">
-            <div className="activeL_bg">
+            {/* <div className="activeR mb-2"> */}
+            {/* <div className="activeL_bg">
               
-              <div className="search_formSec">
-                <h4>Quick Search</h4>
-                <div className="search_gender">
-                  <div className="form_field mb-3">
-                    <p>
-                      <strong>My Gender</strong>
-                    </p>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="gender_male"
-                        value="male"
-                        checked={gender === "male"}
-                        onChange={handleGenderChange}
-                      />
-                      <label class="form-check-label" for="gender_male">
-                        Male
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="gender_female"
-                        value="female"
-                        checked={gender === "female"}
-                        onChange={handleGenderChange}
-                      />
-                      <label class="form-check-label" for="gender_female">
-                        Female
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="gender_other"
-                        value="All"
-                        checked={gender === "All"}
-                        onChange={handleGenderChange}
-                      />
-                      <label class="form-check-label" for="gender_other">
-                        Other
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="form_field country mb-3">
-                  <label>
-                    <strong>Select Location</strong>
-                  </label>
-                  <ReactFlagsSelect
-                    selected={country}
-                    onSelect={(code) => setCountry(code)}
-                    required
-                  />
-                </div>
-                <button className="search_submit" onClick={searchData}>
-                  Search<i class="fas fa-search"></i>
-                </button>
-              </div>
-              </div>
+             
+
+
+              </div> */}
 {/*               
               <div className="member_stats">
                 <h4>Member Statistics</h4>
@@ -320,9 +258,78 @@ const SearchResults = () => {
                 </button>
                 }
               </div> */}
-            </div>
+            {/* </div> */}
             <div className="activeM" style={{ flex: "1" }}>
-              <h3>Recently Joined</h3>
+            <div className="search_formSec">
+                <h4>Quick Search</h4>
+                
+                <div className="search_main">
+                <div className="search_gender_inner">
+                    <p>
+                      <strong>My Gender</strong>
+                    </p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_male"
+                        value="male"
+                        checked={gender === "male"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_male">
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_female"
+                        value="female"
+                        checked={gender === "female"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_female">
+                        Female
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_other"
+                        value="All"
+                        checked={gender === "All"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_other">
+                        Other
+                      </label>
+                    </div>
+                  </div>
+             
+                <div className="form_field country mb-3 search_m">
+                  <label>
+                    <strong>Select Location</strong>
+                  </label>
+                  <ReactFlagsSelect
+                    selected={country}
+                    onSelect={(code) => setCountry(code)}
+                    required
+                  />
+                </div>
+                <div className="button_search">
+                <button className="search_submit" onClick={searchData}>
+                  Search<i class="fas fa-search"></i>
+                </button>
+                </div>
+              </div>
+              </div>
+              {/* <h3>Recently Joined</h3>
               <div className="active_recent">
                 <Link to="/single-profile">
                   <div className="active_rInner">
@@ -348,8 +355,10 @@ const SearchResults = () => {
                     <h4>Emily W.</h4>
                   </div>
                 </Link>
-              </div>
+              </div> */}
 
+
+              <div className="active_mainArea">
               {users && users.length > 0 ? (
                 users.map((item, i) => {
                   if (item?._id !== userId) {
@@ -427,6 +436,7 @@ const SearchResults = () => {
               ) : (
                 <p>No Data Found</p>
               )}
+              </div>
               {!auth && 
               <button
                 className="main_button my-4"
@@ -435,6 +445,7 @@ const SearchResults = () => {
                 Create Account<i class="fas fa-long-arrow-alt-right"></i>
               </button>
               }
+
             </div>
           </div>
         </div>
