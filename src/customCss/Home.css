@@ -10,7 +10,37 @@
     align-items: center;
     justify-content: center;
 }
+.search_gender_inner {
+    width: 35%;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
 
+}
+.search_gender_inner p {
+    margin-bottom: 0px;
+    margin-right: 10px;
+}
+.search_m .ReactFlagsSelect-module_flagsSelect__2pfa2 {
+    width: 70%;
+}
+
+.search_m {
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+.search_m label {
+    margin-right: 18px;
+}
+.button_search {
+    width: 25%;
+}
+.search_main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .locations_area {
     display: flex;
     flex-wrap: wrap;
@@ -203,7 +233,7 @@
 }
 
 .active_secFlex .activeM {
-    width: 53%;
+    width: 100%;
     text-align: center;
     margin: 0% 1%;
     background: #fff;
@@ -259,7 +289,7 @@
     background: ghostwhite;
     margin-bottom: 15px;
     position: relative;
-    width: 48%;
+    width: 31%;
 }
 .active_mainProfile .add_friend{
     position: absolute;
@@ -915,6 +945,32 @@
 }
 
 @media screen and (max-width: 767px) {
+    .search_main {
+        flex-direction: column;
+    }
+    .search_gender_inner {
+        width: 100%;
+        justify-content: center;
+    }
+    .button_search{
+        width: 100%;
+    }
+    .search_m .ReactFlagsSelect-module_flagsSelect__2pfa2 {
+        width: 60%;
+    }
+    .search_m {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* flex-direction: column; */
+    }
+    .active_mainArea {
+        flex-direction: column;
+    }
+    .active_mainProfile {
+        width: 100%;
+    }
     .content_sec button{
         margin: auto;
     }

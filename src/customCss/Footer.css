@@ -80,16 +80,18 @@
 
 
 .footer_FSec {
-    background: url(../images/abstractTwo.jpg);
+    /* background: url(../images/abstractTwo.jpg); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    padding: 60px 10px 0px 10px;
+    padding: 40px 10px 0px 10px;
+    background: linear-gradient(to right, #300243, #15021b);
 }
-
 .footer_FFlex {
     display: flex;
     justify-content: space-between;
+    border-top: 1px solid #fff;
+    padding-top: 40px;
 }
 
 .footer_FFlex ul {
@@ -107,7 +109,7 @@
 
 .footer_FFlex ul li a {
     text-decoration: none;
-    color: #000;
+    color: #fff;
 }
 
 .footer_FFlex ul li a i {
@@ -136,13 +138,20 @@
 
 .footer_bottomBar {
     text-align: center;
-    border-top: 1px solid #000;
+    border-top: 1px solid #fff;
     margin-top: 40px;
     padding: 15px 0px;
 }
 
 .footer_bottomBar p {
     margin: 0;
+    color: #fff;
+}
+.footer_FR h5 {
+    color: #fff;
+}
+.footer_FM h5 {
+    color: #fff;
 }
 @media screen and (max-width: 662px) {
     .footer_flex {
@@ -167,9 +176,6 @@
     }
 
     .footer_FSec {
-        background: url(../images/abstractTwo.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
         background-position: center;
         padding: 60px 10px 0px 10px;
     }
@@ -193,7 +199,7 @@
 
     .footer_FFlex ul li a {
         text-decoration: none;
-        color: #000;
+        color: #fff;
     }
 
     .footer_FFlex ul li a i {
