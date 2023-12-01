@@ -8,22 +8,22 @@ const Footer = () => {
   const [contactData, setContactData] = useState([]);
   const [socialLinks, setSocialLinks] = useState([]);
 
-  const getContactData = async () => {
-    await DataService.getContactUs().then((data) => {
-      const catData = data.data.data[0];
-      setContactData(catData);
-    });
-  };
-  const getSocialLinks = async () => {
-    await DataService.getSocialLinks().then((data) => {
-      const catData = data.data.data[0];
-      setSocialLinks(catData);
-    });
-  };
+  // const getContactData = async () => {
+  //   await DataService.getContactUs().then((data) => {
+  //     const catData = data.data.data[0];
+  //     setContactData(catData);
+  //   });
+  // };
+  // const getSocialLinks = async () => {
+  //   await DataService.getSocialLinks().then((data) => {
+  //     const catData = data.data.data[0];
+  //     setSocialLinks(catData);
+  //   });
+  // };
 
   useEffect(() => {
-    getContactData();
-    getSocialLinks();
+    // getContactData();
+    // getSocialLinks();
   }, []);
   return (
     <>

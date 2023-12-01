@@ -25,11 +25,12 @@ import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import axios from "axios";
+import MultiRangeSlider from "multi-range-slider-react";
 
 const Home = () => {
-  const socket = io("https://dating-app-backend-xyrj.onrender.com");
+  // const socket = new WebSocket("ws://api.digitalmarketingcoursesinchandigarh.in:9091");
 
   const ref = useRef(null);
   const auth = AuthService.getCurrentUser();
@@ -96,7 +97,11 @@ const Home = () => {
   const [selectedGenderSearch, setSelectedGenderSearch] = useState("All");
   const [members, setMembers] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
+  const [ageGroup, setAgeGroup] = useState({ minValue: 15, maxValue: 50 });
 
+  const handleSliderChange = ({ minValue, maxValue }) => {
+    setAgeGroup({  minValue, maxValue });
+  };
 
   const handleViewAllClick = () => {
     setDisplayCount(users.length);
@@ -108,9 +113,13 @@ const Home = () => {
   const SearchHandleSelection = (e) => {
     setSelectedGenderSearch(e.target.value);
   };
+  //  const ageGroupString = `${ageGroup.minValue}-${ageGroup.maxValue}`;
+
   const myStateData = {
     key1: selectedGender,
     key2: searchCountry,
+    key3 : ageGroup.minValue,
+    key4 : ageGroup.maxValue,
   };
 
   const handleInputChange = (e) => {
@@ -263,10 +272,11 @@ const Home = () => {
 
   const getAllUsers = async () => {
     await DataService.getAllUsers().then((data) => {
-      setUsers(data?.data?.data);
+      setUsers(data?.data?.data?.users);
       ref.current.complete();
     });
   };
+  console.log(users)
 
   const addFriend = async (id) => {
     const data = {};
@@ -331,30 +341,30 @@ const Home = () => {
     }
   }, [userId]);
 
-  const getTop = async () => {
-    await DataService.getTopBanner().then((data) => {
-      setTopBanner(data?.data?.data[0]);
-      ref.current.complete();
-    });
-  };
-  const getMiddle = async () => {
-    await DataService.getMiddleBanner().then((data) => {
-      setMiddleBanner(data?.data?.data[0]);
-      ref.current.complete();
-    });
-  };
-  const getSecondLast = async () => {
-    await DataService.getSecondLastBanner().then((data) => {
-      setSecondLastBanner(data?.data?.data[0]);
-      ref.current.complete();
-    });
-  };
-  const getLast = async () => {
-    await DataService.getLastBanner().then((data) => {
-      setlLastBanner(data?.data?.data[0]);
-      ref.current.complete();
-    });
-  };
+  // const getTop = async () => {
+  //   await DataService.getTopBanner().then((data) => {
+  //     setTopBanner(data?.data?.data[0]);
+  //     ref.current.complete();
+  //   });
+  // };
+  // const getMiddle = async () => {
+  //   await DataService.getMiddleBanner().then((data) => {
+  //     setMiddleBanner(data?.data?.data[0]);
+  //     ref.current.complete();
+  //   });
+  // };
+  // const getSecondLast = async () => {
+  //   await DataService.getSecondLastBanner().then((data) => {
+  //     setSecondLastBanner(data?.data?.data[0]);
+  //     ref.current.complete();
+  //   });
+  // };
+  // const getLast = async () => {
+  //   await DataService.getLastBanner().then((data) => {
+  //     setlLastBanner(data?.data?.data[0]);
+  //     ref.current.complete();
+  //   });
+  // };
   const getTotalMembers = async () => {
     await DataService.getMembers().then((data) => {
       setMembers(data?.data);
@@ -366,7 +376,6 @@ const Home = () => {
     });
   };
 
-console.log(cities)
 
 
 
@@ -377,10 +386,10 @@ console.log(cities)
   }, []);
 
   useEffect(() => {
-    getTop();
-    getMiddle();
-    getSecondLast();
-    getLast();
+    // getTop();
+    // getMiddle();
+    // getSecondLast();
+    // getLast();
     getTotalMembers();
   }, []);
 
@@ -1009,10 +1018,22 @@ console.log(cities)
                       required
                     /> */}
                   </div>
+                  <div className="range_Age">
+                  <label>
+                      <strong>Select Age</strong>
+                    </label>
+                  <MultiRangeSlider
+                    min={18}
+                    max={45}
+                    minValue={ageGroup.minValue}
+                    maxValue={ageGroup.maxValue}
+                    onChange={handleSliderChange}
+                  />
+                  </div>
                   <div className="button_search">
                     <Link
                       className="search_submit"
-                      to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
+                      to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}&param3=${myStateData.key3}&param4=${myStateData.key4}`}
                     >
                       Search<i class="fas fa-search"></i>
                     </Link>
@@ -1048,6 +1069,7 @@ console.log(cities)
                   </div>
                 </Link>
               </div> */}
+               
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
                   users.slice(0, displayCount).map((item, i) => {

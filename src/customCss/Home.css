@@ -10,6 +10,22 @@
     align-items: center;
     justify-content: center;
 }
+.multi-range-slider .ruler {
+    display: none!important;
+}
+.range_Age {
+    width: 16%;
+}
+.multi-range-slider {
+    border: solid 1px gray;
+    border-radius: 6px !important;
+    padding: 17px 10px !important;
+    box-shadow: none !important;
+}
+.multi-range-slider .bar-inner {
+    background: linear-gradient(to right, #ef48b5, #F209E1) !important;
+    box-shadow: none !important;
+}
 .new_city {
     display: flex;
     flex-direction: column;
@@ -31,9 +47,7 @@
     min-height: 50px;
 }
 .search_gender_inner {
-    width: 35%;
-    display: flex;
-    align-items: center;
+    width: 30%;
     padding-left: 30px;
 
 }
@@ -46,13 +60,14 @@
 }
 
 .search_m {
-    width: 40%;
+    width: 28%;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 .search_m select#citySelect {
-    padding: 10px 10px;
-    width: 50%;
+    padding: 15px 10px;
+    width: 100%;
     outline: none;
     border-radius: 5px;
     display: flex;
@@ -63,7 +78,7 @@
     margin-right: 18px;
 }
 .button_search {
-    width: 25%;
+    width: 19%;
 }
 .search_main {
     display: flex;
@@ -383,14 +398,15 @@
     color: #ef48b5;
     font-size: 12px;
 }
-
 .active_mainR p {
     margin: 0;
     border-top: 1px dashed #dfdfdf;
     padding-top: 5px;
     margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
 .active_mainL img {
     width: 100%;
     border-radius: 5px;
@@ -561,6 +577,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 20px;
 }
 
 .search_formSec .search_submit i {
@@ -1048,7 +1065,7 @@
 
     .main_button {
         font-size: 14px;
-        padding: 10px 25px;
+        padding: 6px 10px;
     }
 
     .main_button i {
@@ -1059,7 +1076,7 @@
 
     .main_buttonTwo {
         font-size: 14px;
-        padding: 10px 25px;
+        padding: 6px 10px;
     }
 
     .main_buttonTwo i {
@@ -1069,7 +1086,7 @@
     }
 
     .navbarL img {
-        width: 160px;
+        width: 140px;
     }
 
     .navbar_flex {

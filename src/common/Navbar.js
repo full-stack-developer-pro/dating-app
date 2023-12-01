@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import ReactFlagsSelect from "react-flags-select";
 import Logo from "../images/dating-app-logo.png";
 import "../customCss/Navbar.css";
-import TimezoneSelect from "react-timezone-select";
-import Hobby from "../pages/Hobby";
 import OP from "../images/dating-banner.jpg";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
@@ -11,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const auth = AuthService.getCurrentUser();
+  const auth = AuthService.getCurrentUserTokken();
   const navigate = useNavigate();
   // const [loading, setLoading] = useState(false);
   const [signup, setSignUp] = useState(false);
@@ -187,7 +184,6 @@ const Navbar = () => {
             navigate("/profile");
             window.location.reload();
           },2000)
-         
         },
         (error) => {
           const resMessage =
