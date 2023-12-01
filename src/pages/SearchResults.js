@@ -26,6 +26,7 @@ import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
 import { useLocation } from 'react-router-dom';
+import MultiRangeSlider from "multi-range-slider-react";
 
 const SearchResults = () => {
   const [users, setUsers] = useState([]);
@@ -45,18 +46,28 @@ const SearchResults = () => {
   // Access the state data
   const param1 = queryParams.get('param1');
   const param2 = queryParams.get('param2');
+  const param3 = queryParams.get('param3')
+  const param4 = queryParams.get('param4')
 
+
+  const [ageGroup, setAgeGroup] = useState({ minValue: 15, maxValue: 50 });
+
+  const handleSliderChange = ({ minValue, maxValue }) => {
+    setAgeGroup({  minValue, maxValue });
+  };
   const getCity = async () => {
     await DataService.getCities().then((data) => {
       setCities(data?.data?.data);
     });
   };
-  useEffect(()=>{
+  useEffect(() => {
     setGender(param1)
     setCountry(param2)
+    setAgeGroup({minValue:param3})
+    setAgeGroup({maxValue:param4})
     // searchData();
 
-  },[])
+  }, [])
   const getTotalMembers = async () => {
     await DataService.getMembers().then((data) => {
       setMembers(data?.data);
@@ -68,7 +79,7 @@ const SearchResults = () => {
   }, []);
 
   const getsearchData = async () => {
-    await DataService.searchUsers(param1, param2).then(
+    await DataService.searchUsers(param1, param2, param3, param4).then(
       (data) => {
         setUsers(data?.data?.data);
         console.log(data?.data?.data)
@@ -189,7 +200,7 @@ const SearchResults = () => {
 
 
               </div> */}
-{/*               
+            {/*               
               <div className="member_stats">
                 <h4>Member Statistics</h4>
                 <div className="stats_flex">
@@ -269,12 +280,12 @@ const SearchResults = () => {
               </div> */}
             {/* </div> */}
             <div className="activeM" style={{ flex: "1" }}>
-            <div className="search_formSec">
+              <div className="search_formSec">
                 <h4>Quick Search</h4>
-                
-                
+
+
                 <div className="search_main">
-                <div className="search_gender_inner">
+                  <div className="search_gender_inner">
                     <p>
                       <strong>My Gender</strong>
                     </p>
@@ -321,32 +332,44 @@ const SearchResults = () => {
                       </label>
                     </div>
                   </div>
-             
-                <div className="form_field country mb-3 search_m">
-                  <label>
-                    <strong>Select Location</strong>
-                  </label>
-                  <select id="citySelect" value={country} onChange={(e)=>setCountry(e.target.value)}>
-                            <option value="">Select a City/Town</option>
-                            {cities.map((city, index) => (
-                              <option key={index} value={city.city}>
-                                {city.city}
-                              </option>
-                            ))}
-                          </select>
 
-                  {/* <ReactFlagsSelect
+                  <div className="form_field country mb-3 search_m">
+                    <label>
+                      <strong>Select Location</strong>
+                    </label>
+                    <select id="citySelect" value={country} onChange={(e) => setCountry(e.target.value)}>
+                      <option value="">Select a City/Town</option>
+                      {cities.map((city, index) => (
+                        <option key={index} value={city.city}>
+                          {city.city}
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* <ReactFlagsSelect
                     selected={country}
                     onSelect={(code) => setCountry(code)}
                     required
                   /> */}
+                  </div>
+                  <div className="range_Age">
+                  <label>
+                      <strong>Select Age</strong>
+                    </label>
+                  <MultiRangeSlider
+                     min={18}
+                     max={45}
+                     minValue={ageGroup.minValue}
+                     maxValue={ageGroup.maxValue}
+                    onChange={handleSliderChange}
+                  />
+                  </div>
+                  <div className="button_search">
+                    <button className="search_submit" onClick={searchData}>
+                      Search<i class="fas fa-search"></i>
+                    </button>
+                  </div>
                 </div>
-                <div className="button_search">
-                <button className="search_submit" onClick={searchData}>
-                  Search<i class="fas fa-search"></i>
-                </button>
-                </div>
-              </div>
               </div>
               {/* <h3>Recently Joined</h3>
               <div className="active_recent">
@@ -378,91 +401,91 @@ const SearchResults = () => {
 
 
               <div className="active_mainArea">
-              {users && users.length > 0 ? (
-                users.map((item, i) => {
-                  if (item?._id !== userId) {
-                    const isFriend = profile?.friends?.some(
-                      (op) => op?.friends === item?._id
-                    );
-                    return (
-                      <div className="active_mainProfile" key={i}>
-                        <div className="active_mainFlex">
-                          <div className="active_mainL">
-                            <img src={ProfileOne} alt="" />
-                          </div>
-                          <div className="active_mainR">
-                            <h4>{item?.name}</h4>
-                            <span className="active_age">
-                              {item?.age}~
-                              {item?.gender === "male"
-                                ? "M"
-                                : item?.gender === "female"
-                                ? "F"
-                                : "Other"}
-                            </span>
-                            <span>
-                              <i className="fas fa-map-marker-alt"></i>
-                              {item?.city}, {item?.country}
-                            </span>
-                            <br />
-                            {auth ? (
-                              isFriend ? (
-                                <button
-                                  className="add_friend already_friend"
-                                  onClick={() => removeFriend(item?._id)}
-                                >
-                                  Remove Friend
-                                  <i className="fas fa-user-minus"></i>
-                                </button>
+                {users && users.length > 0 ? (
+                  users.map((item, i) => {
+                    if (item?._id !== userId) {
+                      const isFriend = profile?.friends?.some(
+                        (op) => op?.friends === item?._id
+                      );
+                      return (
+                        <div className="active_mainProfile" key={i}>
+                          <div className="active_mainFlex">
+                            <div className="active_mainL">
+                              <img src={ProfileOne} alt="" />
+                            </div>
+                            <div className="active_mainR">
+                              <h4>{item?.name}</h4>
+                              <span className="active_age">
+                                {item?.age}~
+                                {item?.gender === "male"
+                                  ? "M"
+                                  : item?.gender === "female"
+                                    ? "F"
+                                    : "Other"}
+                              </span>
+                              <span>
+                                <i className="fas fa-map-marker-alt"></i>
+                                {item?.city}, {item?.country}
+                              </span>
+                              <br />
+                              {auth ? (
+                                isFriend ? (
+                                  <button
+                                    className="add_friend already_friend"
+                                    onClick={() => removeFriend(item?._id)}
+                                  >
+                                    Remove Friend
+                                    <i className="fas fa-user-minus"></i>
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="add_friend"
+                                    onClick={() => addFriend(item?._id)}
+                                  >
+                                    Add Friend
+                                    <i className="fas fa-user-plus"></i>
+                                  </button>
+                                )
                               ) : (
-                                <button
-                                  className="add_friend"
-                                  onClick={() => addFriend(item?._id)}
-                                >
-                                  Add Friend
-                                  <i className="fas fa-user-plus"></i>
-                                </button>
-                              )
-                            ) : (
-                              ""
-                            )}
-                            <p>{item?.description}</p>
+                                ""
+                              )}
+                              <p>{item?.description}</p>
+                            </div>
+                          </div>
+                          <div className="active_actionSec">
+                            <button>
+                              <Link to={"/single-profile/" + item._id}>
+                                View<i className="fas fa-eye"></i>
+                              </Link>
+                            </button>
+                            <button>
+                              Like<i className="fas fa-thumbs-up"></i>
+                            </button>
+                            <button>
+                              Send Flirt<i className="fas fa-heart"></i>
+                            </button>
+                            <button>
+                              <Link to={"/chats/" + item._id}>
+                                Send Message<i class="fas fa-comment-alt"></i>
+                              </Link>
+                            </button>
                           </div>
                         </div>
-                        <div className="active_actionSec">
-                          <button>
-                            <Link to={"/single-profile/" + item._id}>
-                              View<i className="fas fa-eye"></i>
-                            </Link>
-                          </button>
-                          <button>
-                            Like<i className="fas fa-thumbs-up"></i>
-                          </button>
-                          <button>
-                            Send Flirt<i className="fas fa-heart"></i>
-                          </button>
-                          <button>
-                            <Link to={"/chats/" + item._id}>
-                              Send Message<i class="fas fa-comment-alt"></i>
-                            </Link>
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  }
-                  return null; // Skip rendering for the user's own profile
-                })
-              ) : (
-                <p>No Data Found</p>
-              )}
+                      );
+                    }
+                    return null; // Skip rendering for the user's own profile
+                  })
+                ) : (
+                  <p>No Data Found</p>
+                )}
               </div>
-              {!auth && 
-              <button
-                className="main_button my-4"
-                onClick={() => (window.location.href = "/#signup")}
-              >
-                Create Account<i class="fas fa-long-arrow-alt-right"></i>
-              </button>
+              {!auth &&
+                <button
+                  className="main_button my-4"
+                  onClick={() => (window.location.href = "/#signup")}
+                >
+                  Create Account<i class="fas fa-long-arrow-alt-right"></i>
+                </button>
               }
 
             </div>

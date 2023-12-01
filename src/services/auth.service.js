@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-const API_URL = (process.env.NODE_ENV != 'production' ? "http://51.20.124.172:3000/" : "http://51.20.124.172:3000/");
+const API_URL = (process.env.NODE_ENV != 'production' ? "http://api.digitalmarketingcoursesinchandigarh.in/" : "http://api.digitalmarketingcoursesinchandigarh.in/");
 
 const register = (data) => {
   return axios.post(API_URL + "api/user/signup", data);
@@ -8,14 +8,14 @@ const register = (data) => {
 
 const login = (username, password) => {
   return axios
-    .post(API_URL + "api/user/Login", {
+    .post(API_URL + "api/user/login", {
       email:username,
       password,
     })
     .then((response) => {
-      if (response.data.data.aceesToken) {
-        localStorage.setItem("d_user", JSON.stringify(response.data.data.user._id));
-        localStorage.setItem("d_userToken", JSON.stringify(response.data.data.aceesToken));
+      if (response.data.data.token) {
+        localStorage.setItem("d_user", JSON.stringify(response.data.data.user.id));
+        localStorage.setItem("d_userToken", JSON.stringify(response.data.data.token));
       }
       return response.data;
     });

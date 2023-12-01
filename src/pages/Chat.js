@@ -3,7 +3,6 @@ import "../customCss/Chat.css";
 import DataService from "../services/data.service";
 import moment from "moment";
 import { toast } from "react-toastify";
-import { io } from "socket.io-client";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
@@ -14,7 +13,8 @@ const Chats = () => {
 
   const params = useParams();
   const ref = useRef(null);
-  const socket = io("https://dating-app-backend-xyrj.onrender.com");
+  const socket = new WebSocket("ws://api.digitalmarketingcoursesinchandigarh.in:9091");
+
   const bottomRef = useRef(null);
   const [allChat, setAllChat] = useState([]);
   const [filteredData, setfilteredData] = useState([]);
@@ -127,42 +127,89 @@ const Chats = () => {
 
   // payment
 
-
+  socket.addEventListener("open", (event) => {
+    console.log("WebSocket connection opened:", event);
+  
+    // Once the connection is open, you can send a message
+    setUser();
+  });
+  socket.addEventListener("message", (event) => {
+    const data = JSON.parse(event.data);
+    console.log("Received message:", data);
+  
+    if (data.type === "chat_error") {
+      toast.error(data.message);
+      setTimeout(() => {
+        setPayments(true);
+      }, 2000);
+    } else if (data.type === "new_message") {
+      setTimeout(() => {
+        getExpandedChat();
+      }, 1000);
+      console.log(data);
+    }
+  });
+  
+  // Function to send a message
   const sendMessage = (e) => {
     e.preventDefault();
     const data = {
       senderId: user_id,
       receiverId: params.id,
       message: message,
-      // flirtMessage: flirtMessage
     };
-    socket.emit("chat_message", data);
-    // socket.on('chat_error', { message: 'Insufficient credits' });
+  
+    // Send the message as a JSON string
+    socket.send(JSON.stringify({ type: "chat_message", data }));
+  
     setTimeout(() => {
       getExpandedChat();
     }, 1000);
+  
     setMessage("");
   };
-  socket.on("chat_error", (message) => {
-    toast.error(message.message);
-    setTimeout(() => {
-      setPayments(true);
-    }, 2000);
-  });
-
-  socket.on("new_message", (data) => {
-    setTimeout(() => {
-      getExpandedChat();
-    }, 1000);
-    console.log("Received message:", data);
-    expandChat(data.chat_id);
-    console.log(data);
-  });
-
+  
+  // Function to set the user
   const setUser = () => {
     let user_id = JSON.parse(localStorage.getItem("d_user"));
-    socket.emit("user_added", user_id);
+    socket.send(JSON.stringify({ type: "user_added", user_id }));
   };
+
+  // const sendMessage = (e) => {
+  //   e.preventDefault();
+  //   const data = {
+  //     senderId: user_id,
+  //     receiverId: params.id,
+  //     message: message,
+  //     // flirtMessage: flirtMessage
+  //   };
+  //   socket.emit("chat_message", data);
+  //   // socket.on('chat_error', { message: 'Insufficient credits' });
+  //   setTimeout(() => {
+  //     getExpandedChat();
+  //   }, 1000);
+  //   setMessage("");
+  // };
+  // socket.on("chat_error", (message) => {
+  //   toast.error(message.message);
+  //   setTimeout(() => {
+  //     setPayments(true);
+  //   }, 2000);
+  // });
+
+  // socket.on("new_message", (data) => {
+  //   setTimeout(() => {
+  //     getExpandedChat();
+  //   }, 1000);
+  //   console.log("Received message:", data);
+  //   expandChat(data.chat_id);
+  //   console.log(data);
+  // });
+
+  // const setUser = () => {
+  //   let user_id = JSON.parse(localStorage.getItem("d_user"));
+  //   socket.emit("user_added", user_id);
+  // };
 
   useEffect(() => {
     getUserProfile();

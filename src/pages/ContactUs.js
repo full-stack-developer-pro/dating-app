@@ -10,25 +10,25 @@ const ContactUs = () => {
   const [socialLinks, setSocialLinks] = useState([])
 
 
-  const getContactData = async() => {
-    await DataService.getContactUs().then((data) => {
-      const catData = data.data.data[0];
-        setContactData(catData)
-    });
-}
-const getSocialLinks = async() => {
-  await DataService.getSocialLinks().then((data) => {
-    const catData = data.data.data[0];
-      setSocialLinks(catData);
-  });
-}
+//   const getContactData = async() => {
+//     await DataService.getContactUs().then((data) => {
+//       const catData = data.data.data[0];
+//         setContactData(catData)
+//     });
+// }
+// const getSocialLinks = async() => {
+//   await DataService.getSocialLinks().then((data) => {
+//     const catData = data.data.data[0];
+//       setSocialLinks(catData);
+//   });
+// }
 const mapUrl = `https://maps.google.com/maps?q=${contactData.lat},${contactData.long}&z=12&output=embed`;
 
     useEffect(() => {
         document.title = "Contact Us"
         window.scrollTo(0,0);
-        getContactData();
-        getSocialLinks();
+        // getContactData();
+        // getSocialLinks();
       },[])
   return (
     <>
