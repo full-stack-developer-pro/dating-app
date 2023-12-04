@@ -276,7 +276,7 @@ const Home = () => {
       ref.current.complete();
     });
   };
-  console.log(users)
+  // console.log(users)
 
   const addFriend = async (id) => {
     const data = {};
@@ -328,11 +328,12 @@ const Home = () => {
       }
     );
   };
-  const [profile, getProfile] = useState([]);
+  const [profile, setProfile] = useState([]);
 
   const getUserProfile = async () => {
-    await DataService.getSingleProfile(userId).then((data) => {
-      getProfile(data?.data?.data);
+    await DataService.getAllFriend(userId).then((data) => {
+      console.log(data?.data?.data)
+      setProfile(data?.data?.data);
     });
   };
   useEffect(() => {
@@ -393,13 +394,13 @@ const Home = () => {
     getTotalMembers();
   }, []);
 
-  // let user_id = JSON.parse(localStorage.getItem("d_user"));
-  // const sendFlirt = (e, _id) => {
+  // let userid = JSON.parse(localStorage.getItem("d_user"));
+  // const sendFlirt = (e, id) => {
   //   if (auth) {
   //     // e.preventDefault();
   //     const data = {
-  //       senderId: user_id,
-  //       receiverId: _id,
+  //       senderId: userid,
+  //       receiverId: id,
   //       message: "😃",
   //       // flirtMessage: flirtMessage
   //     };
@@ -423,8 +424,8 @@ const Home = () => {
   // });
 
   // const setUser = () => {
-  //   let user_id = JSON.parse(localStorage.getItem("d_user"));
-  //   socket.emit("user_added", user_id);
+  //   let userid = JSON.parse(localStorage.getItem("d_user"));
+  //   socket.emit("user_added", userid);
   // };
 
   return (
@@ -1073,9 +1074,9 @@ const Home = () => {
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
                   users.slice(0, displayCount).map((item, i) => {
-                    if (item?._id !== userId) {
+                    if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
-                        (op) => op?.friends === item?._id
+                        (op) => op?.id === item?.id
                       );
                       return (
                         <>
@@ -1104,7 +1105,7 @@ const Home = () => {
                                   isFriend ? (
                                     <button
                                       className="add_friend already_friend"
-                                      onClick={() => removeFriend(item?._id)}
+                                      onClick={() => removeFriend(item?.id)}
                                     >
                                       Remove Friend
                                       <i className="fas fa-user-minus"></i>
@@ -1112,7 +1113,7 @@ const Home = () => {
                                   ) : (
                                     <button
                                       className="add_friend"
-                                      onClick={() => addFriend(item?._id)}
+                                      onClick={() => addFriend(item?.id)}
                                     >
                                       Add Friend
                                       <i className="fas fa-user-plus"></i>
@@ -1126,19 +1127,19 @@ const Home = () => {
                             </div>
                             <div className="active_actionSec">
                               <button>
-                                <Link to={"/single-profile/" + item._id}>
+                                <Link to={"/single-profile/" + item.id}>
                                   View<i className="fas fa-eye"></i>
                                 </Link>
                               </button>
                               <button>
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button>
-                              {/* <button onClick={() => sendFlirt(item._id)}>
+                              {/* <button onClick={() => sendFlirt(item.id)}>
                                 Send Flirt<i className="fas fa-heart"></i>
                               </button> */}
                               {auth && (
                                 <button>
-                                  <Link to={"/chats/" + item._id}>
+                                  <Link to={"/chats/" + item.id}>
                                     Send Message<i class="fas fa-comment-alt"></i>
                                   </Link>
                                 </button>

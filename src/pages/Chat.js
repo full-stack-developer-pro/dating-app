@@ -13,8 +13,7 @@ const Chats = () => {
 
   const params = useParams();
   const ref = useRef(null);
-  const socket = new WebSocket("ws://api.digitalmarketingcoursesinchandigarh.in:9091");
-
+  
   const bottomRef = useRef(null);
   const [allChat, setAllChat] = useState([]);
   const [filteredData, setfilteredData] = useState([]);
@@ -30,12 +29,15 @@ const Chats = () => {
   const [payments, setPayments] = useState(false);
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  
   // const history = useHistory();
-
+  let user_id = JSON.parse(localStorage.getItem("d_user"));
+  
+  const socket = new WebSocket(`ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`);
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
+      console.log(data.data.data.user)
       setPersonalProfile(data?.data?.data);
     });
   };
@@ -62,6 +64,7 @@ const Chats = () => {
       setfilteredData(allChat);
     }
   };
+
 
   const expandChat = async (id) => {
     await DataService.getSingleProfile(params.id)
@@ -90,7 +93,6 @@ const Chats = () => {
 
   //   socket.on('chat_message', (data) => {expandChat(data.id)});
 
-  let user_id = JSON.parse(localStorage.getItem("d_user"));
 
   // payment
 
@@ -125,6 +127,15 @@ const Chats = () => {
 
   };
 
+  const getExpandedChat = async () => {
+    await DataService.getChatBox(user_id, params.id).then((data) => {
+      const messages = data?.data?.data?.Messages;
+setExpandedChatMessages(messages ? messages.reverse() : []);
+      // console.log(data?.data);
+      // setExpandedChatMessages(data?.data || []); // Ensure it is initialized as an array
+      ref.current.complete();
+    });
+  };
   // payment
 
   socket.addEventListener("open", (event) => {
@@ -151,29 +162,59 @@ const Chats = () => {
   });
   
   // Function to send a message
+  // const sendMessage = (e) => {
+  //   e.preventDefault();
+  //   const data = {
+  //     senderId: user_id,
+  //     receiverId: params.id,
+  //     message: message,
+  //   };
+  
+  //   // Send the message as a JSON string
+  //   socket.send(JSON.stringify({ type: "chat_message", data }));
+  
+  //   setTimeout(() => {
+  //     getExpandedChat();
+  //   }, 1000);
+  
+  //   setMessage("");
+  // };
+
+ 
+  
   const sendMessage = (e) => {
     e.preventDefault();
     const data = {
-      senderId: user_id,
-      receiverId: params.id,
-      message: message,
+      user_id: user_id,
+      to_user_id: params.id,
+      msg: message,
     };
-  
-    // Send the message as a JSON string
-    socket.send(JSON.stringify({ type: "chat_message", data }));
-  
-    setTimeout(() => {
-      getExpandedChat();
-    }, 1000);
-  
-    setMessage("");
+    
+
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify(data));
+      setTimeout(() => {
+        getExpandedChat();
+      }, 1000);
+      setMessage("");
+    } else {
+      console.error("WebSocket is not open. Message not sent.");
+    }
   };
-  
-  // Function to set the user
+
   const setUser = () => {
     let user_id = JSON.parse(localStorage.getItem("d_user"));
-    socket.send(JSON.stringify({ type: "user_added", user_id }));
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify(user_id));
+    } else {
+      setTimeout(() => setUser(), 100);
+    }
   };
+  // Function to set the user
+  // const setUser = () => {
+  //   let user_id = JSON.parse(localStorage.getItem("d_user"));
+  //   socket.send(JSON.stringify({ type: "user_added", user_id }));
+  // };
 
   // const sendMessage = (e) => {
   //   e.preventDefault();
@@ -213,7 +254,7 @@ const Chats = () => {
 
   useEffect(() => {
     getUserProfile();
-    // getAllChats();
+    getChatList();
     setUser();
   }, []);
   useEffect(() => {
@@ -233,17 +274,13 @@ const Chats = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const getExpandedChat = async () => {
-    await DataService.getChatBox(user_id, params.id).then((data) => {
-      setExpandedChatMessages(data?.data);
-      ref.current.complete();
-    });
-  };
+
   const getChatList = async () => {
     await DataService.getAllChats(user_id)
       .then(async (data) => {
-        setAllChat(data?.data);
-        setfilteredData(data?.data);
+        console.log(data.data.data.chats)
+        setAllChat(data?.data?.data?.chats);
+        setfilteredData(data?.data?.data?.chats);
         ref.current.complete();
       })
       .catch((error) => {
@@ -269,16 +306,16 @@ const Chats = () => {
     getExpandedChat();
   }, []);
 
-  const getPlans = async () => {
-    await DataService.getPackages().then((data) => {
-      setPackages(data?.data?.data);
+  // const getPlans = async () => {
+  //   await DataService.getPackages().then((data) => {
+  //     setPackages(data?.data?.data);
 
-    });
-  };
-  console.log(packages)
-  useEffect(() => {
-    getPlans()
-  }, [])
+  //   });
+  // };
+  // console.log(packages)
+  // useEffect(() => {
+  //   getPlans()
+  // }, [])
 
 
   return (
@@ -346,13 +383,13 @@ const Chats = () => {
                   <>
                     <div
                       className="chat_outer"
-                      onClick={() => sendTo(item?._id)}
+                      onClick={() => sendTo(item?.id)}
                     >
                       <div className="chat_outerImg">
                         <img src="https://i.pravatar.cc/300" alt="" />
                       </div>
                       <div className="chat_outerName">
-                        <h5>{item?.name ? item?.name : "Random Company"}</h5>
+                        <h5>{item?.sender?.name ? item?.sender?.name : "Random Company"}</h5>
                         {/* <p>
                                                     {item?.is_last_message_read === 0 ? (
                                                         <strong>{item?.last_message_text}</strong>
@@ -424,10 +461,7 @@ const Chats = () => {
               )}
               <div className="chat_expBody">
                 {showExpandedChat ? (
-                  expandedChatMessages
-                    ?.slice()
-                    .reverse()
-                    .map((item, i) => {
+                  expandedChatMessages ?.slice().reverse().map((item, i) => {
                       return (
                         <>
                           {item.senderId === user_id ? (
