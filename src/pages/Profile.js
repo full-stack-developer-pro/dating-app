@@ -22,7 +22,7 @@ const Profile = () => {
   const ref = useRef(null);
   // const params = useParams();
 
-  const [profile, getProfile] = useState([]);
+  const [profile, setProfile] = useState([]);
   const [addFriend, setAddFriend] = useState([]);
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
@@ -37,7 +37,10 @@ const Profile = () => {
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
-      getProfile(data?.data?.data);
+      console.log(data?.data?.data?.user)
+      setProfile(data?.data?.data?.user);
+
+
       ref.current.complete();
     });
   };

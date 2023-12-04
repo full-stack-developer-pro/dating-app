@@ -44,27 +44,28 @@ const EditProfile = () => {
   const [inputValue, setInputValue] = useState("");
   const [profile, getProfile] = useState([]);
   const [loading, setLoading] = useState(false)
+
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
-      getProfile(data?.data?.data);
-      setGender(data?.data?.data?.gender)
-      setCountry(data?.data?.data?.country)
-      setUsername(data?.data?.data?.username)
-      setDescription(data?.data?.data?.description)
-      let sDate = data?.data?.data?.birthdate.split("T");
+      getProfile(data?.data?.data?.user);
+      setGender(data?.data?.data?.user?.gender)
+      setCountry(data?.data?.data?.user?.country)
+      setUsername(data?.data?.data?.user?.username)
+      setDescription(data?.data?.data?.user?.description)
+      let sDate = data?.data?.data?.user?.birthdate.split("T");
       setBirthdate(sDate[0])
-      setName(data?.data?.data?.name)
-      setCity(data?.data?.data?.city)
-      setPostcode(data?.data?.data?.postcode)
-      setHeight(data?.data?.data?.height)
-      setWeight(data?.data?.data?.weight)
-      setEyeColor(data?.data?.data?.eye_color)
-      setHairColor(data?.data?.data?.hair_color)
-      setHairLength(data?.data?.data?.hair_length)
-      setMaritalStatus(data?.data?.data?.marital_status)
-      setHobbies(data?.data?.data?.interests)
+      setName(data?.data?.data?.user?.name)
+      setCity(data?.data?.data?.user?.city)
+      setPostcode(data?.data?.data?.user?.postcode)
+      setHeight(data?.data?.data?.user?.height)
+      setWeight(data?.data?.data?.user?.weight)
+      setEyeColor(data?.data?.data?.user?.eye_color)
+      setHairColor(data?.data?.data?.user?.hair_color)
+      setHairLength(data?.data?.data?.user?.hair_length)
+      setMaritalStatus(data?.data?.data?.user?.marital_status)
+      setHobbies(data?.data?.data?.user?.interests)
       ref.current.complete();
     });
   };
@@ -104,7 +105,6 @@ const EditProfile = () => {
     data.append("gender", gender);
     data.append("country", country);
     data.append("username",username);
-    data.append("description", description);
     data.append("description", description);
     data.append("birthdate", birthdate);
     data.append("name", name);
