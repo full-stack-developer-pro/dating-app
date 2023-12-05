@@ -81,8 +81,8 @@ const SearchResults = () => {
   const getsearchData = async () => {
     await DataService.searchUsers(param1, param2, param3, param4).then(
       (data) => {
-        setUsers(data?.data?.data);
-        console.log(data?.data?.data)
+        setUsers(data?.data?.data?.users);
+        // console.log(data?.data?.data)
         ref.current.complete();
         toast.success("Data Searched");
       },
