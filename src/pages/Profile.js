@@ -149,7 +149,7 @@ const Profile = () => {
     setMessage("");
     const data = new FormData();
     uploadedFiles.some((file) => {
-      data.append('images', file)
+      data.append('images[]', file)
     })
     // data.append("images", file[0]);
     DataService.UploadProfileImage(userId,data).then(

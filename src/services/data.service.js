@@ -78,7 +78,7 @@ const getSecondLastBanner = () => {
   return axios.get(API_URL + "api/admin/getSecondLastBanner");
 }
 const getLastBanner = () => {
-  return axios.get(API_URL + "api/admin/geLastBanner");
+  return axios.get(API_URL + "api/admin/getLastBanner");
 }
 const getMembers = () => {
   return axios.get(API_URL + "api/user/memberStatic");

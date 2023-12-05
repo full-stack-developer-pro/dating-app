@@ -342,30 +342,30 @@ const Home = () => {
     }
   }, [userId]);
 
-  // const getTop = async () => {
-  //   await DataService.getTopBanner().then((data) => {
-  //     setTopBanner(data?.data?.data[0]);
-  //     ref.current.complete();
-  //   });
-  // };
-  // const getMiddle = async () => {
-  //   await DataService.getMiddleBanner().then((data) => {
-  //     setMiddleBanner(data?.data?.data[0]);
-  //     ref.current.complete();
-  //   });
-  // };
-  // const getSecondLast = async () => {
-  //   await DataService.getSecondLastBanner().then((data) => {
-  //     setSecondLastBanner(data?.data?.data[0]);
-  //     ref.current.complete();
-  //   });
-  // };
-  // const getLast = async () => {
-  //   await DataService.getLastBanner().then((data) => {
-  //     setlLastBanner(data?.data?.data[0]);
-  //     ref.current.complete();
-  //   });
-  // };
+  const getTop = async () => {
+    await DataService.getTopBanner().then((data) => {
+      setTopBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
+  const getMiddle = async () => {
+    await DataService.getMiddleBanner().then((data) => {
+      setMiddleBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
+  const getSecondLast = async () => {
+    await DataService.getSecondLastBanner().then((data) => {
+      setSecondLastBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
+  const getLast = async () => {
+    await DataService.getLastBanner().then((data) => {
+      setlLastBanner(data?.data?.data[0]);
+      ref.current.complete();
+    });
+  };
   const getTotalMembers = async () => {
     await DataService.getMembers().then((data) => {
       setMembers(data?.data);
@@ -387,10 +387,10 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    // getTop();
-    // getMiddle();
-    // getSecondLast();
-    // getLast();
+    getTop();
+    getMiddle();
+    getSecondLast();
+    getLast();
     getTotalMembers();
   }, []);
 
@@ -876,7 +876,7 @@ const Home = () => {
               {middleBanner?.images?.length > 0 ? (
                 <img
                   src={
-                    "http://51.20.124.172:3000/" + middleBanner?.images[0]?.path
+                    "http://api.digitalmarketingcoursesinchandigarh.in/" + middleBanner?.images[0]?.path
                   }
                   alt=""
                 />
@@ -1385,7 +1385,7 @@ const Home = () => {
               {secondLastBanner?.images?.length > 0 ? (
                 <img
                   src={
-                    "http://51.20.124.172:3000/" +
+                    "http://api.digitalmarketingcoursesinchandigarh.in/" +
                     secondLastBanner?.images[0]?.path
                   }
                   alt=""
@@ -1637,7 +1637,7 @@ const Home = () => {
             <h2 className="main_title">{lastBanner?.heading}</h2>
             {lastBanner?.images?.length > 0 ? (
               <img
-                src={"http://51.20.124.172:3000/" + lastBanner?.images[0]?.path}
+                src={"http://api.digitalmarketingcoursesinchandigarh.in/" + lastBanner?.images[0]?.path}
                 alt=""
               />
             ) : (
