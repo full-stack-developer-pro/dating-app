@@ -129,17 +129,16 @@ const Chats = () => {
 
   const getExpandedChat = async () => {
     await DataService.getChatBox(user_id, params.id).then((data) => {
-      const messages = data?.data?.data?.Messages;
-setExpandedChatMessages(messages ? messages.reverse() : []);
-      // console.log(data?.data);
-      // setExpandedChatMessages(data?.data || []); // Ensure it is initialized as an array
+      const chatData = data?.data?.data?.chat;
+      const messages = chatData?.messages || [];
+      setExpandedChatMessages(messages);
       ref.current.complete();
     });
   };
   // payment
 
   socket.addEventListener("open", (event) => {
-    console.log("WebSocket connection opened:", event);
+    // console.log("WebSocket connection opened:", event);
   
     // Once the connection is open, you can send a message
     setUser();
@@ -383,13 +382,13 @@ setExpandedChatMessages(messages ? messages.reverse() : []);
                   <>
                     <div
                       className="chat_outer"
-                      onClick={() => sendTo(item?.id)}
+                      onClick={() => sendTo(item?._id)}
                     >
                       <div className="chat_outerImg">
                         <img src="https://i.pravatar.cc/300" alt="" />
                       </div>
                       <div className="chat_outerName">
-                        <h5>{item?.sender?.name ? item?.sender?.name : "Random Company"}</h5>
+                        <h5>{item?.name ? item?.name : "Random Company"}</h5>
                         {/* <p>
                                                     {item?.is_last_message_read === 0 ? (
                                                         <strong>{item?.last_message_text}</strong>
@@ -464,11 +463,11 @@ setExpandedChatMessages(messages ? messages.reverse() : []);
                   expandedChatMessages ?.slice().reverse().map((item, i) => {
                       return (
                         <>
-                          {item.senderId === user_id ? (
+                          {item.sent_by === user_id ? (
                             <>
                               <div className="chat_right">
                                 <p className="text_message">
-                                  {item.message}
+                                  {item.message_text}
                                   <i className="fas fa-check"></i>
                                 </p>
                                 <span>
@@ -480,7 +479,7 @@ setExpandedChatMessages(messages ? messages.reverse() : []);
                           ) : (
                             <>
                               <div className="chat_left">
-                                <p className="text_message">{item.message}</p>
+                                <p className="text_message">{item.message_text}</p>
                                 <span>
                                   <i className="far fa-clock"></i>
                                   {moment(item?.createdAt).format("lll")}
