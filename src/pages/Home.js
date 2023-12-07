@@ -887,8 +887,9 @@ const Home = () => {
             <div className="about_flexR">
               <h2>{middleBanner?.heading}</h2>
               <p
+              style={{fontSize:"14px",fontFamily: "'Outfit', sans-serif"}}
                 dangerouslySetInnerHTML={{ __html: middleBanner?.description }}
-              ></p>
+               ></p>
             </div>
           </div>
         </div>
@@ -1369,7 +1370,7 @@ const Home = () => {
           <div className="about_flex">
             <div className="about_flexR">
               <h2>{secondLastBanner?.heading}</h2>
-              <p
+              <p style={{fontSize:"14px",fontFamily: "'Outfit', sans-serif"}}
                 dangerouslySetInnerHTML={{
                   __html: secondLastBanner?.description,
                 }}

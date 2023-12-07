@@ -30,10 +30,10 @@ const getAboutUs = () => {
 //   return axios.get(API_URL + "api/admin/getSocialLinks");
 // };
 const getPrivacyPoicy = () => {
-  return axios.get(API_URL + "api/admin/getPolicy&Privacy");
+  return axios.get(API_URL + "api/admin/getPrivacyPolicy");
 };
 const getTermsConditions = () => {
-  return axios.get(API_URL + "api/admin/getTerms&Condition");
+  return axios.get(API_URL + "api/admin/getTermsCondition");
 };
 const getAllBlogs = () => {
   return axios.get(API_URL + "api/admin/getBlog");

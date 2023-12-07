@@ -38,12 +38,12 @@ const Blogs = () => {
                       <>
                         <div className="blogInner">
                           <div className="blogThumb">
-                            {item?.images.length>0 ? (
+                            {item?.images ? (
                               <img
-                                src={
-                                  "http://51.20.124.172:3000/" +
-                                  item?.images[0]?.path
-                                }
+                              src={
+                                "http://api.digitalmarketingcoursesinchandigarh.in/" +
+                                item?.images[0]?.path
+                              }
                                 alt=""
                               />
                             ) : (
@@ -57,7 +57,7 @@ const Blogs = () => {
                             </span>
                             <h3>{item?.heading}</h3>
                             <p dangerouslySetInnerHTML={{__html: item?.description}}></p>
-                            <Link to={"/single-blog/"+item?._id}><button className='main_button'>Read More</button></Link>
+                            <Link to={"/single-blog/"+item?.id}><button className='main_button'>Read More</button></Link>
                           </div>
                         </div>
                       </>

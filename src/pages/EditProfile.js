@@ -38,12 +38,19 @@ const EditProfile = () => {
   const [eye_color, setEyeColor] = useState("");
   const [hair_color, setHairColor] = useState("");
   const [hair_length, setHairLength] = useState("");
+  const [is_fake, setIsfake] = useState("");
+  const [isflagged, setIsflagged] = useState("");
+  const [isverified, setIsverified] = useState("");
+  const [free_message, setFree_message] = useState("");
+
+
   const [marital_status, setMaritalStatus] = useState("");
   const [interests, setInterests] = useState("");
   const [hobbies, setHobbies] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [profile, getProfile] = useState([]);
   const [loading, setLoading] = useState(false)
+  const [cities, setCities] = useState([]);
 
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
@@ -66,6 +73,11 @@ const EditProfile = () => {
       setHairLength(data?.data?.data?.user?.hair_length)
       setMaritalStatus(data?.data?.data?.user?.marital_status)
       setHobbies(data?.data?.data?.user?.interests)
+      setIsfake(data?.data?.data?.user?.is_fake)
+      setIsflagged(data?.data?.data?.user?.is_flagged)
+      setIsverified(data?.data?.data?.user?.is_verified)
+      setAge(data?.data?.data?.user?.age)
+      setFree_message(data?.data?.data?.user?.free_message)
       ref.current.complete();
     });
   };
@@ -90,10 +102,16 @@ const EditProfile = () => {
   };
 
 
+  const getCity = async () => {
+    await DataService.getCities().then((data) => {
+      setCities(data?.data?.data);
+    });
+  };
 
   useEffect(() => {
     document.title = "Profile";
     window.scrollTo(0, 0);
+    getCity();
     getUserProfile();
     ref.current.continuousStart();
   }, [userId]);
@@ -117,6 +135,12 @@ const EditProfile = () => {
     data.append("hair_length", hair_length);
     data.append("marital_status", marital_status);
     data.append("interests", hobbies);
+    data.append("is_fake",is_fake)
+    data.append("is_flagged",isflagged)
+    data.append("is_verified",isverified)
+    data.append("age",age)
+    data.append("free_message",free_message)
+    
     DataService.UpdateProfile(userId, data).then(
       () => {
         toast.success('Profile updated successfully!', {
@@ -210,15 +234,23 @@ const EditProfile = () => {
           </div>
           <div className="row">
             <div className="col-sm-12">
-              <div className="form_field country mb-3">
+              <div className="form_field country mb-3 new_city">
                 <label>
                   <strong>My Location</strong>
                 </label>
-                <ReactFlagsSelect
+                <select id="citySelect" onChange={(e)=>setCountry(e.target.value)}>
+                            <option>{ country ? country :"Select a City/Town" }</option>
+                            {cities.map((city, index) => (
+                              <option key={index} value={city.city}>
+                                {city.city}
+                              </option>
+                            ))}
+                          </select>
+                {/* <ReactFlagsSelect
                   selected={country}
                   onSelect={(code) => setCountry(code)}
                   required
-                />
+                /> */}
               </div>
             </div>
           </div>

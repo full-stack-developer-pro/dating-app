@@ -20,7 +20,7 @@ import "../customCss/Navbar.css";
 import TimezoneSelect from "react-timezone-select";
 import Hobby from "../pages/Hobby";
 import News from "../images/newsletter.png";
-import DatingCouple from "../images/datingAppCouple.png";
+
 import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
@@ -68,6 +68,7 @@ const SearchResults = () => {
     // searchData();
 
   }, [])
+
   const getTotalMembers = async () => {
     await DataService.getMembers().then((data) => {
       setMembers(data?.data);

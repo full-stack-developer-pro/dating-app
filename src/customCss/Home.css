@@ -17,7 +17,7 @@
     width: 16%;
 }
 .multi-range-slider {
-    border: solid 1px gray;
+    border: none !important;
     border-radius: 6px !important;
     padding: 17px 10px !important;
     box-shadow: none !important;
@@ -992,6 +992,12 @@
 }
 
 @media screen and (max-width: 767px) {
+    .search_gender_inner {
+        padding-left: 0px;
+    }
+    .range_Age {
+        width: 100%;
+    }
     .search_main {
         flex-direction: column;
     }
@@ -1086,7 +1092,7 @@
     }
 
     .navbarL img {
-        width: 140px;
+        width: 125px;
     }
 
     .navbar_flex {
@@ -1143,7 +1149,7 @@
     }
 
     .active_actionSec button:last-of-type {
-        width: 100%;
+        width: 47%;
         margin-right: 0%;
     }
 

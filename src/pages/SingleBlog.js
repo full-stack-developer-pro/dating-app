@@ -32,7 +32,7 @@ const SingleBlog = () => {
       </section>
       <div className="single_blogSec">
         <div className="container">
-        {blog?.images ? <img src={"http://51.20.124.172:3000/"+blog?.images[0].path} style={{width: '100%',height:'300px',objectFit: 'cover',margin: '20px auto'}} alt="blog_image"/> : ""}
+        {blog?.images ? <img src={"http://api.digitalmarketingcoursesinchandigarh.in/"+blog?.images[0].path} style={{width: '100%',height:'300px',objectFit: 'cover',margin: '20px auto'}} alt="blog_image"/> : ""}
           <div className="single_blogInner">
             <div className="single_blogMeta">
               <span>

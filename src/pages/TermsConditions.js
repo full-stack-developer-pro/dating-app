@@ -11,10 +11,9 @@ const TermsConditions = () => {
 
   const getTermsConditions = async () => {
     DataService.getTermsConditions().then((data) => {
-      if (data.data.data.length > 0) {
-        setTermsData(data?.data?.data[0]);
-        setHTML({ __html: data?.data?.data[0]?.description });
-      }
+        setTermsData(data?.data?.data);
+        setHTML({ __html: data?.data?.data?.description });
+    
     });
   };
   useEffect(() => {

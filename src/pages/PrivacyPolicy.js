@@ -10,10 +10,9 @@ const PrivacyPolicy = () => {
 
   const getPrivacyPoicy = async () => {
     DataService.getPrivacyPoicy().then((data) => {
-      if (data.data.data.length > 0) {
-        setPrivacyData(data?.data?.data[0]);
-        setHTML({ __html: data?.data?.data[0]?.description });
-      }
+        setPrivacyData(data?.data?.data);
+        setHTML({ __html: data?.data?.data?.description });
+  
     });
   };
   useEffect(() => {
