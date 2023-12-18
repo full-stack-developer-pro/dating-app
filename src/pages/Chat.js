@@ -38,11 +38,11 @@ const Chats = () => {
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
       console.log(data.data.data.user)
-      setPersonalProfile(data?.data?.data);
+      setPersonalProfile(data?.data?.data?.user);
     });
   };
   let credits = personalProfile?.credits;
-  //   console.log(credits);
+    console.log(credits);
   useEffect(() => {
     UserProfile();
   }, []);
@@ -99,14 +99,16 @@ const Chats = () => {
   const handlePayment = (price) => {
     setMessage("");
     const data = {};
-    data.userId = user_id
-    data.amount = price
+    // data.userId = user_id;
+    data.amount = price;
+  
     DataService.GeneratePayment(data).then(
       (response) => {
-        if (response.data.success) {
+        if (response.data.status === "Success") {
           toast("Link generated successfully!");
+          console.log(response.data.data.url);
           const paymentUrl = response.data.data.url;
-          window.location.href = paymentUrl;
+          window.location.replace(paymentUrl); // Use replace for proper redirection
         } else {
           toast("Failed to generate the payment link.");
         }
@@ -124,7 +126,6 @@ const Chats = () => {
         });
       }
     );
-
   };
 
   const getExpandedChat = async () => {
@@ -138,21 +139,18 @@ const Chats = () => {
   // payment
 
   socket.addEventListener("open", (event) => {
-    // console.log("WebSocket connection opened:", event);
-  
-    // Once the connection is open, you can send a message
     setUser();
   });
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
     console.log("Received message:", data);
-  
-    if (data.type === "chat_error") {
+    console.log(data.msg)
+    if (credits === 0) {
       toast.error(data.message);
+      setPayments(true);
       setTimeout(() => {
-        setPayments(true);
       }, 2000);
-    } else if (data.type === "new_message") {
+    }else if (data.type === "new_message") {
       setTimeout(() => {
         getExpandedChat();
       }, 1000);
@@ -305,16 +303,16 @@ const Chats = () => {
     getExpandedChat();
   }, []);
 
-  // const getPlans = async () => {
-  //   await DataService.getPackages().then((data) => {
-  //     setPackages(data?.data?.data);
+  const getPlans = async () => {
+    await DataService.getPackages().then((data) => {
+      setPackages(data?.data?.data);
 
-  //   });
-  // };
-  // console.log(packages)
-  // useEffect(() => {
-  //   getPlans()
-  // }, [])
+    });
+  };
+  console.log(packages)
+  useEffect(() => {
+    getPlans()
+  }, [])
 
 
   return (

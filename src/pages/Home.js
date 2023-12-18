@@ -64,7 +64,6 @@ const Home = () => {
   };
 
   //Fields States Here
-
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -94,7 +93,7 @@ const Home = () => {
   const [secondLastBanner, setSecondLastBanner] = useState([]);
   const [lastBanner, setlLastBanner] = useState([]);
   const [selectedGender, setSelectGender] = useState("All");
-  const [selectedGenderSearch, setSelectedGenderSearch] = useState("All");
+  const [selectedGenderSearch, setSelectedGenderSearch] = useState("");
   const [members, setMembers] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
   const [ageGroup, setAgeGroup] = useState({ minValue: 15, maxValue: 50 });
@@ -116,7 +115,7 @@ const Home = () => {
   //  const ageGroupString = `${ageGroup.minValue}-${ageGroup.maxValue}`;
 
   const myStateData = {
-    key1: selectedGender,
+    key1: selectedGenderSearch,
     key2: searchCountry,
     key3 : ageGroup.minValue,
     key4 : ageGroup.maxValue,
@@ -377,22 +376,16 @@ const Home = () => {
     });
   };
 
-
-
-
   useEffect(() => {
-    getCity()
-
-    getTotalMembers();
-  }, []);
-
-  useEffect(() => {
+    getCity();
     getTop();
     getMiddle();
     getSecondLast();
     getLast();
     getTotalMembers();
   }, []);
+
+
 
   // let userid = JSON.parse(localStorage.getItem("d_user"));
   // const sendFlirt = (e, id) => {
@@ -1025,8 +1018,8 @@ const Home = () => {
                       <strong>Select Age</strong>
                     </label>
                   <MultiRangeSlider
-                    min={18}
-                    max={45}
+                    min={2}
+                    max={100}
                     minValue={ageGroup.minValue}
                     maxValue={ageGroup.maxValue}
                     onChange={handleSliderChange}
@@ -1401,252 +1394,7 @@ const Home = () => {
       </section>
 
 
-      {/* <section className="profiles_section">
-        <div className="container">
-          <div className="profiles_mainSec">
-            <h2 className="main_title">Explore Some Profiles Here</h2>
-          </div>
-          <div className="profile_flex">
-            <div className="profile_inner">
-              <img src={ProfileOne} alt="" />
-              <div className="gender_ico_f">
-                <i class="fas fa-venus"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">24~F</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>London
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="profile_inner">
-              <img src={ProfileTwo} alt="" />
-              <div className="gender_ico_m">
-                <i class="fas fa-mars"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">27~M</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>New York
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="profile_inner">
-              <img src={ProfileThree} alt="" />
-              <div className="gender_ico_f">
-                <i class="fas fa-venus"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">31~F</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>Egypt
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="profile_inner">
-              <img src={ProfileFour} alt="" />
-              <div className="gender_ico_m">
-                <i class="fas fa-mars"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">36~M</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>France
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="profile_inner">
-              <img src={ProfileThree} alt="" />
-              <div className="gender_ico_f">
-                <i class="fas fa-venus"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">31~F</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>Egypt
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="profile_inner">
-              <img src={ProfileFour} alt="" />
-              <div className="gender_ico_m">
-                <i class="fas fa-mars"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">36~M</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>France
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="profile_inner">
-              <img src={ProfileOne} alt="" />
-              <div className="gender_ico_f">
-                <i class="fas fa-venus"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">24~F</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>London
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="profile_inner">
-              <img src={ProfileTwo} alt="" />
-              <div className="gender_ico_m">
-                <i class="fas fa-mars"></i>
-              </div>
-              <div className="profile_body">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h5>Emily Wilson</h5>
-                  <h6 className="f-gender">27~M</h6>
-                </div>
-                <p className="profile_location">
-                  <i class="fas fa-map-marker-alt"></i>New York
-                </p>
-                <p className="profile_description">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
-                  sit.
-                </p>
-                <div className="profile_buttons">
-                  <Link to="/chats">
-                    <button className="chat_now">Start Chat</button>
-                  </Link>
-                  <button className="add_friend">
-                    <i class="fas fa-user-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="load_more">
-            <button className="main_button">
-              Load More<i class="fas fa-long-arrow-alt-right"></i>
-            </button>
-          </div>
-        </div>
-      </section> */}
-
-      {/* <section className="how_it_works">
-        <div className="container">
-          <div className="how_it_worksInner">
-            <h2 className="main_title">{lastBanner?.heading}</h2>
-            {lastBanner?.images?.length > 0 ? (
-              <img
-                src={"http://api.digitalmarketingcoursesinchandigarh.in/" + lastBanner?.images[0]?.path}
-                alt=""
-              />
-            ) : (
-              <img src={HowIt} alt="" />
-            )}
-          </div>
-        </div>
-      </section> */}
+     
       <Footer />
     </>
   );
