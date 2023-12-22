@@ -259,6 +259,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    height: 100vh;
 }
 
 .active_secFlex {
@@ -1101,6 +1102,7 @@
 
     .active_profilesSec {
         padding: 20px 10px;
+        height: auto;
     }
 
     .active_secFlex {
