@@ -10,6 +10,9 @@
     align-items: center;
     justify-content: center;
 }
+.height_search {
+    min-height: 100vh;
+}
 .multi-range-slider .ruler {
     display: none!important;
 }
@@ -259,7 +262,6 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height: 100vh;
 }
 
 .active_secFlex {

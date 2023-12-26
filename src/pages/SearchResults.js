@@ -189,7 +189,7 @@ const SearchResults = () => {
   return (
     <>
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-      <section className="active_profilesSec">
+      <section className="active_profilesSec height_search">
         <div className="container">
           <div className="active_secFlex">
             {/* <div className="activeR mb-2"> */}
