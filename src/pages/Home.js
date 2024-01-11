@@ -96,7 +96,7 @@ const Home = () => {
   const [selectedGenderSearch, setSelectedGenderSearch] = useState("");
   const [members, setMembers] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
-  const [ageGroup, setAgeGroup] = useState({ minValue: 15, maxValue: 50 });
+  const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
 
   const handleSliderChange = ({ minValue, maxValue }) => {
     setAgeGroup({  minValue, maxValue });
@@ -1018,7 +1018,7 @@ const Home = () => {
                       <strong>Select Age</strong>
                     </label>
                   <MultiRangeSlider
-                    min={2}
+                    min={18}
                     max={100}
                     minValue={ageGroup.minValue}
                     maxValue={ageGroup.maxValue}

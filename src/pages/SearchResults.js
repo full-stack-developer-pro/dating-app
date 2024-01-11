@@ -50,7 +50,7 @@ const SearchResults = () => {
   const param4 = queryParams.get('param4')
 
 
-  const [ageGroup, setAgeGroup] = useState({ minValue: 15, maxValue: 50 });
+  const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
 
   const handleSliderChange = ({ minValue, maxValue }) => {
     setAgeGroup({  minValue, maxValue });
@@ -355,7 +355,7 @@ const SearchResults = () => {
                     </label>
                   <MultiRangeSlider
                      min={18}
-                     max={45}
+                     max={100}
                      minValue={ageGroup.minValue}
                      maxValue={ageGroup.maxValue}
                     onChange={handleSliderChange}
