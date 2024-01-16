@@ -149,10 +149,10 @@ const Profile = () => {
     setMessage("");
     const data = new FormData();
     uploadedFiles.some((file) => {
-      data.append('images[]', file)
+      data.append('image[]', file)
     })
     // data.append("images", file[0]);
-    DataService.UploadProfileImage(userId,data).then(
+    DataService.UploadProfileImage(data).then(
       (response) => {
         if (response.data.is_verified == "true") {
           toast.success("Upload Successfully!")

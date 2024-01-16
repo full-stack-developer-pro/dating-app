@@ -92,8 +92,8 @@ const GeneratePayment = (data) => {
 const verifyPayment = (data) => {
   return axios.post(API_URL + "api/payment/verify-payment", data);
 };
-const UploadProfileImage = (id, data) => {
-  return axios.post(API_URL + "api/uploadGalleryImages/" + id, data);
+const UploadProfileImage = (data) => {
+  return axios.post(API_URL + "api/uploadGalleryImages", data);
 };
 const getCities = () => {
   return axios.get(API_URL + "api/getCountryCities/GB");

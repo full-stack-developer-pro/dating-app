@@ -119,28 +119,73 @@ const EditProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    const data = new FormData();
-    data.append("gender", gender);
-    data.append("country", country);
-    data.append("username",username);
-    data.append("description", description);
-    data.append("birthdate", birthdate);
-    data.append("name", name);
-    data.append("city", city);
-    data.append("postcode", postcode);
-    data.append("height", height);
-    data.append("weight", weight);
-    data.append("hair_color", hair_color);
-    data.append("eye_color", eye_color);
-    data.append("hair_length", hair_length);
-    data.append("marital_status", marital_status);
-    data.append("interests", hobbies);
-    data.append("is_fake",is_fake)
-    data.append("is_flagged",isflagged)
-    data.append("is_verified",isverified)
-    data.append("age",age)
-    data.append("free_message",free_message)
-    
+    const data = {};
+
+    // data.append("gender", gender);
+    // data.append("country", country);
+    // data.append("username",username);
+    // data.append("description", description);
+    // data.append("birthdate", birthdate);
+    // data.append("name", name);
+    // data.append("city", city);
+    // data.append("postcode", postcode);
+    // data.append("height", height);
+    // data.append("weight", weight);
+    // data.append("hair_color", hair_color);
+    // data.append("eye_color", eye_color);
+    // data.append("hair_length", hair_length);
+    // data.append("marital_status", marital_status);
+    // data.append("interests", hobbies);
+    // data.append("is_fake",is_fake)
+    // data.append("is_flagged",isflagged)
+    // data.append("is_verified",isverified)
+    // data.append("age",age)
+    // data.append("free_message",free_message)
+    data.is_fake = false;
+    data.name = name;
+    data.username = username;
+    data.email = email;
+    data.password = password;
+    data.gender = gender;
+    data.birthdate = dob;
+    data.description = description;
+    data.country = country;
+    data.city = city;
+    data.age = age;
+    data.postcode = postcode;
+    data.timezone = timezone;
+    data.height = height;
+    data.weight = weight;
+    data.eye_color = eye_color;
+    data.hair_color = hair_color;
+    data.hair_length = hair_length;
+    data.marital_status = marital_status;
+    data.interests = hobbies;
+    data.free_message = free_message;
+    data.is_verified = isverified;
+    data.is_flagged = isflagged;
+    data.photo = "https://example.com/path/to/photo.jpg";
+    // data.gender = gender
+    // data.country = country
+    // data.username = username
+    // data.description = description
+    // data.birthdate = birthdate
+    // data.name = name
+    // data.city = city
+    // data.postcode = postcode
+    // data.height = height
+    // data.weight = weight
+    // data.hair_color = hair_color
+    // data.eye_color = eye_color
+    // data.hair_length = hair_length
+    // data.marital_status = marital_status
+    // data.interests = hobbies
+    // data.is_fake = is_fake
+    // data.is_flagged = isflagged
+    // data.is_verified = isverified
+    // data.age = age
+    // data.free_message = free_message
+
     DataService.UpdateProfile(userId, data).then(
       () => {
         toast.success('Profile updated successfully!', {
@@ -179,329 +224,329 @@ const EditProfile = () => {
         </div>
       </section>
       <section className="editProfile">
-        <form onSubmit={handleSubmit}> 
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="form_field mb-3">
-                <p>
-                  <strong>My Gender</strong>
-                </p>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="gender"
-                    id="gender_male"
-                    value="male"
-                    checked={gender === "male"}
-                    onChange={handleGenderChange}
-                  />
-                  <label class="form-check-label" for="gender_male">
-                    Male
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="gender"
-                    id="gender_female"
-                    value="female"
-                    checked={gender === "female"}
-                    onChange={handleGenderChange}
-                  />
-                  <label class="form-check-label" for="gender_female">
-                    Female
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="gender"
-                    id="gender_other"
-                    value="other"
-                    checked={gender === "other"}
-                    onChange={handleGenderChange}
-                  />
-                  <label class="form-check-label" for="gender_other">
-                    Other
-                  </label>
+        <form onSubmit={handleSubmit}>
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="form_field mb-3">
+                  <p>
+                    <strong>My Gender</strong>
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="gender_male"
+                      value="male"
+                      checked={gender === "male"}
+                      onChange={handleGenderChange}
+                    />
+                    <label class="form-check-label" for="gender_male">
+                      Male
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="gender_female"
+                      value="female"
+                      checked={gender === "female"}
+                      onChange={handleGenderChange}
+                    />
+                    <label class="form-check-label" for="gender_female">
+                      Female
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="gender_other"
+                      value="other"
+                      checked={gender === "other"}
+                      onChange={handleGenderChange}
+                    />
+                    <label class="form-check-label" for="gender_other">
+                      Other
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="form_field country mb-3 new_city">
-                <label>
-                  <strong>My Location</strong>
-                </label>
-                <select id="citySelect" onChange={(e)=>setCountry(e.target.value)}>
-                            <option>{ country ? country :"Select a City/Town" }</option>
-                            {cities.map((city, index) => (
-                              <option key={index} value={city.city}>
-                                {city.city}
-                              </option>
-                            ))}
-                          </select>
-                {/* <ReactFlagsSelect
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="form_field country mb-3 new_city">
+                  <label>
+                    <strong>My Location</strong>
+                  </label>
+                  <select id="citySelect" onChange={(e) => setCountry(e.target.value)}>
+                    <option>{country ? country : "Select a City/Town"}</option>
+                    {cities.map((city, index) => (
+                      <option key={index} value={city.city}>
+                        {city.city}
+                      </option>
+                    ))}
+                  </select>
+                  {/* <ReactFlagsSelect
                   selected={country}
                   onSelect={(code) => setCountry(code)}
                   required
                 /> */}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-6">
+            <div className="row">
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <label for="floatingInput">Username</label>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <label for="floatingInput">Your Name</label>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <label for="floatingInput">Email</label>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <label for="floatingInput">Password</label>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <textarea
+                    class="form-control"
+                    placeholder=""
+                    id="floatingTextarea2"
+                    style={{ height: "100px" }}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  ></textarea>
+                  <label for="floatingTextarea2">Description</label>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    max={today}
+                    value={birthdate}
+                    onChange={(e) => setBirthdate(e.target.value)}
+                  />
+                  <label for="floatingInput">Date of Birth</label>
+                </div>
+              </div>
+            </div>
+            <div className="form_field row mb-3">
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                  <label for="floatingInput">City</label>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    value={postcode}
+                    onChange={(e) => setPostcode(e.target.value)}
+                  />
+                  <label for="floatingInput">Postal Code</label>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="form_field mb-3">
+                  <p>Select Timezone</p>
+                  <TimezoneSelect
+                    value={timezone}
+                    onChange={setTimezone}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="form-field row mb-3">
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                  />
+                  <label for="floatingInput">Height</label>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                  />
+                  <label for="floatingInput">Weight</label>
+                </div>
+              </div>
+            </div>
+            <div className="form-field row mb-3">
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={eye_color}
+                    onChange={(e) => setEyeColor(e.target.value)}
+                  />
+                  <label for="floatingInput">Eye Color</label>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={hair_color}
+                    onChange={(e) => setHairColor(e.target.value)}
+                  />
+                  <label for="floatingInput">Hair Color</label>
+                </div>
+              </div>
+            </div>
+            <div className="form-field row mb-3">
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={hair_length}
+                    onChange={(e) => setHairLength(e.target.value)}
+                  />
+                  <label for="floatingInput">Hair Length</label>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    value={marital_status}
+                    onChange={(e) => setMaritalStatus(e.target.value)}
+                  />
+                  <label for="floatingInput">Marital Status</label>
+                </div>
+              </div>
+            </div>
+            <div className="form_field mb-3">
+              <div className="hobbies-list">
+                {hobbies.map((hobby, index) => (
+                  <HobbyEdit
+                    key={index}
+                    hobby={hobby}
+                    onDelete={() => handleDelete(index)}
+                  />
+                ))}
+              </div>
               <div class="edit_profile mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingInput"
-                  placeholder=""
+                  placeholder="name@example.com"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onKeyPress={handleKeyPress}
                   required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
                 />
-                <label for="floatingInput">Username</label>
+                <label for="floatingInput">Interests</label>
               </div>
-            </div>
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <label for="floatingInput">Your Name</label>
+              <div className="buttton_update">
+                <button class="main_button" type="submit" onClick={handleSubmit}>Update profile</button>
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="email"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <label for="floatingInput">Email</label>
-              </div>
-            </div>
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="password"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <label for="floatingInput">Password</label>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <textarea
-                  class="form-control"
-                  placeholder=""
-                  id="floatingTextarea2"
-                  style={{ height: "100px" }}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
-                <label for="floatingTextarea2">Description</label>
-              </div>
-            </div>
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="date"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  max={today}
-                  value={birthdate}
-                  onChange={(e) => setBirthdate(e.target.value)}
-                />
-                <label for="floatingInput">Date of Birth</label>
-              </div>
-            </div>
-          </div>
-          <div className="form_field row mb-3">
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                />
-                <label for="floatingInput">City</label>
-              </div>
-            </div>
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  value={postcode}
-                  onChange={(e) => setPostcode(e.target.value)}
-                />
-                <label for="floatingInput">Postal Code</label>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="form_field mb-3">
-                <p>Select Timezone</p>
-                <TimezoneSelect
-                  value={timezone}
-                  onChange={setTimezone}
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-field row mb-3">
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                />
-                <label for="floatingInput">Height</label>
-              </div>
-            </div>
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                />
-                <label for="floatingInput">Weight</label>
-              </div>
-            </div>
-          </div>
-          <div className="form-field row mb-3">
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={eye_color}
-                  onChange={(e) => setEyeColor(e.target.value)}
-                />
-                <label for="floatingInput">Eye Color</label>
-              </div>
-            </div>
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={hair_color}
-                  onChange={(e) => setHairColor(e.target.value)}
-                />
-                <label for="floatingInput">Hair Color</label>
-              </div>
-            </div>
-          </div>
-          <div className="form-field row mb-3">
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={hair_length}
-                  onChange={(e) => setHairLength(e.target.value)}
-                />
-                <label for="floatingInput">Hair Length</label>
-              </div>
-            </div>
-            <div className="col-sm-6">
-              <div class="edit_profile mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder=""
-                  required
-                  value={marital_status}
-                  onChange={(e) => setMaritalStatus(e.target.value)}
-                />
-                <label for="floatingInput">Marital Status</label>
-              </div>
-            </div>
-          </div>
-          <div className="form_field mb-3">
-            <div className="hobbies-list">
-              {hobbies.map((hobby, index) => (
-                <HobbyEdit
-                  key={index}
-                  hobby={hobby}
-                  onDelete={() => handleDelete(index)}
-                />
-              ))}
-            </div>
-            <div class="edit_profile mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingInput"
-                placeholder="name@example.com"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-                required
-              />
-              <label for="floatingInput">Interests</label>
-            </div>
-            <div className="buttton_update">
-              <button class="main_button" type="submit" onClick={handleSubmit}>Update profile</button>
-            </div>
-          </div>
-        </div>
         </form>
       </section>
       {/* <section className="main_proflieSec">
