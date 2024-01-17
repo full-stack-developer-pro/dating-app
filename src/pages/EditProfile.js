@@ -30,9 +30,11 @@ const EditProfile = () => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [postcode, setPostcode] = useState("");
-  const [timezone, setTimezone] = useState(
-    Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
+  // const [timezone, setTimezone] = useState(
+  //   Intl.DateTimeFormat().resolvedOptions().timeZone
+  // );
+  const [timezone, setTimezone] = useState([Intl.DateTimeFormat().resolvedOptions().timeZone]);
+
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [eye_color, setEyeColor] = useState("");
@@ -51,6 +53,8 @@ const EditProfile = () => {
   const [profile, getProfile] = useState([]);
   const [loading, setLoading] = useState(false)
   const [cities, setCities] = useState([]);
+  const [credits, setCredits] = useState("");
+  const [status, setStatus] = useState("");
 
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
@@ -59,6 +63,7 @@ const EditProfile = () => {
       getProfile(data?.data?.data?.user);
       setGender(data?.data?.data?.user?.gender)
       setCountry(data?.data?.data?.user?.country)
+      setCredits(data?.data?.data?.user?.credits)
       setUsername(data?.data?.data?.user?.username)
       setDescription(data?.data?.data?.user?.description)
       let sDate = data?.data?.data?.user?.birthdate.split("T");
@@ -78,6 +83,7 @@ const EditProfile = () => {
       setIsverified(data?.data?.data?.user?.is_verified)
       setAge(data?.data?.data?.user?.age)
       setFree_message(data?.data?.data?.user?.free_message)
+      setStatus(data?.data?.data?.user?.status)
       ref.current.complete();
     });
   };
@@ -147,7 +153,7 @@ const EditProfile = () => {
     data.email = email;
     data.password = password;
     data.gender = gender;
-    data.birthdate = dob;
+    data.birthdate = birthdate;
     data.description = description;
     data.country = country;
     data.city = city;
@@ -164,6 +170,8 @@ const EditProfile = () => {
     data.free_message = free_message;
     data.is_verified = isverified;
     data.is_flagged = isflagged;
+    data.credits = credits;
+    data.status = status
     data.photo = "https://example.com/path/to/photo.jpg";
     // data.gender = gender
     // data.country = country
@@ -200,7 +208,7 @@ const EditProfile = () => {
         const resMessage =
           (error.response &&
             error.response.data &&
-            error.response.data.msg) ||
+            error.response.data.message) ||
           error.message ||
           error.toString();
 
@@ -422,8 +430,8 @@ const EditProfile = () => {
                 <div className="form_field mb-3">
                   <p>Select Timezone</p>
                   <TimezoneSelect
-                    value={timezone}
-                    onChange={setTimezone}
+                    value={timezone ? timezone[0] : ''}
+                    onChange={(selectedTimezone) => setTimezone([selectedTimezone])}
                     required
                   />
                 </div>

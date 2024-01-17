@@ -10,6 +10,16 @@
     align-items: center;
     justify-content: center;
 }
+.back_button {
+    margin: 1% 1%;
+}
+.back_button button {
+    background: #fff;
+    border: none;
+    color: #F113DA;
+    border-radius: 20px;
+    padding: 5px 12px;
+}
 .height_search {
     min-height: 100vh;
 }

@@ -24,13 +24,17 @@ const SingleLProfile = () => {
   const params = useParams();
   const ref = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showError, setShowError] = useState(false);
 
   const [profile, getProfile] = useState([]);
   const [selectedGender, setSelectGender] = useState("All")
   const [isChecked, setIsChecked] = useState(false);
   const [searchCountry, setSearchCountry] = useState("");
   const [cities, setCities] = useState([]);
-
+  const [login, setLogin] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
   const HandleSelection = (e) => {
@@ -41,6 +45,13 @@ const SingleLProfile = () => {
     key2: searchCountry,
   };
 
+  const handleSendMessageClick = () => {
+    if (auth) {
+      navigate("/chats/" + profile?.id);
+    } else {
+      setLogin(true);
+    }
+  };
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(params.id).then((data) => {
@@ -98,6 +109,38 @@ const SingleLProfile = () => {
     );
   };
 
+
+
+
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setMessage("");
+    setLoading(true);
+    AuthService.login(username, password).then(
+      () => {
+        toast.success("Login Successfull!!")
+        setTimeout(() => {
+          navigate("/profile");
+          window.location.reload();
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
+  };
+
   useEffect(() => {
     ref.current.continuousStart();
     document.title = "Profile";
@@ -109,10 +152,17 @@ const SingleLProfile = () => {
     await DataService.getCities().then((data) => {
       setCities(data?.data?.data);
     });
-  };  
+  };
   useEffect(() => {
     getCity();
   }, []);
+  const handleLockClick = () => {
+    // Show login popup if not authenticated
+    if (!auth) {
+      setLogin(true);
+    }
+    // If authenticated, you can add additional logic here
+  };
 
   return (
     <>
@@ -137,7 +187,7 @@ const SingleLProfile = () => {
                 </span>
                 {/* <button className="view_full">View Full Profile</button> */}
                 <div className="single_actionFlex">
-             
+
                   {/* <button>Like</button> */}
                   {/* {auth ? (
                     ? (
@@ -185,8 +235,102 @@ const SingleLProfile = () => {
               </div> */}
             </div>
             <div className="single_pM">
-              <div className="single_gallerySec">
-                <div className="gallery_inner">
+
+              {auth ? (
+                // Render images if authenticated
+                <div className="single_gallerySec">
+                  <div className="gallery_innerNew">
+                    <img src={ProfileOne} alt="" />
+                  </div>
+                  <div className="gallery_innerNew">
+                    <img src={ProfileTwo} alt="" />
+                  </div>
+                  <div className="gallery_innerNew ">
+                    <img src={ProfileThree} alt="" />
+                  </div>
+                  <div className="gallery_innerNew">
+                    <img src={ProfileFour} alt="" />
+                  </div>
+                </div>
+              ) : login && (
+                <div className="main_signUp main_login">
+                  <div className="signup_popup">
+                    <button className="close_icon" onClick={() => setLogin(false)}>
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <div className="signup_inner">
+                      <h2>Login</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Cras commodo ex eget sodales fringill.
+                      </p>
+                      <div className="signup_formSec">
+                        <form>
+                          {showError && (
+                            <div className="error_bar">
+                              <p>Please Fill out All fields !!</p>
+                            </div>
+                          )}
+                          <div class="form-floating mb-4">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder=""
+                              onChange={(e) => setUsername(e.target.value)}
+                            />
+                            <label for="floatingInput">Email address</label>
+                          </div>
+                          <div class="form-floating mb-4">
+                            <input
+                              type="password"
+                              class="form-control"
+                              id="floatingPassword"
+                              placeholder="Password"
+                              onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <label for="floatingPassword">Password</label>
+                          </div>
+                          <p className="forgot_pass">Forgot Password</p>
+                          <div className="form_field">
+                            <button className="main_button" onClick={handleLogin}>Submit</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {!auth && (
+                <div className="single_gallerySec">
+                  <div className="gallery_inner" onClick={handleLockClick}>
+                    <div className="lock_overlay">
+                      <img src={ProfileOne} alt="" />
+                    </div>
+                    <i className="fas fa-lock"></i>
+                  </div>
+                  <div className="gallery_inner" onClick={handleLockClick}>
+                    <div className="lock_overlay">
+                      <img src={ProfileTwo} alt="" />
+                    </div>
+                    <i className="fas fa-lock"></i>
+                  </div>
+                  <div className="gallery_inner" onClick={handleLockClick}>
+                    <div className="lock_overlay">
+                      <img src={ProfileThree} alt="" />
+                    </div>
+                    <i className="fas fa-lock"></i>
+                  </div>
+                  <div className="gallery_inner" onClick={handleLockClick}>
+                    <div className="lock_overlay">
+                      <img src={ProfileFour} alt="" />
+                    </div>
+                    <i className="fas fa-lock"></i>
+                  </div>
+                </div>
+              )}
+              {/* <div className="gallery_inner">
                   <div className="lock_overlay">
                     <img src={ProfileOne} alt="" />
                   </div>
@@ -209,12 +353,66 @@ const SingleLProfile = () => {
                     <img src={ProfileFour} alt="" />
                   </div>
                   <i class="fas fa-lock"></i>
+                </div> */}
+
+
+              <button className="send_m" onClick={handleSendMessageClick}>
+                Send Message<i className="fas fa-paper-plane"></i>
+              </button>
+              {/* <button className="send_m"><Link to={"/chats/" + profile?.id}>Send Message<i class="fas fa-paper-plane"></i> </Link></button> */}
+
+              {login && (
+                <div className="main_signUp main_login">
+                  <div className="signup_popup">
+                    <button className="close_icon" onClick={() => setLogin(false)}>
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <div className="signup_inner">
+                      <h2>Login</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Cras commodo ex eget sodales fringill.
+                      </p>
+                      <div className="signup_formSec">
+                        <form>
+                          {showError && (
+                            <div className="error_bar">
+                              <p>Please Fill out All fields !!</p>
+                            </div>
+                          )}
+                          <div class="form-floating mb-4">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder=""
+                              onChange={(e) => setUsername(e.target.value)}
+                            />
+                            <label for="floatingInput">Email address</label>
+                          </div>
+                          <div class="form-floating mb-4">
+                            <input
+                              type="password"
+                              class="form-control"
+                              id="floatingPassword"
+                              placeholder="Password"
+                              onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <label for="floatingPassword">Password</label>
+                          </div>
+                          <p className="forgot_pass">Forgot Password</p>
+                          <div className="form_field">
+                            <button className="main_button" onClick={handleLogin}>Submit</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-             
-              {auth && (
-                <button className="send_m"><Link to={"/chats/" + profile?.id}>Send Message<i class="fas fa-paper-plane"></i> </Link></button>
               )}
+              {/* {auth && (
+                <button className="send_m"><Link to={"/chats/" + profile?.id}>Send Message<i class="fas fa-paper-plane"></i> </Link></button>
+              )} */}
             </div>
             <div className="single_pR">
               <div className="search_formSec">
@@ -273,14 +471,14 @@ const SingleLProfile = () => {
                   <label>
                     <strong>Select Location</strong>
                   </label>
-                  <select id="citySelect" onChange={(e)=>setSearchCountry(e.target.value)}>
-                            <option value="">Select a City/Town</option>
-                            {cities.map((city, index) => (
-                              <option key={index} value={city.city}>
-                                {city.city}
-                              </option>
-                            ))}
-                          </select>
+                  <select id="citySelect" onChange={(e) => setSearchCountry(e.target.value)}>
+                    <option value="">Select a City/Town</option>
+                    {cities.map((city, index) => (
+                      <option key={index} value={city.city}>
+                        {city.city}
+                      </option>
+                    ))}
+                  </select>
                   {/* <ReactFlagsSelect
                     selected={searchCountry}
                     onSelect={(code) => setSearchCountry(code)}

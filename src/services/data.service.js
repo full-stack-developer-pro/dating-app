@@ -45,7 +45,7 @@ const getSingleProfile = (id) => {
   return axios.get(API_URL + "api/user/getDetailsById/" + id);
 };
 const UpdateProfile = (id, data) => {
-  return axios.put(API_URL + "api/user/" + id, data);
+  return axios.put(API_URL + "api/user/update/" + id, data);
 };
 const getAllUsers = () => {
   return axios.get(API_URL + "api/user/getAllUser");

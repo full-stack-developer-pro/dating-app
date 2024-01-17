@@ -166,7 +166,7 @@ const Profile = () => {
       },
       (error) => {
         const resMessage =
-          (error.response && error.response.data && error.response.data.msg) ||
+          (error.response && error.response.data && error.response.data.message) ||
           error.message ||
           error.toString();
         setLoading(false);

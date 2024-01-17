@@ -182,7 +182,6 @@ const Navbar = () => {
           toast.success("Login Successfull!!")
           setTimeout(() => {
             navigate("/profile");
-            window.location.reload();
           },2000)
         },
         (error) => {

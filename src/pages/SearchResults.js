@@ -29,6 +29,7 @@ import { useLocation } from 'react-router-dom';
 import MultiRangeSlider from "multi-range-slider-react";
 
 const SearchResults = () => {
+  const navigate = useNavigate()
   const [users, setUsers] = useState([]);
   const ref = useRef(null);
   const userId = JSON.parse(localStorage.getItem("d_user"));
@@ -186,12 +187,19 @@ const SearchResults = () => {
       }
     );
   };
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <>
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <section className="active_profilesSec height_search">
         <div className="container">
+        <div className="back_button">
+                <button onClick={goBack}> <i class="fas fa-long-arrow-alt-left"></i> Back</button>
+              </div>
           <div className="active_secFlex">
+
             {/* <div className="activeR mb-2"> */}
             {/* <div className="activeL_bg">
               
@@ -277,6 +285,7 @@ const SearchResults = () => {
               </div> */}
             {/* </div> */}
             <div className="activeM" style={{ flex: "1" }}>
+             
               <div className="search_formSec">
                 <h4>Quick Search</h4>
 
