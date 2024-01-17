@@ -253,15 +253,14 @@ const SingleLProfile = () => {
                 </div>
               ) : login && (
                 <div className="main_signUp main_login">
-                  <div className="signup_popup">
+                  <div className="signup_popup login_popup">
                     <button className="close_icon" onClick={() => setLogin(false)}>
                       <i class="fas fa-times"></i>
                     </button>
                     <div className="signup_inner">
                       <h2>Login</h2>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Cras commodo ex eget sodales fringill.
+                      Enter your details to login
                       </p>
                       <div className="signup_formSec">
                         <form>
@@ -362,15 +361,14 @@ const SingleLProfile = () => {
 
               {login && (
                 <div className="main_signUp main_login">
-                  <div className="signup_popup">
+                  <div className="signup_popup login_popup">
                     <button className="close_icon" onClick={() => setLogin(false)}>
                       <i class="fas fa-times"></i>
                     </button>
                     <div className="signup_inner">
                       <h2>Login</h2>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Cras commodo ex eget sodales fringill.
+                      Enter your details to login
                       </p>
                       <div className="signup_formSec">
                         <form>

@@ -13,6 +13,10 @@
 .back_button {
     margin: 1% 1%;
 }
+.login_popup {
+    width: 40%;
+    padding: 50px 20px;
+}
 .back_button button {
     background: #fff;
     border: none;

@@ -454,20 +454,20 @@ const Profile = () => {
                       <div className="active_actionSec">
                         {/* <div className="allFriend-button"> */}
                         <button className="allFriend-btn1">
-                          <Link to="/single-profile">
+                        <Link to={"/single-profile/" + item.id}>
                             View<i class="fas fa-eye"></i>
                           </Link>
                         </button>
-                        <button className="allFriend-btn2">
+                        {/* <button className="allFriend-btn2">
                           Like<i class="fas fa-thumbs-up"></i>
-                        </button>
+                        </button> */}
                         {/* </div> */}
                         {/* <div className="allFriend-button"> */}
-                        <button className="allFriend-btn3">
+                        {/* <button className="allFriend-btn3">
                           Send Flirt<i class="fas fa-heart"></i>
-                        </button>
+                        </button> */}
                         <button className="allFriend-btn4">
-                          <Link to={"/chats/" + item._id}>
+                          <Link to={"/chats/" + item.id}>
                             Send Message<i class="fas fa-comment-alt"></i>
                           </Link>
                         </button>
