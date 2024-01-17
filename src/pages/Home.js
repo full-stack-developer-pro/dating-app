@@ -256,7 +256,7 @@ const Home = () => {
           const resMessage =
             (error.response &&
               error.response.data &&
-              error.response.data.msg) ||
+              error.response.data.message) ||
             error.message ||
             error.toString();
 
@@ -292,7 +292,7 @@ const Home = () => {
       },
       (error) => {
         const resMessage =
-          (error.response && error.response.data && error.response.data.msg) ||
+          (error.response && error.response.data && error.response.data.message) ||
           error.message ||
           error.toString();
         setLoading(false);
@@ -317,7 +317,7 @@ const Home = () => {
       },
       (error) => {
         const resMessage =
-          (error.response && error.response.data && error.response.data.msg) ||
+          (error.response && error.response.data && error.response.data.message) ||
           error.message ||
           error.toString();
         setLoading(false);

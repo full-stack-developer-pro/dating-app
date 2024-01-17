@@ -5,7 +5,9 @@
     background-repeat: no-repeat;
     background-position: center;
 }
-
+button.send_m a {
+    color: #fff;
+}
 .single_Pflex {
     display: flex;
     align-items: stretch;

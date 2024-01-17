@@ -976,7 +976,9 @@
     font-size: 14px;
     margin: 15px auto;
 }
-
+.new_searchview {
+    width: 100%;
+}
 .single_lockOpen .single_actionFlex {
     display: flex;
     align-items: center;
@@ -984,7 +986,7 @@
 }
 
 .single_actionFlex button {
-    width: 30%;
+    width: 100%;
     background: #ef48b5;
     padding: 5px 5px;
     color: #fff;

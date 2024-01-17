@@ -12,17 +12,26 @@ import { Link, useParams } from "react-router-dom";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../services/auth.service";
+import { ToastContainer, toast } from "react-toastify";
 
 
 const SingleLProfile = () => {
+
   const navigate = useNavigate();
+  const auth = AuthService.getCurrentUser();
+
   const params = useParams();
   const ref = useRef(null);
+  const [loading, setLoading] = useState(false);
+
   const [profile, getProfile] = useState([]);
-  const [searchCountry, setSearchCountry] = useState("");
   const [selectedGender, setSelectGender] = useState("All")
   const [isChecked, setIsChecked] = useState(false);
+  const [searchCountry, setSearchCountry] = useState("");
+  const [cities, setCities] = useState([]);
 
+  const userId = JSON.parse(localStorage.getItem("d_user"));
 
   const HandleSelection = (e) => {
     setSelectGender(e.target.value)
@@ -35,12 +44,59 @@ const SingleLProfile = () => {
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(params.id).then((data) => {
-      getProfile(data?.data?.data);
+      getProfile(data?.data?.data?.user);
       ref.current.complete();
     });
   };
+  const removeFriend = async (id) => {
+    const data = {};
+    data.friendId = id;
+    setLoading(true);
+    await DataService.removeMyFriend(userId, data).then(
+      () => {
+        setLoading(false);
+        toast.success("Friend Removed Successfully!!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        getUserProfile();
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
+  };
 
-
+  const addFriend = async (id) => {
+    const data = {};
+    data.friendId = id;
+    setLoading(true);
+    await DataService.addMyFriend(userId, data).then(
+      () => {
+        setLoading(false);
+        toast.success("Friend Added Successfully!!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        getUserProfile();
+      },
+      (error) => {
+        const resMessage =
+          (error.response && error.response.data && error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
+  };
 
   useEffect(() => {
     ref.current.continuousStart();
@@ -49,6 +105,15 @@ const SingleLProfile = () => {
     getUserProfile();
 
   }, []);
+  const getCity = async () => {
+    await DataService.getCities().then((data) => {
+      setCities(data?.data?.data);
+    });
+  };  
+  useEffect(() => {
+    getCity();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -66,19 +131,39 @@ const SingleLProfile = () => {
               <div className="single_lockOpen">
                 <img src={ProfileOne} alt="" />
                 <h5>{profile?.name}</h5>
-                <span className="single_age" style={{textTransform : 'capitalize'}}>{profile?.age} ~ {profile?.gender}</span>
+                <span className="single_age" style={{ textTransform: 'capitalize' }}>{profile?.age} ~ {profile?.gender}</span>
                 <span>
                   <i class="fas fa-map-marker-alt"></i> {profile?.city}, {profile?.country}
                 </span>
-                <button className="view_full">View Full Profile</button>
+                {/* <button className="view_full">View Full Profile</button> */}
                 <div className="single_actionFlex">
-                  <button>Like</button>
-                  <button>Follow</button>
-                  <button>Block</button>
+             
+                  {/* <button>Like</button> */}
+                  {/* {auth ? (
+                    ? (
+                      <button
+                        onClick={() => removeFriend(profile?.id)}
+                      >
+                        Remove Friend
+                        <i className="fas fa-user-minus"></i>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => addFriend(profile?.id)}
+                      >
+                        Add Friend
+                        <i className="fas fa-user-plus"></i>
+                      </button>
+                    )
+                  ) : (
+                    ""
+                  )} */}
+                  {/* <button>Follow</button>
+                  <button>Block</button> */}
                 </div>
               </div>
-              <h4>Who is Online</h4>
-              <div className="online_profiles">
+              {/* <h4>Who is Online</h4> */}
+              {/* <div className="online_profiles">
               <Link to="/chats">
                 <div className="onlineInner">
                   <img src={ProfileOne} alt="" />
@@ -97,42 +182,45 @@ const SingleLProfile = () => {
                   <i class="fas fa-circle"></i>
                 </div>
                 </Link>
-              </div>
+              </div> */}
             </div>
             <div className="single_pM">
               <div className="single_gallerySec">
                 <div className="gallery_inner">
                   <div className="lock_overlay">
-                  <img src={ProfileOne} alt="" />
+                    <img src={ProfileOne} alt="" />
                   </div>
                   <i class="fas fa-lock"></i>
                 </div>
                 <div className="gallery_inner">
                   <div className="lock_overlay">
-                  <img src={ProfileTwo} alt="" />
+                    <img src={ProfileTwo} alt="" />
                   </div>
                   <i class="fas fa-lock"></i>
                 </div>
                 <div className="gallery_inner">
                   <div className="lock_overlay">
-                  <img src={ProfileThree} alt="" />
+                    <img src={ProfileThree} alt="" />
                   </div>
                   <i class="fas fa-lock"></i>
                 </div>
                 <div className="gallery_inner">
                   <div className="lock_overlay">
-                  <img src={ProfileFour} alt="" />
+                    <img src={ProfileFour} alt="" />
                   </div>
                   <i class="fas fa-lock"></i>
                 </div>
               </div>
-              <button className="send_m">Send Message<i class="fas fa-paper-plane"></i></button>
+             
+              {auth && (
+                <button className="send_m"><Link to={"/chats/" + profile?.id}>Send Message<i class="fas fa-paper-plane"></i> </Link></button>
+              )}
             </div>
             <div className="single_pR">
               <div className="search_formSec">
                 <h4>Quick Search</h4>
                 <div className="search_gender">
-                <div className="form_field mb-3">
+                  <div className="form_field mb-3">
                     <p>
                       <strong>My Gender</strong>
                     </p>
@@ -178,24 +266,32 @@ const SingleLProfile = () => {
                         Female
                       </label>
                     </div>
-                   
+
                   </div>
                 </div>
-                <div className="form_field country mb-3">
+                <div className="form_field country mb-3 search_m new_searchview">
                   <label>
                     <strong>Select Location</strong>
                   </label>
-                  <ReactFlagsSelect
+                  <select id="citySelect" onChange={(e)=>setSearchCountry(e.target.value)}>
+                            <option value="">Select a City/Town</option>
+                            {cities.map((city, index) => (
+                              <option key={index} value={city.city}>
+                                {city.city}
+                              </option>
+                            ))}
+                          </select>
+                  {/* <ReactFlagsSelect
                     selected={searchCountry}
                     onSelect={(code) => setSearchCountry(code)}
                     required
-                  />
+                  /> */}
                 </div>
                 <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}>
                   Search<i class="fas fa-search"></i>
                 </Link>
               </div>
-              <div className="recently_joined">
+              {/* <div className="recently_joined">
                 <h3>Members Near You</h3>
                 <div className="active_recent">
                   <div className="active_rInner">
@@ -215,7 +311,7 @@ const SingleLProfile = () => {
                     <h4>Emily W.</h4>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
