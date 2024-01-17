@@ -460,16 +460,16 @@ const SearchResults = () => {
                           </div>
                           <div className="active_actionSec">
                             <button>
-                              <Link to={"/single-profile/" + item._id}>
+                              <Link to={"/single-profile/" + item.id}>
                                 View<i className="fas fa-eye"></i>
                               </Link>
                             </button>
-                            <button>
+                            {/* <button>
                               Like<i className="fas fa-thumbs-up"></i>
                             </button>
                             <button>
                               Send Flirt<i className="fas fa-heart"></i>
-                            </button>
+                            </button> */}
                             <button>
                               <Link to={"/chats/" + item._id}>
                                 Send Message<i class="fas fa-comment-alt"></i>

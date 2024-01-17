@@ -1125,9 +1125,9 @@ const Home = () => {
                                   View<i className="fas fa-eye"></i>
                                 </Link>
                               </button>
-                              <button>
+                              {/* <button>
                                 Like<i className="fas fa-thumbs-up"></i>
-                              </button>
+                              </button> */}
                               {/* <button onClick={() => sendFlirt(item.id)}>
                                 Send Flirt<i className="fas fa-heart"></i>
                               </button> */}
