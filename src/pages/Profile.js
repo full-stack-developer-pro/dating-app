@@ -400,15 +400,7 @@ const Profile = () => {
                     </i></li></>
                   }
                 </ul>
-                {/* {status === "true" ? (
-                  <div className="show">
-                    <h2>Approved</h2>
-                  </div>
-                ) : (
-                  <div className="pending">
-                    <h2 style={{ fontSize: "16px" }}>Approval Pending...</h2>
-                  </div>
-                )} */}
+               
                 <div className="upload_images">
                   <button className="main_button" onClick={UploadProfile}>Upload images</button>
                 </div>
