@@ -30,6 +30,7 @@ const Profile = () => {
   const [images, setImages] = useState([]);
   const [status, setStatus] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [allImages, setAllImages] = useState([]);
 
   const [fileLimit, setFileLimit] = useState(false);
 
@@ -39,8 +40,7 @@ const Profile = () => {
     await DataService.getSingleProfile(userId).then((data) => {
       console.log(data?.data?.data?.user)
       setProfile(data?.data?.data?.user);
-
-
+      setAllImages(data?.data?.data?.user?.images.filter((item) => item.is_verified === 1));
       ref.current.complete();
     });
   };
@@ -400,7 +400,7 @@ const Profile = () => {
                     </i></li></>
                   }
                 </ul>
-                {status === "true" ? (
+                {/* {status === "true" ? (
                   <div className="show">
                     <h2>Approved</h2>
                   </div>
@@ -408,14 +408,28 @@ const Profile = () => {
                   <div className="pending">
                     <h2 style={{ fontSize: "16px" }}>Approval Pending...</h2>
                   </div>
-                )}
+                )} */}
+                <div className="upload_images">
+                  <button className="main_button" onClick={UploadProfile}>Upload images</button>
+                </div>
+
+                  <h1 style={{fontSize:"16px",margin:"20px 10px"}}>Recent Upload</h1>
+                <div className="image_uploaded">
+                  {
+                    allImages && allImages.length > 0 ? allImages.map((image) => {
+                      return (
+                        <>
+                          <img src={`http://api.digitalmarketingcoursesinchandigarh.in/${image.path}`} alt="Image" />
+                        </>
+                      )
+                    }) : ""
+                  }
+                </div>
               </div>
 
             </div>
 
-            <div className="upload_images">
-              <button className="main_button" onClick={UploadProfile}>Upload images</button>
-            </div>
+
 
 
           </div>
@@ -454,7 +468,7 @@ const Profile = () => {
                       <div className="active_actionSec">
                         {/* <div className="allFriend-button"> */}
                         <button className="allFriend-btn1">
-                        <Link to={"/single-profile/" + item.id}>
+                          <Link to={"/single-profile/" + item.id}>
                             View<i class="fas fa-eye"></i>
                           </Link>
                         </button>

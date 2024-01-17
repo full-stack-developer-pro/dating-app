@@ -13,7 +13,18 @@
     align-items: center;
     justify-content: space-between;
 }
-
+.image_uploaded {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 7px;
+}
+.image_uploaded img {
+    width: 30%;
+    margin: 1%;
+    height: 20vh;
+    object-fit: cover;
+}
 .profileFlexL {
     width: 25%;
     position: relative;

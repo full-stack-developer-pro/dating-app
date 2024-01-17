@@ -29,9 +29,13 @@ const Footer = () => {
     <>
       <div className="footer_FSec">
         <div className="container">
+
+          <div className="logo_footer">
+
+              <img src={Logo} alt="" />
+          </div>
           <div className="footer_FFlex">
             <div className="footer_FL">
-              <img src={Logo} alt="" />
               <ul>
                 <li>
                   <Link to="/">
@@ -58,11 +62,7 @@ const Footer = () => {
                     <i class="fas fa-circle"></i>Account settings
                   </Link>
                 </li>
-                <li>
-                  <Link to="/search-results">
-                    <i class="fas fa-circle"></i>Search by county
-                  </Link>
-                </li>
+              
               </ul>
             </div>
             <div className="footer_FM">
@@ -89,7 +89,7 @@ const Footer = () => {
               <h5>Support</h5>
               <ul>
                 <li>
-                  <Link to="/">
+                  <Link to="/contact-us">
                     <i class="fas fa-circle"></i>Report abuse
                   </Link>
                 </li>
@@ -99,7 +99,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/">
+                  <Link to="/contact-us">
                     <i class="fas fa-circle"></i>Helpdesk
                   </Link>
                 </li>

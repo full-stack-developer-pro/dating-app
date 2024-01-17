@@ -511,7 +511,7 @@ const SingleLProfile = () => {
           </div>
         </div>
       </section>
-      <section className="most_visited">
+      {/* <section className="most_visited">
         <div className="container">
           <h2 className="main_title">Most Visited Locations</h2>
           <div className="most_visitedFlex">
@@ -524,7 +524,7 @@ const SingleLProfile = () => {
             <span>United Kingdom</span>
           </div>
         </div>
-      </section>
+      </section> */}
       <Footer />
     </>
   );

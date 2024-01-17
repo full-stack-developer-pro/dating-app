@@ -25,6 +25,7 @@ import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
+import SelectSearch from 'react-select-search';
 // import { io } from "socket.io-client";
 import axios from "axios";
 import MultiRangeSlider from "multi-range-slider-react";
@@ -58,7 +59,15 @@ const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState();
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [apiError, setApiError] = useState("");
 
+  const [isListVisible, setIsListVisible] = useState(true);
+
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+    setIsListVisible(true); // Show the list when the input changes
+  };
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -99,7 +108,7 @@ const Home = () => {
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
 
   const handleSliderChange = ({ minValue, maxValue }) => {
-    setAgeGroup({  minValue, maxValue });
+    setAgeGroup({ minValue, maxValue });
   };
 
   const handleViewAllClick = () => {
@@ -116,9 +125,9 @@ const Home = () => {
 
   const myStateData = {
     key1: selectedGenderSearch,
-    key2: searchCountry,
-    key3 : ageGroup.minValue,
-    key4 : ageGroup.maxValue,
+    key2: searchKeyword,
+    key3: ageGroup.minValue,
+    key4: ageGroup.maxValue,
   };
 
   const handleInputChange = (e) => {
@@ -164,7 +173,7 @@ const Home = () => {
     setStepThree(true);
   };
   const handleShowTwo = () => {
-    if (gender === "" || age === "" || country === "" || isChecked === false) {
+    if (gender === "" || age === "" || searchKeyword === "" || isChecked === false) {
       setShowError(true);
     } else {
       setShowError(false);
@@ -224,8 +233,8 @@ const Home = () => {
       data.gender = gender;
       data.birthdate = dob;
       data.description = description;
-      data.country = country;
-      data.city = city;
+      data.country = searchKeyword;
+      data.city = searchKeyword;
       data.age = age;
       data.postcode = postal;
       data.timezone = timezone;
@@ -261,9 +270,10 @@ const Home = () => {
             error.toString();
 
           setLoading(false);
-          toast.error(resMessage, {
-            position: toast.POSITION.TOP_RIGHT,
-          });
+          setApiError(resMessage);
+          // toast.error(resMessage, {
+          //   position: toast.POSITION.TOP_RIGHT,
+          // });
         }
       );
     }
@@ -370,14 +380,26 @@ const Home = () => {
       setMembers(data?.data);
     });
   };
+
+
+
   const getCity = async () => {
-    await DataService.getCities().then((data) => {
+    await DataService.getCities(searchKeyword).then((data) => {
       setCities(data?.data?.data);
     });
   };
 
+  const handleHideCity = (selectedCity) => {
+    setSearchKeyword(selectedCity.city);
+    setCities([]);
+    setIsListVisible(false); // Hide the list when a city is selected
+  };
+
   useEffect(() => {
     getCity();
+  }, [searchKeyword]);
+
+  useEffect(() => {
     getTop();
     getMiddle();
     getSecondLast();
@@ -445,6 +467,7 @@ const Home = () => {
                 <div className="signup_inner">
                   <h2>Sign Up Free!</h2>
                   <div className="signup_formSec">
+                  {apiError && <h1 style={{ color: "red",fontSize: "15px",textAlign: "center",background: "#ffd8d8",padding: "10px 8px"}}>{apiError}</h1>}
                     {showError && (
                       <div className="error_bar">
                         <p>Please Fill out All fields !!</p>
@@ -517,14 +540,29 @@ const Home = () => {
                           <label>
                             <strong>My Location</strong>
                           </label>
-                          <select id="citySelect" onChange={(e)=>setCountry(e.target.value)}>
+                          <input
+                            type="search"
+                            placeholder="Enter city name"
+                            value={searchKeyword}
+                            onChange={handleSearchChange}
+                          />
+                          {isListVisible && searchKeyword && (
+                            <ul className="location_new">
+                              {cities.map((city) => (
+                                <li onClick={() => handleHideCity(city)} key={city.id}>
+                                  {city.city}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {/* <select id="citySelect" onChange={(e)=>setCountry(e.target.value)}>
                             <option value="">Select a City/Town</option>
                             {cities.map((city, index) => (
                               <option key={index} value={city.city}>
                                 {city.city}
                               </option>
                             ))}
-                          </select>
+                          </select> */}
 
                           {/* <ReactFlagsSelect
                             selected={country}
@@ -598,7 +636,9 @@ const Home = () => {
                             onChange={(e) => setEmail(e.target.value)}
                           />
                           <label for="floatingInput">Email</label>
+
                         </div>
+
                         <div class="form-floating mb-3">
                           <input
                             type="password"
@@ -610,6 +650,7 @@ const Home = () => {
                           />
                           <label for="floatingInput">Password</label>
                         </div>
+
                         <div class="form-floating mb-3">
                           <textarea
                             class="form-control"
@@ -880,9 +921,9 @@ const Home = () => {
             <div className="about_flexR">
               <h2>{middleBanner?.heading}</h2>
               <p
-              style={{fontSize:"14px",fontFamily: "'Outfit', sans-serif"}}
+                style={{ fontSize: "14px", fontFamily: "'Outfit', sans-serif" }}
                 dangerouslySetInnerHTML={{ __html: middleBanner?.description }}
-               ></p>
+              ></p>
             </div>
           </div>
         </div>
@@ -998,14 +1039,29 @@ const Home = () => {
                     <label>
                       <strong>Select Location</strong>
                     </label>
-                    <select id="citySelect" onChange={(e)=>setSearchCountry(e.target.value)}>
-                            <option value="">Select a City/Town</option>
-                            {cities.map((city, index) => (
-                              <option key={index} value={city.city}>
-                                {city.city}
-                              </option>
-                            ))}
-                          </select>
+                    <input
+                      type="search"
+                      placeholder="Enter city name"
+                      value={searchKeyword}
+                      onChange={handleSearchChange}
+                    />
+                    {isListVisible && searchKeyword && (
+                      <ul className="location_new">
+                        {cities.map((city) => (
+                          <li onClick={() => handleHideCity(city)} key={city.id}>
+                            {city.city}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {/* <select id="citySelect" onChange={(e) => setSearchCountry(e.target.value)}>
+                      <option value="">Select a City/Town</option>
+                      {cities.map((city, index) => (
+                        <option key={index} value={city.city}>
+                          {city.city}
+                        </option>
+                      ))}
+                    </select> */}
                     {/* <ReactFlagsSelect
                       placeholder="Select a Town or City"
                       selected={searchCountry}
@@ -1014,16 +1070,17 @@ const Home = () => {
                     /> */}
                   </div>
                   <div className="range_Age">
-                  <label>
+                    <label>
                       <strong>Select Age</strong>
                     </label>
-                  <MultiRangeSlider
-                    min={18}
-                    max={100}
-                    minValue={ageGroup.minValue}
-                    maxValue={ageGroup.maxValue}
-                    onChange={handleSliderChange}
-                  />
+                    <MultiRangeSlider
+                      min={18}
+                      max={100}
+                      minValue={ageGroup.minValue}
+                      maxValue={ageGroup.maxValue}
+                      onChange={handleSliderChange}
+                    />
+
                   </div>
                   <div className="button_search">
                     <Link
@@ -1064,7 +1121,7 @@ const Home = () => {
                   </div>
                 </Link>
               </div> */}
-               
+
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
                   users.slice(0, displayCount).map((item, i) => {
@@ -1363,7 +1420,7 @@ const Home = () => {
           <div className="about_flex">
             <div className="about_flexR">
               <h2>{secondLastBanner?.heading}</h2>
-              <p style={{fontSize:"14px",fontFamily: "'Outfit', sans-serif"}}
+              <p style={{ fontSize: "14px", fontFamily: "'Outfit', sans-serif" }}
                 dangerouslySetInnerHTML={{
                   __html: secondLastBanner?.description,
                 }}
@@ -1389,12 +1446,12 @@ const Home = () => {
               )}
             </div>
           </div>
-         
+
         </div>
       </section>
 
 
-     
+
       <Footer />
     </>
   );

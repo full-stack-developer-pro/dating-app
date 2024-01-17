@@ -90,10 +90,17 @@
 .footer_FFlex {
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid #fff;
-    padding-top: 40px;
+    padding-top: 20px;
 }
+.logo_footer {
+    width: 100%;
+    border-top: 1px solid #fff;
+    padding-top: 20px;
+}
+.logo_footer img {
+    width: 160px;
 
+}
 .footer_FFlex ul {
     list-style: none;
     margin: 0;
