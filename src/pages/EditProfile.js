@@ -84,6 +84,8 @@ const EditProfile = () => {
       setAge(data?.data?.data?.user?.age)
       setFree_message(data?.data?.data?.user?.free_message)
       setStatus(data?.data?.data?.user?.status)
+      setEmail(data?.data?.data?.user?.email)
+      setPassword(data?.data?.data?.user?.password)
       ref.current.complete();
     });
   };
