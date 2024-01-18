@@ -27,6 +27,12 @@
     justify-content: space-between;
     padding: 20px;
     border: 1px dotted #00000075;
+    width: 42%;
+    margin: auto;
+    flex-direction: column;
+}
+.upload-box i {
+    margin-bottom: 20px;
 }
 .upload-btn-wrapper input[type=file] {
     font-size: 100px;

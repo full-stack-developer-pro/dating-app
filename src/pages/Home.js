@@ -136,7 +136,7 @@ const Home = () => {
   const maxDate = eighteenYearsAgo.toISOString().split('T')[0];
 
 
-// errors 
+  // errors 
   const minLength = 6;
 
   const handleChange = (e) => {
@@ -154,7 +154,7 @@ const Home = () => {
       setError('');
     }
   };
-// errors 
+  // errors 
 
   const handleSliderChange = ({ minValue, maxValue }) => {
     setAgeGroup({ minValue, maxValue });
@@ -250,7 +250,7 @@ const Home = () => {
     }
   };
   const handleShowFour = () => {
-    if (city === "" || postal === "" ) {
+    if (city === "" || postal === "") {
       setShowError(true);
     } else {
       setShowError(false);
@@ -262,67 +262,67 @@ const Home = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      eyecolor === "" ||
-      haircolor === "" ||
-      maritalstatus === "" ||
-      hobbies === ""
-    ) {
-      setShowError(true);
-    } else {
-      const data = {};
-      data.is_fake = false;
-      data.name = name;
-      data.username = username;
-      data.email = email;
-      data.password = password;
-      data.gender = gender;
-      data.birthdate = dob;
-      data.description = "dsd";
-      data.country = searchKeyword;
-      data.city = city;
-      data.age = age;
-      data.postcode = postal;
-      data.timezone = ["ds"];
-      data.height = parseInt(height);
-      data.weight = parseInt(weight);
-      data.eye_color = eyecolor;
-      data.hair_color = haircolor;
-      data.hair_length = "sd";
-      data.marital_status = maritalstatus;
-      data.interests = hobbies;
-      data.credits = 200;
-      data.free_message = "Hello world";
-      data.is_verified = true;
-      data.is_flagged = false;
-      data.photo = "https://example.com/path/to/photo.jpg";
-      setLoading(true);
-      await AuthService.register(data).then(
-        () => {
-          setLoading(false);
-          toast.success("Profile create successfully! Please Login Now", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+    // if (
+    //   eyecolor === "" ||
+    //   haircolor === "" ||
+    //   maritalstatus === "" ||
+    //   hobbies === ""
+    // ) {
+    //   setShowError(true);
+    // } else {
+    const data = {};
+    data.is_fake = false;
+    data.name = name;
+    data.username = username;
+    data.email = email;
+    data.password = password;
+    data.gender = gender;
+    data.birthdate = dob;
+    data.description = "dsd";
+    data.country = searchKeyword;
+    data.city = city;
+    data.age = age;
+    data.postcode = postal;
+    data.timezone = ["ds"];
+    data.height = parseInt(height) ? parseInt(height) : "45";
+    data.weight = parseInt(weight) ?parseInt(weight) :"56";
+    data.eye_color = eyecolor ? eyecolor : "black";
+    data.hair_color = haircolor ? eyecolor : "black";
+    data.hair_length = "sd";
+    data.marital_status = maritalstatus ? maritalstatus : "unmarried";
+    data.interests = hobbies ? hobbies : "";
+    data.credits = 200;
+    data.free_message = "Hello world";
+    data.is_verified = true;
+    data.is_flagged = false;
+    data.photo = "https://example.com/path/to/photo.jpg";
+    setLoading(true);
+    await AuthService.register(data).then(
+      () => {
+        setLoading(false);
+        toast.success("Profile create successfully! Please Login Now", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-          setLoading(false);
-          setApiError(resMessage);
-          // toast.error(resMessage, {
-          //   position: toast.POSITION.TOP_RIGHT,
-          // });
-        }
-      );
-    }
+        setLoading(false);
+        setApiError(resMessage);
+        // toast.error(resMessage, {
+        //   position: toast.POSITION.TOP_RIGHT,
+        // });
+      }
+    );
+    // }
   };
 
   const getAllUsers = async () => {
@@ -711,9 +711,9 @@ const Home = () => {
                             value={password}
                             onChange={handleChange}
                           />
-                          <label for="floatingInput">Password</label>   
+                          <label for="floatingInput">Password</label>
                           {!isPasswordValid && (
-                            <div style={{ color: 'red' ,fontSize: "14px", paddingTop: "10px"}}>Password must be at least 6 characters long</div>
+                            <div style={{ color: 'red', fontSize: "14px", paddingTop: "10px" }}>Password must be at least 6 characters long</div>
                           )}
                         </div>
 

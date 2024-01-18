@@ -185,8 +185,8 @@ const Profile = () => {
           position: toast.POSITION.TOP_RIGHT
         });
         setLoading(false);
-        setTimeout(function(){
-            window.location.reload();
+        setTimeout(function () {
+          window.location.reload();
         }, 1500)
       },
       (error) => {
@@ -275,7 +275,7 @@ const Profile = () => {
                 <button onClick={UploadProfile}>Upload image</button>
                 <img src="" />
               </div> */}
-              <img src={profile?.profile_path} alt="" />
+              <img src={profile?.profile_path ? profile?.profile_path : ProfileOne} alt="" />
               <div className="gender_iop">
                 <i class="fas fa-venus"></i>
               </div>
@@ -419,24 +419,25 @@ const Profile = () => {
             <div className="card mt-4 mb-4">
               <div className="card-body mt-2 p-4">
                 <label className="form-label"><h4 className="f-700">Media</h4></label>
-
-                <div className="upload-box">
-                  <i><svg width="47" height="39" viewBox="0 0 47 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M32 27.5L24 19.5L16 27.5" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M24 19.5V37.5" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M40.7799 32.28C42.7306 31.2165 44.2716 29.5337 45.1597 27.4972C46.0477 25.4607 46.2323 23.1864 45.6843 21.0334C45.1363 18.8803 43.8869 16.971 42.1333 15.6069C40.3796 14.2427 38.2216 13.5014 35.9999 13.5H33.4799C32.8745 11.1585 31.7462 8.98464 30.1798 7.14195C28.6134 5.29927 26.6496 3.83567 24.4361 2.86118C22.2226 1.8867 19.817 1.42669 17.4002 1.51573C14.9833 1.60478 12.6181 2.24057 10.4823 3.3753C8.34649 4.51003 6.49574 6.11417 5.06916 8.06713C3.64259 10.0201 2.6773 12.271 2.24588 14.6508C1.81446 17.0305 1.92813 19.477 2.57835 21.8065C3.22856 24.136 4.3984 26.2877 5.99992 28.1" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M32 27.5L24 19.5L16 27.5" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  </i>
-                  <div class="upload-btn-wrapper ms-3">
-                    <button class="btn-file">Select a file or drag and drop here</button>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      name="myfile"
-                      style={{ width: "100%" }}
-                      multiple
-                      onChangeCapture={onFileChangeCaptureMultiple} />
+                <div className="new_mainupload">
+                  <div className="upload-box">
+                    <i><svg width="47" height="39" viewBox="0 0 47 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M32 27.5L24 19.5L16 27.5" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M24 19.5V37.5" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M40.7799 32.28C42.7306 31.2165 44.2716 29.5337 45.1597 27.4972C46.0477 25.4607 46.2323 23.1864 45.6843 21.0334C45.1363 18.8803 43.8869 16.971 42.1333 15.6069C40.3796 14.2427 38.2216 13.5014 35.9999 13.5H33.4799C32.8745 11.1585 31.7462 8.98464 30.1798 7.14195C28.6134 5.29927 26.6496 3.83567 24.4361 2.86118C22.2226 1.8867 19.817 1.42669 17.4002 1.51573C14.9833 1.60478 12.6181 2.24057 10.4823 3.3753C8.34649 4.51003 6.49574 6.11417 5.06916 8.06713C3.64259 10.0201 2.6773 12.271 2.24588 14.6508C1.81446 17.0305 1.92813 19.477 2.57835 21.8065C3.22856 24.136 4.3984 26.2877 5.99992 28.1" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M32 27.5L24 19.5L16 27.5" stroke="#F209E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    </i>
+                    <div class="upload-btn-wrapper ms-3">
+                      <button class="btn-file">Select a file or drag and drop here</button>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        name="myfile"
+                        style={{ width: "100%" }}
+                        multiple
+                        onChangeCapture={onFileChangeCaptureMultiple} />
+                    </div>
                   </div>
                 </div>
                 <ul className="thumbs-img mt-3 mb-2">
@@ -548,7 +549,7 @@ const Profile = () => {
                 );
               })
             ) : (
-              <p>not found</p>
+              ""
             )}
           </div>
         </div>
