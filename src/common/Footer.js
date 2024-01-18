@@ -38,12 +38,12 @@ const Footer = () => {
             <div className="footer_FL">
               <ul>
                 <li>
-                  <Link to="/">
+                  <Link to="/search-results">
                     <i class="fas fa-circle"></i>Browse profiles
                   </Link>
                 </li>
                 <li>
-                  <Link to="/">
+                  <Link to="/chats">
                     <i class="fas fa-circle"></i>Messages
                   </Link>
                 </li>
@@ -52,11 +52,12 @@ const Footer = () => {
                     <i class="fas fa-circle"></i>My profile
                   </Link>
                 </li>
-                <li>
-                  <Link to="/">
+                {/*
+               <li>
+                  <Link to="/profile">
                     <i class="fas fa-circle"></i>My visitors
                   </Link>
-                </li>
+                </li>*/}
                 <li>
                   <Link to="/edit-profile">
                     <i class="fas fa-circle"></i>Account settings
@@ -90,7 +91,7 @@ const Footer = () => {
               <ul>
                 <li>
                   <Link to="/contact-us">
-                    <i class="fas fa-circle"></i>Report abuse
+                    <i class="fas fa-circle"></i>Contact
                   </Link>
                 </li>
                 <li>

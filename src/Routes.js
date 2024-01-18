@@ -17,7 +17,7 @@ import EditProfile from "./pages/EditProfile";
 import { RestrictedAccess } from "./private-component/RestrictedAccess";
 import SearchResults from "./pages/SearchResults";
 import Payments from "./pages/Payment";
-
+import AllChats from "./pages/AllChats"
 
 
 export default function App() {
@@ -39,6 +39,7 @@ export default function App() {
         <Route element={<RestrictedAccess />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/chats/:id" element={<Chats />} />
+        <Route path="/chats" element={<AllChats />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/thank-you" element={<Payments />} />
         </Route>
