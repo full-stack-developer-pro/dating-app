@@ -23,12 +23,12 @@ axios.interceptors.response.use(function (response) {
 const getAboutUs = () => {
   return axios.get(API_URL + "api/admin/getAboutAs");
 };
-// const getContactUs = () => {
-//   return axios.get(API_URL + "api/admin/getcontactAs");
-// };
-// const getSocialLinks = () => {
-//   return axios.get(API_URL + "api/admin/getSocialLinks");
-// };
+const getContactUs = () => {
+  return axios.get(API_URL + "api/admin/getcontactAs");
+};
+const getSocialLinks = () => {
+  return axios.get(API_URL + "api/admin/getSocialLinks");
+};
 const getPrivacyPoicy = () => {
   return axios.get(API_URL + "api/admin/getPrivacyPolicy");
 };
@@ -110,8 +110,8 @@ const DataService = {
   getMembers,
   UpdateProfile,
   getAboutUs,
-  // getContactUs,
-  // getSocialLinks,
+  getContactUs,
+  getSocialLinks,
   getPrivacyPoicy,
   getTermsConditions,
   getAllBlogs,

@@ -31,6 +31,7 @@ const Profile = () => {
   const [status, setStatus] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [allImages, setAllImages] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
 
   const [fileLimit, setFileLimit] = useState(false);
 
@@ -143,6 +144,69 @@ const Profile = () => {
   }, [userId]);
 
 
+  // const handleAvatar = (image) => {
+  //   setImageUrl(image.url)
+  // }
+
+
+  const handleAvatar = (image) => {
+    setLoading(true);
+    const data = {};
+    data.photo = image.url;
+    data.is_fake = profile?.is_fake
+    data.name = profile?.name;
+    data.username = profile?.username;
+    data.email = profile?.email;
+    data.password = profile?.password;
+    data.gender = profile?.gender;
+    data.birthdate = profile?.birthdate;
+    data.description = profile?.description;
+    data.country = profile?.country;
+    data.city = profile?.city;
+    data.age = profile?.age;
+    data.postcode = profile?.postcode;
+    data.timezone = profile?.timezone;
+    data.height = profile?.height;
+    data.weight = profile?.weight;
+    data.eye_color = profile?.eye_color;
+    data.hair_color = profile?.hair_color;
+    data.hair_length = profile?.hair_length;
+    data.marital_status = profile?.marital_status;
+    data.interests = profile?.interests;
+    data.free_message = profile?.free_message;
+    data.is_verified = profile?.is_verified;
+    data.is_flagged = profile?.is_flagged;
+    data.credits = profile?.credits;
+    data.status = profile?.status
+
+    DataService.UpdateProfile(userId, data).then(
+      () => {
+        toast.success('Profile updated successfully!', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+        setLoading(false);
+        setTimeout(function(){
+            window.location.reload();
+        }, 1500)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT
+        });
+      }
+    );
+
+  };
+
+
 
   const UploadProfile = (e) => {
     e.preventDefault();
@@ -211,7 +275,7 @@ const Profile = () => {
                 <button onClick={UploadProfile}>Upload image</button>
                 <img src="" />
               </div> */}
-              <img src={ProfileOne} alt="" />
+              <img src={profile?.profile_path} alt="" />
               <div className="gender_iop">
                 <i class="fas fa-venus"></i>
               </div>
@@ -370,7 +434,7 @@ const Profile = () => {
                       type="file"
                       accept="image/*"
                       name="myfile"
-                      style={{ width: "100%", height: "100%" }}
+                      style={{ width: "100%" }}
                       multiple
                       onChangeCapture={onFileChangeCaptureMultiple} />
                   </div>
@@ -400,30 +464,30 @@ const Profile = () => {
                     </i></li></>
                   }
                 </ul>
-               
-                <div className="upload_images">
-                  <button className="main_button" onClick={UploadProfile}>Upload images</button>
-                </div>
 
-                  <h1 style={{fontSize:"16px",margin:"20px 10px"}}>Recent Upload</h1>
-                <div className="image_uploaded">
-                  {
-                    allImages && allImages.length > 0 ? allImages.map((image) => {
-                      return (
-                        <>
-                          <img src={`http://api.digitalmarketingcoursesinchandigarh.in/${image.path}`} alt="Image" />
-                        </>
-                      )
-                    }) : ""
-                  }
-                </div>
+              </div>
+              <div className="upload_images">
+                <button className="main_button" onClick={UploadProfile}>Upload images</button>
               </div>
 
+              <h1 style={{ fontSize: "16px", margin: "20px 10px" }}>Recent Upload</h1>
+              <div className="image_uploaded">
+                {
+                  allImages && allImages.length > 0 ? allImages.map((image) => {
+                    return (
+                      <>
+                        <div className="inner_images">
+                          <img src={`http://api.digitalmarketingcoursesinchandigarh.in/${image.path}`} alt="Image" />
+                          <div className="edit_image">
+                            <button onClick={() => handleAvatar(image)}><i class="fas fa-pencil-alt"></i> Make Profile</button>
+                          </div>
+                        </div>
+                      </>
+                    )
+                  }) : ""
+                }
+              </div>
             </div>
-
-
-
-
           </div>
 
           {addFriend?.friends?.length > 0 ? <h2 className="text-center mt-5 mb-4">My Friends</h2> : ""}

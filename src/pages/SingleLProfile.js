@@ -36,13 +36,20 @@ const SingleLProfile = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const userId = JSON.parse(localStorage.getItem("d_user"));
+  const [searchKeyword, setSearchKeyword] = useState('');
 
+  const [isListVisible, setIsListVisible] = useState(true);
+
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+    setIsListVisible(true); // Show the list when the input changes
+  };
   const HandleSelection = (e) => {
     setSelectGender(e.target.value)
   }
   const myStateData = {
     key1: selectedGender,
-    key2: searchCountry,
+    key2: searchKeyword,
   };
 
   const handleSendMessageClick = () => {
@@ -148,13 +155,20 @@ const SingleLProfile = () => {
 
   }, []);
   const getCity = async () => {
-    await DataService.getCities().then((data) => {
+    await DataService.getCities(searchKeyword).then((data) => {
       setCities(data?.data?.data);
     });
   };
+
+  const handleHideCity = (selectedCity) => {
+    setSearchKeyword(selectedCity.city);
+    setCities([]);
+    setIsListVisible(false); // Hide the list when a city is selected
+  };
+
   useEffect(() => {
     getCity();
-  }, []);
+  }, [searchKeyword]);
   const handleLockClick = () => {
     // Show login popup if not authenticated
     if (!auth) {
@@ -170,7 +184,7 @@ const SingleLProfile = () => {
       <section className="profile_bannerSec">
         <div className="container">
           <h1>User Profile</h1>
-          <span>Home / User Profile</span>
+          {/* <span>Home / User Profile</span> */}
         </div>
       </section>
       <section className="single_profileArea">
@@ -260,7 +274,7 @@ const SingleLProfile = () => {
                     <div className="signup_inner">
                       <h2>Login</h2>
                       <p>
-                      Enter your details to login
+                        Enter your details to login
                       </p>
                       <div className="signup_formSec">
                         <form>
@@ -368,7 +382,7 @@ const SingleLProfile = () => {
                     <div className="signup_inner">
                       <h2>Login</h2>
                       <p>
-                      Enter your details to login
+                        Enter your details to login
                       </p>
                       <div className="signup_formSec">
                         <form>
@@ -414,12 +428,13 @@ const SingleLProfile = () => {
             <div className="single_pR">
               <div className="search_formSec">
                 <h4>Quick Search</h4>
-                <div className="search_gender">
-                  <div className="form_field mb-3">
-                    <p>
+                <p style={{margin:"0px"}}>
                       <strong>My Gender</strong>
                     </p>
-                    <div class="form-check">
+                <div className="search_gender">
+                  <div className="form_field mb-3 new_gender">
+                  
+                    <div class="form-check new_genderinner">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -433,9 +448,9 @@ const SingleLProfile = () => {
                         All
                       </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check new_genderinner">
                       <input
-                        class="form-check-input"
+                        class="form-check-input "
                         type="radio"
                         name="gender"
                         id="gender_male"
@@ -447,7 +462,7 @@ const SingleLProfile = () => {
                         Male
                       </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check new_genderinner">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -468,14 +483,29 @@ const SingleLProfile = () => {
                   <label>
                     <strong>Select Location</strong>
                   </label>
-                  <select id="citySelect" onChange={(e) => setSearchCountry(e.target.value)}>
+                  <input
+                    type="search"
+                    placeholder="Enter city name"
+                    value={searchKeyword}
+                    onChange={handleSearchChange}
+                  />
+                  {isListVisible && searchKeyword && (
+                    <ul className="location_new">
+                      {cities.map((city) => (
+                        <li onClick={() => handleHideCity(city)} key={city.id}>
+                          {city.city}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {/* <select id="citySelect" onChange={(e) => setSearchCountry(e.target.value)}>
                     <option value="">Select a City/Town</option>
                     {cities.map((city, index) => (
                       <option key={index} value={city.city}>
                         {city.city}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                   {/* <ReactFlagsSelect
                     selected={searchCountry}
                     onSelect={(code) => setSearchCountry(code)}

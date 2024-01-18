@@ -43,7 +43,14 @@ const SearchResults = () => {
   const [cities, setCities] = useState([]);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
+  const [isListVisible, setIsListVisible] = useState(true);
+
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+    setIsListVisible(true); // Show the list when the input changes
+  };
   // Access the state data
   const param1 = queryParams.get('param1');
   const param2 = queryParams.get('param2');
@@ -57,10 +64,22 @@ const SearchResults = () => {
     setAgeGroup({  minValue, maxValue });
   };
   const getCity = async () => {
-    await DataService.getCities().then((data) => {
+    await DataService.getCities(searchKeyword).then((data) => {
       setCities(data?.data?.data);
     });
   };
+
+  const handleHideCity = (selectedCity) => {
+    setSearchKeyword(selectedCity.city);
+    setCities([]);
+    setIsListVisible(false); // Hide the list when a city is selected
+  };
+
+  useEffect(() => {
+    getCity();
+  }, [searchKeyword]);
+
+
   useEffect(() => {
     setGender(param1)
     setCountry(param2)
@@ -113,7 +132,7 @@ const SearchResults = () => {
     });
   };
   const searchData = async () => {
-    await DataService.searchUsers(gender, country,ageGroup.minValue,ageGroup.minValue).then(
+    await DataService.searchUsers(gender, searchKeyword,ageGroup.minValue,ageGroup.minValue).then(
       (data) => {
         setUsers(data?.data?.data.users);
         ref.current.complete();
@@ -343,14 +362,30 @@ const SearchResults = () => {
                     <label>
                       <strong>Select Location</strong>
                     </label>
-                    <select id="citySelect" value={country} onChange={(e) => setCountry(e.target.value)}>
+                    <input
+                      type="search"
+                      placeholder="Enter city name"
+                      value={searchKeyword}
+                      onChange={handleSearchChange}
+                    />
+                    {isListVisible && searchKeyword && (
+                      <ul className="location_new">
+                        {cities.map((city) => (
+                          <li onClick={() => handleHideCity(city)} key={city.id}>
+                            {city.city}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {/* <select id="citySelect" value={country} onChange={(e) => setCountry(e.target.value)}>
                       <option value="">Select a City/Town</option>
                       {cities.map((city, index) => (
                         <option key={index} value={city.city}>
                           {city.city}
                         </option>
                       ))}
-                    </select>
+                    </select> */}
 
                     {/* <ReactFlagsSelect
                     selected={country}

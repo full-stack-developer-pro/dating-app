@@ -44,6 +44,7 @@ const Home = () => {
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
   const today = new Date().toISOString().split("T")[0];
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [cities, setCities] = useState([]);
@@ -106,6 +107,54 @@ const Home = () => {
   const [members, setMembers] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
+  const [error, setError] = useState('');
+
+
+
+  const calculateAge = (birthdate) => {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    setDob(selectedDate);
+    const calculatedAge = calculateAge(selectedDate);
+    setAge(calculatedAge);
+  };
+
+  const eighteenYearsAgo = new Date();
+  eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+  const maxDate = eighteenYearsAgo.toISOString().split('T')[0];
+
+
+// errors 
+  const minLength = 6;
+
+  const handleChange = (e) => {
+    const enteredPassword = e.target.value;
+    setPassword(enteredPassword);
+  };
+  const isPasswordValid = password.length >= minLength;
+
+  const handleEmailChange = (e) => {
+    const enteredEmail = e.target.value;
+    setEmail(enteredEmail);
+    if (!enteredEmail.includes('@')) {
+      setError('Email must be with @');
+    } else {
+      setError('');
+    }
+  };
+// errors 
 
   const handleSliderChange = ({ minValue, maxValue }) => {
     setAgeGroup({ minValue, maxValue });
@@ -173,7 +222,7 @@ const Home = () => {
     setStepThree(true);
   };
   const handleShowTwo = () => {
-    if (gender === "" || age === "" || searchKeyword === "" || isChecked === false) {
+    if (gender === "" || dob === "" || searchKeyword === "" || isChecked === false) {
       setShowError(true);
     } else {
       setShowError(false);
@@ -188,8 +237,8 @@ const Home = () => {
       username === "" ||
       name === "" ||
       email === "" ||
-      password === "" ||
-      description === ""
+      password === ""
+      // description === ""
     ) {
       setShowError(true);
     } else {
@@ -201,7 +250,7 @@ const Home = () => {
     }
   };
   const handleShowFour = () => {
-    if (dob === "" || city === "" || postal === "" || timezone === "") {
+    if (city === "" || postal === "" ) {
       setShowError(true);
     } else {
       setShowError(false);
@@ -214,11 +263,8 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      height === "" ||
-      weight === "" ||
       eyecolor === "" ||
       haircolor === "" ||
-      hairlength === "" ||
       maritalstatus === "" ||
       hobbies === ""
     ) {
@@ -232,17 +278,17 @@ const Home = () => {
       data.password = password;
       data.gender = gender;
       data.birthdate = dob;
-      data.description = description;
+      data.description = "dsd";
       data.country = searchKeyword;
-      data.city = searchKeyword;
+      data.city = city;
       data.age = age;
       data.postcode = postal;
-      data.timezone = timezone;
+      data.timezone = ["ds"];
       data.height = parseInt(height);
       data.weight = parseInt(weight);
       data.eye_color = eyecolor;
       data.hair_color = haircolor;
-      data.hair_length = hairlength;
+      data.hair_length = "sd";
       data.marital_status = maritalstatus;
       data.interests = hobbies;
       data.credits = 200;
@@ -467,7 +513,7 @@ const Home = () => {
                 <div className="signup_inner">
                   <h2>Sign Up Free!</h2>
                   <div className="signup_formSec">
-                  {apiError && <h1 style={{ color: "red",fontSize: "15px",textAlign: "center",background: "#ffd8d8",padding: "10px 8px"}}>{apiError}</h1>}
+                    {apiError && <h1 style={{ color: "red", fontSize: "15px", textAlign: "center", background: "#ffd8d8", padding: "10px 8px" }}>{apiError}</h1>}
                     {showError && (
                       <div className="error_bar">
                         <p>Please Fill out All fields !!</p>
@@ -525,7 +571,7 @@ const Home = () => {
                             </label>
                           </div>
                         </div>
-                        <div class="form-floating mb-3">
+                        {/* <div class="form-floating mb-3">
                           <input
                             type="text"
                             class="form-control"
@@ -535,6 +581,18 @@ const Home = () => {
                             onChange={(e) => setAge(e.target.value)}
                           />
                           <label for="floatingInput">My Age</label>
+                        </div> */}
+                        <div class="form-floating mb-3">
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="floatingInput"
+                            placeholder=""
+                            required
+                            max={maxDate}
+                            onChange={handleDateChange}
+                          />
+                          <label for="floatingInput">Date of Birth</label>
                         </div>
                         <div className="form_field country mb-3 new_city">
                           <label>
@@ -611,6 +669,7 @@ const Home = () => {
                             id="floatingInput"
                             placeholder=""
                             required
+                            value={username}
                             onChange={(e) => setUsername(e.target.value)}
                           />
                           <label for="floatingInput">Username</label>
@@ -622,6 +681,7 @@ const Home = () => {
                             id="floatingInput"
                             placeholder=""
                             required
+                            value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
                           <label for="floatingInput">Your Name</label>
@@ -633,9 +693,11 @@ const Home = () => {
                             id="floatingInput"
                             placeholder=""
                             required
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            onChange={handleEmailChange}
                           />
                           <label for="floatingInput">Email</label>
+                          {error && <div style={{ color: 'red', fontSize: "14px", paddingTop: "10px" }}>{error}</div>}
 
                         </div>
 
@@ -646,12 +708,16 @@ const Home = () => {
                             id="floatingInput"
                             placeholder=""
                             required
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            onChange={handleChange}
                           />
-                          <label for="floatingInput">Password</label>
+                          <label for="floatingInput">Password</label>   
+                          {!isPasswordValid && (
+                            <div style={{ color: 'red' ,fontSize: "14px", paddingTop: "10px"}}>Password must be at least 6 characters long</div>
+                          )}
                         </div>
 
-                        <div class="form-floating mb-3">
+                        {/* <div class="form-floating mb-3">
                           <textarea
                             class="form-control"
                             placeholder=""
@@ -660,7 +726,7 @@ const Home = () => {
                             onChange={(e) => setDescription(e.target.value)}
                           ></textarea>
                           <label for="floatingTextarea2">Description</label>
-                        </div>
+                        </div> */}
 
                         <div className="signup_buttons">
                           <button
@@ -686,18 +752,18 @@ const Home = () => {
                           <span className="three active">3</span>
                           <span className="four">4</span>
                         </div>
-                        <div class="form-floating mb-3">
+                        {/* <div class="form-floating mb-3">
                           <input
                             type="date"
                             class="form-control"
                             id="floatingInput"
                             placeholder=""
                             required
-                            max={today}
-                            onChange={(e) => setDob(e.target.value)}
+                            max={maxDate}                           
+                             onChange={(e) => setDob(e.target.value)}
                           />
                           <label for="floatingInput">Date of Birth</label>
-                        </div>
+                        </div> */}
 
                         <div className="form_field row mb-3">
                           <div className="col-sm-6">
@@ -707,6 +773,7 @@ const Home = () => {
                                 class="form-control"
                                 id="floatingInput"
                                 placeholder=""
+                                value={city}
                                 onChange={(e) => setCity(e.target.value)}
                               />
                               <label for="floatingInput">City</label>
@@ -718,6 +785,7 @@ const Home = () => {
                                 type="text"
                                 class="form-control"
                                 id="floatingInput"
+                                value={postal}
                                 placeholder=""
                                 onChange={(e) => setPostal(e.target.value)}
                               />
@@ -725,14 +793,44 @@ const Home = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="form_field mb-3">
+                        <div className="form-field row mb-3">
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                value={height}
+                                onChange={(e) => setHeight(e.target.value)}
+                              />
+                              <label for="floatingInput">Height</label>
+                            </div>
+                          </div>
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                value={weight}
+                                onChange={(e) => setWeight(e.target.value)}
+                              />
+                              <label for="floatingInput">Weight</label>
+                            </div>
+                          </div>
+                        </div>
+                        {/* <div className="form_field mb-3">
                           <p>Select Timezone</p>
                           <TimezoneSelect
                             value={timezone}
                             onChange={setTimezone}
                             required
                           />
-                        </div>
+                        </div> */}
                         <div className="signup_buttons">
                           <button
                             className="main_button back_button"
@@ -757,7 +855,7 @@ const Home = () => {
                           <span className="three active">3</span>
                           <span className="four active">4</span>
                         </div>
-                        <div className="form-field row mb-3">
+                        {/* <div className="form-field row mb-3">
                           <div className="col-sm-6">
                             <div class="form-floating mb-3">
                               <input
@@ -784,7 +882,7 @@ const Home = () => {
                               <label for="floatingInput">Weight</label>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="form-field row mb-3">
                           <div className="col-sm-6">
                             <div class="form-floating mb-3">
@@ -814,7 +912,7 @@ const Home = () => {
                           </div>
                         </div>
                         <div className="form-field row mb-3">
-                          <div className="col-sm-6">
+                          {/* <div className="col-sm-6">
                             <div class="form-floating mb-3">
                               <input
                                 type="text"
@@ -826,8 +924,8 @@ const Home = () => {
                               />
                               <label for="floatingInput">Hair Length</label>
                             </div>
-                          </div>
-                          <div className="col-sm-6">
+                          </div> */}
+                          <div className="col-sm-12">
                             <div class="form-floating mb-3">
                               <input
                                 type="text"

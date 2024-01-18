@@ -55,14 +55,21 @@ const EditProfile = () => {
   const [cities, setCities] = useState([]);
   const [credits, setCredits] = useState("");
   const [status, setStatus] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [profileImage, setProfileImage] = useState('');
 
   const userId = JSON.parse(localStorage.getItem("d_user"));
+  const [isListVisible, setIsListVisible] = useState(true);
 
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+    setIsListVisible(true); // Show the list when the input changes
+  };
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
       getProfile(data?.data?.data?.user);
       setGender(data?.data?.data?.user?.gender)
-      setCountry(data?.data?.data?.user?.country)
+      setSearchKeyword(data?.data?.data?.user?.country)
       setCredits(data?.data?.data?.user?.credits)
       setUsername(data?.data?.data?.user?.username)
       setDescription(data?.data?.data?.user?.description)
@@ -77,7 +84,7 @@ const EditProfile = () => {
       setHairColor(data?.data?.data?.user?.hair_color)
       setHairLength(data?.data?.data?.user?.hair_length)
       setMaritalStatus(data?.data?.data?.user?.marital_status)
-      setHobbies(data?.data?.data?.user?.interests)
+      setHobbies(data?.data?.data?.user?.interests || []);
       setIsfake(data?.data?.data?.user?.is_fake)
       setIsflagged(data?.data?.data?.user?.is_flagged)
       setIsverified(data?.data?.data?.user?.is_verified)
@@ -86,12 +93,16 @@ const EditProfile = () => {
       setStatus(data?.data?.data?.user?.status)
       setEmail(data?.data?.data?.user?.email)
       setPassword(data?.data?.data?.user?.password)
+      setProfileImage(data?.data?.data?.user?.profile_path)
+
       ref.current.complete();
     });
   };
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
+
+ 
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
@@ -110,16 +121,49 @@ const EditProfile = () => {
   };
 
 
+  const calculateAge = (birthdate) => {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    setBirthdate(selectedDate);
+    const calculatedAge = calculateAge(selectedDate);
+    setAge(calculatedAge);
+  };
+
+  const eighteenYearsAgo = new Date();
+  eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+  const maxDate = eighteenYearsAgo.toISOString().split('T')[0];
+
   const getCity = async () => {
-    await DataService.getCities().then((data) => {
+    await DataService.getCities(searchKeyword).then((data) => {
       setCities(data?.data?.data);
     });
   };
 
+  const handleHideCity = (selectedCity) => {
+    setSearchKeyword(selectedCity.city);
+    setCities([]);
+    setIsListVisible(false); // Hide the list when a city is selected
+  };
+
+  useEffect(() => {
+    getCity();
+  }, [searchKeyword]);
+
   useEffect(() => {
     document.title = "Profile";
     window.scrollTo(0, 0);
-    getCity();
     getUserProfile();
     ref.current.continuousStart();
   }, [userId]);
@@ -157,7 +201,7 @@ const EditProfile = () => {
     data.gender = gender;
     data.birthdate = birthdate;
     data.description = description;
-    data.country = country;
+    data.country = searchKeyword;
     data.city = city;
     data.age = age;
     data.postcode = postcode;
@@ -174,7 +218,7 @@ const EditProfile = () => {
     data.is_flagged = isflagged;
     data.credits = credits;
     data.status = status
-    data.photo = "https://example.com/path/to/photo.jpg";
+    data.photo = profileImage;
     // data.gender = gender
     // data.country = country
     // data.username = username
@@ -238,6 +282,7 @@ const EditProfile = () => {
           <div className="container">
             <div className="row">
               <div className="col-sm-12">
+
                 <div className="form_field mb-3">
                   <p>
                     <strong>My Gender</strong>
@@ -293,14 +338,29 @@ const EditProfile = () => {
                   <label>
                     <strong>My Location</strong>
                   </label>
-                  <select id="citySelect" onChange={(e) => setCountry(e.target.value)}>
+                  <input
+                    type="search"
+                    placeholder="Enter city name"
+                    value={searchKeyword}
+                    onChange={handleSearchChange}
+                  />
+                  {isListVisible && searchKeyword && (
+                    <ul className="location_new">
+                      {cities.map((city) => (
+                        <li onClick={() => handleHideCity(city)} key={city.id}>
+                          {city.city}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {/* <select id="citySelect" onChange={(e) => setCountry(e.target.value)}>
                     <option>{country ? country : "Select a City/Town"}</option>
                     {cities.map((city, index) => (
                       <option key={index} value={city.city}>
                         {city.city}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                   {/* <ReactFlagsSelect
                   selected={country}
                   onSelect={(code) => setCountry(code)}
@@ -384,8 +444,20 @@ const EditProfile = () => {
                 </div>
               </div>
               <div className="col-sm-6">
+
                 <div class="edit_profile mb-3">
                   <input
+                    type="date"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    max={maxDate}
+                    value={birthdate}
+                    onChange={handleDateChange}
+                  />
+                  <label for="floatingInput">Date of Birth</label>
+                  {/* <input
                     type="date"
                     class="form-control"
                     id="floatingInput"
@@ -395,7 +467,7 @@ const EditProfile = () => {
                     value={birthdate}
                     onChange={(e) => setBirthdate(e.target.value)}
                   />
-                  <label for="floatingInput">Date of Birth</label>
+                  <label for="floatingInput">Date of Birth</label> */}
                 </div>
               </div>
             </div>

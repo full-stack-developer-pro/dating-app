@@ -10,6 +10,19 @@
     align-items: center;
     justify-content: center;
 }
+.new_gender {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+}
+.new_genderinner {
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+
+
 .new_city input {
     height: 50px;
     min-height: 50px;
@@ -32,7 +45,17 @@ ul.location_new {
     overflow-y: scroll;
     z-index: 1;
 }
-
+.about_flexR ul {
+    padding-left: 18px;
+}
+.location_new li {
+    padding: 5px 4px;
+    cursor: pointer;
+    text-align: start;
+}
+.location_new li:hover {
+    background-color: #dfdfdf;
+}
 .back_button {
     margin: 1% 1%;
 }
