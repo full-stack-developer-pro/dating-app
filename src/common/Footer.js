@@ -38,7 +38,7 @@ const Footer = () => {
             <div className="footer_FL">
               <ul>
                 <li>
-                  <Link to="/search-results">
+                  <Link to="/profile">
                     <i class="fas fa-circle"></i>Browse profiles
                   </Link>
                 </li>

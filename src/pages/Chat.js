@@ -13,7 +13,7 @@ const Chats = () => {
 
   const params = useParams();
   const ref = useRef(null);
-  
+
   const bottomRef = useRef(null);
   const [allChat, setAllChat] = useState([]);
   const [filteredData, setfilteredData] = useState([]);
@@ -29,10 +29,10 @@ const Chats = () => {
   const [payments, setPayments] = useState(false);
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   // const history = useHistory();
   let user_id = JSON.parse(localStorage.getItem("d_user"));
-  
+
   const socket = new WebSocket(`ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`);
 
   const UserProfile = async () => {
@@ -42,7 +42,7 @@ const Chats = () => {
     });
   };
   let credits = personalProfile?.credits;
-    console.log(credits);
+  console.log(credits);
   useEffect(() => {
     UserProfile();
   }, []);
@@ -101,7 +101,7 @@ const Chats = () => {
     const data = {};
     // data.userId = user_id;
     data.amount = price;
-  
+
     DataService.GeneratePayment(data).then(
       (response) => {
         if (response.data.status === "Success") {
@@ -150,14 +150,14 @@ const Chats = () => {
       setPayments(true);
       setTimeout(() => {
       }, 2000);
-    }else if (data.type === "new_message") {
+    } else if (data.type === "new_message") {
       setTimeout(() => {
         getExpandedChat();
       }, 1000);
       console.log(data);
     }
   });
-  
+
   // Function to send a message
   // const sendMessage = (e) => {
   //   e.preventDefault();
@@ -166,19 +166,19 @@ const Chats = () => {
   //     receiverId: params.id,
   //     message: message,
   //   };
-  
+
   //   // Send the message as a JSON string
   //   socket.send(JSON.stringify({ type: "chat_message", data }));
-  
+
   //   setTimeout(() => {
   //     getExpandedChat();
   //   }, 1000);
-  
+
   //   setMessage("");
   // };
 
- 
-  
+
+
   const sendMessage = (e) => {
     e.preventDefault();
     const data = {
@@ -186,7 +186,7 @@ const Chats = () => {
       to_user_id: params.id,
       msg: message,
     };
-    
+
 
     if (socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify(data));
@@ -207,6 +207,20 @@ const Chats = () => {
       setTimeout(() => setUser(), 100);
     }
   };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 950) {
+        setMobileAdjust(false);
+      } else {
+        setMobileAdjust(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   // Function to set the user
   // const setUser = () => {
   //   let user_id = JSON.parse(localStorage.getItem("d_user"));
@@ -257,20 +271,7 @@ const Chats = () => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 950) {
-        setMobileAdjust(true);
-      } else {
-        setMobileAdjust(true);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+
 
   const getChatList = async () => {
     await DataService.getAllChats(user_id)
@@ -458,36 +459,36 @@ const Chats = () => {
               )}
               <div className="chat_expBody">
                 {showExpandedChat ? (
-                  expandedChatMessages ?.slice().reverse().map((item, i) => {
-                      return (
-                        <>
-                          {item.sent_by === user_id ? (
-                            <>
-                              <div className="chat_right">
-                                <p className="text_message">
-                                  {item.message_text}
-                                  <i className="fas fa-check"></i>
-                                </p>
-                                <span>
-                                  <i className="far fa-clock"></i>
-                                  {moment(item?.createdAt).format("lll")}
-                                </span>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="chat_left">
-                                <p className="text_message">{item.message_text}</p>
-                                <span>
-                                  <i className="far fa-clock"></i>
-                                  {moment(item?.createdAt).format("lll")}
-                                </span>
-                              </div>
-                            </>
-                          )}
-                        </>
-                      );
-                    })
+                  expandedChatMessages?.slice().reverse().map((item, i) => {
+                    return (
+                      <>
+                        {item.sent_by === user_id ? (
+                          <>
+                            <div className="chat_right">
+                              <p className="text_message">
+                                {item.message_text}
+                                <i className="fas fa-check"></i>
+                              </p>
+                              <span>
+                                <i className="far fa-clock"></i>
+                                {moment(item?.createdAt).format("lll")}
+                              </span>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="chat_left">
+                              <p className="text_message">{item.message_text}</p>
+                              <span>
+                                <i className="far fa-clock"></i>
+                                {moment(item?.createdAt).format("lll")}
+                              </span>
+                            </div>
+                          </>
+                        )}
+                      </>
+                    );
+                  })
                 ) : (
                   <>
                     <p>Select a Chat to proceed</p>
@@ -498,7 +499,7 @@ const Chats = () => {
               <div className="chat_footer">
                 <form onSubmit={sendMessage}>
                   <div className="chat_footer_flex">
-                  {/* <EmojiPicker /> */}
+                    {/* <EmojiPicker /> */}
                     <input
                       type="text"
                       placeholder="Type Your Message ..."

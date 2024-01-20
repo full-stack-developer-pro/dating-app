@@ -238,7 +238,21 @@ background: none;}
     margin: 1%;
 }
 @media screen and (max-width: 767px) {
-
+    .inner_images {
+        width:  100%;
+    }
+    .edit_image {
+        position: absolute;
+        top: 0;
+        background: #fff;
+        right: 0;
+        width: 60%;
+        height: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
     .profileFlex {
         flex-direction: column;
     }

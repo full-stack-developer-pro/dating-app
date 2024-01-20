@@ -79,3 +79,9 @@
         width: 180px;
     }
 }
+@media screen and (max-width: 767px) {
+    .upload-box {
+        width: 100%;
+     
+    }
+}
