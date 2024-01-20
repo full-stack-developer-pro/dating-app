@@ -20,8 +20,16 @@
     display: flex !important;
     justify-content: space-between !important;
 }
-
-
+.sku_btn {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+button.Skip_btn {
+    color: #ef48b5;
+    font-size: 16px;
+    font-weight: 600;
+}
 
 .new_city input {
     height: 50px;

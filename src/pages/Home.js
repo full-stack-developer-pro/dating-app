@@ -250,15 +250,13 @@ const Home = () => {
     }
   };
   const handleShowFour = () => {
-    if (city === "" || postal === "") {
-      setShowError(true);
-    } else {
-      setShowError(false);
-      setStepTwo(false);
-      setStepOne(false);
-      setStepThree(false);
-      setStepFour(true);
-    }
+
+    setShowError(false);
+    setStepTwo(false);
+    setStepOne(false);
+    setStepThree(false);
+    setStepFour(true);
+
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -280,12 +278,12 @@ const Home = () => {
     data.birthdate = dob;
     data.description = "dsd";
     data.country = searchKeyword;
-    data.city = city;
+    data.city = searchKeyword;
     data.age = age;
-    data.postcode = postal;
+    data.postcode = "16601";
     data.timezone = ["ds"];
     data.height = parseInt(height) ? parseInt(height) : "45";
-    data.weight = parseInt(weight) ?parseInt(weight) :"56";
+    data.weight = parseInt(weight) ? parseInt(weight) : "56";
     data.eye_color = eyecolor ? eyecolor : "black";
     data.hair_color = haircolor ? eyecolor : "black";
     data.hair_length = "sd";
@@ -752,6 +750,92 @@ const Home = () => {
                           <span className="three active">3</span>
                           <span className="four">4</span>
                         </div>
+
+                        <div className="form-field row mb-3">
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                value={eyecolor}
+                                onChange={(e) => setEyeColor(e.target.value)}
+                              />
+                              <label for="floatingInput">Eye Color</label>
+                            </div>
+                          </div>
+                          <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                value={haircolor}
+                                onChange={(e) => setHairColor(e.target.value)}
+                              />
+                              <label for="floatingInput">Hair Color</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="form-field row mb-3">
+                          {/* <div className="col-sm-6">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                onChange={(e) => setHairLength(e.target.value)}
+                              />
+                              <label for="floatingInput">Hair Length</label>
+                            </div>
+                          </div> */}
+                          <div className="col-sm-12">
+                            <div class="form-floating mb-3">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                required
+                                value={maritalstatus}
+                                onChange={(e) =>
+                                  setMaritalStatus(e.target.value)
+                                }
+                              />
+                              <label for="floatingInput">Marital Status</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="form_field mb-3">
+                          <div className="hobbies-list">
+                            {hobbies.map((hobby, index) => (
+                              <Hobby
+                                key={index}
+                                hobby={hobby}
+                                onDelete={() => handleDelete(index)}
+                              />
+                            ))}
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder="name@example.com"
+                              value={inputValue}
+                              onChange={handleInputChange}
+                              onKeyPress={handleKeyPress}
+                              required
+                            />
+                            <label for="floatingInput">Interests</label>
+                          </div>
+                        </div>
                         {/* <div class="form-floating mb-3">
                           <input
                             type="date"
@@ -764,7 +848,7 @@ const Home = () => {
                           />
                           <label for="floatingInput">Date of Birth</label>
                         </div> */}
-
+                        {/* 
                         <div className="form_field row mb-3">
                           <div className="col-sm-6">
                             <div class="form-floating mb-3">
@@ -822,7 +906,7 @@ const Home = () => {
                               <label for="floatingInput">Weight</label>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         {/* <div className="form_field mb-3">
                           <p>Select Timezone</p>
                           <TimezoneSelect
@@ -831,6 +915,9 @@ const Home = () => {
                             required
                           />
                         </div> */}
+                        <div className="sku_btn">
+                          <button className="Skip_btn" onClick={handleShowFour}>Skip this</button>
+                        </div>
                         <div className="signup_buttons">
                           <button
                             className="main_button back_button"
@@ -840,9 +927,9 @@ const Home = () => {
                           </button>
                           <button
                             className="main_button next_button"
-                            onClick={handleShowFour}
+                            onClick={handleSubmit}
                           >
-                            Next <i class="fas fa-long-arrow-alt-right"></i>
+                            Submit 
                           </button>
                         </div>
                       </div>
@@ -854,6 +941,9 @@ const Home = () => {
                           <span className="two active">2</span>
                           <span className="three active">3</span>
                           <span className="four active">4</span>
+                        </div>
+                        <div className="new_skiptext" style={{textAlign:"center",padding:"15px 0px"}} >
+                        <label for="floatingInput" style={{color:" #ef48b5",fontSize:"18px",fontWeight:"600"}}>Continue with these <br/> sigup details !</label>
                         </div>
                         {/* <div className="form-field row mb-3">
                           <div className="col-sm-6">
@@ -883,88 +973,7 @@ const Home = () => {
                             </div>
                           </div>
                         </div> */}
-                        <div className="form-field row mb-3">
-                          <div className="col-sm-6">
-                            <div class="form-floating mb-3">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder=""
-                                required
-                                onChange={(e) => setEyeColor(e.target.value)}
-                              />
-                              <label for="floatingInput">Eye Color</label>
-                            </div>
-                          </div>
-                          <div className="col-sm-6">
-                            <div class="form-floating mb-3">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder=""
-                                required
-                                onChange={(e) => setHairColor(e.target.value)}
-                              />
-                              <label for="floatingInput">Hair Color</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-field row mb-3">
-                          {/* <div className="col-sm-6">
-                            <div class="form-floating mb-3">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder=""
-                                required
-                                onChange={(e) => setHairLength(e.target.value)}
-                              />
-                              <label for="floatingInput">Hair Length</label>
-                            </div>
-                          </div> */}
-                          <div className="col-sm-12">
-                            <div class="form-floating mb-3">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder=""
-                                required
-                                onChange={(e) =>
-                                  setMaritalStatus(e.target.value)
-                                }
-                              />
-                              <label for="floatingInput">Marital Status</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form_field mb-3">
-                          <div className="hobbies-list">
-                            {hobbies.map((hobby, index) => (
-                              <Hobby
-                                key={index}
-                                hobby={hobby}
-                                onDelete={() => handleDelete(index)}
-                              />
-                            ))}
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder="name@example.com"
-                              value={inputValue}
-                              onChange={handleInputChange}
-                              onKeyPress={handleKeyPress}
-                              required
-                            />
-                            <label for="floatingInput">Interests</label>
-                          </div>
-                        </div>
+
                         <div className="signup_buttons">
                           <button
                             className="main_button back_button"
