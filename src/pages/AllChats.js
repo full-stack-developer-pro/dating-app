@@ -6,14 +6,9 @@ import { toast } from "react-toastify";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
-// import { useHistory } from 'react-router-dom';
-// import EmojiPicker from 'emoji-picker-react';
-
 const Chats = () => {
-
   const params = useParams();
   const ref = useRef(null);
-  
   const bottomRef = useRef(null);
   const [allChat, setAllChat] = useState([]);
   const [filteredData, setfilteredData] = useState([]);
@@ -65,9 +60,12 @@ const Chats = () => {
     }
   };
 
+  // const expandChat = (id)=>{
+  //   console.log(id)
+  // }
 
   const expandChat = async (id) => {
-    await DataService.getSingleProfile(params.id)
+    await DataService.getChatBox(user_id, id)
       .then(async (data) => {
         setMobileAdjust(true);
         setExpandedChat(data?.data?.data);
@@ -92,8 +90,6 @@ const Chats = () => {
   };
 
   //   socket.on('chat_message', (data) => {expandChat(data.id)});
-
-
   // payment
 
   const handlePayment = (price) => {
@@ -128,8 +124,8 @@ const Chats = () => {
     );
   };
 
-  const getExpandedChat = async () => {
-    await DataService.getChatBox(user_id, params.id).then((data) => {
+  const getExpandedChat = async (id) => {
+    await DataService.getChatBox(user_id, id).then((data) => {
       const chatData = data?.data?.data?.chat;
       const messages = chatData?.messages || [];
       setExpandedChatMessages(messages);
@@ -158,26 +154,6 @@ const Chats = () => {
     }
   });
   
-  // Function to send a message
-  // const sendMessage = (e) => {
-  //   e.preventDefault();
-  //   const data = {
-  //     senderId: user_id,
-  //     receiverId: params.id,
-  //     message: message,
-  //   };
-  
-  //   // Send the message as a JSON string
-  //   socket.send(JSON.stringify({ type: "chat_message", data }));
-  
-  //   setTimeout(() => {
-  //     getExpandedChat();
-  //   }, 1000);
-  
-  //   setMessage("");
-  // };
-
- 
   
   const sendMessage = (e) => {
     e.preventDefault();
@@ -207,47 +183,6 @@ const Chats = () => {
       setTimeout(() => setUser(), 100);
     }
   };
-  // Function to set the user
-  // const setUser = () => {
-  //   let user_id = JSON.parse(localStorage.getItem("d_user"));
-  //   socket.send(JSON.stringify({ type: "user_added", user_id }));
-  // };
-
-  // const sendMessage = (e) => {
-  //   e.preventDefault();
-  //   const data = {
-  //     senderId: user_id,
-  //     receiverId: params.id,
-  //     message: message,
-  //     // flirtMessage: flirtMessage
-  //   };
-  //   socket.emit("chat_message", data);
-  //   // socket.on('chat_error', { message: 'Insufficient credits' });
-  //   setTimeout(() => {
-  //     getExpandedChat();
-  //   }, 1000);
-  //   setMessage("");
-  // };
-  // socket.on("chat_error", (message) => {
-  //   toast.error(message.message);
-  //   setTimeout(() => {
-  //     setPayments(true);
-  //   }, 2000);
-  // });
-
-  // socket.on("new_message", (data) => {
-  //   setTimeout(() => {
-  //     getExpandedChat();
-  //   }, 1000);
-  //   console.log("Received message:", data);
-  //   expandChat(data.chat_id);
-  //   console.log(data);
-  // });
-
-  // const setUser = () => {
-  //   let user_id = JSON.parse(localStorage.getItem("d_user"));
-  //   socket.emit("user_added", user_id);
-  // };
 
   useEffect(() => {
     getUserProfile();
@@ -373,33 +308,20 @@ const Chats = () => {
                 </div>
               </div>
             </div>
-
             {filteredData && filteredData.length > 0 ? (
               filteredData.map((item, i) => {
                 return (
                   <>
                     <div
                       className="chat_outer"
-                      onClick={() => sendTo(item?._id)}
+                      onClick={() => expandChat(item._id)}
                     >
                       <div className="chat_outerImg">
                         <img src="https://i.pravatar.cc/300" alt="" />
                       </div>
                       <div className="chat_outerName">
                         <h5>{item?.name ? item?.name : "Random Company"}</h5>
-                        {/* <p>
-                                                    {item?.is_last_message_read === 0 ? (
-                                                        <strong>{item?.last_message_text}</strong>
-                                                    ) : (
-                                                        item?.last_message_text
-                                                    )}
-                                                </p>
-                                                <span>
-                                                    <i class="far fa-clock"></i>
-                                                    {item?.updatedAt
-                                                        ? moment(item?.updatedAt).format("LT")
-                                                        : moment(item?.createdAt).format("LT")}
-                                                </span> */}
+              
                       </div>
                     </div>
                   </>

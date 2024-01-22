@@ -10,6 +10,52 @@
     align-items: center;
     justify-content: center;
 }
+.cross_btn {
+    position: absolute;
+    right: 0px;
+    top: -2px;
+}
+.cross_btn i{
+    font-size: 24px;
+}
+.credits_box {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    max-width: 1270px;
+    margin: auto;
+    position: relative;
+}
+.notification_area {
+    margin-right: 10px;
+}
+.notification_area i {
+    font-size: 26px;
+    color: #EF48B5;
+}
+
+.span_credits {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: column;
+    /* border: 2px solid #EF48B5; */
+    margin-right: 5px;
+    background: #f8f9fa47;
+    padding: 5px 10px;
+}
+.span_credits h1 {
+    margin: 0px;
+    font-size: 16px;
+    color: #300243;
+}
+.span_credits p{
+    margin: 0px;
+    color: #300243;
+    display: flex;
+    justify-content: start;
+    width: 100%;
+}
 .new_gender {
     display: flex;
     align-items: center;
@@ -250,7 +296,7 @@ ul.location_new {
     font-size: 16px;
     border: none;
     outline: none;
-    padding: 15px 45px;
+    padding: 15px 40px;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -313,7 +359,7 @@ ul.location_new {
 }
 
 .navbarL {
-    width: 50%;
+    width: 45%;
 }
 
 .navbarL img {
@@ -321,7 +367,7 @@ ul.location_new {
 }
 
 .navbarR {
-    width: 50%;
+    width: 55%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1186,7 +1232,10 @@ ul.location_new {
     .navbar_flex {
         padding: 15px 15px;
     }
+    .credits_box {
+        padding: 15px 15px !important;
 
+    }
     .active_profilesSec {
         padding: 20px 10px;
         height: auto;

@@ -102,7 +102,7 @@ const EditProfile = () => {
     setInputValue(e.target.value);
   };
 
- 
+
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
@@ -200,17 +200,17 @@ const EditProfile = () => {
     data.password = password;
     data.gender = gender;
     data.birthdate = birthdate;
-    data.description = description;
+    // data.description = description;
     data.country = searchKeyword;
     data.city = city;
     data.age = age;
     data.postcode = postcode;
-    data.timezone = timezone;
-    data.height = height;
-    data.weight = weight;
+    // data.timezone = timezone;
+    // data.height = height;
+    // data.weight = weight;
     data.eye_color = eye_color;
     data.hair_color = hair_color;
-    data.hair_length = hair_length;
+    // data.hair_length = hair_length;
     data.marital_status = marital_status;
     data.interests = hobbies;
     data.free_message = free_message;
@@ -431,7 +431,7 @@ const EditProfile = () => {
             </div>
             <div className="row">
               <div className="col-sm-6">
-                <div class="edit_profile mb-3">
+                {/* <div class="edit_profile mb-3">
                   <textarea
                     class="form-control"
                     placeholder=""
@@ -441,7 +441,41 @@ const EditProfile = () => {
                     onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
                   <label for="floatingTextarea2">Description</label>
+                </div> */}
+              </div>
+              {/* <div className="col-sm-6">
+
+                <div class="edit_profile mb-3">
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    required
+                    max={maxDate}
+                    value={birthdate}
+                    onChange={handleDateChange}
+                  />
+                  <label for="floatingInput">Date of Birth</label>
+
                 </div>
+              </div> */}
+            </div>
+            <div className="form_field row mb-3">
+
+              <div className="col-sm-6">
+                <div class="edit_profile mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder=""
+                    value={postcode}
+                    onChange={(e) => setPostcode(e.target.value)}
+                  />
+                  <label for="floatingInput">Postal Code</label>
+                </div>
+
               </div>
               <div className="col-sm-6">
 
@@ -457,49 +491,11 @@ const EditProfile = () => {
                     onChange={handleDateChange}
                   />
                   <label for="floatingInput">Date of Birth</label>
-                  {/* <input
-                    type="date"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder=""
-                    required
-                    max={today}
-                    value={birthdate}
-                    onChange={(e) => setBirthdate(e.target.value)}
-                  />
-                  <label for="floatingInput">Date of Birth</label> */}
+
                 </div>
               </div>
             </div>
-            <div className="form_field row mb-3">
-              <div className="col-sm-6">
-                <div class="edit_profile mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder=""
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-                  <label for="floatingInput">City</label>
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <div class="edit_profile mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder=""
-                    value={postcode}
-                    onChange={(e) => setPostcode(e.target.value)}
-                  />
-                  <label for="floatingInput">Postal Code</label>
-                </div>
-              </div>
-            </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-12">
                 <div className="form_field mb-3">
                   <p>Select Timezone</p>
@@ -510,9 +506,9 @@ const EditProfile = () => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="form-field row mb-3">
-              <div className="col-sm-6">
+              {/* <div className="col-sm-6">
                 <div class="edit_profile mb-3">
                   <input
                     type="text"
@@ -525,8 +521,8 @@ const EditProfile = () => {
                   />
                   <label for="floatingInput">Height</label>
                 </div>
-              </div>
-              <div className="col-sm-6">
+              </div> */}
+              {/* <div className="col-sm-6">
                 <div class="edit_profile mb-3">
                   <input
                     type="text"
@@ -539,7 +535,7 @@ const EditProfile = () => {
                   />
                   <label for="floatingInput">Weight</label>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="form-field row mb-3">
               <div className="col-sm-6">
@@ -572,7 +568,7 @@ const EditProfile = () => {
               </div>
             </div>
             <div className="form-field row mb-3">
-              <div className="col-sm-6">
+              {/* <div className="col-sm-6">
                 <div class="edit_profile mb-3">
                   <input
                     type="text"
@@ -585,8 +581,8 @@ const EditProfile = () => {
                   />
                   <label for="floatingInput">Hair Length</label>
                 </div>
-              </div>
-              <div className="col-sm-6">
+              </div> */}
+              <div className="col-sm-12">
                 <div class="edit_profile mb-3">
                   <input
                     type="text"

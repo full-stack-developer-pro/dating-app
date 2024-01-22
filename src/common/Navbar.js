@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../images/dating-app-logo.png";
 import "../customCss/Navbar.css";
 import OP from "../images/dating-banner.jpg";
@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import DataService from "../services/data.service";
+import profile1 from "../images/profile1.jpg"
 
 const Navbar = () => {
   const auth = AuthService.getCurrentUserTokken();
@@ -41,8 +43,27 @@ const Navbar = () => {
   const [hairlength, setHairLength] = useState("");
   const [maritalstatus, setMaritalStatus] = useState("");
   const [hobbies, setHobbies] = useState([]);
+  const [profile, setProfile] = useState("");
+  const [notification, setShowNotification] = useState(false);
 
   const [inputValue, setInputValue] = useState("");
+
+
+  const userId = JSON.parse(localStorage.getItem("d_user"));
+
+
+  const getUserProfile = async () => {
+    if (auth) {
+      await DataService.getSingleProfile(userId).then((data) => {
+        console.log(data?.data?.data?.user)
+        setProfile(data?.data?.data?.user);
+      })
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile()
+  }, [])
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -114,90 +135,89 @@ const Navbar = () => {
     ) {
       setShowError(true);
     } else {
-          const data = {};
-            data.is_fake = false;
-            data.name = name;
-            data.username = username;
-            data.email = email;
-            data.password = password;
-            data.gender = gender;
-            data.birthdate = dob;
-            data.description = description;
-            data.country = country;
-            data.city = city;
-            data.postcode = postal;
-            data.timezone = timezone;
-            data.height = height;
-            data.weight = weight;
-            data.eye_color = eyecolor;
-            data.hair_color = haircolor;
-            data.hair_length = hairlength;
-            data.marital_status = maritalstatus;
-            data.interests = hobbies;
-            data.credits = 200;
-            data.free_message = "Hello,world!";
-            data.is_verified = true;
-            data.is_flagged = false;
+      const data = {};
+      data.is_fake = false;
+      data.name = name;
+      data.username = username;
+      data.email = email;
+      data.password = password;
+      data.gender = gender;
+      data.birthdate = dob;
+      data.description = description;
+      data.country = country;
+      data.city = city;
+      data.postcode = postal;
+      data.timezone = timezone;
+      data.height = height;
+      data.weight = weight;
+      data.eye_color = eyecolor;
+      data.hair_color = haircolor;
+      data.hair_length = hairlength;
+      data.marital_status = maritalstatus;
+      data.interests = hobbies;
+      data.credits = 200;
+      data.free_message = "Hello,world!";
+      data.is_verified = true;
+      data.is_flagged = false;
 
-          setLoading(true);
-          await AuthService.register(data).then(
-            () => {
-              setLoading(false);
-              toast.success('Profile create successfully!', {
-                position: toast.POSITION.TOP_RIGHT
-              });
-              // navigate('/login-page')
-    
-              // buttonref1.current.click();
-            },
-            (error) => {
-              const resMessage =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.msg) ||
-                error.message ||
-                error.toString();
-    
-              setLoading(false);
-              toast.error(resMessage, {
-                position: toast.POSITION.TOP_RIGHT
-              });
-            });
-
-
-    
-      }
-  };
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setMessage("");
-    setLoading(true);
-      AuthService.login(username, password).then(
+      setLoading(true);
+      await AuthService.register(data).then(
         () => {
-          toast.success("Login Successfull!!")
-          setTimeout(() => {
-            navigate("/profile");
-          },2000)
+          setLoading(false);
+          toast.success('Profile create successfully!', {
+            position: toast.POSITION.TOP_RIGHT
+          });
+          // navigate('/login-page')
+
+          // buttonref1.current.click();
         },
         (error) => {
           const resMessage =
             (error.response &&
               error.response.data &&
-              error.response.data.message) ||
+              error.response.data.msg) ||
             error.message ||
             error.toString();
-            toast.error(resMessage, {
-              position: toast.POSITION.TOP_RIGHT,
-            });
+
           setLoading(false);
-          setMessage(resMessage);
-        }
-      );
+          toast.error(resMessage, {
+            position: toast.POSITION.TOP_RIGHT
+          });
+        });
+    }
+  };
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [packages, setPackages] = useState("");
+  const [payments, setPayments] = useState(false);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setMessage("");
+    setLoading(true);
+    AuthService.login(username, password).then(
+      () => {
+        toast.success("Login Successfull!!")
+        setTimeout(() => {
+          navigate("/profile");
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
   };
   const logout = (e) => {
     localStorage.removeItem("d_user");
@@ -205,39 +225,182 @@ const Navbar = () => {
     navigate("/");
     window.location.reload();
   }
+
+  const handlePayment = (price) => {
+    setMessage("");
+    const data = {};
+    // data.userId = user_id;
+    data.amount = price;
+
+    DataService.GeneratePayment(data).then(
+      (response) => {
+        if (response.data.status === "Success") {
+          toast("Link generated successfully!");
+          console.log(response.data.data.url);
+          const paymentUrl = response.data.data.url;
+          window.location.replace(paymentUrl); // Use replace for proper redirection
+        } else {
+          toast("Failed to generate the payment link.");
+        }
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.msg) ||
+          error.message ||
+          error.toString();
+        setLoading(false);
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    );
+  };
+  const getPlans = async () => {
+    if (auth) {
+      await DataService.getPackages().then((data) => {
+        setPackages(data?.data?.data);
+
+      })
+    }
+  };
+  console.log(packages)
+  useEffect(() => {
+    getPlans()
+  }, [])
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
+      {payments && (
+        <div className="payments_popup">
+          <div className="payments_inner">
+            <div className="container">
+              <div className="payments_flexOne">
+
+                <div className="payment_bg">
+                  <div className="cross_btn">
+                    <i onClick={() => setPayments(false)} class="fas fa-window-close"></i>
+                  </div>
+                  {
+                    packages?.length > 0 ? packages?.map((item) => {
+                      return (
+                        <>
+
+                          <div className="payments_plan">
+                            <h2>{item.credits}</h2>
+                            <span className="bonus">{item.bonus}</span>
+                            <h4>credits</h4>
+                            <hr />
+                            <h3>Just For</h3>
+                            <p>
+                              <span>{item.currency} {item.price}</span>
+                            </p>
+                            <hr />
+                            <button className="main_button" onClick={() => handlePayment(item.price)}>Purchase Now</button>
+                          </div>
+                        </>
+                      )
+                    }) : ""
+                  }
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {
+        auth && (
+          <>
+            <div className="credits_box" style={{ padding: "10px 0px" }}>
+              {notification && (
+                <div className="notification_main">
+                  <div className="notification_pop">
+                    <div className="payment_bg_notification">
+                      <div className="notification_heading">
+                        <h2>Notifications</h2>
+                      </div>
+                      {
+                        packages?.length > 0 ? packages?.map((item) => {
+                          return (
+                            <>
+                              {/* <div className="cross_btn">
+                                  <i onClick={() => setShowNotification(false)} class="fas fa-window-close"></i>
+                                </div> */}
+
+                              <div className="mainnotification_text">
+                                <div className="ntificationone">
+                                  <img src={profile1} />
+                                </div>
+                                <div className="notification_text">
+                                  <p>
+                                    <span>Elizabeth 506</span> has viewed your profile
+                                  </p>
+                                  <h2>Just now</h2>
+                                </div>
+                              </div>
+                            </>
+                          )
+                        }) : ""
+                      }
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="notification_area">
+                <i onClick={() => setShowNotification(!notification)} class="fas fa-bell"></i>
+              </div>
+              <div className="span_credits">
+                <h1>Account Balance</h1>
+                <p><b style={{ marginRight: "10px" }}>{profile?.credits}</b> Credits</p>
+              </div>
+              <div className="buy_nowbtn">
+                <button className="main_buttonTwo credits" onClick={() => setPayments(true)}>
+                  Buy now
+                </button>
+              </div>
+            </div>
+          </>
+        )
+      }
+
       <div className="main_navbar">
         <div className="navbar_flex">
           <div className="navbarL">
-          <Link to="/">
-            <img src={Logo} alt="" />
+            <Link to="/">
+              <img src={Logo} alt="" />
             </Link>
           </div>
           <div className="navbarR">
-          {auth ?  
-          <>
-          <button className="main_buttonTwo" onClick={() => navigate("/profile")}>
-              My Profile<i class="fas fa-user"></i>
-            </button> 
-            <button className="main_button" onClick={logout}>
-              Logout<i class="fas fa-sign-in-alt"></i>
-            </button>
-            </>
-            : 
-            <><button className="main_buttonTwo" onClick={() => setLogin(true)}>
-              Login<i class="fas fa-sign-in-alt"></i>
-            </button>
-            {/* <button className="main_button" onClick={() => window.location.href = "/#signup"}>
+            {auth ?
+              <>
+                {/* <div className="span_credits">
+                <h1>Account Balance</h1>
+                <p><span></span>200 Credits</p>
+               </div> */}
+                {/* <button className="main_buttonTwo credits" >
+               Buy now
+                </button> */}
+                <button className="main_buttonTwo" onClick={() => navigate("/profile")}>
+                  My Profile<i class="fas fa-user"></i>
+                </button>
+                <button className="main_button" onClick={logout}>
+                  Logout<i class="fas fa-sign-in-alt"></i>
+                </button>
+              </>
+              :
+              <><button className="main_buttonTwo" onClick={() => setLogin(true)}>
+                Login<i class="fas fa-sign-in-alt"></i>
+              </button>
+                {/* <button className="main_button" onClick={() => window.location.href = "/#signup"}>
               Signup<i class="fas fa-user"></i>
             </button> */}
-            </>
+              </>
             }
-            
-
           </div>
-          
+
           {login && (
             <div className="main_signUp main_login">
               <div className="signup_popup login_popup">
@@ -247,7 +410,7 @@ const Navbar = () => {
                 <div className="signup_inner ">
                   <h2>Login</h2>
                   <p>
-                  Enter your details to login
+                    Enter your details to login
                   </p>
                   <div className="signup_formSec">
                     <form>
@@ -287,70 +450,70 @@ const Navbar = () => {
             </div>
           )}
           {hide && (
-          <div className="main_signUp main_login">
-            <div className="signup_popup" style={{ background: "#fff" }}>
-              <button className="close_icon" onClick={() => setLogin(false)}>
-                <i class="fas fa-times"></i>
-              </button>
-              <div className="orders">
-                <h2>Refund Details</h2>
-                <div className="orders_inner">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th scope="col" width="50%">
-                          Item
-                        </th>
-                        <th scope="col" width="10%">
-                          Cost
-                        </th>
-                        <th scope="col" width="10%">
-                          Quantity
-                        </th>
-                        <th scope="col" width="10%">
-                          Total
-                        </th>
-                        <th scope="col" width="10%">
-                          Tax
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="item">
-                          <img
-                            src="https://api.yourbasket.co.ke/uploads/1687856420134_mosquitonet.jpeg"
-                            alt=""
-                          />
-                          <p>Pink Hair Straightener</p>
-                        </td>
-                        <td>$52</td>
-                        <td>1</td>
-                        <td>$45</td>
-                        <td>$12</td>
-                      </tr>
-                      <tr>
-                        <td><strong>Discount:</strong></td><td>$0</td>
-                      </tr>
-                      <tr>
-                        <td><strong>Shipping:</strong></td><td>$0</td>
-                      </tr>
-                      <tr>
-                        <td><strong>Tax:</strong></td><td>$12</td>
-                      </tr>
-                      <tr>
-                        <td><strong>Order Total:</strong></td><td>$71</td>
-                      </tr>
-                      <tr>
-                        <td style={{color:'tomato'}}><strong>Refunded:</strong></td><td style={{color:'tomato'}}>-$0</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="order_button">
-                    <button>Request Refund</button>
-                    <button>Cancel</button>
-                  </div>
-                  
+            <div className="main_signUp main_login">
+              <div className="signup_popup" style={{ background: "#fff" }}>
+                <button className="close_icon" onClick={() => setLogin(false)}>
+                  <i class="fas fa-times"></i>
+                </button>
+                <div className="orders">
+                  <h2>Refund Details</h2>
+                  <div className="orders_inner">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th scope="col" width="50%">
+                            Item
+                          </th>
+                          <th scope="col" width="10%">
+                            Cost
+                          </th>
+                          <th scope="col" width="10%">
+                            Quantity
+                          </th>
+                          <th scope="col" width="10%">
+                            Total
+                          </th>
+                          <th scope="col" width="10%">
+                            Tax
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="item">
+                            <img
+                              src="https://api.yourbasket.co.ke/uploads/1687856420134_mosquitonet.jpeg"
+                              alt=""
+                            />
+                            <p>Pink Hair Straightener</p>
+                          </td>
+                          <td>$52</td>
+                          <td>1</td>
+                          <td>$45</td>
+                          <td>$12</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Discount:</strong></td><td>$0</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Shipping:</strong></td><td>$0</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Tax:</strong></td><td>$12</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Order Total:</strong></td><td>$71</td>
+                        </tr>
+                        <tr>
+                          <td style={{ color: 'tomato' }}><strong>Refunded:</strong></td><td style={{ color: 'tomato' }}>-$0</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="order_button">
+                      <button>Request Refund</button>
+                      <button>Cancel</button>
+                    </div>
+
                     <>
                       <div className="order_sec">
                         <div class="form-check">
@@ -440,11 +603,11 @@ const Navbar = () => {
                         </button>
                       </div>
                     </>
-                  
+
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           )}
         </div>
       </div>

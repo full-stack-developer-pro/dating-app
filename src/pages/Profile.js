@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { Link } from "react-router-dom";
 // const auth = AuthService.getCurrentUser();
-
+import NoImage from "../images/noImage.png"
 
 const MAX_COUNT = 5;
 
@@ -241,6 +241,9 @@ const Profile = () => {
     );
   };
 
+  const handleImage = (e) => {
+    e.target.src = NoImage
+  }
 
   return (
     <>
@@ -275,7 +278,7 @@ const Profile = () => {
                 <button onClick={UploadProfile}>Upload image</button>
                 <img src="" />
               </div> */}
-              <img src={profile?.profile_path ? profile?.profile_path : ProfileOne} alt="" />
+              <img onError={handleImage} src={profile?.profile_path} />
               <div className="gender_iop">
                 <i class="fas fa-venus"></i>
               </div>
@@ -297,8 +300,7 @@ const Profile = () => {
                   </Link>
                 </div>
                 <p>
-                  <i class="fas fa-map-marker-alt"></i> {profile?.city},{" "}
-                  {profile?.country}
+                  <i class="fas fa-map-marker-alt"></i> {profile?.country}
                 </p>
                 <p>{profile?.description}</p>
               </div>
@@ -339,36 +341,36 @@ const Profile = () => {
                 </div>
                 <div className="profileEntry">
                   <p>
-                    <i class="fas fa-map-marker-alt"></i> City
+                    <i class="fas fa-map-marker-alt"></i> Country
                   </p>
                   <p>:</p>
                   <p>
-                    {profile?.city}, {profile?.postcode}
+                    {profile?.country}
                   </p>
                 </div>
-                <div className="profileEntry">
+                {/* <div className="profileEntry">
                   <p>
                     <i class="fas fa-clock"></i> Timezone
                   </p>
                   <p>:</p>
                   <p>{profile?.timezone?.label}</p>
-                </div>
-                <div className="profileEntry">
+                </div> */}
+                {/* <div className="profileEntry">
                   <p>
                     <i class="fas fa-text-height"></i> Height
                   </p>
                   <p>:</p>
                   <p>{profile?.height}</p>
-                </div>
+                </div> */}
               </div>
               <div className="profile_dFlexR">
-                <div className="profileEntry">
+                {/* <div className="profileEntry">
                   <p>
                     <i class="fas fa-weight"></i> Weight
                   </p>
                   <p>:</p>
                   <p>{profile?.weight}Kg</p>
-                </div>
+                </div> */}
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-eye"></i> Eye Color
@@ -383,13 +385,13 @@ const Profile = () => {
                   <p>:</p>
                   <p>{profile?.hair_color}</p>
                 </div>
-                <div className="profileEntry">
+                {/* <div className="profileEntry">
                   <p>
                     <i class="fab fa-servicestack"></i> Hair Length
                   </p>
                   <p>:</p>
                   <p>{profile?.hair_length}</p>
-                </div>
+                </div> */}
                 <div className="profileEntry">
                   <p>
                     <i class="fas fa-ring"></i> Marital Status

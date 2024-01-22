@@ -161,6 +161,7 @@ background: none;}
 .profileEntry p:last-of-type {
     width: 40%;
     text-align: right;
+    word-wrap: break-word;
 }
 
 .profileEntry p i {
@@ -238,6 +239,12 @@ background: none;}
     margin: 1%;
 }
 @media screen and (max-width: 767px) {
+    .profileEntry p:last-of-type {
+        word-wrap: break-word;
+    }
+    .profile_descriptionSec {
+        padding: 10px;
+    }
     .inner_images {
         width:  100%;
     }
