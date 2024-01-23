@@ -33,7 +33,7 @@ const mapUrl = `https://maps.google.com/maps?q=${contactData.lat},${contactData.
   return (
     <>
       <Navbar />
-      <section className="profile_bannerSec">
+      <section className="profile_bannerSec" style={{padding:"60px 0px",minHeight:"50vh"}}>
         <div className="container">
           <h1>Contact Us</h1>
           <span>Home / Contact Us</span>

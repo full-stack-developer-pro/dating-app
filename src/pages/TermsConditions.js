@@ -24,7 +24,7 @@ const TermsConditions = () => {
   return (
     <>
       <Navbar />
-      <section className="profile_bannerSec">
+      <section className="profile_bannerSec" style={{padding:"60px 0px",minHeight:"50vh"}}>
         <div className="container">
           <h1>Terms & Conditions</h1>
           <span>Home / Terms & Conditions</span>
