@@ -59,11 +59,13 @@
     justify-content: space-between;
     padding: 15px 15px;
     background: #F6F6F6;
+    cursor: pointer;
 }
 .notification_text p {
     font-size: 16px;
     margin: 0px;
     font-weight: 600;
+    color: #000;
 }
 .notification_text h2 {
     color: #CBCBCB;

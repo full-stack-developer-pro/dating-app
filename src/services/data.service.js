@@ -23,6 +23,18 @@ axios.interceptors.response.use(function (response) {
 const getAboutUs = () => {
   return axios.get(API_URL + "api/admin/getAboutAs");
 };
+
+const getNotification = () => {
+  return axios.get(API_URL + "api/user/notifications");
+};
+const UpdateNotification = (data) => {
+  return axios.put(API_URL + "api/user/notifications", data);
+};
+const TrackProfile = (id) => {
+  return axios.post(API_URL + "api/user/profile-view/" + id);
+};
+
+
 const getContactUs = () => {
   return axios.get(API_URL + "api/admin/getcontactAs");
 };
@@ -103,6 +115,9 @@ const getCities = (location) => {
   return axios.get(API_URL + "api/getCountryCities/GB?q=" + location);
 }
 const DataService = {
+  TrackProfile,
+  UpdateNotification,
+  getNotification,
   UploadProfileImage,
   verifyPayment,
   GeneratePayment,

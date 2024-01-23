@@ -192,6 +192,8 @@ const Navbar = () => {
   const [password, setPassword] = useState("");
   const [packages, setPackages] = useState("");
   const [payments, setPayments] = useState(false);
+  const [notifications, setNotifications] = useState('');
+  const [notificationLength, setNotificationLength] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -269,6 +271,49 @@ const Navbar = () => {
   useEffect(() => {
     getPlans()
   }, [])
+
+  const getNotifications = async () => {
+    if (auth) {
+      await DataService.getNotification().then((data) => {
+        setNotifications(data?.data?.data?.notifications);
+        setNotificationLength(data?.data?.data?.counts.unread)
+      })
+    }
+  };
+  useEffect(() => {
+    getNotifications()
+  }, [])
+
+  const handleNotification = (id) => {
+    const data = {}
+    data.ids = [id]
+    DataService.UpdateNotification(data).then(
+      () => {
+        setTimeout(() => {
+
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
+  };
+
+
+  // const handleME = (e) => {
+  //   e.target.src = { profile1 }
+  // }
+
   return (
     <>
       <ToastContainer />
@@ -323,24 +368,55 @@ const Navbar = () => {
                         <h2>Notifications</h2>
                       </div>
                       {
-                        packages?.length > 0 ? packages?.map((item) => {
+                        notifications?.length > 0 ? notifications?.map((item) => {
                           return (
                             <>
-                              {/* <div className="cross_btn">
-                                  <i onClick={() => setShowNotification(false)} class="fas fa-window-close"></i>
-                                </div> */}
 
-                              <div className="mainnotification_text">
-                                <div className="ntificationone">
-                                  <img src={profile1} />
+                              {/* {item?.user ? (
+                                <Link to={"/single-profile/" + item?.user?.id}>
+                                  <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                    <div className="ntificationone">
+                                      <img src={item?.user ? item?.user?.profile_path : profile1} />
+                                    </div>
+                                    <div className="notification_text">
+                                      <p>
+                                        {item?.body}
+                                      </p>
+                                      <h2>Just now</h2>
+                                    </div>
+                                  </div>
+                                </Link>
+
+                              ) : null} */}
+
+                              {item?.user ? (
+                                <Link to={"/single-profile/" + item?.user?.id}>
+                                  <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                    <div className="ntificationone">
+                                      <img src={item?.user ? item?.user?.profile_path : profile1} />
+                                    </div>
+                                    <div className="notification_text">
+                                      <p>
+                                        {item?.body}
+                                      </p>
+                                      <h2>Just now</h2>
+                                    </div>
+                                  </div>
+                                </Link>
+                              ) : (
+                                <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                  <div className="ntificationone">
+                                    <img src={profile1} />
+                                  </div>
+                                  <div className="notification_text">
+                                    <p>
+                                      {item?.body}
+                                    </p>
+                                    <h2>Just now</h2>
+                                  </div>
                                 </div>
-                                <div className="notification_text">
-                                  <p>
-                                    <span>Elizabeth 506</span> has viewed your profile
-                                  </p>
-                                  <h2>Just now</h2>
-                                </div>
-                              </div>
+                              )}
+
                             </>
                           )
                         }) : ""
@@ -351,6 +427,9 @@ const Navbar = () => {
               )}
               <div className="notification_area">
                 <i onClick={() => setShowNotification(!notification)} class="fas fa-bell"></i>
+                <div className="notification_count">
+                  <h1>{notificationLength}</h1>
+                </div>
               </div>
               <div className="span_credits">
                 <h1>Account Balance</h1>

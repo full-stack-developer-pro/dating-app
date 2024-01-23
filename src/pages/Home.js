@@ -451,6 +451,27 @@ const Home = () => {
     getTotalMembers();
   }, []);
 
+  const handleNotification = (id) => {
+    DataService.TrackProfile(id).then(
+      () => {
+        setTimeout(() => {
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
+  };
 
 
   // let userid = JSON.parse(localStorage.getItem("d_user"));
@@ -929,7 +950,7 @@ const Home = () => {
                             className="main_button next_button"
                             onClick={handleSubmit}
                           >
-                            Submit 
+                            Submit
                           </button>
                         </div>
                       </div>
@@ -942,8 +963,8 @@ const Home = () => {
                           <span className="three active">3</span>
                           <span className="four active">4</span>
                         </div>
-                        <div className="new_skiptext" style={{textAlign:"center",padding:"15px 0px"}} >
-                        <label for="floatingInput" style={{color:" #ef48b5",fontSize:"18px",fontWeight:"600"}}>Continue with these <br/> sigup details !</label>
+                        <div className="new_skiptext" style={{ textAlign: "center", padding: "15px 0px" }} >
+                          <label for="floatingInput" style={{ color: " #ef48b5", fontSize: "18px", fontWeight: "600" }}>Continue with these <br /> sigup details !</label>
                         </div>
                         {/* <div className="form-field row mb-3">
                           <div className="col-sm-6">
@@ -1284,7 +1305,7 @@ const Home = () => {
                               </div>
                             </div>
                             <div className="active_actionSec">
-                              <button>
+                              <button onClick={() => handleNotification(item.id)}>
                                 <Link to={"/single-profile/" + item.id}>
                                   View<i className="fas fa-eye"></i>
                                 </Link>

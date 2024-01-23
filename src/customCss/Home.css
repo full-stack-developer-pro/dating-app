@@ -28,9 +28,28 @@
 }
 .notification_area {
     margin-right: 10px;
+    position: relative;
+}
+.notification_count {
+    position: absolute;
+    top: -3px;
+    right: -13px;
+    margin: 0px;
+    background: #300243;
+    padding: 4px;
+    width: 21px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+}
+.notification_count h1 {
+    font-size: 12px;
+    margin: 0px;
+    color: #fff;
 }
 .notification_area i {
-    font-size: 26px;
+    font-size: 30px;
     color: #EF48B5;
 }
 
