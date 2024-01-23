@@ -172,27 +172,6 @@ const EditProfile = () => {
     e.preventDefault();
     setLoading(true);
     const data = {};
-
-    // data.append("gender", gender);
-    // data.append("country", country);
-    // data.append("username",username);
-    // data.append("description", description);
-    // data.append("birthdate", birthdate);
-    // data.append("name", name);
-    // data.append("city", city);
-    // data.append("postcode", postcode);
-    // data.append("height", height);
-    // data.append("weight", weight);
-    // data.append("hair_color", hair_color);
-    // data.append("eye_color", eye_color);
-    // data.append("hair_length", hair_length);
-    // data.append("marital_status", marital_status);
-    // data.append("interests", hobbies);
-    // data.append("is_fake",is_fake)
-    // data.append("is_flagged",isflagged)
-    // data.append("is_verified",isverified)
-    // data.append("age",age)
-    // data.append("free_message",free_message)
     data.is_fake = false;
     data.name = name;
     data.username = username;
@@ -219,36 +198,14 @@ const EditProfile = () => {
     data.credits = credits;
     data.status = status
     data.photo = profileImage;
-    // data.gender = gender
-    // data.country = country
-    // data.username = username
-    // data.description = description
-    // data.birthdate = birthdate
-    // data.name = name
-    // data.city = city
-    // data.postcode = postcode
-    // data.height = height
-    // data.weight = weight
-    // data.hair_color = hair_color
-    // data.eye_color = eye_color
-    // data.hair_length = hair_length
-    // data.marital_status = marital_status
-    // data.interests = hobbies
-    // data.is_fake = is_fake
-    // data.is_flagged = isflagged
-    // data.is_verified = isverified
-    // data.age = age
-    // data.free_message = free_message
+
 
     DataService.UpdateProfile(userId, data).then(
       () => {
         toast.success('Profile updated successfully!', {
           position: toast.POSITION.TOP_RIGHT
         });
-        // setLoading(false);
-        // setTimeout(function(){
-        //     window.location.reload();
-        // }, 1500)
+
       },
       (error) => {
         const resMessage =
@@ -269,14 +226,14 @@ const EditProfile = () => {
 
   return (
     <>
-      <Navbar />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
+      {/* <Navbar />
       <section className="profile_bannerSec">
         <div className="container">
           <h1>My Profile</h1>
           <span>Home / Profile</span>
         </div>
-      </section>
+      </section> */}
       <section className="editProfile">
         <form onSubmit={handleSubmit}>
           <div className="container">
@@ -353,19 +310,7 @@ const EditProfile = () => {
                       ))}
                     </ul>
                   )}
-                  {/* <select id="citySelect" onChange={(e) => setCountry(e.target.value)}>
-                    <option>{country ? country : "Select a City/Town"}</option>
-                    {cities.map((city, index) => (
-                      <option key={index} value={city.city}>
-                        {city.city}
-                      </option>
-                    ))}
-                  </select> */}
-                  {/* <ReactFlagsSelect
-                  selected={country}
-                  onSelect={(code) => setCountry(code)}
-                  required
-                /> */}
+               
                 </div>
               </div>
             </div>
@@ -431,35 +376,9 @@ const EditProfile = () => {
             </div>
             <div className="row">
               <div className="col-sm-6">
-                {/* <div class="edit_profile mb-3">
-                  <textarea
-                    class="form-control"
-                    placeholder=""
-                    id="floatingTextarea2"
-                    style={{ height: "100px" }}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  ></textarea>
-                  <label for="floatingTextarea2">Description</label>
-                </div> */}
+              
               </div>
-              {/* <div className="col-sm-6">
-
-                <div class="edit_profile mb-3">
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder=""
-                    required
-                    max={maxDate}
-                    value={birthdate}
-                    onChange={handleDateChange}
-                  />
-                  <label for="floatingInput">Date of Birth</label>
-
-                </div>
-              </div> */}
+            
             </div>
             <div className="form_field row mb-3">
 
@@ -495,47 +414,9 @@ const EditProfile = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="row">
-              <div className="col-sm-12">
-                <div className="form_field mb-3">
-                  <p>Select Timezone</p>
-                  <TimezoneSelect
-                    value={timezone ? timezone[0] : ''}
-                    onChange={(selectedTimezone) => setTimezone([selectedTimezone])}
-                    required
-                  />
-                </div>
-              </div>
-            </div> */}
+           
             <div className="form-field row mb-3">
-              {/* <div className="col-sm-6">
-                <div class="edit_profile mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder=""
-                    required
-                    value={height}
-                    onChange={(e) => setHeight(e.target.value)}
-                  />
-                  <label for="floatingInput">Height</label>
-                </div>
-              </div> */}
-              {/* <div className="col-sm-6">
-                <div class="edit_profile mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder=""
-                    required
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                  />
-                  <label for="floatingInput">Weight</label>
-                </div>
-              </div> */}
+          
             </div>
             <div className="form-field row mb-3">
               <div className="col-sm-6">
@@ -568,20 +449,7 @@ const EditProfile = () => {
               </div>
             </div>
             <div className="form-field row mb-3">
-              {/* <div className="col-sm-6">
-                <div class="edit_profile mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder=""
-                    required
-                    value={hair_length}
-                    onChange={(e) => setHairLength(e.target.value)}
-                  />
-                  <label for="floatingInput">Hair Length</label>
-                </div>
-              </div> */}
+             
               <div className="col-sm-12">
                 <div class="edit_profile mb-3">
                   <input
@@ -627,149 +495,8 @@ const EditProfile = () => {
           </div>
         </form>
       </section>
-      {/* <section className="main_proflieSec">
-        <div className="container">
-          <div className="profileFlex">
-            <div className="profileFlexL">
-              <img src={ProfileOne} alt="" />
-              <div className="gender_iop">
-                <i class="fas fa-venus"></i>
-              </div>
-            </div>
-            <div className="profileFlexR">
-              <div className="profile_title">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h2>
-                    {profile?.name}
-                    <i className="fas fa-circle"></i>
-                  </h2>
-                  <button
-                    className="main_button"
-                    style={{ margin: "0", padding: "10px 35px" }}
-                  >
-                    Edit Profile<i class="fas fa-pencil-alt"></i>
-                  </button>
-                </div>
-                <p>
-                  <i class="fas fa-map-marker-alt"></i> {profile?.city},{" "}
-                  {profile?.country}
-                </p>
-                <p>{profile?.description}</p>
-              </div>
-            </div>
-          </div>
-          <div className="profile_descriptionSec">
-            <div className="profile_dflex">
-              <div className="verified_badge">
-                <img src={Verified} alt="" />
-              </div>
-              <div className="profile_dFlexL">
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-envelope"></i> Email
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.email}</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-user"></i> Gender
-                  </p>
-                  <p>:</p>
-                  <p>
-                    {profile?.gender === "male"
-                      ? "Male"
-                      : profile?.gender === "female"
-                      ? "Female"
-                      : "Other"}
-                  </p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-birthday-cake"></i> Birth Date
-                  </p>
-                  <p>:</p>
-                  <p>{moment(profile?.birthdate).format("LL")}</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-map-marker-alt"></i> City
-                  </p>
-                  <p>:</p>
-                  <p>
-                    {profile?.city}, {profile?.postcode}
-                  </p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-clock"></i> Timezone
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.timezone?.label}</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-text-height"></i> Height
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.height}</p>
-                </div>
-              </div>
-              <div className="profile_dFlexR">
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-weight"></i> Weight
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.weight}Kg</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-eye"></i> Eye Color
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.eye_color}</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-tint"></i> Hair Color
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.hair_color}</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fab fa-servicestack"></i> Hair Length
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.hair_length}</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-ring"></i> Marital Status
-                  </p>
-                  <p>:</p>
-                  <p>{profile?.marital_status}</p>
-                </div>
-                <div className="profileEntry">
-                  <p>
-                    <i class="fas fa-futbol"></i> Interests
-                  </p>
-                  <p>:</p>
-                  <p>
-                    {profile?.interests && profile?.interests.length > 0
-                      ? profile?.interests?.map((item, i) => {
-                          return item + ", ";
-                        })
-                      : ""}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      <Footer />
+      
+      {/* <Footer /> */}
     </>
   );
 };

@@ -70,6 +70,7 @@ const Chats = () => {
         setMobileAdjust(true);
         setExpandedChat(data?.data?.data);
         setExpandedChatMessages(data?.data?.data?.Messages.reverse());
+        console.log(data?.data?.data?.Messages)
         setShowExpandedChat(true);
         setFDisabled(false);
       })
@@ -443,7 +444,6 @@ const Chats = () => {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

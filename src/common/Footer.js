@@ -31,8 +31,8 @@ const Footer = () => {
         <div className="container">
 
           <div className="logo_footer">
-
-              <img src={Logo} alt="" />
+            <Link to="/"><img src={Logo} alt="" /></Link>
+              
           </div>
           <div className="footer_FFlex">
             <div className="footer_FL">
@@ -59,7 +59,7 @@ const Footer = () => {
                   </Link>
                 </li>*/}
                 <li>
-                  <Link to="/edit-profile">
+                  <Link to="/profile">
                     <i class="fas fa-circle"></i>Account settings
                   </Link>
                 </li>

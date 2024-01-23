@@ -35,14 +35,14 @@ div {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-  min-height: 45vh;
+  /* min-height: 45vh; */
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding-top: 100px;
-  background-color:#300243;
+  padding-top: 70px;
+  background-color: #300243;
 }
 
 .profile_bannerSec .container {

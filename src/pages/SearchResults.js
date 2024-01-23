@@ -42,10 +42,10 @@ const SearchResults = () => {
 
   const [cities, setCities] = useState([]);
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [isListVisible, setIsListVisible] = useState(true);
+  const queryParams = new URLSearchParams(location.search);
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
@@ -61,7 +61,7 @@ const SearchResults = () => {
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
 
   const handleSliderChange = ({ minValue, maxValue }) => {
-    setAgeGroup({  minValue, maxValue });
+    setAgeGroup({ minValue, maxValue });
   };
   const getCity = async () => {
     await DataService.getCities(searchKeyword).then((data) => {
@@ -83,8 +83,8 @@ const SearchResults = () => {
   useEffect(() => {
     setGender(param1)
     setCountry(param2)
-    setAgeGroup({minValue:param3})
-    setAgeGroup({maxValue:param4})
+    setAgeGroup({ minValue: param3 })
+    setAgeGroup({ maxValue: param4 })
     // searchData();
 
   }, [])
@@ -132,7 +132,7 @@ const SearchResults = () => {
     });
   };
   const searchData = async () => {
-    await DataService.searchUsers(gender, searchKeyword,ageGroup.minValue,ageGroup.minValue).then(
+    await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.minValue).then(
       (data) => {
         setUsers(data?.data?.data.users);
         ref.current.complete();
@@ -235,101 +235,13 @@ const SearchResults = () => {
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <section className="active_profilesSec height_search">
         <div className="container">
-        <div className="back_button">
-                <button onClick={goBack}> <i class="fas fa-long-arrow-alt-left"></i> Back</button>
-              </div>
+          <div className="back_button">
+            <button onClick={goBack}> <i class="fas fa-long-arrow-alt-left"></i> Back</button>
+          </div>
           <div className="active_secFlex">
-
-            {/* <div className="activeR mb-2"> */}
-            {/* <div className="activeL_bg">
-              
-             
-              </div> */}
-            {/*               
-              <div className="member_stats">
-                <h4>Member Statistics</h4>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Total Members</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.totalMembers}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Active Members</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.activeMembers}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Joined Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.membersJoinedToday}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Men Joined Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.menJoinedToday}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Women Joined Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.womenJoinedToday}</p>
-                  </div>
-                </div>
-                <div className="stats_flex">
-                  <div className="statsL">
-                    <p>Messages Sent Today</p>
-                  </div>
-                  <div className="statsM">
-                    <p>~</p>
-                  </div>
-                  <div className="statsR">
-                    <p>{members.messagesSentToday}</p>
-                  </div>
-                </div>
-                {!auth && 
-                <button
-                  className="main_button"
-                  onClick={() => (window.location.href = "/#signup")}
-                >
-                  Join Now<i class="fas fa-long-arrow-alt-right"></i>
-                </button>
-                }
-              </div> */}
-            {/* </div> */}
             <div className="activeM" style={{ flex: "1" }}>
-             
               <div className="search_formSec">
                 <h4>Quick Search</h4>
-
-
                 <div className="search_main">
                   <div className="search_gender_inner">
                     <p>
@@ -399,32 +311,18 @@ const SearchResults = () => {
                       </ul>
                     )}
 
-                    {/* <select id="citySelect" value={country} onChange={(e) => setCountry(e.target.value)}>
-                      <option value="">Select a City/Town</option>
-                      {cities.map((city, index) => (
-                        <option key={index} value={city.city}>
-                          {city.city}
-                        </option>
-                      ))}
-                    </select> */}
-
-                    {/* <ReactFlagsSelect
-                    selected={country}
-                    onSelect={(code) => setCountry(code)}
-                    required
-                  /> */}
                   </div>
                   <div className="range_Age">
-                  <label>
+                    <label>
                       <strong>Select Age</strong>
                     </label>
-                  <MultiRangeSlider
-                     min={18}
-                     max={100}
-                     minValue={ageGroup.minValue}
-                     maxValue={ageGroup.maxValue}
-                    onChange={handleSliderChange}
-                  />
+                    <MultiRangeSlider
+                      min={18}
+                      max={100}
+                      minValue={ageGroup.minValue}
+                      maxValue={ageGroup.maxValue}
+                      onChange={handleSliderChange}
+                    />
                   </div>
                   <div className="button_search">
                     <button className="search_submit" onClick={searchData}>
@@ -433,34 +331,6 @@ const SearchResults = () => {
                   </div>
                 </div>
               </div>
-              {/* <h3>Recently Joined</h3>
-              <div className="active_recent">
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileOne} alt="" />
-                    <h4>Jessica M.</h4>
-                  </div>
-                </Link>
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileTwo} alt="" />
-                    <h4>Emily W.</h4>
-                  </div>
-                </Link>
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileThree} alt="" />
-                    <h4>Jessica M.</h4>
-                  </div>
-                </Link>
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileFour} alt="" />
-                    <h4>Emily W.</h4>
-                  </div>
-                </Link>
-              </div> */}
-
 
               <div className="active_mainArea">
                 {users && users.length > 0 ? (

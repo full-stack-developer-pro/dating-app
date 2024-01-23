@@ -181,7 +181,7 @@ const SingleLProfile = () => {
     <>
       <Navbar />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-      <section className="profile_bannerSec">
+      <section className="profile_bannerSec" style={{padding:"60px 0px",minHeight:"40vh"}}>
         <div className="container">
           <h1>User Profile</h1>
           {/* <span>Home / User Profile</span> */}
