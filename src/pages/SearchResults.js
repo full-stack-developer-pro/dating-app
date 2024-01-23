@@ -206,6 +206,27 @@ const SearchResults = () => {
       }
     );
   };
+
+  const handleNotification = (id) => {
+    DataService.TrackProfile(id).then(
+      () => {
+        setTimeout(() => {
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+      }
+    );
+  };
   const goBack = () => {
     navigate(-1);
   };
@@ -494,7 +515,7 @@ const SearchResults = () => {
                             </div>
                           </div>
                           <div className="active_actionSec">
-                            <button>
+                            <button onClick={() => handleNotification(item.id)}>
                               <Link to={"/single-profile/" + item.id}>
                                 View<i className="fas fa-eye"></i>
                               </Link>

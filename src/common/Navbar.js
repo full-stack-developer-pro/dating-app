@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import DataService from "../services/data.service";
 import profile1 from "../images/profile1.jpg"
-
+import moment from "moment";
 const Navbar = () => {
   const auth = AuthService.getCurrentUserTokken();
   const navigate = useNavigate();
@@ -280,6 +280,23 @@ const Navbar = () => {
       })
     }
   };
+  const calculateTimeDifference = (timestamp) => {
+    // Implement your time difference calculation logic here
+    // This example assumes the timestamp is in ISO format
+    const now = new Date();
+    const notificationTime = new Date(timestamp);
+    const timeDifference = now - notificationTime;
+
+    // Convert milliseconds to seconds
+    const secondsDifference = Math.floor(timeDifference / 1000);
+
+    if (secondsDifference < 60) {
+      return 'Just now';
+    } else {
+      // Implement other time formats if needed (e.g., minutes, hours, days)
+      // Example: return `${Math.floor(secondsDifference / 60)} minutes ago`;
+    }
+  };
   useEffect(() => {
     getNotifications()
   }, [])
@@ -399,7 +416,8 @@ const Navbar = () => {
                                       <p>
                                         {item?.body}
                                       </p>
-                                      <h2>Just now</h2>
+
+                                      <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
                                     </div>
                                   </div>
                                 </Link>
@@ -412,7 +430,7 @@ const Navbar = () => {
                                     <p>
                                       {item?.body}
                                     </p>
-                                    <h2>Just now</h2>
+                                    <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
                                   </div>
                                 </div>
                               )}
