@@ -23,6 +23,9 @@ axios.interceptors.response.use(function (response) {
 const getAboutUs = () => {
   return axios.get(API_URL + "api/admin/getAboutAs");
 };
+const getOldPayments = () => {
+  return axios.get(API_URL + "api/user/payments");
+};
 
 const getNotification = () => {
   return axios.get(API_URL + "api/user/notifications");
@@ -143,7 +146,8 @@ const DataService = {
   getMiddleBanner,
   getSecondLastBanner,
   getLastBanner,
-  getCities
+  getCities,
+  getOldPayments
 
 }
 export default DataService;

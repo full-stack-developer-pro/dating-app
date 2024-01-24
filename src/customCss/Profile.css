@@ -1,3 +1,76 @@
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  .enable_notification {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
+    align-items: center;
+}
+
+.notification_turn h2 {
+    text-align: center;
+    font-size: 18px;
+    padding: 20px 0px;
+}
+
 .show_edit_bgarea {
     background: #fff;
     padding: 16px 15px;
@@ -5,6 +78,29 @@
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     width: 95%;
     margin: auto;
+}
+
+.payments_old_data {
+    width: 60%;
+    margin: auto;
+}
+
+.payments_old_data h2 {
+    text-align: center;
+    padding: 20px 0px;
+    font-size: 20px;
+}
+.edit_profile_function {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0px;
+}
+.edit_profile_function button {
+    margin: 0px 15px;
+}
+.edit_profile_function button.active {
+    border-bottom: 3px solid #ef48b5;
 }
 .main_craedits_two {
     display: flex;
@@ -14,6 +110,7 @@
     /* margin: auto; */
     position: relative;
 }
+
 .main_craedits_one img {
     width: 40%;
 }
@@ -327,6 +424,9 @@ background: none;}
 }
 
 @media screen and (max-width: 767px) {
+    .toggle-button{
+        display: block;
+    }
     .profile_bannerSec {
 
         padding-top: 0px;

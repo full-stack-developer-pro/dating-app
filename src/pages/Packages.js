@@ -5,6 +5,8 @@ import "../customCss/Package.css"
 import DataService from '../services/data.service'
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
+import AddIcon from "../images/add-icon.png"
+import GiftIcon from "../images/gift-icon.png"
 
 const Packages = () => {
     const [packages, setPackages] = useState([]);
@@ -32,7 +34,7 @@ const Packages = () => {
                     toast("Link generated successfully!");
                     console.log(response.data.data.url);
                     const paymentUrl = response.data.data.url;
-                    window.location.replace(paymentUrl); 
+                    window.location.replace(paymentUrl);
                 } else {
                     toast("Failed to generate the payment link.");
                 }
@@ -88,6 +90,23 @@ const Packages = () => {
                                             <h2><b>{item.credits}</b><br />
                                                 credits</h2>
                                         </div>
+
+                                        {
+                                            item.bonus == 0 ?
+                                                <div className='packages_gift_two'>
+                                                </div>
+                                                :
+                                                <div className='packages_gift'>
+                                                    <div className="promo_item">
+                                                        <img className="plus_img" src={AddIcon} />
+                                                        <img src={GiftIcon} />
+                                                        <h2>FREE</h2>
+                                                        <h3>{item?.bonus} <br />credits
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                        }
+
                                         <div className='packages_middle'>
                                             <h3>{item.currency} {item.price}</h3>
                                         </div>

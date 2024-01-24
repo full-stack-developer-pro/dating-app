@@ -173,7 +173,7 @@ const Profile = () => {
   const handleAvatar = (image) => {
     setLoading(true);
     const data = {};
-    data.photo = image.url;
+    data.avatar = image.url;
     data.is_fake = profile?.is_fake
     data.name = profile?.name;
     data.username = profile?.username;
@@ -491,6 +491,7 @@ const Profile = () => {
           </div>
           <div className="profile_main">
             <div className="profile_right">
+              
               <button className={showSearchArea ? 'active' : ''} onClick={() => handleButtonClick('search')}>Search</button>
               <button className={showFriends ? 'active' : ''} onClick={() => handleButtonClick('friends')}>My Friends</button>
               <button className={showMessages ? 'active' : ''} onClick={() => handleButtonClick('messages')}>Messages</button>

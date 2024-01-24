@@ -31,6 +31,8 @@ const Chats = () => {
   const [loading, setLoading] = useState(false);
 
   // const history = useHistory();
+
+  
   let user_id = JSON.parse(localStorage.getItem("d_user"));
   let connectionEstablished = false;
   let socket;
@@ -59,7 +61,7 @@ const Chats = () => {
       }
     });
   
-    
+
     socket.addEventListener("close", (event) => {
       console.log("WebSocket connection closed:", event);
     });
@@ -97,7 +99,6 @@ const Chats = () => {
     }
   };
   
-  // Establish the WebSocket connection initially
   establishConnection();
   
 

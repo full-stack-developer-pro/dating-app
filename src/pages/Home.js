@@ -292,7 +292,7 @@ const Home = () => {
     data.interests = hobbies ? hobbies : "";
     data.credits = 200;
     data.free_message = "Hello world";
-    data.is_verified = true;
+    data.is_verified = 0;
     data.is_flagged = false;
     data.photo = "https://example.com/path/to/photo.jpg";
     setLoading(true);
@@ -1282,7 +1282,7 @@ const Home = () => {
                                 </span>
                                 <span>
                                   <i className="fas fa-map-marker-alt"></i>
-                                  {item?.city}, {item?.country}
+                                  {item?.country}
                                 </span>
                                 <br />
                                 {auth ? (
