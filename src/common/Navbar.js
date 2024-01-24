@@ -55,7 +55,6 @@ const Navbar = () => {
   const getUserProfile = async () => {
     if (auth) {
       await DataService.getSingleProfile(userId).then((data) => {
-        console.log(data?.data?.data?.user)
         setProfile(data?.data?.data?.user);
       })
     }
@@ -267,7 +266,6 @@ const Navbar = () => {
       })
     }
   };
-  console.log(packages)
   useEffect(() => {
     getPlans()
   }, [])
@@ -280,23 +278,7 @@ const Navbar = () => {
       })
     }
   };
-  const calculateTimeDifference = (timestamp) => {
-    // Implement your time difference calculation logic here
-    // This example assumes the timestamp is in ISO format
-    const now = new Date();
-    const notificationTime = new Date(timestamp);
-    const timeDifference = now - notificationTime;
-
-    // Convert milliseconds to seconds
-    const secondsDifference = Math.floor(timeDifference / 1000);
-
-    if (secondsDifference < 60) {
-      return 'Just now';
-    } else {
-      // Implement other time formats if needed (e.g., minutes, hours, days)
-      // Example: return `${Math.floor(secondsDifference / 60)} minutes ago`;
-    }
-  };
+ 
   useEffect(() => {
     getNotifications()
   }, [])
@@ -454,9 +436,11 @@ const Navbar = () => {
                 <p><b style={{ marginRight: "10px" }}>{profile?.credits}</b> Credits</p>
               </div>
               <div className="buy_nowbtn">
-                <button className="main_buttonTwo credits" onClick={() => setPayments(true)}>
+              <Link to="/packages">
+                <button className="main_buttonTwo credits" >
                   Buy now
                 </button>
+                </Link>
               </div>
             </div>
           </>

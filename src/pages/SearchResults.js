@@ -27,6 +27,8 @@ import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
 import { useLocation } from 'react-router-dom';
 import MultiRangeSlider from "multi-range-slider-react";
+import ProfileAvatar from "../images/profile-avatar.png"
+
 
 const SearchResults = () => {
   const navigate = useNavigate()
@@ -230,6 +232,10 @@ const SearchResults = () => {
   const goBack = () => {
     navigate(-1);
   };
+  const handleImage = (e) => {
+    e.target.src = ProfileAvatar
+  }
+  
   return (
     <>
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
@@ -343,7 +349,7 @@ const SearchResults = () => {
                         <div className="active_mainProfile" key={i}>
                           <div className="active_mainFlex">
                             <div className="active_mainL">
-                              <img src={ProfileOne} alt="" />
+                              <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImage} />
                             </div>
                             <div className="active_mainR">
                               <h4>{item?.name}</h4>

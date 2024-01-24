@@ -21,6 +21,8 @@ import AuthService from "../services/auth.service";
 import NavbarProfile from "../common/NavbarProfile";
 import EditProfile from "./EditProfile";
 import AllChats from "../pages/AllChats"
+import ProfileAvatar from "../images/profile-avatar.png"
+
 const MAX_COUNT = 5;
 
 const Profile = () => {
@@ -59,7 +61,6 @@ const Profile = () => {
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
-      console.log(data?.data?.data?.user)
       setProfile(data?.data?.data?.user);
       setAllImages(data?.data?.data?.user?.images.filter((item) => item.is_verified === 1));
       ref.current.complete();
@@ -463,6 +464,10 @@ const Profile = () => {
     window.location.reload();
   }
 
+  const handleImagenew = (e) => {
+    e.target.src = ProfileAvatar
+  }
+
   return (
     <>
       {/* <Navbar /> */}
@@ -632,7 +637,7 @@ const Profile = () => {
                                   <div className="active_mainProfile" key={i}>
                                     <div className="active_mainFlex">
                                       <div className="active_mainL">
-                                        <img src={ProfileOne} alt="" />
+                                        <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
                                       </div>
                                       <div className="active_mainR">
                                         <h4>{item?.name}</h4>

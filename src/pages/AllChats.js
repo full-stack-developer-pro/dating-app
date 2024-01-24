@@ -315,7 +315,7 @@ const Chats = () => {
                   <>
                     <div
                       className="chat_outer"
-                      onClick={() => expandChat(item._id)}
+                      onClick={() => navigate("/chats/"+item?._id)}
                     >
                       <div className="chat_outerImg">
                         <img src="https://i.pravatar.cc/300" alt="" />
@@ -332,8 +332,8 @@ const Chats = () => {
               <p className="text-center my-4">No Messages Found !!!</p>
             )}
           </div>
-          {mobileAdjust && (
-            <div className="chat_flexR">
+          
+            <div className="chat_flexR hide_meY">
               {showExpandedChat ? (
                 <>
                   <div className="chat_expHead">
@@ -441,9 +441,10 @@ const Chats = () => {
                 </form>
               </div>
             </div>
-          )}
+        
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

@@ -29,6 +29,7 @@ import SelectSearch from 'react-select-search';
 // import { io } from "socket.io-client";
 import axios from "axios";
 import MultiRangeSlider from "multi-range-slider-react";
+import ProfileAvatar from "../images/profile-avatar.png"
 
 const Home = () => {
   // const socket = new WebSocket("ws://api.digitalmarketingcoursesinchandigarh.in:9091");
@@ -385,7 +386,6 @@ const Home = () => {
 
   const getUserProfile = async () => {
     await DataService.getAllFriend(userId).then((data) => {
-      console.log(data?.data?.data)
       setProfile(data?.data?.data);
     });
   };
@@ -507,6 +507,10 @@ const Home = () => {
   //   let userid = JSON.parse(localStorage.getItem("d_user"));
   //   socket.emit("user_added", userid);
   // };
+
+  const handleImage = (e) => {
+    e.target.src = ProfileAvatar
+  }
 
   return (
     <>
@@ -1263,7 +1267,8 @@ const Home = () => {
                           <div className="active_mainProfile" key={i}>
                             <div className="active_mainFlex">
                               <div className="active_mainL">
-                                <img src={ProfileOne} alt="" />
+                                {/* ProfileOne */}
+                                <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImage} />
                               </div>
                               <div className="active_mainR">
                                 <h4>{item?.name}</h4>

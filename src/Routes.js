@@ -18,6 +18,7 @@ import { RestrictedAccess } from "./private-component/RestrictedAccess";
 import SearchResults from "./pages/SearchResults";
 import Payments from "./pages/Payment";
 import AllChats from "./pages/AllChats"
+import Packages from "./pages/Packages";
 
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/chats" element={<AllChats />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/thank-you" element={<Payments />} />
+        <Route path="/packages" element={<Packages />} />
         </Route>
       </Routes>
     </BrowserRouter>

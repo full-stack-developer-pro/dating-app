@@ -21,6 +21,22 @@ const NavbarProfile = () => {
     const [profile, setProfile] = useState("");
     const [notification, setShowNotification] = useState(false);
     const navigate = useNavigate();
+    const userId = JSON.parse(localStorage.getItem("d_user"));
+
+    const getUserProfile = async () => {
+        if (auth) {
+          await DataService.getSingleProfile(userId).then((data) => {
+            setProfile(data?.data?.data?.user);
+          })
+        }
+      };
+    
+      useEffect(() => {
+        getUserProfile()
+      }, [])
+    
+
+
 
     const handlePayment = (price) => {
         setMessage("");
@@ -61,7 +77,6 @@ const NavbarProfile = () => {
             })
         }
     };
-    console.log(packages)
     useEffect(() => {
         getPlans()
     }, [])
@@ -160,7 +175,7 @@ const NavbarProfile = () => {
                         <div className="main_craedits_two" style={{ padding: "10px 0px" }}>
                            
                                 {notification && (
-                                    <div className="notification_main">
+                                    <div className="notification_main profile_notification">
                                         <div className="notification_pop">
                                             <div className="payment_bg_notification">
                                                 <div className="notification_heading">
@@ -236,9 +251,11 @@ const NavbarProfile = () => {
                                     <p style={{color:"#fff"}}><b style={{ marginRight: "10px",color:"#fff"}}>{profile?.credits}</b> Credits</p>
                                 </div>
                                 <div className="buy_nowbtn">
-                                    <button className="main_buttonTwo credits" onClick={() => setPayments(true)}>
+                                    <Link to="/packages">
+                                    <button className="main_buttonTwo credits" >
                                         Buy now
                                     </button>
+                                    </Link>
                                 </div>
 
                         </div>
