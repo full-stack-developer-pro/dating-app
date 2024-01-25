@@ -778,22 +778,33 @@ const Home = () => {
 
                         <div className="form-field row mb-3">
                           <div className="col-sm-6">
-                            <div class="form-floating mb-3">
-                              <input
+                            <div class="select_singup">
+                              <label for="floatingInput">Eye Color</label>
+                              <select value={eyecolor}
+                                onChange={(e) => setEyeColor(e.target.value)}>
+                                <option value="Black">Black</option>
+                                <option value="Brown">Brown</option>
+                              </select>
+                              {/* <input
                                 type="text"
                                 class="form-control"
                                 id="floatingInput"
                                 placeholder=""
                                 required
-                                value={eyecolor}
-                                onChange={(e) => setEyeColor(e.target.value)}
+                             
                               />
-                              <label for="floatingInput">Eye Color</label>
+                             */}
                             </div>
                           </div>
                           <div className="col-sm-6">
-                            <div class="form-floating mb-3">
-                              <input
+                            <div class="select_singup">
+                              <label for="floatingInput">Hair Color</label>
+                              <select value={eyecolor}
+                                onChange={(e) => setEyeColor(e.target.value)}>
+                                <option value="Black">Black</option>
+                                <option value="Brown">Brown</option>
+                              </select>
+                              {/* <input
                                 type="text"
                                 class="form-control"
                                 id="floatingInput"
@@ -801,28 +812,24 @@ const Home = () => {
                                 required
                                 value={haircolor}
                                 onChange={(e) => setHairColor(e.target.value)}
-                              />
-                              <label for="floatingInput">Hair Color</label>
+                              /> */}
                             </div>
                           </div>
                         </div>
                         <div className="form-field row mb-3">
-                          {/* <div className="col-sm-6">
-                            <div class="form-floating mb-3">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder=""
-                                required
-                                onChange={(e) => setHairLength(e.target.value)}
-                              />
-                              <label for="floatingInput">Hair Length</label>
-                            </div>
-                          </div> */}
+
                           <div className="col-sm-12">
-                            <div class="form-floating mb-3">
-                              <input
+                            <div class="select_singup">
+                            <label for="floatingInput">Marital Status</label>
+
+                              <select value={maritalstatus}
+                                onChange={(e) =>
+                                  setMaritalStatus(e.target.value)
+                                }>
+                                <option value="Married">Married</option>
+                                <option value="Unmarried">Unmarried</option>
+                              </select>
+                              {/* <input
                                 type="text"
                                 class="form-control"
                                 id="floatingInput"
@@ -832,8 +839,7 @@ const Home = () => {
                                 onChange={(e) =>
                                   setMaritalStatus(e.target.value)
                                 }
-                              />
-                              <label for="floatingInput">Marital Status</label>
+                              /> */}
                             </div>
                           </div>
                         </div>
@@ -1025,12 +1031,17 @@ const Home = () => {
             {/* <img src={Heart} alt="" className="heartTwo" /> */}
             <h1>{topBanner?.heading}</h1>
             <p dangerouslySetInnerHTML={{ __html: topBanner?.description }}></p>
-            <button
-              className="main_button"
-              onClick={() => (window.location.href = "/#signup")}
-            >
-              Join Free Now!<i class="fas fa-chevron-right"></i>
-            </button>
+            {
+              !auth && (
+                <button
+                  className="main_button"
+                  onClick={() => (window.location.href = "/#signup")}
+                >
+                  Join Free Now!<i class="fas fa-chevron-right"></i>
+                </button>
+              )
+            }
+
             {/* <img src={HeartTwo} alt="" className="heartOne" /> */}
           </div>
         </div>
@@ -1121,7 +1132,7 @@ const Home = () => {
                   <div className="search_gender_inner">
 
                     <p>
-                      <strong>My Gender</strong>
+                      <strong>Gender</strong>
                     </p>
                     <div class="form-check">
                       <input

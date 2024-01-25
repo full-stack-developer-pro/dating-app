@@ -48,7 +48,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/profile">
+                  <Link to="/my-profile">
                     <i class="fas fa-circle"></i>My profile
                   </Link>
                 </li>
@@ -59,7 +59,7 @@ const Footer = () => {
                   </Link>
                 </li>*/}
                 <li>
-                  <Link to="/profile">
+                  <Link to="/edit-profile">
                     <i class="fas fa-circle"></i>Account settings
                   </Link>
                 </li>

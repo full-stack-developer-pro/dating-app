@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
+import NavbarProfile from "../common/NavbarProfile";
 // import { useHistory } from 'react-router-dom';
 // import EmojiPicker from 'emoji-picker-react';
 
@@ -251,8 +252,10 @@ const Chats = () => {
 
   return (
     <>
+    <NavbarProfile/>
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-
+      <div className="container">
+      <div className="show_edit_bgarea">
       <div className="chat_sec">
         <div className="chat_flex">
           <div className="chat_flexL  hide_meY">
@@ -410,6 +413,8 @@ const Chats = () => {
           </div>
 
         </div>
+      </div>
+      </div>
       </div>
       <Footer />
     </>

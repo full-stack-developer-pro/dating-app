@@ -1,10 +1,26 @@
+.profile_right button.active,
+.profile_left button.active {
+    border-bottom: 2px solid #fff;
+}
+.not_friends {
+    width: 100%;
+    text-align: center;
+    padding: 50px 0px;
+}
+.not_friends h2 {
+    padding: 20px 0px;
+    font-size: 28px;
+}
 .switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
   }
-  
+
+  .edit_profile_area {
+    width: 55% !important;
+}
   .switch input { 
     opacity: 0;
     width: 0;
@@ -36,11 +52,11 @@
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #ef48b5;
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #ef48b5;
   }
   
   input:checked + .slider:before {
@@ -60,7 +76,7 @@
   .enable_notification {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 65%;
     margin: auto;
     align-items: center;
 }
@@ -70,7 +86,6 @@
     font-size: 18px;
     padding: 20px 0px;
 }
-
 .show_edit_bgarea {
     background: #fff;
     padding: 16px 15px;
@@ -78,10 +93,11 @@
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     width: 95%;
     margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
-
 .payments_old_data {
-    width: 60%;
+    width: 80%;
     margin: auto;
 }
 
@@ -422,8 +438,70 @@ background: none;}
     width: 48% !important;
     margin: 1%;
 }
+.toggle_btn {
+    display: none;
+}
 
+.mobile_hide_credits {
+    display: none;
+}
 @media screen and (max-width: 767px) {
+    .mobile_hide_credits {
+        display: block;
+    }
+    .mobile_area_credits {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0px;
+    }
+    .toggle_area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo_mobile_nav {
+        width: 50%;
+    }
+    .logo_mobile_nav img {
+        width: 70%;
+    }
+
+    .hide_mobile_screen {
+        display: none;
+    }
+    .toggle_btn {
+        display: block;
+        padding: 16px 0px;
+        background-color: #300243;
+    }
+    .toggle_buttons {
+        width: 50%;
+        display: flex;
+        justify-content: end;
+    }
+    .toggle_buttons svg {
+        fill: #fff;
+    }
+    .payments_old_data {
+        width: 100%;
+    }
+    .save_btnnotification {
+        width: 100%;
+    }
+    .notification_turn h2 {
+        font-size: 14px;
+        margin: 0px;
+    }
+    .enable_notification {
+        width: 100%;
+    }
+    .edit_profile_area{
+        width: 100% !important;
+    }
+    .edit_profile_function {
+        flex-direction: column;
+    }
     .toggle-button{
         display: block;
     }
@@ -435,7 +513,8 @@ background: none;}
         width: 70%;
     }
     .maincreadits {
-        padding: 20px 14px;
+        /* padding: 20px 14px; */
+        display: none;
     }
     .main_craedits_one {
         width: 49%;
@@ -468,6 +547,8 @@ background: none;}
     }
     .inner_images {
         width:  100%;
+        margin: 7%;
+
     }
     .edit_image {
         position: absolute;
@@ -550,7 +631,7 @@ background: none;}
         margin: 1% !important;
     }
     .allFriend-column .allFriend-btn4 {
-        width: 98% !important;
+        width: 48% !important;
         margin: 1%;
     }
 

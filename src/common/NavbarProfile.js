@@ -5,10 +5,11 @@ import OP from "../images/dating-banner.jpg";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom";
 import DataService from "../services/data.service";
 import profile1 from "../images/profile1.jpg"
 import moment from "moment";
+import NoImage from "../images/noImage.png"
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const NavbarProfile = () => {
     const [loading, setLoading] = useState(false);
@@ -21,20 +22,34 @@ const NavbarProfile = () => {
     const [profile, setProfile] = useState("");
     const [notification, setShowNotification] = useState(false);
     const navigate = useNavigate();
+    const [showMobile, setShowMobile] = useState(false);
+    const [activeSection, setActiveSection] = useState("");
     const userId = JSON.parse(localStorage.getItem("d_user"));
+    const location = useLocation();
 
+
+    const handleImage = (e) => {
+        e.target.src = NoImage
+    }
+
+    const logout = (e) => {
+        localStorage.removeItem("d_user");
+        localStorage.removeItem("d_userToken");
+        navigate("/");
+        window.location.reload();
+    }
     const getUserProfile = async () => {
         if (auth) {
-          await DataService.getSingleProfile(userId).then((data) => {
-            setProfile(data?.data?.data?.user);
-          })
+            await DataService.getSingleProfile(userId).then((data) => {
+                setProfile(data?.data?.data?.user);
+            })
         }
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         getUserProfile()
-      }, [])
-    
+    }, [])
+
 
 
 
@@ -120,6 +135,57 @@ const NavbarProfile = () => {
     };
 
 
+
+
+    useEffect(() => {
+        const currentPath = location.pathname;
+        const isCurrentPage = (path) => currentPath.startsWith(path);
+
+        if (isCurrentPage('/my-profile')) {
+            setActiveSection('profile');
+        } else if (isCurrentPage('/upload-gallery')) {
+            setActiveSection('uploads');
+        } else if (isCurrentPage('/profile')) {
+            setActiveSection('search');
+        } else if (isCurrentPage('/my-friends')) {
+            setActiveSection('friends');
+        } else if (isCurrentPage('/chats')) {
+            setActiveSection('messages');
+        } else if (isCurrentPage('/edit-profile')) {
+            setActiveSection('edit');
+        }
+    }, [location.pathname]);
+
+    const handleButtonClick = (section) => {
+
+        setActiveSection(section);
+
+        switch (section) {
+            case 'profile':
+                navigate("/my-profile")
+                break;
+            case 'uploads':
+                navigate("/upload-gallery")
+                break;
+            case 'search':
+                navigate("/profile")
+
+                break;
+            case 'friends':
+                navigate("/my-friends")
+                break;
+            case 'messages':
+                navigate("/chats")
+                break;
+            case 'edit':
+                navigate("/edit-profile")
+                break;
+            default:
+                break;
+        }
+    };
+
+
     return (
         <>
             {payments && (
@@ -164,103 +230,230 @@ const NavbarProfile = () => {
             {
                 auth && (
                     <>
-                    <div className="cradits_bg">
+                        <div className="cradits_bg">
 
-                        <div className="maincreadits">
-                            <div className="main_craedits_one">
-                         <Link to="/">
-                                <img src={Logo} alt="" />
-                            </Link>
-                            </div>
-                        <div className="main_craedits_two" style={{ padding: "10px 0px" }}>
-                           
-                                {notification && (
-                                    <div className="notification_main profile_notification">
-                                        <div className="notification_pop">
-                                            <div className="payment_bg_notification">
-                                                <div className="notification_heading">
-                                                    <h2>Notifications</h2>
-                                                </div>
-                                                {
-                                                    notifications?.length > 0 ? notifications?.map((item) => {
-                                                        return (
-                                                            <>
+                            <div className="maincreadits">
+                                <div className="main_craedits_one">
+                                    <Link to='/profile'>
+                                        <img src={Logo} alt="" />
+                                    </Link>
+                                </div>
+                                <div className="main_craedits_two" style={{ padding: "10px 0px" }}>
 
-                                                                {/* {item?.user ? (
-                                <Link to={"/single-profile/" + item?.user?.id}>
-                                  <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
-                                    <div className="ntificationone">
-                                      <img src={item?.user ? item?.user?.profile_path : profile1} />
-                                    </div>
-                                    <div className="notification_text">
-                                      <p>
-                                        {item?.body}
-                                      </p>
-                                      <h2>Just now</h2>
-                                    </div>
-                                  </div>
-                                </Link>
+                                    {notification && (
+                                        <div className="notification_main profile_notification">
+                                            <div className="notification_pop">
+                                                <div className="payment_bg_notification">
+                                                    <div className="notification_heading">
+                                                        <h2>Notifications</h2>
+                                                    </div>
+                                                    {
+                                                        notifications?.length > 0 ? notifications?.map((item) => {
+                                                            return (
+                                                                <>
+                                                                    {item?.user ? (
+                                                                        <Link to={"/single-profile/" + item?.user?.id}>
+                                                                            <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                                                                <div className="ntificationone">
+                                                                                    <img src={item?.user ? item?.user?.profile_path : profile1} />
+                                                                                </div>
+                                                                                <div className="notification_text">
+                                                                                    <p>
+                                                                                        {item?.body}
+                                                                                    </p>
 
-                              ) : null} */}
-
-                                                                {item?.user ? (
-                                                                    <Link to={"/single-profile/" + item?.user?.id}>
+                                                                                    <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
+                                                                                </div>
+                                                                            </div>
+                                                                        </Link>
+                                                                    ) : (
                                                                         <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
                                                                             <div className="ntificationone">
-                                                                                <img src={item?.user ? item?.user?.profile_path : profile1} />
+                                                                                <img src={profile1} />
                                                                             </div>
                                                                             <div className="notification_text">
                                                                                 <p>
                                                                                     {item?.body}
                                                                                 </p>
-
                                                                                 <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
                                                                             </div>
                                                                         </div>
-                                                                    </Link>
-                                                                ) : (
-                                                                    <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
-                                                                        <div className="ntificationone">
-                                                                            <img src={profile1} />
-                                                                        </div>
-                                                                        <div className="notification_text">
-                                                                            <p>
-                                                                                {item?.body}
-                                                                            </p>
-                                                                            <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
-                                                                        </div>
-                                                                    </div>
-                                                                )}
+                                                                    )}
 
-                                                            </>
-                                                        )
-                                                    }) : ""
-                                                }
+                                                                </>
+                                                            )
+                                                        }) : ""
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
+                                    )}
+                                    <div className="notification_area">
+                                        <i onClick={() => setShowNotification(!notification)} class="fas fa-bell"></i>
+                                        <div className="notification_count" style={{ backgroundColor: "#fff" }}>
+                                            <h1 style={{ color: "#300243" }}>{notificationLength}</h1>
+                                        </div>
                                     </div>
-                                )}
-                                <div className="notification_area">
-                                    <i onClick={() => setShowNotification(!notification)} class="fas fa-bell"></i>
-                                    <div className="notification_count" style={{backgroundColor:"#fff"}}>
-                                        <h1 style={{color:"#300243"}}>{notificationLength}</h1>
+                                    <div className="span_credits white_spancredits">
+                                        <h1 style={{ color: "#fff" }}>Account Balance</h1>
+                                        <p style={{ color: "#fff" }}><b style={{ marginRight: "10px", color: "#fff" }}>{profile?.credits}</b> Credits</p>
                                     </div>
+                                    <div className="buy_nowbtn">
+                                        <Link to="/packages">
+                                            <button className="main_buttonTwo credits" >
+                                                Buy now
+                                            </button>
+                                        </Link>
+                                    </div>
+
                                 </div>
-                                <div className="span_credits white_spancredits">
-                                    <h1 style={{color:"#fff"}}>Account Balance</h1>
-                                    <p style={{color:"#fff"}}><b style={{ marginRight: "10px",color:"#fff"}}>{profile?.credits}</b> Credits</p>
-                                </div>
-                                <div className="buy_nowbtn">
-                                    <Link to="/packages">
-                                    <button className="main_buttonTwo credits" >
-                                        Buy now
-                                    </button>
-                                    </Link>
+                            </div>
+                        </div>
+                        <div className="toggle_btn">
+                            <div className="container">
+
+                                {/* toggle section */}
+                                <div className="toggle_area">
+                                    <div className="logo_mobile_nav">
+                                        <img src={Logo} alt="" />
+                                    </div>
+                                    <div className="toggle_buttons">
+                                        {notification && (
+                                            <div className="notification_main ">
+                                                <div className="notification_pop">
+                                                    <div className="payment_bg_notification">
+                                                        <div className="notification_heading">
+                                                            <h2>Notifications</h2>
+                                                        </div>
+                                                        {
+                                                            notifications?.length > 0 ? notifications?.map((item) => {
+                                                                return (
+                                                                    <>
+                                                                        {item?.user ? (
+                                                                            <Link to={"/single-profile/" + item?.user?.id}>
+                                                                                <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                                                                    <div className="ntificationone">
+                                                                                        <img src={item?.user ? item?.user?.profile_path : profile1} />
+                                                                                    </div>
+                                                                                    <div className="notification_text">
+                                                                                        <p>
+                                                                                            {item?.body}
+                                                                                        </p>
+
+                                                                                        <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </Link>
+                                                                        ) : (
+                                                                            <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                                                                <div className="ntificationone">
+                                                                                    <img src={profile1} />
+                                                                                </div>
+                                                                                <div className="notification_text">
+                                                                                    <p>
+                                                                                        {item?.body}
+                                                                                    </p>
+                                                                                    <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
+
+                                                                    </>
+                                                                )
+                                                            }) : ""
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div className="notification_area">
+                                            <i onClick={() => setShowNotification(!notification)} class="fas fa-bell"></i>
+                                            <div className="notification_count" style={{ backgroundColor: "#fff" }}>
+                                                <h1 style={{ color: "#300243" }}>{notificationLength}</h1>
+                                            </div>
+                                        </div>
+
+                                        <button onClick={() => setShowMobile(!showMobile)}><svg data-v-ab08f53e="" height="24px" width="24px" viewBox="0 -53 384 384" xmlns="http://www.w3.org/2000/svg">
+                                            <path data-v-ab08f53e="" d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" class="menu-svg"></path>
+                                            <path data-v-ab08f53e="" d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" class="menu-svg"></path>
+                                            <path data-v-ab08f53e="" d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" class="menu-svg"></path>
+                                        </svg>
+                                        </button>
+                                    </div>
                                 </div>
 
+                            </div>
                         </div>
+                        <div className="container">
+                            <div className="mobile_hide_credits">
+                                <div className="mobile_area_credits">
+                                    <div className="span_credits white_spancredits">
+                                        <h1 style={{ color: "#300243" }}>Account Balance</h1>
+                                        <p style={{ color: "#300243" }}><b style={{ marginRight: "10px", color: "#300243" }}>{profile?.credits}</b> Credits</p>
+                                    </div>
+                                    <div className="buy_nowbtn">
+                                        <Link to="/packages">
+                                            <button className="main_buttonTwo credits" >
+                                                Buy now
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        {/* toggle section */}
+
+                        <div className="profile_navbar hide_mobile_screen">
+                            <div className="container">
+                                <div className="user_profile_page">
+                                    <img onError={handleImage} src={profile?.profile_path} />
+                                    <h2>
+                                        {profile?.name}
+                                    </h2>
+                                </div>
+                                <div className="profile_main">
+                                    <div className="profile_right">
+                                        <button className={activeSection === 'search' ? 'active' : ''} onClick={() => handleButtonClick('search')}>Search</button>
+                                        <button className={activeSection === 'friends' ? 'active' : ''} onClick={() => handleButtonClick('friends')}>My Friends</button>
+                                        <button className={activeSection === 'messages' ? 'active' : ''} onClick={() => handleButtonClick('messages')}>Messages</button>
+                                        <button className={activeSection === 'profile' ? 'active' : ''} onClick={() => handleButtonClick('profile')}>Profile</button>
+                                        <button className={activeSection === 'uploads' ? 'active' : ''} onClick={() => handleButtonClick('uploads')}>My Uploads</button>
+                                    </div>
+                                    <div className="profile_left">
+                                        <button className={activeSection === 'edit' ? 'active' : ''} onClick={() => handleButtonClick('edit')}>Account settings</button>
+                                        <button onClick={logout}>Logout</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {
+                            showMobile && (
+                                <div className="profile_navbar ">
+                                    <div className="container">
+                                        <div className="user_profile_page">
+                                            <img onError={handleImage} src={profile?.profile_path} />
+                                            <h2>
+                                                {profile?.name}
+                                            </h2>
+                                        </div>
+                                        <div className="profile_main">
+                                        <div className="profile_right">
+                                        <button className={activeSection === 'search' ? 'active' : ''} onClick={() => handleButtonClick('search')}>Search</button>
+                                        <button className={activeSection === 'friends' ? 'active' : ''} onClick={() => handleButtonClick('friends')}>My Friends</button>
+                                        <button className={activeSection === 'messages' ? 'active' : ''} onClick={() => handleButtonClick('messages')}>Messages</button>
+                                        <button className={activeSection === 'profile' ? 'active' : ''} onClick={() => handleButtonClick('profile')}>Profile</button>
+                                        <button className={activeSection === 'uploads' ? 'active' : ''} onClick={() => handleButtonClick('uploads')}>My Uploads</button>
+                                    </div>
+                                    <div className="profile_left">
+                                        <button className={activeSection === 'edit' ? 'active' : ''} onClick={() => handleButtonClick('edit')}>Account settings</button>
+                                        <button onClick={logout}>Logout</button>
+                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
                     </>
                 )
             }

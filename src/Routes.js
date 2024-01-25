@@ -19,6 +19,9 @@ import SearchResults from "./pages/SearchResults";
 import Payments from "./pages/Payment";
 import AllChats from "./pages/AllChats"
 import Packages from "./pages/Packages";
+import UploadGallery from "./pages/UploadGallery";
+import MyFriends from "./pages/MyFriends";
+import ProfileMain from "./pages/ProfileMain";
 
 
 export default function App() {
@@ -44,6 +47,10 @@ export default function App() {
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/thank-you" element={<Payments />} />
         <Route path="/packages" element={<Packages />} />
+        <Route path="/upload-gallery" element={<UploadGallery/>} />
+        <Route path="/my-friends" element={<MyFriends/>} />
+        <Route path="/my-profile" element={<ProfileMain/>} />
+
         </Route>
       </Routes>
     </BrowserRouter>

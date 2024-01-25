@@ -14,6 +14,8 @@ import LoadingBar from "react-top-loading-bar";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
+import ProfileAvatar from "../images/profile-avatar.png"
+import NavbarProfile from "../common/NavbarProfile";
 
 
 const SingleLProfile = () => {
@@ -177,85 +179,107 @@ const SingleLProfile = () => {
     // If authenticated, you can add additional logic here
   };
 
+  const handleMe = (e) => {
+    e.target.src = ProfileAvatar
+  }
   return (
     <>
-      <Navbar />
+      <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-      <section className="profile_bannerSec" style={{padding:"60px 0px",minHeight:"40vh"}}>
+      {/* <section className="profile_bannerSec" style={{ padding: "60px 0px", minHeight: "40vh" }}>
         <div className="container">
           <h1>User Profile</h1>
-          {/* <span>Home / User Profile</span> */}
         </div>
-      </section>
+      </section> */}
       <section className="single_profileArea">
         <div className="container">
           <div className="single_Pflex">
-            <div className="single_pL">
-              <div className="single_lockOpen">
-                <img src={ProfileOne} alt="" />
-                <h5>{profile?.name}</h5>
-                <span className="single_age" style={{ textTransform: 'capitalize' }}>{profile?.age} ~ {profile?.gender}</span>
-                <span>
-                  <i class="fas fa-map-marker-alt"></i> {profile?.city}, {profile?.country}
-                </span>
-                {/* <button className="view_full">View Full Profile</button> */}
-                <div className="single_actionFlex">
 
-                  {/* <button>Like</button> */}
-                  {/* {auth ? (
-                    ? (
-                      <button
-                        onClick={() => removeFriend(profile?.id)}
-                      >
-                        Remove Friend
-                        <i className="fas fa-user-minus"></i>
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => addFriend(profile?.id)}
-                      >
-                        Add Friend
-                        <i className="fas fa-user-plus"></i>
-                      </button>
-                    )
-                  ) : (
-                    ""
-                  )} */}
-                  {/* <button>Follow</button>
-                  <button>Block</button> */}
+            <div className="single_pL_main">
+              <div className="single_pL">
+                <div className="single_lockOpen">
+                  <img src={profile?.profile_path} onError={handleMe} alt="" />
+                  <h5>{profile?.name}</h5>
+                  <span className="single_age" style={{ textTransform: 'capitalize' }}>{profile?.age} ~ {profile?.gender}</span>
+                  <span>
+                    <i class="fas fa-map-marker-alt"></i>  {profile?.country}
+                  </span>
+                  {/* <button className="view_full">View Full Profile</button> */}
+                  <div className="single_actionFlex">
+
+                  </div>
                 </div>
+                <button className="send_m" onClick={handleSendMessageClick}>
+                  Send Message<i className="fas fa-paper-plane"></i>
+                </button>
               </div>
-              {/* <h4>Who is Online</h4> */}
-              {/* <div className="online_profiles">
-              <Link to="/chats">
-                <div className="onlineInner">
-                  <img src={ProfileOne} alt="" />
-                  <i class="fas fa-circle"></i>
-                </div>
-                </Link>
-                <Link to="/chats">
-                <div className="onlineInner">
-                  <img src={ProfileThree} alt="" />
-                  <i class="fas fa-circle"></i>
-                </div>
-                </Link>
-                <Link to="/chats">
-                <div className="onlineInner">
-                  <img src={ProfileFour} alt="" />
-                  <i class="fas fa-circle"></i>
-                </div>
-                </Link>
-              </div> */}
             </div>
             <div className="single_pM">
 
+              <div className="about_me_info">
+                <h2>About me</h2>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <h3 className="text_about_me">Username</h3>
+                  </div>
+                  <div className="col-lg-6">
+                    <p>{profile?.username}</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <h3 className="text_about_me">Gender</h3>
+                  </div>
+                  <div className="col-lg-6">
+                    <p>{profile?.gender}</p>
+
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <h3 className="text_about_me">Age</h3>
+                  </div>
+                  <div className="col-lg-6">
+                    <p>{profile?.age}</p>
+
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <h3 className="text_about_me">Looking For	</h3>
+                  </div>
+                  <div className="col-lg-6">
+                    <p>{profile?.interests}</p>
+
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <h3 className="text_about_me">Country</h3>
+                  </div>
+                  <div className="col-lg-6">
+                    <p>{profile?.country}</p>
+
+                  </div>
+                </div>
+              </div>
               {auth ? (
                 // Render images if authenticated
                 <div className="single_gallerySec">
-                  <div className="gallery_innerNew">
-                    <img src={ProfileOne} alt="" />
-                  </div>
-                  <div className="gallery_innerNew">
+                  {
+                    profile?.images?.length > 0 ? profile?.images.map((item) => {
+                      return (
+                        <>
+                          <div className="gallery_innerNew">
+                            <img src={item?.url} alt="" />
+                          </div>
+                        </>
+                      )
+                    }) : ""
+                  }
+
+
+                  {/* <div className="gallery_innerNew">
                     <img src={ProfileTwo} alt="" />
                   </div>
                   <div className="gallery_innerNew ">
@@ -263,7 +287,7 @@ const SingleLProfile = () => {
                   </div>
                   <div className="gallery_innerNew">
                     <img src={ProfileFour} alt="" />
-                  </div>
+                  </div> */}
                 </div>
               ) : login && (
                 <div className="main_signUp main_login">
@@ -316,61 +340,26 @@ const SingleLProfile = () => {
 
               {!auth && (
                 <div className="single_gallerySec">
-                  <div className="gallery_inner" onClick={handleLockClick}>
-                    <div className="lock_overlay">
-                      <img src={ProfileOne} alt="" />
-                    </div>
-                    <i className="fas fa-lock"></i>
-                  </div>
-                  <div className="gallery_inner" onClick={handleLockClick}>
-                    <div className="lock_overlay">
-                      <img src={ProfileTwo} alt="" />
-                    </div>
-                    <i className="fas fa-lock"></i>
-                  </div>
-                  <div className="gallery_inner" onClick={handleLockClick}>
-                    <div className="lock_overlay">
-                      <img src={ProfileThree} alt="" />
-                    </div>
-                    <i className="fas fa-lock"></i>
-                  </div>
-                  <div className="gallery_inner" onClick={handleLockClick}>
-                    <div className="lock_overlay">
-                      <img src={ProfileFour} alt="" />
-                    </div>
-                    <i className="fas fa-lock"></i>
-                  </div>
+                  {
+                    profile?.images?.length > 0 ? profile?.images.map((item) => {
+                      return (
+                        <>
+                          <div className="gallery_inner" onClick={handleLockClick}>
+                            <div className="lock_overlay">
+                              <img src={item?.url} alt="" />
+                            </div>
+                            <i className="fas fa-lock"></i>
+                          </div>
+                        </>
+                      )
+                    }) : ""
+                  }
+
                 </div>
               )}
-              {/* <div className="gallery_inner">
-                  <div className="lock_overlay">
-                    <img src={ProfileOne} alt="" />
-                  </div>
-                  <i class="fas fa-lock"></i>
-                </div>
-                <div className="gallery_inner">
-                  <div className="lock_overlay">
-                    <img src={ProfileTwo} alt="" />
-                  </div>
-                  <i class="fas fa-lock"></i>
-                </div>
-                <div className="gallery_inner">
-                  <div className="lock_overlay">
-                    <img src={ProfileThree} alt="" />
-                  </div>
-                  <i class="fas fa-lock"></i>
-                </div>
-                <div className="gallery_inner">
-                  <div className="lock_overlay">
-                    <img src={ProfileFour} alt="" />
-                  </div>
-                  <i class="fas fa-lock"></i>
-                </div> */}
 
 
-              <button className="send_m" onClick={handleSendMessageClick}>
-                Send Message<i className="fas fa-paper-plane"></i>
-              </button>
+
               {/* <button className="send_m"><Link to={"/chats/" + profile?.id}>Send Message<i class="fas fa-paper-plane"></i> </Link></button> */}
 
               {login && (
@@ -425,136 +414,92 @@ const SingleLProfile = () => {
                 <button className="send_m"><Link to={"/chats/" + profile?.id}>Send Message<i class="fas fa-paper-plane"></i> </Link></button>
               )} */}
             </div>
-            <div className="single_pR">
-              <div className="search_formSec">
-                <h4>Quick Search</h4>
-                <p style={{margin:"0px"}}>
-                      <strong>My Gender</strong>
-                    </p>
-                <div className="search_gender">
-                  <div className="form_field mb-3 new_gender">
-                  
-                    <div class="form-check new_genderinner">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="gender_other"
-                        value="other"
-                        checked={selectedGender === "All"}
-                        onChange={HandleSelection}
-                      />
-                      <label class="form-check-label" for="gender_other">
-                        All
-                      </label>
+            <div className="single_pR_main">
+              <div className="single_pR">
+                <div className="search_formSec">
+                  <h4>Quick Search</h4>
+                  <p style={{ margin: "0px" }}>
+                    <strong>Gender</strong>
+                  </p>
+                  <div className="search_gender">
+                    <div className="form_field mb-3 new_gender">
+
+                      <div class="form-check new_genderinner">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender"
+                          id="gender_other"
+                          value="other"
+                          checked={selectedGender === "All"}
+                          onChange={HandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_other">
+                          All
+                        </label>
+                      </div>
+                      <div class="form-check new_genderinner">
+                        <input
+                          class="form-check-input "
+                          type="radio"
+                          name="gender"
+                          id="gender_male"
+                          value="male"
+                          checked={selectedGender === "male"}
+                          onChange={HandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_male">
+                          Male
+                        </label>
+                      </div>
+                      <div class="form-check new_genderinner">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender"
+                          id="gender_female"
+                          value="female"
+                          checked={selectedGender === "female"}
+                          onChange={HandleSelection}
+                        />
+                        <label class="form-check-label" for="gender_female">
+                          Female
+                        </label>
+                      </div>
+
                     </div>
-                    <div class="form-check new_genderinner">
-                      <input
-                        class="form-check-input "
-                        type="radio"
-                        name="gender"
-                        id="gender_male"
-                        value="male"
-                        checked={selectedGender === "male"}
-                        onChange={HandleSelection}
-                      />
-                      <label class="form-check-label" for="gender_male">
-                        Male
-                      </label>
-                    </div>
-                    <div class="form-check new_genderinner">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="gender_female"
-                        value="female"
-                        checked={selectedGender === "female"}
-                        onChange={HandleSelection}
-                      />
-                      <label class="form-check-label" for="gender_female">
-                        Female
-                      </label>
-                    </div>
+                  </div>
+                  <div className="form_field country mb-3 search_m new_searchview">
+                    <label>
+                      <strong>Select Location</strong>
+                    </label>
+                    <input
+                      type="search"
+                      placeholder="Enter city name"
+                      value={searchKeyword}
+                      onChange={handleSearchChange}
+                    />
+                    {isListVisible && searchKeyword && (
+                      <ul className="location_new">
+                        {cities.map((city) => (
+                          <li onClick={() => handleHideCity(city)} key={city.id}>
+                            {city.city}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
                   </div>
+                  <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}>
+                    Search<i class="fas fa-search"></i>
+                  </Link>
                 </div>
-                <div className="form_field country mb-3 search_m new_searchview">
-                  <label>
-                    <strong>Select Location</strong>
-                  </label>
-                  <input
-                    type="search"
-                    placeholder="Enter city name"
-                    value={searchKeyword}
-                    onChange={handleSearchChange}
-                  />
-                  {isListVisible && searchKeyword && (
-                    <ul className="location_new">
-                      {cities.map((city) => (
-                        <li onClick={() => handleHideCity(city)} key={city.id}>
-                          {city.city}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {/* <select id="citySelect" onChange={(e) => setSearchCountry(e.target.value)}>
-                    <option value="">Select a City/Town</option>
-                    {cities.map((city, index) => (
-                      <option key={index} value={city.city}>
-                        {city.city}
-                      </option>
-                    ))}
-                  </select> */}
-                  {/* <ReactFlagsSelect
-                    selected={searchCountry}
-                    onSelect={(code) => setSearchCountry(code)}
-                    required
-                  /> */}
-                </div>
-                <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}>
-                  Search<i class="fas fa-search"></i>
-                </Link>
               </div>
-              {/* <div className="recently_joined">
-                <h3>Members Near You</h3>
-                <div className="active_recent">
-                  <div className="active_rInner">
-                    <img src={ProfileOne} alt="" />
-                    <h4>Jessica M.</h4>
-                  </div>
-                  <div className="active_rInner">
-                    <img src={ProfileTwo} alt="" />
-                    <h4>Emily W.</h4>
-                  </div>
-                  <div className="active_rInner">
-                    <img src={ProfileThree} alt="" />
-                    <h4>Jessica M.</h4>
-                  </div>
-                  <div className="active_rInner">
-                    <img src={ProfileFour} alt="" />
-                    <h4>Emily W.</h4>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
       </section>
-      {/* <section className="most_visited">
-        <div className="container">
-          <h2 className="main_title">Most Visited Locations</h2>
-          <div className="most_visitedFlex">
-            <span>America</span>
-            <span>India</span>
-            <span>Australia</span>
-            <span>Egypt</span>
-            <span>Russia</span>
-            <span>Canada</span>
-            <span>United Kingdom</span>
-          </div>
-        </div>
-      </section> */}
+
       <Footer />
     </>
   );

@@ -26,6 +26,9 @@ const getAboutUs = () => {
 const getOldPayments = () => {
   return axios.get(API_URL + "api/user/payments");
 };
+const statusNotification = (status,data) => {
+  return axios.put(API_URL + "api/user/notifications/" + status,data);
+};
 
 const getNotification = () => {
   return axios.get(API_URL + "api/user/notifications");
@@ -119,6 +122,7 @@ const getCities = (location) => {
 }
 const DataService = {
   TrackProfile,
+  statusNotification,
   UpdateNotification,
   getNotification,
   UploadProfileImage,

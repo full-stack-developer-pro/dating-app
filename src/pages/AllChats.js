@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
+import NavbarProfile from "../common/NavbarProfile";
 const Chats = () => {
   const params = useParams();
   const ref = useRef(null);
@@ -247,13 +248,18 @@ const Chats = () => {
   };
   console.log(packages)
   useEffect(() => {
+    window.scrollTo(0, 0);
     getPlans()
   }, [])
 
 
   return (
     <>
+    <NavbarProfile/>
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
+      <div className="container">
+      <div className="show_edit_bgarea">
+
       {payments && (
         <div className="payments_popup">
           <div className="payments_inner">
@@ -443,6 +449,8 @@ const Chats = () => {
             </div>
         
         </div>
+      </div>
+      </div>
       </div>
       <Footer/>
     </>

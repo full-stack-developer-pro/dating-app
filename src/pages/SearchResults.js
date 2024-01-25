@@ -251,7 +251,7 @@ const SearchResults = () => {
                 <div className="search_main">
                   <div className="search_gender_inner">
                     <p>
-                      <strong>My Gender</strong>
+                      <strong>Gender</strong>
                     </p>
                     <div class="form-check">
                       <input
@@ -341,9 +341,9 @@ const SearchResults = () => {
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
                   users.map((item, i) => {
-                    if (item?._id !== userId) {
+                    if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
-                        (op) => op?.friends === item?._id
+                        (op) => op?.friends === item?.id
                       );
                       return (
                         <div className="active_mainProfile" key={i}>
@@ -363,14 +363,14 @@ const SearchResults = () => {
                               </span>
                               <span>
                                 <i className="fas fa-map-marker-alt"></i>
-                                {item?.city}, {item?.country}
+                               {item?.country}
                               </span>
                               <br />
                               {auth ? (
                                 isFriend ? (
                                   <button
                                     className="add_friend already_friend"
-                                    onClick={() => removeFriend(item?._id)}
+                                    onClick={() => removeFriend(item?.id)}
                                   >
                                     Remove Friend
                                     <i className="fas fa-user-minus"></i>
@@ -378,7 +378,7 @@ const SearchResults = () => {
                                 ) : (
                                   <button
                                     className="add_friend"
-                                    onClick={() => addFriend(item?._id)}
+                                    onClick={() => addFriend(item?.id)}
                                   >
                                     Add Friend
                                     <i className="fas fa-user-plus"></i>
@@ -403,7 +403,7 @@ const SearchResults = () => {
                               Send Flirt<i className="fas fa-heart"></i>
                             </button> */}
                             <button>
-                              <Link to={"/chats/" + item._id}>
+                              <Link to={"/chats/" + item.id}>
                                 Send Message<i class="fas fa-comment-alt"></i>
                               </Link>
                             </button>
