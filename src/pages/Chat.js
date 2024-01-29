@@ -11,10 +11,10 @@ import NavbarProfile from "../common/NavbarProfile";
 // import EmojiPicker from 'emoji-picker-react';
 
 const Chats = () => {
-
   const params = useParams();
   const ref = useRef(null);
-
+  const chatBoxRef = useRef(null);
+  const inputRef = useRef(null);
   const bottomRef = useRef(null);
   const [allChat, setAllChat] = useState([]);
   const [filteredData, setfilteredData] = useState([]);
@@ -22,8 +22,9 @@ const Chats = () => {
   const [mobileAdjust, setMobileAdjust] = useState(true);
   const [expandedChatMessages, setExpandedChatMessages] = useState([]);
   const [showExpandedChat, setShowExpandedChat] = useState(true);
-  const [fDisabled, setFDisabled] = useState(true);
+  const [fDisabled, setFDisabled] = useState(false);
   const [noticeCount, setNoticeCount] = useState("");
+  const [chatLoader, setChatLoader] = useState(true);
   const [message, setMessage] = useState();
   const [profile, setProfile] = useState([]);
   const [personalProfile, setPersonalProfile] = useState([]);
@@ -31,82 +32,80 @@ const Chats = () => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // const history = useHistory();
+  useEffect(() => {
+    chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [expandedChatMessages]);
+  setTimeout(() => {
+  setChatLoader(false)
+  },10000)
 
-  
   let user_id = JSON.parse(localStorage.getItem("d_user"));
   let connectionEstablished = false;
   let socket;
-  
-  const establishConnection = () => {
-    socket = new WebSocket(`ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`);
-  
-    socket.addEventListener("open", (event) => {
-      setUser();
-      connectionEstablished = true;
-    });
-  
-    socket.addEventListener("message", (event) => {
-      const data = JSON.parse(event.data);
-      console.log("Received message:", data);
-      console.log(data.msg);
-  
-      if (credits === 0) {
-        toast.error(data.message);
-        navigate("/packages");
-  
-        socket.close();
-      } else if (data.type === "new_message") {
-        getExpandedChat();
-        console.log(data);
-      }
-    });
-  
 
-    socket.addEventListener("close", (event) => {
-      console.log("WebSocket connection closed:", event);
-    });
-  };
-  
+  socket = new WebSocket(
+    `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
+  );
+
+  socket.addEventListener("open", (event) => {
+    setUser();
+    connectionEstablished = true;
+  });
+
+  socket.addEventListener("message", (event) => {
+    const data = JSON.parse(event.data);
+    console.log("Received message:", data);
+    console.log(data.msg);
+    getExpandedChat();
+    if (credits === 0) {
+      toast.error(data.message);
+      navigate("/packages");
+
+      socket.close();
+    } else if (data.type === "new_message") {
+      getExpandedChat();
+      console.log(data);
+    }
+  });
+
+  socket.addEventListener("close", (event) => {
+    console.log("WebSocket connection closed:", event);
+  });
+
   const sendMessage = async (e) => {
     e.preventDefault();
-  
+
     if (!connectionEstablished || socket.readyState !== WebSocket.OPEN) {
       console.error("WebSocket is not open. Message not sent.");
       return;
     }
-  
+    let msdg = document.getElementById("main_input").value;
     const data = {
       user_id: user_id,
       to_user_id: params.id,
-      msg: message,
+      msg: msdg,
     };
-  
     socket.send(JSON.stringify(data));
     await getExpandedChat();
-    setMessage("");
+    document.getElementById("main_input").value = "";
   };
-  
+
   const setUser = () => {
     if (!connectionEstablished) {
       console.error("WebSocket connection not yet established.");
       return;
     }
-  
+
+
     if (socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify(user_id));
     } else {
       console.error("WebSocket is not open. Unable to send user ID.");
     }
   };
-  
-  establishConnection();
-  
-
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
-      console.log(data.data.data.user)
       setPersonalProfile(data?.data?.data?.user);
     });
   };
@@ -120,7 +119,6 @@ const Chats = () => {
       setProfile(data?.data?.data?.user);
     });
   };
-  // console.log(profile)
 
   const onChangeSearch = (e) => {
     if (e.target.value) {
@@ -132,7 +130,6 @@ const Chats = () => {
       setfilteredData(allChat);
     }
   };
-
 
   const expandChat = async (id) => {
     await DataService.getSingleProfile(params.id)
@@ -159,7 +156,6 @@ const Chats = () => {
     navigate(-1);
   };
 
-
   const getExpandedChat = async () => {
     try {
       const response = await DataService.getChatBox(user_id, params.id);
@@ -178,10 +174,6 @@ const Chats = () => {
   };
   // payment
 
-
-
-
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 950) {
@@ -197,21 +189,15 @@ const Chats = () => {
     };
   }, []);
 
-
   useEffect(() => {
     getUserProfile();
     getChatList();
     // setUser();
   }, []);
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
-
 
   const getChatList = async () => {
     await DataService.getAllChats(user_id)
       .then(async (data) => {
-        console.log(data.data.data.chats)
         setAllChat(data?.data?.data?.chats);
         setfilteredData(data?.data?.data?.chats);
         ref.current.complete();
@@ -242,179 +228,207 @@ const Chats = () => {
   const getPlans = async () => {
     await DataService.getPackages().then((data) => {
       setPackages(data?.data?.data);
-
     });
   };
   useEffect(() => {
-    getPlans()
-  }, [])
-
+    getPlans();
+  }, []);
 
   return (
     <>
-    <NavbarProfile/>
+      <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-      <div className="show_edit_bgarea">
-      <div className="chat_sec">
-        <div className="chat_flex">
-          <div className="chat_flexL  hide_meY">
-            <div className="chat_topFlex">
-              <div className="chat_topL">
-                <button className="chat_back" onClick={goBack}>
-                  <i class="fas fa-long-arrow-alt-left"></i>
-                </button>
-              </div>
-              <div className="chat_topR">
-                <div className="searchBar">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search Messages here..."
-                    onChange={onChangeSearch}
-                  />
-                  <i class="fas fa-search"></i>
+        <div className="show_edit_bgarea">
+          <div className="chat_sec">
+            <div className="chat_flex">
+              <div className="chat_flexL  hide_meY">
+                <div className="chat_topFlex">
+                  <div className="chat_topL">
+                    <button className="chat_back" onClick={goBack}>
+                      <i class="fas fa-long-arrow-alt-left"></i>
+                    </button>
+                  </div>
+                  <div className="chat_topR">
+                    <div className="searchBar">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Messages here..."
+                        onChange={onChangeSearch}
+                      />
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
                 </div>
+
+                {filteredData && filteredData.length > 0 ? (
+                  filteredData.map((item, i) => {
+                    return (
+                      <>
+                        <div
+                          className="chat_outer"
+                          onClick={() => sendTo(item?._id)}
+                        >
+                          <div className="chat_outerImg">
+                            <img
+                              onError={(e) =>
+                                (e.target.src = "https://i.pravatar.cc/300")
+                              }
+                              src={
+                                item?.image
+                                  ? item?.image
+                                  : "https://i.pravatar.cc/300"
+                              }
+                              alt=""
+                            />
+                          </div>
+                          <div className="chat_outerName">
+                            <h5>
+                              {item?.name ? item?.name : "Random Company"}
+                            </h5>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })
+                ) : (
+                  <p className="text-center my-4">No Messages Found !!!</p>
+                )}
               </div>
-            </div>
 
-            {filteredData && filteredData.length > 0 ? (
-              filteredData.map((item, i) => {
-                return (
+              <div className="chat_flexR">
+              {chatLoader && 
+                <div className="chat_loader">
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              }
+                {showExpandedChat ? (
                   <>
-                    <div
-                      className="chat_outer"
-                      onClick={() => sendTo(item?._id)}
-                    >
-                      <div className="chat_outerImg">
-                        <img src="https://i.pravatar.cc/300" alt="" />
+                    <div className="chat_expHead">
+                      <div className="back_buttonT">
+                        <button className="back" onClick={goBack}>
+                          <i class="fas fa-long-arrow-alt-left"></i>
+                        </button>
                       </div>
-                      <div className="chat_outerName">
-                        <h5>{item?.name ? item?.name : "Random Company"}</h5>
-
+                      <div className="chat_expHeadL">
+                        <img
+                          onError={(e) =>
+                            (e.target.src = "https://i.pravatar.cc/300")
+                          }
+                          src={
+                            profile?.profile_path != ""
+                              ? profile?.profile_path
+                              : "https://i.pravatar.cc/300"
+                          }
+                          alt=""
+                        />
+                        {/* <img src="https://i.pravatar.cc/300" alt="" /> */}
+                      </div>
+                      <div className="chat_expHeadR">
+                        <h5>
+                          {profile.name}
+                          <i class="fas fa-circle"></i>
+                        </h5>
                       </div>
                     </div>
                   </>
-                );
-              })
-            ) : (
-              <p className="text-center my-4">No Messages Found !!!</p>
-            )}
-          </div>
-
-          <div className="chat_flexR">
-            {showExpandedChat ? (
-              <>
-                <div className="chat_expHead">
-                  <div className="back_buttonT">
-                    <button
-                      className="back"
-                      onClick={goBack}
-                    >
-                      <i class="fas fa-long-arrow-alt-left"></i>
-                    </button>
-                  </div>
-                  <div className="chat_expHeadL">
-                    <img onError={(e) => e.target.src = "https://i.pravatar.cc/300"} src={profile?.profile_path != "" ? profile?.profile_path : "https://i.pravatar.cc/300"} />
-                    {/* <img src="https://i.pravatar.cc/300" alt="" /> */}
-                  </div>
-                  <div className="chat_expHeadR">
-                    <h5>
-                      {profile.name}
-                      <i class="fas fa-circle"></i>
-                    </h5>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="chat_expHead">
-                  <div className="back_buttonT">
-                    <button
-                      className="back"
-                      onClick={(e) => setMobileAdjust(false)}
-                    >
-                      <i class="fas fa-long-arrow-alt-left"></i>
-                    </button>
-                  </div>
-                  <div className="chat_expHeadL">
-                    <img src="https://i.pravatar.cc/300" alt="" />
-                  </div>
-                  <div className="chat_expHeadR">
-                    <h5>
-                      {profile.name}
-                      <i class="fas fa-circle"></i>
-                    </h5>
-                  </div>
-                </div>
-              </>
-            )}
-            <div className="chat_expBody">
-              {showExpandedChat ? (
-                expandedChatMessages?.slice().reverse().map((item, i) => {
-                  return (
+                ) : (
+                  <>
+                    <div className="chat_expHead">
+                      <div className="back_buttonT">
+                        <button
+                          className="back"
+                          onClick={(e) => setMobileAdjust(false)}
+                        >
+                          <i class="fas fa-long-arrow-alt-left"></i>
+                        </button>
+                      </div>
+                      <div className="chat_expHeadL">
+                        <img src="https://i.pravatar.cc/300" alt="" />
+                      </div>
+                      <div className="chat_expHeadR">
+                        <h5>
+                          {profile.name}
+                          <i class="fas fa-circle"></i>
+                        </h5>
+                      </div>
+                    </div>
+                  </>
+                )}
+                <div className="chat_expBody" style={{ position: "relative" }}>
+                  {showExpandedChat ? (
+                    expandedChatMessages?.map((item, i) => {
+                      return (
+                        <>
+                          {item.sent_by === user_id ? (
+                            <>
+                              <div className="chat_right">
+                                <p className="text_message">
+                                  {item.message_text}
+                                  <i className="fas fa-check"></i>
+                                </p>
+                                <span>
+                                  <i className="far fa-clock"></i>
+                                  {moment(item?.created_at).format("lll")}
+                                </span>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="chat_left">
+                                <p className="text_message">
+                                  {item.message_text}
+                                </p>
+                                <span>
+                                  <i className="far fa-clock"></i>
+                                  {moment(item?.created_at).format("lll")}
+                                </span>
+                              </div>
+                            </>
+                          )}
+                        </>
+                      );
+                    })
+                  ) : (
                     <>
-                      {item.sent_by === user_id ? (
-                        <>
-                          <div className="chat_right">
-                            <p className="text_message">
-                              {item.message_text}
-                              <i className="fas fa-check"></i>
-                            </p>
-                            <span>
-                              <i className="far fa-clock"></i>
-                              {moment(item?.createdAt).format("lll")}
-                            </span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="chat_left">
-                            <p className="text_message">{item.message_text}</p>
-                            <span>
-                              <i className="far fa-clock"></i>
-                              {moment(item?.createdAt).format("lll")}
-                            </span>
-                          </div>
-                        </>
-                      )}
+                      <p>Select a Chat to proceed</p>
                     </>
-                  );
-                })
-              ) : (
-                <>
-                  <p>Select a Chat to proceed</p>
-                </>
-              )}
-              <div ref={bottomRef} />
-            </div>
-            <div className="chat_footer">
-              <form onSubmit={sendMessage}>
-                <div className="chat_footer_flex">
-                  {/* <EmojiPicker /> */}
-                  <input
-                    type="text"
-                    placeholder="Type Your Message ..."
-                    className="form-control"
-                    // disabled={fDisabled}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                  />
-                  <button
-                    className="main_button"
-                    // disabled={fDisabled}
-                    onClick={sendMessage}
-                  >
-                    <i class="fas fa-paper-plane"></i>
-                  </button>
+                  )}
+                  <div className="chat_footer">
+                    <form onSubmit={sendMessage}>
+                      <div className="chat_footer_flex">
+                        {/* <EmojiPicker /> */}
+                        <input
+                          type="text"
+                          placeholder="Type Your Message ..."
+                          className="form-control"
+                          autoFocus={true}
+                          ref={inputRef}
+                          // disabled={fDisabled}
+                          // value={message}
+                          id="main_input"
+                          // onChange={(e) => setMessage(e.target.value)}
+                        />
+                        <button
+                          className="main_button"
+                          // disabled={fDisabled}
+                          onClick={sendMessage}
+                        >
+                          <i class="fas fa-paper-plane"></i>
+                        </button>
+                      </div>
+                    </form>
+                    {/* <div ref={chatBoxRef} style={{height: '3px',width: '50%',backgroundColor:'red'}}></div> */}
+                  </div>
+                  <div ref={chatBoxRef}></div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
-
         </div>
-      </div>
-      </div>
       </div>
       <Footer />
     </>

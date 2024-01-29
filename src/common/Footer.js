@@ -81,7 +81,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/">
+                  <Link to="/gdpr">
                     <i class="fas fa-circle"></i>GDPR
                   </Link>
                 </li>
