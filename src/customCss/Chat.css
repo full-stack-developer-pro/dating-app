@@ -158,8 +158,23 @@ span.bonus {
 
 .chat_flexR {
     width: 70%;
+    position: relative;
 }
-
+.chat_loader{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chat_loader .spinner-border{
+    height: 3rem;
+    width: 3rem;
+}
 .chat_outer {
     display: flex;
     justify-content: space-between;
@@ -242,8 +257,8 @@ span.bonus {
 
 .chat_expBody {
     padding: 20px 50px;
-    max-height: 78vh;
-    min-height: 78vh;
+    max-height: 90vh;
+    min-height: 90vh;
     overflow-y: scroll;
     background-image: url(../images/abstractTwo.jpg);
     background-position: center;
@@ -254,7 +269,13 @@ span.bonus {
 .chat_expBody::-webkit-scrollbar {
     width: 7px;
 }
-
+.chat_error{
+    text-align: center;
+    font-size: 22px;
+}
+.chat_error i{
+    margin-right: 7px;
+}
 .chat_expBody::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;

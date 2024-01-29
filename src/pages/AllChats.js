@@ -16,7 +16,7 @@ const Chats = () => {
   const [expandedChat, setExpandedChat] = useState();
   const [mobileAdjust, setMobileAdjust] = useState(true);
   const [expandedChatMessages, setExpandedChatMessages] = useState([]);
-  const [showExpandedChat, setShowExpandedChat] = useState(true);
+  const [showExpandedChat, setShowExpandedChat] = useState(false);
   const [fDisabled, setFDisabled] = useState(true);
   const [noticeCount, setNoticeCount] = useState("");
   const [message, setMessage] = useState();
@@ -25,20 +25,22 @@ const Chats = () => {
   const [payments, setPayments] = useState(false);
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   // const history = useHistory();
   let user_id = JSON.parse(localStorage.getItem("d_user"));
-  
-  const socket = new WebSocket(`ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`);
+
+  const socket = new WebSocket(
+    `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
+  );
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
-      console.log(data.data.data.user)
+      console.log(data.data.data.user);
       setPersonalProfile(data?.data?.data?.user);
     });
   };
   let credits = personalProfile?.credits;
-    console.log(credits);
+  console.log(credits);
   useEffect(() => {
     UserProfile();
   }, []);
@@ -71,7 +73,7 @@ const Chats = () => {
         setMobileAdjust(true);
         setExpandedChat(data?.data?.data);
         setExpandedChatMessages(data?.data?.data?.Messages.reverse());
-        console.log(data?.data?.data?.Messages)
+        console.log(data?.data?.data?.Messages);
         setShowExpandedChat(true);
         setFDisabled(false);
       })
@@ -99,7 +101,7 @@ const Chats = () => {
     const data = {};
     // data.userId = user_id;
     data.amount = price;
-  
+
     DataService.GeneratePayment(data).then(
       (response) => {
         if (response.data.status === "Success") {
@@ -113,9 +115,7 @@ const Chats = () => {
       },
       (error) => {
         const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.msg) ||
+          (error.response && error.response.data && error.response.data.msg) ||
           error.message ||
           error.toString();
         setLoading(false);
@@ -142,21 +142,19 @@ const Chats = () => {
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
     console.log("Received message:", data);
-    console.log(data.msg)
+    console.log(data.msg);
     if (credits === 0) {
       toast.error(data.message);
       setPayments(true);
-      setTimeout(() => {
-      }, 2000);
-    }else if (data.type === "new_message") {
+      setTimeout(() => {}, 2000);
+    } else if (data.type === "new_message") {
       setTimeout(() => {
         getExpandedChat();
       }, 1000);
       console.log(data);
     }
   });
-  
-  
+
   const sendMessage = (e) => {
     e.preventDefault();
     const data = {
@@ -164,7 +162,6 @@ const Chats = () => {
       to_user_id: params.id,
       msg: message,
     };
-    
 
     if (socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify(data));
@@ -212,7 +209,7 @@ const Chats = () => {
   const getChatList = async () => {
     await DataService.getAllChats(user_id)
       .then(async (data) => {
-        console.log(data.data.data.chats)
+        console.log(data.data.data.chats);
         setAllChat(data?.data?.data?.chats);
         setfilteredData(data?.data?.data?.chats);
         ref.current.complete();
@@ -243,216 +240,185 @@ const Chats = () => {
   const getPlans = async () => {
     await DataService.getPackages().then((data) => {
       setPackages(data?.data?.data);
-
     });
   };
-  console.log(packages)
+  console.log(packages);
   useEffect(() => {
     window.scrollTo(0, 0);
-    getPlans()
-  }, [])
-
+    getPlans();
+  }, []);
 
   return (
     <>
-    <NavbarProfile/>
+      <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-      <div className="show_edit_bgarea">
-
-      {payments && (
-        <div className="payments_popup">
-          <div className="payments_inner">
-            <div className="container">
-              <div className="payments_flexOne">
-                <div className="payment_bg">
-                  {
-                    packages?.length > 0 ? packages?.map((item) => {
-                      return (
-                        <>
-                          <div className="payments_plan">
-                            <h2>{item.credits}</h2>
-                            <span className="bonus">{item.bonus}</span>
-                            <h4>credits</h4>
-                            <hr />
-                            <h3>Just For</h3>
-                            <p>
-                              <span>{item.currency} {item.price}</span>
-                            </p>
-                            <hr />
-                            <button className="main_button" onClick={() => handlePayment(item.price)}>Purchase Now</button>
-                          </div>
-                        </>
-                      )
-                    }) : ""
-                  }
-
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      <div className="chat_sec">
-        <div className="chat_flex">
-          <div className="chat_flexL">
-            <div className="chat_topFlex">
-              <div className="chat_topL">
-                <button className="chat_back" onClick={goBack}>
-                  <i class="fas fa-long-arrow-alt-left"></i>
-                </button>
-              </div>
-              <div className="chat_topR">
-                <div className="searchBar">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search Messages here..."
-                    onChange={onChangeSearch}
-                  />
-                  <i class="fas fa-search"></i>
+        <div className="show_edit_bgarea">
+          {payments && (
+            <div className="payments_popup">
+              <div className="payments_inner">
+                <div className="container">
+                  <div className="payments_flexOne">
+                    <div className="payment_bg">
+                      {packages?.length > 0
+                        ? packages?.map((item) => {
+                            return (
+                              <>
+                                <div className="payments_plan">
+                                  <h2>{item.credits}</h2>
+                                  <span className="bonus">{item.bonus}</span>
+                                  <h4>credits</h4>
+                                  <hr />
+                                  <h3>Just For</h3>
+                                  <p>
+                                    <span>
+                                      {item.currency} {item.price}
+                                    </span>
+                                  </p>
+                                  <hr />
+                                  <button
+                                    className="main_button"
+                                    onClick={() => handlePayment(item.price)}
+                                  >
+                                    Purchase Now
+                                  </button>
+                                </div>
+                              </>
+                            );
+                          })
+                        : ""}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            {filteredData && filteredData.length > 0 ? (
-              filteredData.map((item, i) => {
-                return (
-                  <>
-                    <div
-                      className="chat_outer"
-                      onClick={() => navigate("/chats/"+item?._id)}
-                    >
-                      <div className="chat_outerImg">
-                        <img src="https://i.pravatar.cc/300" alt="" />
-                      </div>
-                      <div className="chat_outerName">
-                        <h5>{item?.name ? item?.name : "Random Company"}</h5>
-              
-                      </div>
-                    </div>
-                  </>
-                );
-              })
-            ) : (
-              <p className="text-center my-4">No Messages Found !!!</p>
-            )}
-          </div>
-          
-            <div className="chat_flexR hide_meY">
-              {showExpandedChat ? (
-                <>
-                  <div className="chat_expHead">
-                    <div className="back_buttonT">
-                      <button
-                        className="back"
-                        onClick={(e) => setMobileAdjust(false)}
-                      >
-                        <i class="fas fa-long-arrow-alt-left"></i>
-                      </button>
-                    </div>
-                    <div className="chat_expHeadL">
-                      <img src="https://i.pravatar.cc/300" alt="" />
-                    </div>
-                    <div className="chat_expHeadR">
-                      <h5>
-                        {profile.name}
-                        <i class="fas fa-circle"></i>
-                      </h5>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="chat_expHead">
-                    <div className="back_buttonT">
-                      <button
-                        className="back"
-                        onClick={(e) => setMobileAdjust(false)}
-                      >
-                        <i class="fas fa-long-arrow-alt-left"></i>
-                      </button>
-                    </div>
-                    <div className="chat_expHeadL">
-                      <img src="https://i.pravatar.cc/300" alt="" />
-                    </div>
-                    <div className="chat_expHeadR">
-                      <h5>
-                        {profile.name}
-                        <i class="fas fa-circle"></i>
-                      </h5>
-                    </div>
-                  </div>
-                </>
-              )}
-              <div className="chat_expBody">
-                {showExpandedChat ? (
-                  expandedChatMessages ?.slice().reverse().map((item, i) => {
-                      return (
-                        <>
-                          {item.sent_by === user_id ? (
-                            <>
-                              <div className="chat_right">
-                                <p className="text_message">
-                                  {item.message_text}
-                                  <i className="fas fa-check"></i>
-                                </p>
-                                <span>
-                                  <i className="far fa-clock"></i>
-                                  {moment(item?.createdAt).format("lll")}
-                                </span>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="chat_left">
-                                <p className="text_message">{item.message_text}</p>
-                                <span>
-                                  <i className="far fa-clock"></i>
-                                  {moment(item?.createdAt).format("lll")}
-                                </span>
-                              </div>
-                            </>
-                          )}
-                        </>
-                      );
-                    })
-                ) : (
-                  <>
-                    <p>Select a Chat to proceed</p>
-                  </>
-                )}
-                <div ref={bottomRef} />
-              </div>
-              <div className="chat_footer">
-                <form onSubmit={sendMessage}>
-                  <div className="chat_footer_flex">
-                  {/* <EmojiPicker /> */}
-                    <input
-                      type="text"
-                      placeholder="Type Your Message ..."
-                      className="form-control"
-                      // disabled={fDisabled}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                    />
-                    <button
-                      className="main_button"
-                      // disabled={fDisabled}
-                      onClick={sendMessage}
-                    >
-                      <i class="fas fa-paper-plane"></i>
+          )}
+          <div className="chat_sec">
+            <div className="chat_flex">
+              <div className="chat_flexL">
+                <div className="chat_topFlex">
+                  <div className="chat_topL">
+                    <button className="chat_back" onClick={goBack}>
+                      <i class="fas fa-long-arrow-alt-left"></i>
                     </button>
                   </div>
-                </form>
+                  <div className="chat_topR">
+                    <div className="searchBar">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Messages here..."
+                        onChange={onChangeSearch}
+                      />
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                </div>
+                {filteredData && filteredData.length > 0 ? (
+                  filteredData.map((item, i) => {
+                    return (
+                      <>
+                        <div
+                          className="chat_outer"
+                          onClick={() => navigate("/chats/" + item?._id)}
+                        >
+                          <div className="chat_outerImg">
+                            <img src="https://i.pravatar.cc/300" alt="" />
+                          </div>
+                          <div className="chat_outerName">
+                            <h5>
+                              {item?.name ? item?.name : "Random Company"}
+                            </h5>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })
+                ) : (
+                  <p className="text-center my-4">No Messages Found !!!</p>
+                )}
+              </div>
+
+              <div className="chat_flexR hide_meY">
+                {showExpandedChat ? (
+                  <>
+                    <div className="chat_expHead">
+                      <div className="back_buttonT">
+                        <button
+                          className="back"
+                          onClick={(e) => setMobileAdjust(false)}
+                        >
+                          <i class="fas fa-long-arrow-alt-left"></i>
+                        </button>
+                      </div>
+                      <div className="chat_expHeadL">
+                        <img src="https://i.pravatar.cc/300" alt="" />
+                      </div>
+                      <div className="chat_expHeadR">
+                        <h5>
+                          {profile.name}
+                          <i class="fas fa-circle"></i>
+                        </h5>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="chat_expHead">
+                      <div className="back_buttonT">
+                        <button
+                          className="back"
+                          onClick={(e) => setMobileAdjust(false)}
+                        >
+                          <i class="fas fa-long-arrow-alt-left"></i>
+                        </button>
+                      </div>
+                      <div className="chat_expHeadL">
+                        {/* <img src="https://i.pravatar.cc/300" alt="" /> */}
+                      </div>
+                      <div className="chat_expHeadR">
+                        <h5>
+                          {/* {profile.name}
+                          <i class="fas fa-circle"></i> */}
+                        </h5>
+                      </div>
+                    </div>
+                  </>
+                )}
+                <div className="chat_expBody">
+                  <p className="chat_error">
+                    <i class="fas fa-hand-point-left"></i>Select a Chat to
+                    proceed
+                  </p>
+                </div>
+                <div className="chat_footer">
+                  <form onSubmit={sendMessage}>
+                    <div className="chat_footer_flex">
+                      {/* <EmojiPicker /> */}
+                      <input
+                        type="text"
+                        placeholder="Type Your Message ..."
+                        className="form-control"
+                        disabled={fDisabled}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                      />
+                      <button
+                        className="main_button"
+                        // disabled={fDisabled}
+                        onClick={sendMessage}
+                      >
+                        <i class="fas fa-paper-plane"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
-        
+          </div>
         </div>
       </div>
-      </div>
-      </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

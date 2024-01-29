@@ -22,6 +22,7 @@ import Packages from "./pages/Packages";
 import UploadGallery from "./pages/UploadGallery";
 import MyFriends from "./pages/MyFriends";
 import ProfileMain from "./pages/ProfileMain";
+import GDPR from "./pages/GDPR";
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/single-blog/:id" element={<SingleBlog />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/gdpr" element={<GDPR />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/search-results" element={<SearchResults />} />
         {/* <Route path="/search-results/:gender" element={<SearchResults />} /> */}
