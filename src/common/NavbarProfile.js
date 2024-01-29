@@ -133,14 +133,9 @@ const NavbarProfile = () => {
             }
         );
     };
-
-
-
-
     useEffect(() => {
         const currentPath = location.pathname;
         const isCurrentPage = (path) => currentPath.startsWith(path);
-
         if (isCurrentPage('/my-profile')) {
             setActiveSection('profile');
         } else if (isCurrentPage('/upload-gallery')) {
@@ -154,12 +149,11 @@ const NavbarProfile = () => {
         } else if (isCurrentPage('/edit-profile')) {
             setActiveSection('edit');
         }
+
     }, [location.pathname]);
 
     const handleButtonClick = (section) => {
-
         setActiveSection(section);
-
         switch (section) {
             case 'profile':
                 navigate("/my-profile")
@@ -185,11 +179,11 @@ const NavbarProfile = () => {
         }
     };
 
-
+  
     return (
         <>
             {payments && (
-                <div className="payments_popup">
+                <div className="payments_popup" >
                     <div className="payments_inner">
                         <div className="container">
                             <div className="payments_flexOne">

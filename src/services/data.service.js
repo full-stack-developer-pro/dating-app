@@ -45,7 +45,9 @@ const UpdateNotification = (data) => {
 const TrackProfile = (id) => {
   return axios.post(API_URL + "api/user/profile-view/" + id);
 };
-
+const helpdesk = (data) => {
+  return axios.post(API_URL + "api/helpdesk" ,data);
+};
 const getContactUs = () => {
   return axios.get(API_URL + "api/admin/getcontactAs");
 };
@@ -141,6 +143,7 @@ const getCities = (location) => {
   return axios.get(API_URL + "api/getCountryCities/GB?q=" + location);
 };
 const DataService = {
+  helpdesk,
   TrackProfile,
   statusNotification,
   UpdateNotification,

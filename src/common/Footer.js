@@ -8,6 +8,7 @@ const Footer = () => {
   const [contactData, setContactData] = useState([]);
   const [socialLinks, setSocialLinks] = useState([]);
 
+  const currentYear = new Date().getFullYear();
   // const getContactData = async () => {
   //   await DataService.getContactUs().then((data) => {
   //     const catData = data.data.data[0];
@@ -89,18 +90,18 @@ const Footer = () => {
             <div className="footer_FR">
               <h5>Support</h5>
               <ul>
-                <li>
+                {/* <li>
                   <Link to="/contact-us">
                     <i class="fas fa-circle"></i>Contact
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/">
                     <i class="fas fa-circle"></i>Frequently Asked Questions
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact-us">
+                  <Link to="/help-desk">
                     <i class="fas fa-circle"></i>Helpdesk
                   </Link>
                 </li>
@@ -114,8 +115,7 @@ const Footer = () => {
             <p>
               Disclaimer: This website contains adult material, all members and
               persons appearing on this site have contractually represented to
-              us that they are 18 years of age or older. Copyright © 1996-2023
-              Ind Z Gib Ltd. All rights reserved.{" "}
+              us that they are 18 years of age or older. Copyright © 1996-{currentYear} Ind Z Gib Ltd. All rights reserved.{" "}
             </p>
           </div>
         </div>

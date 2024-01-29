@@ -23,13 +23,14 @@ import UploadGallery from "./pages/UploadGallery";
 import MyFriends from "./pages/MyFriends";
 import ProfileMain from "./pages/ProfileMain";
 import GDPR from "./pages/GDPR";
+import HelpDesk from "./pages/HelpDesk";
 
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/single-profile/:id" element={<SingleLProfile />} />
         <Route path="/about-us" element={<AboutUs />} />
@@ -43,16 +44,16 @@ export default function App() {
         {/* <Route path="/search-results/:gender" element={<SearchResults />} /> */}
         {/* <Route path="/search-results/:location" element={<SearchResults />} /> */}
         <Route element={<RestrictedAccess />}>
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/chats/:id" element={<Chats />} />
-        <Route path="/chats" element={<AllChats />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/thank-you" element={<Payments />} />
-        <Route path="/packages" element={<Packages />} />
-        <Route path="/upload-gallery" element={<UploadGallery/>} />
-        <Route path="/my-friends" element={<MyFriends/>} />
-        <Route path="/my-profile" element={<ProfileMain/>} />
-
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/chats/:id" element={<Chats />} />
+          <Route path="/chats" element={<AllChats />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/thank-you" element={<Payments />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/upload-gallery" element={<UploadGallery />} />
+          <Route path="/my-friends" element={<MyFriends />} />
+          <Route path="/my-profile" element={<ProfileMain />} />
+          <Route path="/help-desk" element={<HelpDesk />} />
         </Route>
       </Routes>
     </BrowserRouter>

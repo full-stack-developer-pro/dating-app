@@ -188,6 +188,7 @@ span.bonus {
 
 .chat_outerImg {
     width: 20%;
+    margin-right: 15px;
 }
 
 .chat_outer img {
@@ -447,6 +448,9 @@ span.bonus {
 
 
 @media screen and (max-width: 950px) {
+    .chat_outerImg {
+        margin-right: 5px;
+    }
     .payments_flexOne {
         overflow-x: scroll;
     }
