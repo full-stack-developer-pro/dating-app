@@ -378,6 +378,7 @@ background: none;}
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .verified_badge {

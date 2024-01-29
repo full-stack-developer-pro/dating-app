@@ -296,13 +296,6 @@ const EditProfile = () => {
     <>
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-      {/* <Navbar />
-      <section className="profile_bannerSec">
-        <div className="container">
-          <h1>My Profile</h1>
-          <span>Home / Profile</span>
-        </div>
-      </section> */}
    <div className="container">
       <div className="show_edit_bgarea edit_profile_area">
 

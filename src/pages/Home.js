@@ -511,6 +511,10 @@ const Home = () => {
   const handleImage = (e) => {
     e.target.src = ProfileAvatar
   }
+  const handleBottom = (e) => {
+    e.target.src = ProfileAvatar
+  }
+
 
   return (
     <>
@@ -1579,15 +1583,14 @@ const Home = () => {
             <div className="about_flexL">
               {secondLastBanner?.images?.length > 0 ? (
                 <img
+                onError={handleBottom}
                   src={
                     "http://api.digitalmarketingcoursesinchandigarh.in/" +
                     secondLastBanner?.images[0]?.path
                   }
                   alt=""
                 />
-              ) : (
-                <img src={DatingGirl} alt="" />
-              )}
+              ) : ""}
             </div>
           </div>
 

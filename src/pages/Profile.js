@@ -11,12 +11,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { useLocation, useNavigate } from 'react-router-dom';
 // import { useParams } from "react-router-dom";
 import MultiRangeSlider from "multi-range-slider-react";
-
 import { Link } from "react-router-dom";
-
 import AuthService from "../services/auth.service";
 import NavbarProfile from "../common/NavbarProfile";
-
 import ProfileAvatar from "../images/profile-avatar.png"
 
 
@@ -195,20 +192,14 @@ const Profile = () => {
   const goBack = () => {
     navigate(-1);
   };
-  // search area 
-
-
-
   const handleImagenew = (e) => {
     e.target.src = ProfileAvatar
   }
-
   return (
     <>
       {/* <Navbar /> */}
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-
           <section className="active_profilesSec height_search">
             <div className="container">
               <div className="active_secFlex">
