@@ -1,10 +1,12 @@
 .ntificationone {
     width: 20%;
 }
+
 .payment_bg_notification {
     max-height: 35vh;
     overflow-y: scroll;
 }
+
 .notification_heading {
     padding: 15px 20px;
     background: #fff;
@@ -25,33 +27,37 @@
 .notification_text {
     width: 80%;
 }
+
 /* scroll bar */
-.no-scroll{
+.no-scroll {
     overflow-y: auto !important;
-  }
-  .no-scroll::-webkit-scrollbar {
+}
+
+.no-scroll::-webkit-scrollbar {
     width: 0px;
-  }
-  .payment_bg_notification::-webkit-scrollbar {
+}
+
+.payment_bg_notification::-webkit-scrollbar {
     width: 5px;
-  }
-  
-  /* Track */
-  .payment_bg_notification::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
+}
+
+/* Track */
+.payment_bg_notification::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
-  }
-   
-  /* Handle */
-  .payment_bg_notification::-webkit-scrollbar-thumb {
-    background: #EF48B5; 
+}
+
+/* Handle */
+.payment_bg_notification::-webkit-scrollbar-thumb {
+    background: #EF48B5;
     border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  .payment_bg_notification::-webkit-scrollbar-thumb:hover {
-    background: #EF48B5; 
-  }
+}
+
+/* Handle on hover */
+.payment_bg_notification::-webkit-scrollbar-thumb:hover {
+    background: #EF48B5;
+}
+
 /* scroll bar */
 
 .mainnotification_text {
@@ -61,12 +67,14 @@
     background: #F6F6F6;
     cursor: pointer;
 }
+
 .notification_text p {
     font-size: 16px;
     margin: 0px;
     font-weight: 600;
     color: #000;
 }
+
 .notification_text h2 {
     color: #CBCBCB;
     font-size: 14px;
@@ -160,21 +168,24 @@ span.bonus {
     width: 70%;
     position: relative;
 }
-.chat_loader{
+
+.chat_loader {
     height: 100%;
     width: 100%;
     position: absolute;
-    background: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(3px);
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.chat_loader .spinner-border{
+
+.chat_loader .spinner-border {
     height: 3rem;
     width: 3rem;
 }
+
 .chat_outer {
     display: flex;
     justify-content: space-between;
@@ -196,6 +207,7 @@ span.bonus {
     width: 50px;
     border-radius: 50%;
     box-shadow: 3px 5px 10px -5px rgba(0, 0, 0, 0.8);
+    object-fit: cover;
 }
 
 .chat_outerName {
@@ -218,6 +230,7 @@ span.bonus {
     margin: 0;
     color: #02224e;
     font-size: 18px;
+    text-transform: capitalize;
 }
 
 .chat_outerName p {
@@ -247,6 +260,7 @@ span.bonus {
     margin: 0;
     color: #02224e;
     font-size: 18px;
+    text-transform: capitalize;
 }
 
 .chat_expHeadR h5 i {
@@ -270,13 +284,16 @@ span.bonus {
 .chat_expBody::-webkit-scrollbar {
     width: 7px;
 }
-.chat_error{
+
+.chat_error {
     text-align: center;
     font-size: 22px;
 }
-.chat_error i{
+
+.chat_error i {
     margin-right: 7px;
 }
+
 .chat_expBody::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
@@ -388,10 +405,12 @@ span.bonus {
 .back_buttonT {
     display: none;
 }
+
 .profile_notification {
     width: 100% !important;
     right: 95% !important;
 }
+
 .notification_main {
     width: 30%;
     position: absolute;
@@ -451,28 +470,35 @@ span.bonus {
     .chat_outerImg {
         margin-right: 5px;
     }
+
     .payments_flexOne {
         overflow-x: scroll;
     }
+
     .payments_flexOne .payments_plan {
         width: 100%;
     }
+
     .payments_inner {
         max-width: 85%;
         padding: 40px 0px;
     }
+
     .notification_main {
         width: 86%;
         right: 6%;
         top: 67px;
     }
-    .chat_flex{
+
+    .chat_flex {
         flex-direction: column;
     }
+
     .chat_flexL {
         width: 100%;
     }
-    .hide_meY{
+
+    .hide_meY {
         display: none;
     }
 
@@ -545,9 +571,11 @@ span.bonus {
     .chat_expHeadR h5 {
         font-size: 16px;
     }
+
     .searchBar input {
         font-size: 12px;
     }
+
     .searchBar i {
         bottom: 30%;
     }

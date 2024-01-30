@@ -7,6 +7,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
 import NavbarProfile from "../common/NavbarProfile";
+import ProfileAvatar from "../images/profile-avatar.png";
 const Chats = () => {
   const params = useParams();
   const ref = useRef(null);
@@ -323,7 +324,11 @@ const Chats = () => {
                           onClick={() => navigate("/chats/" + item?._id)}
                         >
                           <div className="chat_outerImg">
-                            <img src="https://i.pravatar.cc/300" alt="" />
+                            <img
+                              onError={(e) => (e.target.src = ProfileAvatar)}
+                              src={item?.image ? item?.image : ProfileAvatar}
+                              alt=""
+                            />
                           </div>
                           <div className="chat_outerName">
                             <h5>
@@ -373,9 +378,7 @@ const Chats = () => {
                           <i class="fas fa-long-arrow-alt-left"></i>
                         </button>
                       </div>
-                      <div className="chat_expHeadL">
-                        {/* <img src="https://i.pravatar.cc/300" alt="" /> */}
-                      </div>
+                      <div className="chat_expHeadL"></div>
                       <div className="chat_expHeadR">
                         <h5>
                           {/* {profile.name}
