@@ -25,9 +25,9 @@ const Profile = () => {
 
   // search filters 
   const navigate = useNavigate()
-  const [users, setUsers] = useState([]);
+  const [usersData, setUsers] = useState([]);
   const auth = AuthService.getCurrentUser();
-  const [gender, setGender] = useState("male");
+  const [gender, setGender] = useState("");
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ const Profile = () => {
     setIsListVisible(true); // Show the list when the input changes
   };
 
-  const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
+  const [ageGroup, setAgeGroup] = useState("");
 
   const handleSliderChange = ({ minValue, maxValue }) => {
     setAgeGroup({ minValue, maxValue });
@@ -97,11 +97,13 @@ const Profile = () => {
     await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.minValue).then(
       (data) => {
         setUsers(data?.data?.data.users);
+        console.log(data?.data?.data.users)
         ref.current.complete();
+        toast.success("Data Searched");
       },
       (error) => {
         const resMessage =
-          (error.response && error.response.data && error.response.addFriend.msg) ||
+          (error.response && error.response.data && error.response.data.msg) ||
           error.message ||
           error.toString();
         setLoading(false);
@@ -113,8 +115,8 @@ const Profile = () => {
 
   useEffect(() => {
     searchData()
-  }, [])
-
+  }, []);
+  
   useEffect(() => {
     ref.current.continuousStart();
     if (userId) {
@@ -204,192 +206,194 @@ const Profile = () => {
       {/* <Navbar /> */}
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-          <section className="active_profilesSec height_search">
-            <div className="container">
-              <div className="active_secFlex">
-                <div className="activeM" style={{ flex: "1" }}>
-                  <div className="search_formSec">
-                    <h4>Quick Search</h4>
-                    <div className="search_main">
-                      <div className="search_gender_inner">
-                        <p>
-                          <strong>Gender</strong>
-                        </p>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="gender_male"
-                            value="male"
-                            checked={gender === "male"}
-                            onChange={handleGenderChange}
-                          />
-                          <label class="form-check-label" for="gender_male">
-                            Male
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="gender_female"
-                            value="female"
-                            checked={gender === "female"}
-                            onChange={handleGenderChange}
-                          />
-                          <label class="form-check-label" for="gender_female">
-                            Female
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="gender_other"
-                            value="All"
-                            checked={gender === "All"}
-                            onChange={handleGenderChange}
-                          />
-                          <label class="form-check-label" for="gender_other">
-                            Other
-                          </label>
-                        </div>
-                      </div>
-
-                      <div className="form_field country mb-3 search_m">
-                        <label>
-                          <strong>Select Location</strong>
-                        </label>
-                        <input
-                          type="search"
-                          placeholder="Enter city name"
-                          value={searchKeyword}
-                          onChange={handleSearchChange}
-                        />
-                        {isListVisible && searchKeyword && (
-                          <ul className="location_new">
-                            {cities.map((city) => (
-                              <li onClick={() => handleHideCity(city)} key={city.id}>
-                                {city.city}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-
-                      </div>
-                      <div className="range_Age">
-                        <label>
-                          <strong>Select Age</strong>
-                        </label>
-                        <MultiRangeSlider
-                          min={18}
-                          max={100}
-                          minValue={ageGroup.minValue}
-                          maxValue={ageGroup.maxValue}
-                          onChange={handleSliderChange}
-                        />
-                      </div>
-                      <div className="button_search">
-                        <button className="search_submit" onClick={searchData}>
-                          Search<i class="fas fa-search"></i>
-                        </button>
-                      </div>
+      <section className="active_profilesSec height_search">
+        <div className="container">
+          <div className="active_secFlex">
+            <div className="activeM" style={{ flex: "1" }}>
+              <div className="search_formSec">
+                <h4>Quick Search</h4>
+                <div className="search_main">
+                  <div className="search_gender_inner">
+                    <p>
+                      <strong>Gender</strong>
+                    </p>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_male"
+                        value="male"
+                        checked={gender === "male"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_male">
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_female"
+                        value="female"
+                        checked={gender === "female"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_female">
+                        Female
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="gender_other"
+                        value="All"
+                        checked={gender === "All"}
+                        onChange={handleGenderChange}
+                      />
+                      <label class="form-check-label" for="gender_other">
+                        Other
+                      </label>
                     </div>
                   </div>
 
-                  <div className="active_mainArea">
-                    {users && users.length > 0 ? (
-                      users.map((item, i) => {
-                        if (item?.id !== userId) {
-                          const isFriend = profile?.friends?.some(
-                            (op) => op?.id === item?.id
-                          );
-                          return (
-                            <div className="active_mainProfile" key={i}>
-                              <div className="active_mainFlex">
-                                <div className="active_mainL">
-                                <Link to={"/single-profile/" + item.id}>
-
-                                  <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
-                                  </Link>
-                                </div>
-                                <div className="active_mainR">
-                                  <h4>{item?.name}</h4>
-                                  <span className="active_age">
-                                    {item?.age}~
-                                    {item?.gender === "male"
-                                      ? "M"
-                                      : item?.gender === "female"
-                                        ? "F"
-                                        : "Other"}
-                                  </span>
-                                  <span>
-                                    <i className="fas fa-map-marker-alt"></i>
-                                    {item?.country}
-                                  </span>
-                                  <br />
-                                  {auth ? (
-                                    isFriend ? (
-                                      <button
-                                        className="add_friend already_friend"
-                                        onClick={() => removeFriend(item?.id)}
-                                      >
-                                        Remove Friend
-                                        <i className="fas fa-user-minus"></i>
-                                      </button>
-                                    ) : (
-                                      <button
-                                        className="add_friend"
-                                        onClick={() => addNewFriend(item?.id)}
-                                      >
-                                        Add Friend
-                                        <i className="fas fa-user-plus"></i>
-                                      </button>
-                                    )
-                                  ) : (
-                                    ""
-                                  )}
-                                  <p>{item?.description}</p>
-                                </div>
-                              </div>
-                              <div className="active_actionSec">
-                                <button onClick={() => handleNotificationTwo(item.id)}>
-                                  <Link to={"/single-profile/" + item.id}>
-                                    View<i className="fas fa-eye"></i>
-                                  </Link>
-                                </button>
-
-                                <button>
-                                  <Link to={"/chats/" + item.id}>
-                                    Send Message<i class="fas fa-comment-alt"></i>
-                                  </Link>
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })
-                    ) : (
-                      <p>No Data Found</p>
+                  <div className="form_field country mb-3 search_m">
+                    <label>
+                      <strong>Select Location</strong>
+                    </label>
+                    <input
+                      type="search"
+                      placeholder="Enter city name"
+                      value={searchKeyword}
+                      onChange={handleSearchChange}
+                    />
+                    {isListVisible && searchKeyword && (
+                      <ul className="location_new">
+                        {cities.map((city) => (
+                          <li onClick={() => handleHideCity(city)} key={city.id}>
+                            {city.city}
+                          </li>
+                        ))}
+                      </ul>
                     )}
-                  </div>
-                  {!auth &&
-                    <button
-                      className="main_button my-4"
-                      onClick={() => (window.location.href = "/#signup")}
-                    >
-                      Create Account<i class="fas fa-long-arrow-alt-right"></i>
-                    </button>
-                  }
 
+                  </div>
+                  <div className="range_Age">
+                    <label>
+                      <strong>Select Age</strong>
+                    </label>
+                    <MultiRangeSlider
+                      min={18}
+                      max={100}
+                      minValue={ageGroup.minValue}
+                      maxValue={ageGroup.maxValue}
+                      onChange={handleSliderChange}
+                    />
+                  </div>
+                  <div className="button_search">
+                    <button className="search_submit" onClick={searchData}>
+                      Search<i class="fas fa-search"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
+
+              <div className="active_mainArea">
+                {usersData && usersData.length > 0 ? (
+                  usersData.map((item, i) => {
+                    if (item?.id !== userId) {
+                      const isFriend = profile?.friends?.some(
+                        (op) => op?.id === item?.id
+                      );
+                      return (
+                        <>
+                        <div className="active_mainProfile" key={i}>
+                          <div className="active_mainFlex">
+                            <div className="active_mainL">
+                              <Link to={"/single-profile/" + item.id}>
+
+                                <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
+                              </Link>
+                            </div>
+                            <div className="active_mainR">
+                              <h4>{item?.name}</h4>
+                              <span className="active_age">
+                                {item?.age}~
+                                {item?.gender === "male"
+                                  ? "M"
+                                  : item?.gender === "female"
+                                    ? "F"
+                                    : "Other"}
+                              </span>
+                              <span>
+                                <i className="fas fa-map-marker-alt"></i>
+                               {item?.country}
+                              </span>
+                              <br />
+                              {auth ? (
+                                isFriend ? (
+                                  <button
+                                    className="add_friend already_friend"
+                                    onClick={() => removeFriend(item?.id)}
+                                  >
+                                    Remove Friend
+                                    <i className="fas fa-user-minus"></i>
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="add_friend"
+                                    onClick={() => addNewFriend(item?.id)}
+                                  >
+                                    Add Friend
+                                    <i className="fas fa-user-plus"></i>
+                                  </button>
+                                )
+                              ) : (
+                                ""
+                              )}
+                              <p>{item?.description}</p>
+                            </div>
+                          </div>
+                          <div className="active_actionSec">
+                            <button onClick={() => handleNotificationTwo(item.id)}>
+                              <Link to={"/single-profile/" + item.id}>
+                                View<i className="fas fa-eye"></i>
+                              </Link>
+                            </button>
+
+                            <button>
+                              <Link to={"/chats/" + item.id}>
+                                Send Message<i class="fas fa-comment-alt"></i>
+                              </Link>
+                            </button>
+                          </div>
+                        </div>
+                        </>
+                      );
+                    }
+                    return null;
+                  })
+                ) : (
+                  <p>No Data Found</p>
+                )}
+              </div>
+              {!auth &&
+                <button
+                  className="main_button my-4"
+                  onClick={() => (window.location.href = "/#signup")}
+                >
+                  Create Account<i class="fas fa-long-arrow-alt-right"></i>
+                </button>
+              }
+
             </div>
-          </section>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
