@@ -36,7 +36,7 @@ const SearchResults = () => {
   const ref = useRef(null);
   const userId = JSON.parse(localStorage.getItem("d_user"));
   const [loading, setLoading] = useState(false);
-  const [profile, getProfile] = useState([]);
+  const [profile, setProfile] = useState([]);
   const [country, setCountry] = useState("");
   const auth = AuthService.getCurrentUser();
   const [gender, setGender] = useState("male");
@@ -129,7 +129,7 @@ const SearchResults = () => {
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
-      getProfile(data?.data?.data);
+      setProfile(data?.data?.data);
       ref.current.complete();
     });
   };
@@ -349,7 +349,9 @@ const SearchResults = () => {
                         <div className="active_mainProfile" key={i}>
                           <div className="active_mainFlex">
                             <div className="active_mainL">
+                            <Link to={"/single-profile/" + item.id}>
                               <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImage} />
+                              </Link>
                             </div>
                             <div className="active_mainR">
                               <h4>{item?.name}</h4>

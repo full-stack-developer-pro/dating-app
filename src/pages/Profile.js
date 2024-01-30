@@ -37,11 +37,10 @@ const Profile = () => {
 
   const getUserProfile = async () => {
     await DataService.getSingleProfile(userId).then((data) => {
-      setProfile(data?.data?.data?.user);
+      setProfile(data?.data?.data?.users);
       ref.current.complete();
     });
   };
-  // search area 
 
   const location = useLocation();
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -300,14 +299,17 @@ const Profile = () => {
                     {users && users.length > 0 ? (
                       users.map((item, i) => {
                         if (item?.id !== userId) {
-                          const isFriend = profile?.friends?.some(
-                            (op) => op?.friends === item?.id
+                          const isFriend = profile?.friend?.some(
+                            (op) => op?.friend === item?.id
                           );
                           return (
                             <div className="active_mainProfile" key={i}>
                               <div className="active_mainFlex">
                                 <div className="active_mainL">
+                                <Link to={"/single-profile/" + item.id}>
+
                                   <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
+                                  </Link>
                                 </div>
                                 <div className="active_mainR">
                                   <h4>{item?.name}</h4>
