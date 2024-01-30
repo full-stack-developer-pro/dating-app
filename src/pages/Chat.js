@@ -7,6 +7,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
 import NavbarProfile from "../common/NavbarProfile";
+import ProfileAvatar from "../images/profile-avatar.png";
 // import { useHistory } from 'react-router-dom';
 // import EmojiPicker from 'emoji-picker-react';
 
@@ -36,8 +37,8 @@ const Chats = () => {
     chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [expandedChatMessages]);
   setTimeout(() => {
-  setChatLoader(false)
-  },10000)
+    setChatLoader(false);
+  }, 9000);
 
   let user_id = JSON.parse(localStorage.getItem("d_user"));
   let connectionEstablished = false;
@@ -55,7 +56,6 @@ const Chats = () => {
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
     console.log("Received message:", data);
-    console.log(data.msg);
     getExpandedChat();
     if (credits === 0) {
       toast.error(data.message);
@@ -95,7 +95,6 @@ const Chats = () => {
       console.error("WebSocket connection not yet established.");
       return;
     }
-
 
     if (socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify(user_id));
@@ -272,14 +271,8 @@ const Chats = () => {
                         >
                           <div className="chat_outerImg">
                             <img
-                              onError={(e) =>
-                                (e.target.src = "https://i.pravatar.cc/300")
-                              }
-                              src={
-                                item?.image
-                                  ? item?.image
-                                  : "https://i.pravatar.cc/300"
-                              }
+                              onError={(e) => (e.target.src = ProfileAvatar)}
+                              src={item?.image ? item?.image : ProfileAvatar}
                               alt=""
                             />
                           </div>
@@ -298,13 +291,13 @@ const Chats = () => {
               </div>
 
               <div className="chat_flexR">
-              {chatLoader && 
-                <div className="chat_loader">
-                  <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+                {chatLoader && (
+                  <div className="chat_loader">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
                   </div>
-                </div>
-              }
+                )}
                 {showExpandedChat ? (
                   <>
                     <div className="chat_expHead">
@@ -315,13 +308,11 @@ const Chats = () => {
                       </div>
                       <div className="chat_expHeadL">
                         <img
-                          onError={(e) =>
-                            (e.target.src = "https://i.pravatar.cc/300")
-                          }
+                          onError={(e) => (e.target.src = ProfileAvatar)}
                           src={
-                            profile?.profile_path != ""
+                            profile?.profile_path
                               ? profile?.profile_path
-                              : "https://i.pravatar.cc/300"
+                              : ProfileAvatar
                           }
                           alt=""
                         />
