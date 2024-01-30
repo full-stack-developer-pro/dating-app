@@ -2,16 +2,17 @@ import axios from "axios";
 import AuthService from "./auth.service";
 
 const API_URL =
-  process.env.NODE_ENV != "production"
+  process.env.NODE_ENV !== "production"
     ? "http://api.digitalmarketingcoursesinchandigarh.in/"
     : "http://api.digitalmarketingcoursesinchandigarh.in/";
 
 axios.interceptors.request.use(function (config) {
   const token = AuthService.getCurrentUserTokken();
   config.headers.Authorization = "Bearer " + token;
-
+  config.headers["API-TOKEN"] = `c1462debeb1e53644f768cbbc6a9562b73009-56a1e28ea706dc0bc38ba5ae990`;
   return config;
 });
+
 axios.interceptors.response.use(
   function (response) {
     return response;
@@ -19,8 +20,8 @@ axios.interceptors.response.use(
   function (error) {
     if (error.response.status === 401) {
       localStorage.removeItem("user");
-      // window.location.href ='/#/login'
-      // Hace la solicitud de refresco de tokens
+      // window.location.href = '/#/login';
+      // Make the token refresh request here
     }
     return Promise.reject(error);
   }
@@ -46,7 +47,7 @@ const TrackProfile = (id) => {
   return axios.post(API_URL + "api/user/profile-view/" + id);
 };
 const helpdesk = (data) => {
-  return axios.post(API_URL + "api/helpdesk" ,data);
+  return axios.post(API_URL + "api/helpdesk", data);
 };
 const getContactUs = () => {
   return axios.get(API_URL + "api/admin/getcontactAs");

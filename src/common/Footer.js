@@ -110,12 +110,12 @@ const Footer = () => {
           </div>
           <div className="footer_bottomBar">
           <div className="new_line">
-            <p style={{ color: "white", marginTop: "10px", marginBottom: "10px" }}>Persons appearing in photographs and videos may not be actual members. Other data for illustrative purposes only. MilfHub.co.uk does not conduct criminal background screening of its members.</p>
+            <p style={{ color: "white", marginTop: "10px", marginBottom: "10px" }}>Persons appearing in photographs and videos may not be actual members. Other data for illustrative purposes only. <br/>MilfHub.co.uk does not conduct criminal background screening of its members.</p>
           </div>
             <p>
               Disclaimer: This website contains adult material, all members and
               persons appearing on this site have contractually represented to
-              us that they are 18 years of age or older. Copyright © 1996-{currentYear} Ind Z Gib Ltd. All rights reserved.{" "}
+              us that they are 18 years of age or older.<br/> Copyright © 1996-{currentYear} Ind Z Gib Ltd. All rights reserved.{" "}
             </p>
           </div>
         </div>
