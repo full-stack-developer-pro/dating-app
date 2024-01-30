@@ -96,7 +96,7 @@ const Footer = () => {
                   </Link>
                 </li> */}
                 <li>
-                  <Link to="/">
+                  <Link to="/faq-page">
                     <i class="fas fa-circle"></i>Frequently Asked Questions
                   </Link>
                 </li>

@@ -216,53 +216,6 @@ const SingleLProfile = () => {
             </div>
             <div className="single_pM">
 
-              <div className="about_me_info">
-                <h2>About me</h2>
-                <div className="row">
-                  <div className="col-lg-6">
-                    <h3 className="text_about_me">Username</h3>
-                  </div>
-                  <div className="col-lg-6">
-                    <p>{profile?.username}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-6">
-                    <h3 className="text_about_me">Gender</h3>
-                  </div>
-                  <div className="col-lg-6">
-                    <p>{profile?.gender}</p>
-
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-6">
-                    <h3 className="text_about_me">Age</h3>
-                  </div>
-                  <div className="col-lg-6">
-                    <p>{profile?.age}</p>
-
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-6">
-                    <h3 className="text_about_me">Looking For	</h3>
-                  </div>
-                  <div className="col-lg-6">
-                    <p>{profile?.interests}</p>
-
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-6">
-                    <h3 className="text_about_me">Country</h3>
-                  </div>
-                  <div className="col-lg-6">
-                    <p>{profile?.country}</p>
-
-                  </div>
-                </div>
-              </div>
               {auth ? (
                 // Render images if authenticated
                 <div className="single_gallerySec">
@@ -277,7 +230,6 @@ const SingleLProfile = () => {
                       )
                     }) : ""
                   }
-
 
                   {/* <div className="gallery_innerNew">
                     <img src={ProfileTwo} alt="" />
@@ -337,6 +289,54 @@ const SingleLProfile = () => {
                   </div>
                 </div>
               )}
+              
+              <div className="about_me_info">
+                <h2>About me</h2>
+                <div className="row mobile_profile_row">
+                  <div className="col-lg-6 Mobile_profile">
+                    <h3 className="text_about_me">Username</h3>
+                  </div>
+                  <div className="col-lg-6 Mobile_profile">
+                    <p>{profile?.username}</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6 Mobile_profile">
+                    <h3 className="text_about_me">Gender</h3>
+                  </div>
+                  <div className="col-lg-6 Mobile_profile">
+                    <p>{profile?.gender}</p>
+
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6 Mobile_profile">
+                    <h3 className="text_about_me">Age</h3>
+                  </div>
+                  <div className="col-lg-6 Mobile_profile">
+                    <p>{profile?.age}</p>
+
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6 Mobile_profile">
+                    <h3 className="text_about_me">Looking For	</h3>
+                  </div>
+                  <div className="col-lg-6 Mobile_profile">
+                    <p>{profile?.interests}</p>
+
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6 Mobile_profile">
+                    <h3 className="text_about_me">Country</h3>
+                  </div>
+                  <div className="col-lg-6 Mobile_profile">
+                    <p>{profile?.country}</p>
+
+                  </div>
+                </div>
+              </div>
 
               {!auth && (
                 <div className="single_gallerySec">

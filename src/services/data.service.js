@@ -61,6 +61,9 @@ const getPrivacyPoicy = () => {
 const getGdpr = () => {
   return axios.get(API_URL + "api/admin/getGdpr");
 };
+const getFAQ = () => {
+  return axios.get(API_URL + "api/admin/faq");
+};
 const getTermsConditions = () => {
   return axios.get(API_URL + "api/admin/getTermsCondition");
 };
@@ -125,7 +128,7 @@ const getMembers = () => {
   return axios.get(API_URL + "api/user/memberStatic");
 };
 const getPackages = () => {
-  return axios.get(API_URL + "api/admin/getAllCredit");
+  return axios.get(API_URL + "api/getAllCredit");
 };
 const GeneratePayment = (data) => {
   return axios.post(API_URL + "api/payment/generate-link", data);
@@ -177,5 +180,6 @@ const DataService = {
   getLastBanner,
   getCities,
   getOldPayments,
+  getFAQ
 };
 export default DataService;

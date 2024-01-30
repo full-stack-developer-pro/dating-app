@@ -1078,56 +1078,6 @@ const Home = () => {
       <section className="active_profilesSec">
         <div className="container">
           <div className="active_secFlex">
-            {/* <div className="activeL">
-              <div className="activeL_bg">
-                <ul>
-                  <li>
-                    <i class="fas fa-check-circle"></i>Find real local sex contacts
-                  </li>
-                  <li>
-                    <i class="fas fa-check-circle"></i>Find other Causal sex & hookups
-                  </li>
-                  <li>
-                    <i class="fas fa-check-circle"></i>100% discreet, safe & Secure
-                  </li>
-                  <li>
-                    <i class="fas fa-check-circle"></i>Instant Messaging
-                  </li>
-                  <li>
-                    <i class="fas fa-check-circle"></i>Verified Persons
-                  </li>
-                  <li>
-                    <i class="fas fa-check-circle"></i>Free Contact
-                  </li>
-                  <li>
-                    <i class="fas fa-check-circle"></i>100% anonymous
-                  </li>
-                </ul>
-                <h4>Who is Online</h4>
-                <div className="online_profiles">
-                  <Link to="/chats">
-                    <div className="onlineInner">
-                      <img src={ProfileOne} alt="" />
-                      <i class="fas fa-circle"></i>
-                    </div>
-                  </Link>
-                  <Link to="/chats">
-                    <div className="onlineInner">
-                      <img src={ProfileThree} alt="" />
-                      <i class="fas fa-circle"></i>
-                    </div>
-                  </Link>
-                  <Link to="/chats">
-                    <div className="onlineInner">
-                      <img src={ProfileFour} alt="" />
-                      <i class="fas fa-circle"></i>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div> */}
-
-
             <div className="activeM">
               <div className="search_formSec">
                 <h4>Quick Search</h4>
@@ -1241,33 +1191,7 @@ const Home = () => {
 
 
               </div>
-              {/* <h3>Recently Joined</h3>
-              <div className="active_recent">
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileOne} alt="" />
-                    <h4>Jessica M.</h4>
-                  </div>
-                </Link>
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileTwo} alt="" />
-                    <h4>Emily W.</h4>
-                  </div>
-                </Link>
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileThree} alt="" />
-                    <h4>Jessica M.</h4>
-                  </div>
-                </Link>
-                <Link to="/single-profile">
-                  <div className="active_rInner">
-                    <img src={ProfileFour} alt="" />
-                    <h4>Emily W.</h4>
-                  </div>
-                </Link>
-              </div> */}
+       
 
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
