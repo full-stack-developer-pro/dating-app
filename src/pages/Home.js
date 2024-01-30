@@ -1278,12 +1278,13 @@ const Home = () => {
                       );
                       return (
                         <>
-
                           <div className="active_mainProfile" key={i}>
                             <div className="active_mainFlex">
                               <div className="active_mainL">
                                 {/* ProfileOne */}
+                                <Link to={"/single-profile/" + item.id}>
                                 <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImage} />
+                                </Link>
                               </div>
                               <div className="active_mainR">
                                 <h4>{item?.name}</h4>

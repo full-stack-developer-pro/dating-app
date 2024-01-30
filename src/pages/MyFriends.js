@@ -130,23 +130,20 @@ const MyFriends = () => {
                                                 <img src={ProfileOne} alt="" />
                                             </div>
                                             <div className="active_mainR">
-                                                <h4>{item?.friends?.name}</h4>
+                                                <h4>{item?.name}</h4>
                                                 <span className="active_age">
-                                                    {item?.friends?.age}~
-                                                    {item?.friends?.gender === "male"
+                                                    {item?.age}~
+                                                    {item?.gender === "male"
                                                         ? "M"
-                                                        : item?.friends?.gender === "female"
+                                                        : item?.gender === "female"
                                                             ? "F"
                                                             : "Other"}
                                                 </span>
                                                 <span>
                                                     <i class="fas fa-map-marker-alt"></i>
-                                                    {item?.friends?.city}, {item?.friends?.country}
+                                                    {item?.country}
                                                 </span>
-                                                <br />
 
-
-                                                <p>{item?.description}</p>
                                             </div>
                                         </div>
                                         <div className="active_actionSec">
