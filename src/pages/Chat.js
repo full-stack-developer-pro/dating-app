@@ -388,7 +388,10 @@ const Chats = () => {
                       <p>Select a Chat to proceed</p>
                     </>
                   )}
-                  <div className="chat_footer">
+                
+                  <div ref={chatBoxRef}></div>
+                </div>
+                <div className="chat_footer">
                     <form onSubmit={sendMessage}>
                       <div className="chat_footer_flex">
                         {/* <EmojiPicker /> */}
@@ -414,8 +417,6 @@ const Chats = () => {
                     </form>
                     {/* <div ref={chatBoxRef} style={{height: '3px',width: '50%',backgroundColor:'red'}}></div> */}
                   </div>
-                  <div ref={chatBoxRef}></div>
-                </div>
               </div>
             </div>
           </div>
