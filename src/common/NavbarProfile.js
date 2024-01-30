@@ -26,6 +26,7 @@ const NavbarProfile = () => {
     const [activeSection, setActiveSection] = useState("");
     const userId = JSON.parse(localStorage.getItem("d_user"));
     const location = useLocation();
+    const [selectedLanguage, setSelectedLanguage] = useState("");
 
 
     const handleImage = (e) => {
@@ -138,9 +139,11 @@ const NavbarProfile = () => {
         const isCurrentPage = (path) => currentPath.startsWith(path);
         if (isCurrentPage('/my-profile')) {
             setActiveSection('profile');
-        } else if (isCurrentPage('/upload-gallery')) {
-            setActiveSection('uploads');
-        } else if (isCurrentPage('/profile')) {
+        } 
+        // else if (isCurrentPage('/upload-gallery')) {
+        //     setActiveSection('uploads');
+        // }
+         else if (isCurrentPage('/profile')) {
             setActiveSection('search');
         } else if (isCurrentPage('/my-friends')) {
             setActiveSection('friends');
@@ -158,9 +161,9 @@ const NavbarProfile = () => {
             case 'profile':
                 navigate("/my-profile")
                 break;
-            case 'uploads':
-                navigate("/upload-gallery")
-                break;
+            // case 'uploads':
+            //     navigate("/upload-gallery")
+            //     break;
             case 'search':
                 navigate("/profile")
 
@@ -179,7 +182,69 @@ const NavbarProfile = () => {
         }
     };
 
-  
+    useEffect(() => {
+        const loadGoogleTranslate = () => {
+            if (!window.googleTranslateLoaded) {
+                window.googleTranslateElementInit = () => {
+                    const translator = new window.google.translate.TranslateElement(
+                        {
+                            includedLanguages: "es,en,fr,pb",
+                            layout:
+                                window.google.translate.TranslateElement.InlineLayout
+                                    .HORIZONTAL,
+                        },
+                        "google_translate_element"
+                    );
+    
+                    // Set up an observer for changes in the Google Translate dropdown
+                    const observer = new MutationObserver(() => {
+                        const newLanguage = getSelectedLanguage();
+                        if (newLanguage && newLanguage !== selectedLanguage) {
+                            setSelectedLanguage(newLanguage);
+                            changeDirection(newLanguage);
+                        }
+                    });
+    
+                    // Define the target node for the observer
+                    const targetNode = document.querySelector(".goog-te-combo");
+    
+                    // Configure the observer
+                    const config = { childList: true, subtree: true };
+    
+                    // Start observing the target node for changes
+                    observer.observe(targetNode, config);
+    
+                    // Initialize direction based on the default selected language
+                    changeDirection(selectedLanguage);
+                };
+    
+                const script = document.createElement("script");
+                script.src =
+                    "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+                script.async = true;
+                document.head.appendChild(script);
+                window.googleTranslateLoaded = true;
+            }
+        };
+    
+        const changeDirection = (language) => {
+            const body = document.body;
+            body.style.direction =
+                language === "ar" ? "rtl" : language === "en" ? "ltr" : "";
+        };
+    
+        // Helper function to get the currently selected language
+        const getSelectedLanguage = () => {
+            const selectElement = document.querySelector(".goog-te-combo");
+            if (selectElement) {
+                return selectElement.value;
+            }
+            return null;
+        };
+    
+        loadGoogleTranslate();
+    }, [selectedLanguage]);
+
     return (
         <>
             {payments && (
@@ -232,7 +297,11 @@ const NavbarProfile = () => {
                                         <img src={Logo} alt="" />
                                     </Link>
                                 </div>
+
                                 <div className="main_craedits_two" style={{ padding: "10px 0px" }}>
+                                <div className="translater_main">
+                                    <div id="google_translate_element"></div>
+                                </div>
 
                                     {notification && (
                                         <div className="notification_main profile_notification">
@@ -412,7 +481,7 @@ const NavbarProfile = () => {
                                         <button className={activeSection === 'friends' ? 'active' : ''} onClick={() => handleButtonClick('friends')}>My Friends</button>
                                         <button className={activeSection === 'messages' ? 'active' : ''} onClick={() => handleButtonClick('messages')}>Messages</button>
                                         <button className={activeSection === 'profile' ? 'active' : ''} onClick={() => handleButtonClick('profile')}>Profile</button>
-                                        <button className={activeSection === 'uploads' ? 'active' : ''} onClick={() => handleButtonClick('uploads')}>My Uploads</button>
+                                        {/* <button className={activeSection === 'uploads' ? 'active' : ''} onClick={() => handleButtonClick('uploads')}>My Uploads</button> */}
                                     </div>
                                     <div className="profile_left">
                                         <button className={activeSection === 'edit' ? 'active' : ''} onClick={() => handleButtonClick('edit')}>Account settings</button>
@@ -432,17 +501,17 @@ const NavbarProfile = () => {
                                             </h2>
                                         </div>
                                         <div className="profile_main">
-                                        <div className="profile_right">
-                                        <button className={activeSection === 'search' ? 'active' : ''} onClick={() => handleButtonClick('search')}>Search</button>
-                                        <button className={activeSection === 'friends' ? 'active' : ''} onClick={() => handleButtonClick('friends')}>My Friends</button>
-                                        <button className={activeSection === 'messages' ? 'active' : ''} onClick={() => handleButtonClick('messages')}>Messages</button>
-                                        <button className={activeSection === 'profile' ? 'active' : ''} onClick={() => handleButtonClick('profile')}>Profile</button>
-                                        <button className={activeSection === 'uploads' ? 'active' : ''} onClick={() => handleButtonClick('uploads')}>My Uploads</button>
-                                    </div>
-                                    <div className="profile_left">
-                                        <button className={activeSection === 'edit' ? 'active' : ''} onClick={() => handleButtonClick('edit')}>Account settings</button>
-                                        <button onClick={logout}>Logout</button>
-                                    </div>
+                                            <div className="profile_right">
+                                                <button className={activeSection === 'search' ? 'active' : ''} onClick={() => handleButtonClick('search')}>Search</button>
+                                                <button className={activeSection === 'friends' ? 'active' : ''} onClick={() => handleButtonClick('friends')}>My Friends</button>
+                                                <button className={activeSection === 'messages' ? 'active' : ''} onClick={() => handleButtonClick('messages')}>Messages</button>
+                                                <button className={activeSection === 'profile' ? 'active' : ''} onClick={() => handleButtonClick('profile')}>Profile</button>
+                                                {/* <button className={activeSection === 'uploads' ? 'active' : ''} onClick={() => handleButtonClick('uploads')}>My Uploads</button> */}
+                                            </div>
+                                            <div className="profile_left">
+                                                <button className={activeSection === 'edit' ? 'active' : ''} onClick={() => handleButtonClick('edit')}>Account settings</button>
+                                                <button onClick={logout}>Logout</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

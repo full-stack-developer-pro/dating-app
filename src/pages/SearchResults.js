@@ -128,7 +128,7 @@ const SearchResults = () => {
   };
 
   const getUserProfile = async () => {
-    await DataService.getSingleProfile(userId).then((data) => {
+    await DataService.getAllFriend(userId).then((data) => {
       setProfile(data?.data?.data);
       ref.current.complete();
     });
@@ -343,7 +343,7 @@ const SearchResults = () => {
                   users.map((item, i) => {
                     if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
-                        (op) => op?.friends === item?.id
+                        (op) => op?.id === item?.id
                       );
                       return (
                         <div className="active_mainProfile" key={i}>

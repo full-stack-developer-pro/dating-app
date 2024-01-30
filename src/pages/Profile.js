@@ -36,11 +36,17 @@ const Profile = () => {
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
   const getUserProfile = async () => {
-    await DataService.getSingleProfile(userId).then((data) => {
-      setProfile(data?.data?.data?.users);
+    await DataService.getAllFriend(userId).then((data) => {
+      setProfile(data?.data?.data);
       ref.current.complete();
     });
   };
+  useEffect(() => {
+    if (userId) {
+      getUserProfile();
+    }
+  }, [userId]);
+
 
   const location = useLocation();
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -77,7 +83,6 @@ const Profile = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getUserProfile();
     ref.current.continuousStart();
     getCity()
   }, []);
@@ -299,8 +304,8 @@ const Profile = () => {
                     {users && users.length > 0 ? (
                       users.map((item, i) => {
                         if (item?.id !== userId) {
-                          const isFriend = profile?.friend?.some(
-                            (op) => op?.friend === item?.id
+                          const isFriend = profile?.friends?.some(
+                            (op) => op?.id === item?.id
                           );
                           return (
                             <div className="active_mainProfile" key={i}>

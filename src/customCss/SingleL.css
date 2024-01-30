@@ -7,7 +7,7 @@
 h3.text_about_me {
     font-size: 16px;
     margin: 0px;
-    padding: 13px 0px;
+    padding: 10px 0px;
 }
 .about_me_info {
     padding: 10px 12px;
@@ -136,7 +136,7 @@ button.send_m a {
     background: linear-gradient(to right, #ef48b5, #F209E1);
     padding: 10px;
     color: #ef48b5;
-    margin: 80px 1% 20px 1%;
+    margin: 25px 1% 20px 1%;
     border: none;
     outline: none;
     color: #fff;
@@ -150,8 +150,23 @@ button.send_m a {
     margin-left: 10px;
     font-size: 14px;
 }
-
+.Mobile_profile p{
+    margin: 0px;
+    text-transform: capitalize;
+}
 @media screen and (max-width: 767px) {
+    .Mobile_profile {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        padding-top: 14px;
+    }
+    h3.text_about_me{
+        padding: 0px;
+    }
+    .Mobile_profile p{
+        margin: 0px;
+    }
     .gallery_innerNew {
         width: 45%;
     }
@@ -185,6 +200,18 @@ button.send_m a {
 
     .single_pR {
         width: 100% !important;
+    }
+    .single_lockOpen img {
+        max-width: 185px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        min-height: 20vh;
+        object-fit: cover;
+    }
+    .single_lockOpen {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
     }
 
 }

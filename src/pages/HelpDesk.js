@@ -54,6 +54,7 @@ const HelpDesk = () => {
                             <div className='help_desk_cat'>
                                 <label>Choose the category of your question</label>
                                 <select onChange={(e) => setCategory(e.target.value)}>
+                                    <option value="">Select the category</option>
                                     <option value="General">General</option>
                                     <option value="Payments">Payments</option>
                                 </select>

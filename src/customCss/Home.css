@@ -1135,6 +1135,7 @@ ul.location_new {
 
 .single_lockOpen h5 {
     margin-bottom: 5px;
+    text-transform: capitalize;
 }
 
 .single_lockOpen span.single_age {

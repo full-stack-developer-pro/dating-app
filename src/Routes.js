@@ -24,6 +24,7 @@ import MyFriends from "./pages/MyFriends";
 import ProfileMain from "./pages/ProfileMain";
 import GDPR from "./pages/GDPR";
 import HelpDesk from "./pages/HelpDesk";
+import Faq from "./pages/Faq";
 
 
 export default function App() {
@@ -43,6 +44,8 @@ export default function App() {
         <Route path="/search-results" element={<SearchResults />} />
         {/* <Route path="/search-results/:gender" element={<SearchResults />} /> */}
         {/* <Route path="/search-results/:location" element={<SearchResults />} /> */}
+        <Route path="/faq-page" element={<Faq />} />
+
         <Route element={<RestrictedAccess />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/chats/:id" element={<Chats />} />
