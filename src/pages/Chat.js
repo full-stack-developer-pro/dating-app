@@ -79,6 +79,7 @@ const Chats = () => {
       console.error("WebSocket is not open. Message not sent.");
       return;
     }
+
     let msdg = document.getElementById("main_input").value;
     const data = {
       user_id: user_id,
@@ -88,6 +89,7 @@ const Chats = () => {
     socket.send(JSON.stringify(data));
     await getExpandedChat();
     document.getElementById("main_input").value = "";
+    
   };
 
   const setUser = () => {

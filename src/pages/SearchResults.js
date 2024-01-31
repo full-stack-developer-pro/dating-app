@@ -134,7 +134,7 @@ const SearchResults = () => {
     });
   };
   const searchData = async () => {
-    await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.minValue).then(
+    await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue).then(
       (data) => {
         setUsers(data?.data?.data.users);
         ref.current.complete();
