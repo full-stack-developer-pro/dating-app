@@ -155,6 +155,13 @@ button.send_m a {
     text-transform: capitalize;
 }
 @media screen and (max-width: 767px) {
+    .send_m {
+        width: 70%;
+        margin: auto;
+    }
+    .single_gallerySec {
+        justify-content: space-between;
+    }
     .Mobile_profile {
         width: 50%;
         display: flex;

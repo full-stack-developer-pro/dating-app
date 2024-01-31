@@ -94,12 +94,11 @@ const Profile = () => {
 
 
   const searchData = async () => {
-    await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.minValue).then(
+    await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue).then(
       (data) => {
         setUsers(data?.data?.data.users);
-        console.log(data?.data?.data.users)
         ref.current.complete();
-        toast.success("Data Searched");
+        // toast.success("Data Searched");
       },
       (error) => {
         const resMessage =
@@ -114,8 +113,8 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    searchData()
-  }, []);
+    searchData();
+  }, [gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue]);
   
   useEffect(() => {
     ref.current.continuousStart();

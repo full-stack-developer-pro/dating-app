@@ -70,7 +70,7 @@ const MyFriends = () => {
         toast.success("Friend Removed Successfully!!", {
           position: toast.POSITION.TOP_RIGHT,
         });
-       
+
         getUserProfile();
       },
       (error) => {
@@ -134,7 +134,9 @@ const MyFriends = () => {
                     <div className="active_mainProfile">
                       <div className="active_mainFlex">
                         <div className="active_mainL">
-                        <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
+                          <Link to={"/single-profile/" + item.id}>
+                            <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
+                          </Link>
                         </div>
                         <div className="active_mainR">
                           <h4>{item?.name}</h4>
@@ -181,7 +183,7 @@ const MyFriends = () => {
             ) : (
               <div className="not_friends">
                 <h2>Add some friends</h2>
-                <Link to="/"><button className="main_button">Click to add friends</button></Link>
+                <Link to="/profile"><button className="main_button">Click to add friends</button></Link>
               </div>
             )}
           </div>

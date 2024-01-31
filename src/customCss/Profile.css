@@ -513,9 +513,8 @@ background: none;
         display: block;
     }
     .profile_bannerSec {
-
-        padding-top: 0px;
-    }
+        min-height: 40vh !important;
+    } 
     .main_craedits_one img {
         width: 70%;
     }

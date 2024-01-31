@@ -102,7 +102,7 @@ const Home = () => {
   const [topBanner, setTopBanner] = useState([]);
   const [middleBanner, setMiddleBanner] = useState([]);
   const [secondLastBanner, setSecondLastBanner] = useState([]);
-  const [lastBanner, setlLastBanner] = useState([]);
+  // const [lastBanner, setlLastBanner] = useState([]);
   const [selectedGender, setSelectGender] = useState("All");
   const [selectedGenderSearch, setSelectedGenderSearch] = useState("");
   const [members, setMembers] = useState([]);
@@ -139,7 +139,6 @@ const Home = () => {
 
   // errors 
   const minLength = 6;
-
   const handleChange = (e) => {
     const enteredPassword = e.target.value;
     setPassword(enteredPassword);
@@ -150,7 +149,7 @@ const Home = () => {
     const enteredEmail = e.target.value;
     setEmail(enteredEmail);
     if (!enteredEmail.includes('@')) {
-      setError('Email must be with @');
+      setError('Email address must contain the @ symbol.');
     } else {
       setError('');
     }
@@ -413,17 +412,17 @@ const Home = () => {
       ref.current.complete();
     });
   };
-  const getLast = async () => {
-    await DataService.getLastBanner().then((data) => {
-      setlLastBanner(data?.data?.data[0]);
-      ref.current.complete();
-    });
-  };
-  const getTotalMembers = async () => {
-    await DataService.getMembers().then((data) => {
-      setMembers(data?.data);
-    });
-  };
+  // const getLast = async () => {
+  //   await DataService.getLastBanner().then((data) => {
+  //     setlLastBanner(data?.data?.data[0]);
+  //     ref.current.complete();
+  //   });
+  // };
+  // const getTotalMembers = async () => {
+  //   await DataService.getMembers().then((data) => {
+  //     setMembers(data?.data);
+  //   });
+  // };
 
 
 
@@ -447,8 +446,8 @@ const Home = () => {
     getTop();
     getMiddle();
     getSecondLast();
-    getLast();
-    getTotalMembers();
+    // getLast();
+    // getTotalMembers();
   }, []);
 
   const handleNotification = (id) => {
@@ -725,7 +724,6 @@ const Home = () => {
                           />
                           <label for="floatingInput">Email</label>
                           {error && <div style={{ color: 'red', fontSize: "14px", paddingTop: "10px" }}>{error}</div>}
-
                         </div>
 
                         <div class="form-floating mb-3">
@@ -1294,200 +1292,9 @@ const Home = () => {
               )
               }
             </div>
-
-
-            {/* <div className="activeR">
-              <div className="activeL_bg">
-
-                <div className="search_formSec">
-                  <h4>Quick Search</h4>
-                  <div className="search_gender">
-                    <div className="form_field mb-3">
-                      <p>
-                        <strong>My Gender</strong>
-                      </p>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="searchgender"
-                          id="gender_all_search"
-                          value="all"
-                          checked={selectedGenderSearch === "all"}
-                          onChange={SearchHandleSelection}
-                        />
-                        <label class="form-check-label" for="gender_all_search">
-                          All
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="searchgender"
-                          id="gender_male_search"
-                          value="male"
-                          checked={selectedGenderSearch === "male"}
-                          onChange={SearchHandleSelection}
-                        />
-                        <label class="form-check-label" for="gender_male_search">
-                          Male
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="searchgender"
-                          id="gender_female_search"
-                          value="female"
-                          checked={selectedGenderSearch === "female"}
-                          onChange={SearchHandleSelection}
-                        />
-                        <label class="form-check-label" for="gender_female_search">
-                          Female
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form_field country mb-3">
-                    <label>
-                      <strong>Select Location</strong>
-                    </label>
-                    <ReactFlagsSelect
-                      placeholder="Select a Town or City"
-                      selected={searchCountry}
-                      onSelect={(code) => setSearchCountry(code)}
-                      required
-                    />
-                  </div>
-                  <Link
-                    className="search_submit"
-                    to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}
-                  >
-                    Search<i class="fas fa-search"></i>
-                  </Link>
-                 
-                </div>
-                <div className="member_stats">
-                  <h4>Member Statistics</h4>
-                  <div className="stats_flex">
-                    <div className="statsL">
-                      <p>Total Members</p>
-                    </div>
-                    <div className="statsM">
-                      <p>~</p>
-                    </div>
-                    <div className="statsR">
-                      <p>{members.totalMembers}</p>
-                    </div>
-                  </div>
-                  <div className="stats_flex">
-                    <div className="statsL">
-                      <p>Active Members</p>
-                    </div>
-                    <div className="statsM">
-                      <p>~</p>
-                    </div>
-                    <div className="statsR">
-                      <p>{members.activeMembers}</p>
-                    </div>
-                  </div>
-                  <div className="stats_flex">
-                    <div className="statsL">
-                      <p>Joined Today</p>
-                    </div>
-                    <div className="statsM">
-                      <p>~</p>
-                    </div>
-                    <div className="statsR">
-                      <p>{members.membersJoinedToday}</p>
-                    </div>
-                  </div>
-                  <div className="stats_flex">
-                    <div className="statsL">
-                      <p>Men Joined Today</p>
-                    </div>
-                    <div className="statsM">
-                      <p>~</p>
-                    </div>
-                    <div className="statsR">
-                      <p>{members.menJoinedToday}</p>
-                    </div>
-                  </div>
-                  <div className="stats_flex">
-                    <div className="statsL">
-                      <p>Women Joined Today</p>
-                    </div>
-                    <div className="statsM">
-                      <p>~</p>
-                    </div>
-                    <div className="statsR">
-                      <p>{members.womenJoinedToday}</p>
-                    </div>
-                  </div>
-                  <div className="stats_flex">
-                    <div className="statsL">
-                      <p>Messages Sent Today</p>
-                    </div>
-                    <div className="statsM">
-                      <p>~</p>
-                    </div>
-                    <div className="statsR">
-                      <p>{members.messagesSentToday}</p>
-                    </div>
-                  </div>
-                  {!auth &&
-                    <button
-                      className="main_button"
-                      onClick={() => (window.location.href = "/#signup")}
-                    >
-                      Join Now<i class="fas fa-long-arrow-alt-right"></i>
-                    </button>
-                  }
-                </div>
-              </div>
-
-              <div className="activeL_bg" style={{marginTop:"10px"}}>
-                <div className="member_stats">
-                  <h4>Popular searchs</h4>
-                </div>
-                <div className="locations_area">
-                  <p>Afghanistan</p>
-                  <p>Albania</p>
-                  <p>Algeria</p>
-                  <p>American Samoa</p>
-                  <p>Australia</p>
-                  <p>Antigua and Barbuda</p>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </section>
-
-      {/* <section className="become_part">
-        <div className="container">
-          <div className="become_flex">
-            <div className="becomeL">
-              <img src={News} alt="" />
-            </div>
-            <div className="becomeR">
-              <h2>Become Part of Community</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                a lacus nec lacus mollis condimentum in id justo.
-              </p>
-              <button
-                className="main_button"
-                onClick={() => (window.location.href = "/#signup")}
-              >
-                Register
-              </button>
-            </div>
-          </div>
-        </div>
-      </section> */}
       <section className="about_section">
         <div className="container">
           <div className="about_flex">
@@ -1498,12 +1305,16 @@ const Home = () => {
                   __html: secondLastBanner?.description,
                 }}
               ></p>
-              <button
+              {
+              !auth && (
+                <button
                 className="main_button"
                 onClick={() => (window.location.href = "/#signup")}
               >
                 Join For Free Here Right Now
               </button>
+              )}
+             
             </div>
             <div className="about_flexL">
               {secondLastBanner?.images?.length > 0 ? (

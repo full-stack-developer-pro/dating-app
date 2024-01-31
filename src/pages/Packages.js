@@ -79,7 +79,6 @@ const Packages = () => {
                 </div>
 
                 <div className="container">
-
                     {
                         packages?.length > 0 ? packages?.map((item) => {
                             return (
@@ -114,7 +113,6 @@ const Packages = () => {
                                             <button onClick={() => handlePayment(item)}>Buy</button>
                                         </div>
                                     </div>
-
                                 </>
                             )
                         }) : ""
