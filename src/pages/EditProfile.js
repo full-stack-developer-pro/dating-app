@@ -429,7 +429,7 @@ const EditProfile = () => {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-sm-6">
+                        <div className="col-sm-12">
                           <div class="edit_profile mb-3">
                             <input
                               type="email"
@@ -443,7 +443,7 @@ const EditProfile = () => {
                             <label for="floatingInput">Email</label>
                           </div>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                           <div class="edit_profile mb-3">
                             <input
                               type="password"
@@ -456,7 +456,7 @@ const EditProfile = () => {
                             />
                             <label for="floatingInput">Password</label>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="row">
                         <div className="col-sm-6">
@@ -505,7 +505,7 @@ const EditProfile = () => {
                       <div className="form-field row mb-3">
                         <div className="col-sm-6">
                           <div class="edit_profile mb-3">
-                            <input
+                            {/* <input
                               type="text"
                               class="form-control"
                               id="floatingInput"
@@ -513,13 +513,20 @@ const EditProfile = () => {
                               required
                               value={eye_color}
                               onChange={(e) => setEyeColor(e.target.value)}
-                            />
-                            <label for="floatingInput">Eye Color</label>
+                            /> */}
+                            <div class="select_singup">
+                              <label for="floatingInput">Hair Color</label>
+                              <select value={eye_color}
+                                onChange={(e) => setEyeColor(e.target.value)}>
+                                <option value="Black">Black</option>
+                                <option value="Brown">Brown</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
                         <div className="col-sm-6">
                           <div class="edit_profile mb-3">
-                            <input
+                            {/* <input
                               type="text"
                               class="form-control"
                               id="floatingInput"
@@ -527,8 +534,15 @@ const EditProfile = () => {
                               required
                               value={hair_color}
                               onChange={(e) => setHairColor(e.target.value)}
-                            />
-                            <label for="floatingInput">Hair Color</label>
+                            /> */}
+                            <div class="select_singup">
+                              <label for="floatingInput">Hair Color</label>
+                              <select value={hair_color}
+                                onChange={(e) => setHairColor(e.target.value)}>
+                                <option value="Black">Black</option>
+                                <option value="Brown">Brown</option>
+                              </select>
+                              </div>
                           </div>
                         </div>
                       </div>
@@ -536,7 +550,7 @@ const EditProfile = () => {
 
                         <div className="col-sm-12">
                           <div class="edit_profile mb-3">
-                            <input
+                            {/* <input
                               type="text"
                               class="form-control"
                               id="floatingInput"
@@ -544,10 +558,21 @@ const EditProfile = () => {
                               required
                               value={marital_status}
                               onChange={(e) => setMaritalStatus(e.target.value)}
-                            />
-                            <label for="floatingInput">Marital Status</label>
+                            /> */}
+                            <div class="select_singup">
+                              <label for="floatingInput">Marital Status</label>
+                              <select
+                                value={marital_status}
+                                onChange={(e) => setMaritalStatus(e.target.value)}
+                                defaultValue={marital_status || ""}
+                              >
+                                <option value="Married">Married</option>
+                                <option value="Unmarried">Unmarried</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
+
                       </div>
                       <div className="form_field mb-3">
                         <div className="hobbies-list">

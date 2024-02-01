@@ -1136,6 +1136,7 @@ ul.location_new {
 .single_lockOpen h5 {
     margin-bottom: 5px;
     text-transform: capitalize;
+    font-size: 16px;
 }
 
 .single_lockOpen span.single_age {
@@ -1446,8 +1447,16 @@ ul.location_new {
     .profile_inner {
         width: 48%;
     }
+    .single_lockOpen h5 {
+        word-break: break-word;
+    }
 }
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
 
+    .single_lockOpen h5 {
+        word-break: break-word;
+    }
+}
 @keyframes random {
     0% {
         width: 60px
