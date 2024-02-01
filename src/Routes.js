@@ -26,8 +26,8 @@ import GDPR from "./pages/GDPR";
 import HelpDesk from "./pages/HelpDesk";
 import Faq from "./pages/Faq";
 
-
 export default function App() {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -45,6 +45,7 @@ export default function App() {
         {/* <Route path="/search-results/:gender" element={<SearchResults />} /> */}
         {/* <Route path="/search-results/:location" element={<SearchResults />} /> */}
         <Route path="/faq-page" element={<Faq />} />
+
 
         <Route element={<RestrictedAccess />}>
           <Route path="/profile" element={<Profile />} />
