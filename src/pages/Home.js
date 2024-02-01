@@ -473,6 +473,30 @@ const Home = () => {
   };
 
 
+  const sendFlirt = (id) => {
+    DataService.PostFlirt(id).then(
+      () => {
+        toast.success("Wink Sent");
+        setTimeout(() => {
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
+  };
+
+
   // let userid = JSON.parse(localStorage.getItem("d_user"));
   // const sendFlirt = (e, id) => {
   //   if (auth) {
@@ -801,8 +825,8 @@ const Home = () => {
                           <div className="col-sm-6">
                             <div class="select_singup">
                               <label for="floatingInput">Hair Color</label>
-                              <select value={eyecolor}
-                                onChange={(e) => setEyeColor(e.target.value)}>
+                              <select value={haircolor}
+                                onChange={(e) => setHairColor(e.target.value)}>
                                 <option value="Black">Black</option>
                                 <option value="Brown">Brown</option>
                               </select>
@@ -1257,13 +1281,15 @@ const Home = () => {
                               {/* <button>
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button> */}
-                              {/* <button onClick={() => sendFlirt(item.id)}>
-                                Send Flirt<i className="fas fa-heart"></i>
-                              </button> */}
+                              {auth && (
+                                <button onClick={() => sendFlirt(item.id)}>
+                                  Send Flirt<i className="fas fa-heart"></i>
+                                </button>
+                              )}
                               {auth && (
                                 <button>
                                   <Link to={"/chats/" + item.id}>
-                                    Send Message<i class="fas fa-comment-alt"></i>
+                                    Message<i class="fas fa-comment-alt"></i>
                                   </Link>
                                 </button>
                               )}

@@ -35,6 +35,31 @@ const Profile = () => {
   const [profile, setProfile] = useState([]);
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
+
+  const sendFlirt = (id) => {
+    DataService.PostFlirt(id).then(
+      () => {
+        toast.success("Wink Sent");
+
+        setTimeout(() => {
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+      }
+    );
+  };
+
+
   const getUserProfile = async () => {
     await DataService.getAllFriend(userId).then((data) => {
       setProfile(data?.data?.data);
@@ -115,7 +140,7 @@ const Profile = () => {
   useEffect(() => {
     searchData();
   }, [gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue]);
-  
+
   useEffect(() => {
     ref.current.continuousStart();
     if (userId) {
@@ -310,67 +335,71 @@ const Profile = () => {
                       );
                       return (
                         <>
-                        <div className="active_mainProfile" key={i}>
-                          <div className="active_mainFlex">
-                            <div className="active_mainL">
-                              <Link to={"/single-profile/" + item.id}>
+                          <div className="active_mainProfile" key={i}>
+                            <div className="active_mainFlex">
+                              <div className="active_mainL">
+                                <Link to={"/single-profile/" + item.id}>
 
-                                <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
-                              </Link>
-                            </div>
-                            <div className="active_mainR">
-                              <h4>{item?.name}</h4>
-                              <span className="active_age">
-                                {item?.age}~
-                                {item?.gender === "male"
-                                  ? "M"
-                                  : item?.gender === "female"
-                                    ? "F"
-                                    : "Other"}
-                              </span>
-                              <span>
-                                <i className="fas fa-map-marker-alt"></i>
-                               {item?.country}
-                              </span>
-                              <br />
-                              {auth ? (
-                                isFriend ? (
-                                  <button
-                                    className="add_friend already_friend"
-                                    onClick={() => removeFriend(item?.id)}
-                                  >
-                                    Remove Friend
-                                    <i className="fas fa-user-minus"></i>
-                                  </button>
+                                  <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
+                                </Link>
+                              </div>
+                              <div className="active_mainR">
+                                <h4>{item?.name}</h4>
+                                <span className="active_age">
+                                  {item?.age}~
+                                  {item?.gender === "male"
+                                    ? "M"
+                                    : item?.gender === "female"
+                                      ? "F"
+                                      : "Other"}
+                                </span>
+                                <span>
+                                  <i className="fas fa-map-marker-alt"></i>
+                                  {item?.country}
+                                </span>
+                                <br />
+                                {auth ? (
+                                  isFriend ? (
+                                    <button
+                                      className="add_friend already_friend"
+                                      onClick={() => removeFriend(item?.id)}
+                                    >
+                                      Remove Friend
+                                      <i className="fas fa-user-minus"></i>
+                                    </button>
+                                  ) : (
+                                    <button
+                                      className="add_friend"
+                                      onClick={() => addNewFriend(item?.id)}
+                                    >
+                                      Add Friend
+                                      <i className="fas fa-user-plus"></i>
+                                    </button>
+                                  )
                                 ) : (
-                                  <button
-                                    className="add_friend"
-                                    onClick={() => addNewFriend(item?.id)}
-                                  >
-                                    Add Friend
-                                    <i className="fas fa-user-plus"></i>
-                                  </button>
-                                )
-                              ) : (
-                                ""
-                              )}
-                              <p>{item?.description}</p>
+                                  ""
+                                )}
+                                <p>{item?.description}</p>
+                              </div>
+                            </div>
+                            <div className="active_actionSec">
+                              <button onClick={() => handleNotificationTwo(item.id)}>
+                                <Link to={"/single-profile/" + item.id}>
+                                  View<i className="fas fa-eye"></i>
+                                </Link>
+                              </button>
+
+                              <button onClick={() => sendFlirt(item.id)}>
+                                Send Flirt<i className="fas fa-heart"></i>
+                              </button>
+
+                              <button>
+                                <Link to={"/chats/" + item.id}>
+                                  Send Message<i class="fas fa-comment-alt"></i>
+                                </Link>
+                              </button>
                             </div>
                           </div>
-                          <div className="active_actionSec">
-                            <button onClick={() => handleNotificationTwo(item.id)}>
-                              <Link to={"/single-profile/" + item.id}>
-                                View<i className="fas fa-eye"></i>
-                              </Link>
-                            </button>
-
-                            <button>
-                              <Link to={"/chats/" + item.id}>
-                                Send Message<i class="fas fa-comment-alt"></i>
-                              </Link>
-                            </button>
-                          </div>
-                        </div>
                         </>
                       );
                     }

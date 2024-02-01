@@ -49,6 +49,28 @@ const SearchResults = () => {
   const [isListVisible, setIsListVisible] = useState(true);
   const queryParams = new URLSearchParams(location.search);
 
+  const sendFlirt = (id) => {
+    DataService.PostFlirt(id).then(
+      () => {
+        toast.success("Wink Sent");
+        setTimeout(() => {
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+      }
+    );
+  };
+
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
     setIsListVisible(true); // Show the list when the input changes
@@ -404,6 +426,11 @@ const SearchResults = () => {
                             <button>
                               Send Flirt<i className="fas fa-heart"></i>
                             </button> */}
+                              {auth && (
+                                <button onClick={() => sendFlirt(item.id)}>
+                                  Send Flirt<i className="fas fa-heart"></i>
+                                </button>
+                              )}
                             <button>
                               <Link to={"/chats/" + item.id}>
                                 Send Message<i class="fas fa-comment-alt"></i>

@@ -371,7 +371,8 @@ const Chats = () => {
                             <>
                               <div className="chat_right">
                                 <p className="text_message">
-                                  {item.message_text}
+                                  {item.type === "wink" ?  "😉" : item.message_text}
+                                  {/* {item.message_text} */}
                                   <i className="fas fa-check"></i>
                                 </p>
                                 <span>
@@ -384,7 +385,7 @@ const Chats = () => {
                             <>
                               <div className="chat_left">
                                 <p className="text_message">
-                                  {item.message_text}
+                                {item.type === "wink" ?  "😉" : item.message_text}
                                 </p>
                                 <span>
                                   <i className="far fa-clock"></i>

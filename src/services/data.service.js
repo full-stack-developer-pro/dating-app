@@ -94,14 +94,14 @@ const getAllFriend = (id) => {
 const searchUsers = (gender, country, minValue, maxValue) => {
   return axios.get(
     API_URL +
-      "api/user/getList?gender=" +
-      gender +
-      "&country=" +
-      country +
-      "&minValue=" +
-      minValue +
-      "&maxValue=" +
-      maxValue
+    "api/user/getList?gender=" +
+    gender +
+    "&country=" +
+    country +
+    "&minValue=" +
+    minValue +
+    "&maxValue=" +
+    maxValue
   );
 };
 const getChatBox = (myId, yourId) => {
@@ -139,6 +139,9 @@ const verifyPayment = (data) => {
 const UploadProfileImage = (data) => {
   return axios.post(API_URL + "api/uploadGalleryImages", data);
 };
+const PostFlirt = (id) => {
+  return axios.post(API_URL + "api/user/wink/" + id);
+};
 
 // const getCities = () => {
 //   return axios.get(API_URL + "api/getCountryCities/GB");
@@ -147,6 +150,7 @@ const getCities = (location) => {
   return axios.get(API_URL + "api/getCountryCities/GB?q=" + location);
 };
 const DataService = {
+  PostFlirt,
   helpdesk,
   TrackProfile,
   statusNotification,
