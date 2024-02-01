@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import NavbarProfile from "../common/NavbarProfile";
 import ProfileAvatar from "../images/profile-avatar.png"
+import LanguageSelector from "../common/LanguageSelector";
 
 
 const MAX_COUNT = 5;
@@ -34,13 +35,13 @@ const Profile = () => {
   // search filters 
   const [profile, setProfile] = useState([]);
   const userId = JSON.parse(localStorage.getItem("d_user"));
+  const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
 
 
   const sendFlirt = (id) => {
     DataService.PostFlirt(id).then(
       () => {
         toast.success("Wink Sent");
-
         setTimeout(() => {
         }, 2000)
       },
@@ -84,7 +85,6 @@ const Profile = () => {
     setIsListVisible(true); // Show the list when the input changes
   };
 
-  const [ageGroup, setAgeGroup] = useState("");
 
   const handleSliderChange = ({ minValue, maxValue }) => {
     setAgeGroup({ minValue, maxValue });
@@ -119,22 +119,20 @@ const Profile = () => {
 
 
   const searchData = async () => {
-    await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue).then(
-      (data) => {
-        setUsers(data?.data?.data.users);
-        ref.current.complete();
-        // toast.success("Data Searched");
-      },
-      (error) => {
-        const resMessage =
-          (error.response && error.response.data && error.response.data.msg) ||
-          error.message ||
-          error.toString();
-        setLoading(false);
-        toast.error("No Results Found with Selected Country & Gender!");
-        setUsers([]);
-      }
-    );
+    try {
+      const response = await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue);
+      setUsers(response?.data?.data.users);
+      ref.current.complete();
+      // toast.success("Data Searched");
+    } catch (error) {
+      const resMessage =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.message ||
+        error.toString();
+      setLoading(false);
+      toast.error("No Results Found with Selected Country & Gender!");
+      setUsers([]);
+    }
   };
 
   useEffect(() => {

@@ -217,7 +217,7 @@
 .image_uploaded {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
     margin-top: 7px;
 }
 .inner_images {

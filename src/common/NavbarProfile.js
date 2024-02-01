@@ -11,6 +11,7 @@ import moment from "moment";
 import NoImage from "../images/noImage.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import ProfileAvatar from "../images/profile-avatar.png";
+// import LanguageSelector from "./LanguageSelector";
 
 const NavbarProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -28,6 +29,9 @@ const NavbarProfile = () => {
   const userId = JSON.parse(localStorage.getItem("d_user"));
   const location = useLocation();
   const [selectedLanguage, setSelectedLanguage] = useState("");
+
+
+
 
   const handleImage = (e) => {
     e.target.src = NoImage;
@@ -109,7 +113,7 @@ const NavbarProfile = () => {
     data.ids = [id];
     DataService.UpdateNotification(data).then(
       () => {
-        setTimeout(() => {}, 2000);
+        setTimeout(() => { }, 2000);
       },
       (error) => {
         const resMessage =
@@ -173,68 +177,8 @@ const NavbarProfile = () => {
     }
   };
 
-  useEffect(() => {
-    const loadGoogleTranslate = () => {
-      if (!window.googleTranslateLoaded) {
-        window.googleTranslateElementInit = () => {
-          const translator = new window.google.translate.TranslateElement(
-            {
-              includedLanguages: "es,en,fr,pb",
-              layout:
-                window.google.translate.TranslateElement.InlineLayout
-                  .HORIZONTAL,
-            },
-            "google_translate_element"
-          );
 
-          // Set up an observer for changes in the Google Translate dropdown
-          const observer = new MutationObserver(() => {
-            const newLanguage = getSelectedLanguage();
-            if (newLanguage && newLanguage !== selectedLanguage) {
-              setSelectedLanguage(newLanguage);
-              changeDirection(newLanguage);
-            }
-          });
-
-          // Define the target node for the observer
-          const targetNode = document.querySelector(".goog-te-combo");
-
-          // Configure the observer
-          const config = { childList: true, subtree: true };
-
-          // Start observing the target node for changes
-          observer.observe(targetNode, config);
-
-          // Initialize direction based on the default selected language
-          changeDirection(selectedLanguage);
-        };
-
-        const script = document.createElement("script");
-        script.src =
-          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-        script.async = true;
-        document.head.appendChild(script);
-        window.googleTranslateLoaded = true;
-      }
-    };
-
-    const changeDirection = (language) => {
-      const body = document.body;
-      body.style.direction =
-        language === "ar" ? "rtl" : language === "en" ? "ltr" : "";
-    };
-
-    // Helper function to get the currently selected language
-    const getSelectedLanguage = () => {
-      const selectElement = document.querySelector(".goog-te-combo");
-      if (selectElement) {
-        return selectElement.value;
-      }
-      return null;
-    };
-
-    loadGoogleTranslate();
-  }, [selectedLanguage]);
+  
 
   return (
     <>
@@ -252,30 +196,30 @@ const NavbarProfile = () => {
                   </div>
                   {packages?.length > 0
                     ? packages?.map((item) => {
-                        return (
-                          <>
-                            <div className="payments_plan">
-                              <h2>{item.credits}</h2>
-                              <span className="bonus">{item.bonus}</span>
-                              <h4>credits</h4>
-                              <hr />
-                              <h3>Just For</h3>
-                              <p>
-                                <span>
-                                  {item.currency} {item.price}
-                                </span>
-                              </p>
-                              <hr />
-                              <button
-                                className="main_button"
-                                onClick={() => handlePayment(item.price)}
-                              >
-                                Purchase Now
-                              </button>
-                            </div>
-                          </>
-                        );
-                      })
+                      return (
+                        <>
+                          <div className="payments_plan">
+                            <h2>{item.credits}</h2>
+                            <span className="bonus">{item.bonus}</span>
+                            <h4>credits</h4>
+                            <hr />
+                            <h3>Just For</h3>
+                            <p>
+                              <span>
+                                {item.currency} {item.price}
+                              </span>
+                            </p>
+                            <hr />
+                            <button
+                              className="main_button"
+                              onClick={() => handlePayment(item.price)}
+                            >
+                              Purchase Now
+                            </button>
+                          </div>
+                        </>
+                      );
+                    })
                     : ""}
                 </div>
               </div>
@@ -299,8 +243,10 @@ const NavbarProfile = () => {
                 style={{ padding: "10px 0px" }}
               >
                 <div className="translater_main">
-                  <div id="google_translate_element"></div>
+                <div id="google_translate_element"></div>
+                  {/* <LanguageSelector /> */}
                 </div>
+                {/* <div id="google_translate_element"></div> */}
 
                 {notification && (
                   <div className="notification_main profile_notification">
@@ -311,42 +257,12 @@ const NavbarProfile = () => {
                         </div>
                         {notifications?.length > 0
                           ? notifications?.map((item) => {
-                              return (
-                                <>
-                                  {item?.user ? (
-                                    <Link
-                                      to={"/single-profile/" + item?.user?.id}
-                                    >
-                                      <div
-                                        className="mainnotification_text"
-                                        onClick={() =>
-                                          handleNotification(item.id)
-                                        }
-                                      >
-                                        <div className="ntificationone">
-                                          <img
-                                            src={
-                                              item?.user
-                                                ? item?.user?.profile_path
-                                                : ProfileAvatar
-                                            }
-                                            alt="notification_image"
-                                          />
-                                        </div>
-                                        <div className="notification_text">
-                                          <p>{item?.body}</p>
-
-                                          <h2>
-                                            {item?.created_at
-                                              ? moment(item?.created_at).format(
-                                                  "LT"
-                                                )
-                                              : " "}
-                                          </h2>
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  ) : (
+                            return (
+                              <>
+                                {item?.user ? (
+                                  <Link
+                                    to={"/single-profile/" + item?.user?.id}
+                                  >
                                     <div
                                       className="mainnotification_text"
                                       onClick={() =>
@@ -355,25 +271,55 @@ const NavbarProfile = () => {
                                     >
                                       <div className="ntificationone">
                                         <img
-                                          src={ProfileAvatar}
+                                          src={
+                                            item?.user
+                                              ? item?.user?.profile_path
+                                              : ProfileAvatar
+                                          }
                                           alt="notification_image"
                                         />
                                       </div>
                                       <div className="notification_text">
                                         <p>{item?.body}</p>
+
                                         <h2>
                                           {item?.created_at
                                             ? moment(item?.created_at).format(
-                                                "LT"
-                                              )
+                                              "LT"
+                                            )
                                             : " "}
                                         </h2>
                                       </div>
                                     </div>
-                                  )}
-                                </>
-                              );
-                            })
+                                  </Link>
+                                ) : (
+                                  <div
+                                    className="mainnotification_text"
+                                    onClick={() =>
+                                      handleNotification(item.id)
+                                    }
+                                  >
+                                    <div className="ntificationone">
+                                      <img
+                                        src={ProfileAvatar}
+                                        alt="notification_image"
+                                      />
+                                    </div>
+                                    <div className="notification_text">
+                                      <p>{item?.body}</p>
+                                      <h2>
+                                        {item?.created_at
+                                          ? moment(item?.created_at).format(
+                                            "LT"
+                                          )
+                                          : " "}
+                                      </h2>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })
                           : ""}
                       </div>
                     </div>
@@ -425,42 +371,12 @@ const NavbarProfile = () => {
                           </div>
                           {notifications?.length > 0
                             ? notifications?.map((item) => {
-                                return (
-                                  <>
-                                    {item?.user ? (
-                                      <Link
-                                        to={"/single-profile/" + item?.user?.id}
-                                      >
-                                        <div
-                                          className="mainnotification_text"
-                                          onClick={() =>
-                                            handleNotification(item.id)
-                                          }
-                                        >
-                                          <div className="ntificationone">
-                                            <img
-                                              src={
-                                                item?.user
-                                                  ? item?.user?.profile_path
-                                                  : ProfileAvatar
-                                              }
-                                              alt=""
-                                            />
-                                          </div>
-                                          <div className="notification_text">
-                                            <p>{item?.body}</p>
-
-                                            <h2>
-                                              {item?.created_at
-                                                ? moment(
-                                                    item?.created_at
-                                                  ).format("LT")
-                                                : " "}
-                                            </h2>
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ) : (
+                              return (
+                                <>
+                                  {item?.user ? (
+                                    <Link
+                                      to={"/single-profile/" + item?.user?.id}
+                                    >
                                       <div
                                         className="mainnotification_text"
                                         onClick={() =>
@@ -470,8 +386,8 @@ const NavbarProfile = () => {
                                         <div className="ntificationone">
                                           <img
                                             src={
-                                              item?.image
-                                                ? item?.image?.url
+                                              item?.user
+                                                ? item?.user?.profile_path
                                                 : ProfileAvatar
                                             }
                                             alt=""
@@ -479,19 +395,49 @@ const NavbarProfile = () => {
                                         </div>
                                         <div className="notification_text">
                                           <p>{item?.body}</p>
+
                                           <h2>
                                             {item?.created_at
-                                              ? moment(item?.created_at).format(
-                                                  "LT"
-                                                )
+                                              ? moment(
+                                                item?.created_at
+                                              ).format("LT")
                                               : " "}
                                           </h2>
                                         </div>
                                       </div>
-                                    )}
-                                  </>
-                                );
-                              })
+                                    </Link>
+                                  ) : (
+                                    <div
+                                      className="mainnotification_text"
+                                      onClick={() =>
+                                        handleNotification(item.id)
+                                      }
+                                    >
+                                      <div className="ntificationone">
+                                        <img
+                                          src={
+                                            item?.image
+                                              ? item?.image?.url
+                                              : ProfileAvatar
+                                          }
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div className="notification_text">
+                                        <p>{item?.body}</p>
+                                        <h2>
+                                          {item?.created_at
+                                            ? moment(item?.created_at).format(
+                                              "LT"
+                                            )
+                                            : " "}
+                                        </h2>
+                                      </div>
+                                    </div>
+                                  )}
+                                </>
+                              );
+                            })
                             : ""}
                         </div>
                       </div>

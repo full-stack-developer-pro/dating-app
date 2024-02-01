@@ -98,9 +98,9 @@ const searchUsers = (gender, country, minValue, maxValue) => {
     gender +
     "&country=" +
     country +
-    "&minValue=" +
+    "&min_age=" +
     minValue +
-    "&maxValue=" +
+    "&max_age=" +
     maxValue
   );
 };
