@@ -4,11 +4,12 @@ import "../customCss/Navbar.css";
 import OP from "../images/dating-banner.jpg";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DataService from "../services/data.service";
-import profile1 from "../images/profile1.jpg"
+import profile1 from "../images/profile1.jpg";
 import moment from "moment";
+import ProfileAvatar from "../images/profile-avatar.png";
 const Navbar = () => {
   const auth = AuthService.getCurrentUserTokken();
   const navigate = useNavigate();
@@ -48,21 +49,19 @@ const Navbar = () => {
 
   const [inputValue, setInputValue] = useState("");
 
-
   const userId = JSON.parse(localStorage.getItem("d_user"));
-
 
   const getUserProfile = async () => {
     if (auth) {
       await DataService.getSingleProfile(userId).then((data) => {
         setProfile(data?.data?.data?.user);
-      })
+      });
     }
   };
 
   useEffect(() => {
-    getUserProfile()
-  }, [])
+    getUserProfile();
+  }, []);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -163,8 +162,8 @@ const Navbar = () => {
       await AuthService.register(data).then(
         () => {
           setLoading(false);
-          toast.success('Profile create successfully!', {
-            position: toast.POSITION.TOP_RIGHT
+          toast.success("Profile create successfully!", {
+            position: toast.POSITION.TOP_RIGHT,
           });
           // navigate('/login-page')
 
@@ -180,9 +179,10 @@ const Navbar = () => {
 
           setLoading(false);
           toast.error(resMessage, {
-            position: toast.POSITION.TOP_RIGHT
+            position: toast.POSITION.TOP_RIGHT,
           });
-        });
+        }
+      );
     }
   };
   const [loading, setLoading] = useState(false);
@@ -191,8 +191,8 @@ const Navbar = () => {
   const [password, setPassword] = useState("");
   const [packages, setPackages] = useState("");
   const [payments, setPayments] = useState(false);
-  const [notifications, setNotifications] = useState('');
-  const [notificationLength, setNotificationLength] = useState('');
+  const [notifications, setNotifications] = useState("");
+  const [notificationLength, setNotificationLength] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -200,10 +200,10 @@ const Navbar = () => {
     setLoading(true);
     AuthService.login(username, password).then(
       () => {
-        toast.success("Login Successfull!!")
+        toast.success("Login Successfull!!");
         setTimeout(() => {
           navigate("/profile");
-        }, 2000)
+        }, 2000);
       },
       (error) => {
         const resMessage =
@@ -225,7 +225,7 @@ const Navbar = () => {
     localStorage.removeItem("d_userToken");
     navigate("/");
     window.location.reload();
-  }
+  };
 
   const handlePayment = (price) => {
     setMessage("");
@@ -246,9 +246,7 @@ const Navbar = () => {
       },
       (error) => {
         const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.msg) ||
+          (error.response && error.response.data && error.response.data.msg) ||
           error.message ||
           error.toString();
         setLoading(false);
@@ -262,35 +260,32 @@ const Navbar = () => {
     if (auth) {
       await DataService.getPackages().then((data) => {
         setPackages(data?.data?.data);
-
-      })
+      });
     }
   };
   useEffect(() => {
-    getPlans()
-  }, [])
+    getPlans();
+  }, []);
 
   const getNotifications = async () => {
     if (auth) {
       await DataService.getNotification().then((data) => {
         setNotifications(data?.data?.data?.notifications);
-        setNotificationLength(data?.data?.data?.counts.unread)
-      })
+        setNotificationLength(data?.data?.data?.counts.unread);
+      });
     }
   };
- 
+
   useEffect(() => {
-    getNotifications()
-  }, [])
+    getNotifications();
+  }, []);
 
   const handleNotification = (id) => {
-    const data = {}
-    data.ids = [id]
+    const data = {};
+    data.ids = [id];
     DataService.UpdateNotification(data).then(
       () => {
-        setTimeout(() => {
-
-        }, 2000)
+        setTimeout(() => {}, 2000);
       },
       (error) => {
         const resMessage =
@@ -308,7 +303,6 @@ const Navbar = () => {
     );
   };
 
-
   // const handleME = (e) => {
   //   e.target.src = { profile1 }
   // }
@@ -321,56 +315,61 @@ const Navbar = () => {
           <div className="payments_inner">
             <div className="container">
               <div className="payments_flexOne">
-
                 <div className="payment_bg">
                   <div className="cross_btn">
-                    <i onClick={() => setPayments(false)} class="fas fa-window-close"></i>
+                    <i
+                      onClick={() => setPayments(false)}
+                      class="fas fa-window-close"
+                    ></i>
                   </div>
-                  {
-                    packages?.length > 0 ? packages?.map((item) => {
-                      return (
-                        <>
-
-                          <div className="payments_plan">
-                            <h2>{item.credits}</h2>
-                            <span className="bonus">{item.bonus}</span>
-                            <h4>credits</h4>
-                            <hr />
-                            <h3>Just For</h3>
-                            <p>
-                              <span>{item.currency} {item.price}</span>
-                            </p>
-                            <hr />
-                            <button className="main_button" onClick={() => handlePayment(item.price)}>Purchase Now</button>
-                          </div>
-                        </>
-                      )
-                    }) : ""
-                  }
+                  {packages?.length > 0
+                    ? packages?.map((item) => {
+                        return (
+                          <>
+                            <div className="payments_plan">
+                              <h2>{item.credits}</h2>
+                              <span className="bonus">{item.bonus}</span>
+                              <h4>credits</h4>
+                              <hr />
+                              <h3>Just For</h3>
+                              <p>
+                                <span>
+                                  {item.currency} {item.price}
+                                </span>
+                              </p>
+                              <hr />
+                              <button
+                                className="main_button"
+                                onClick={() => handlePayment(item.price)}
+                              >
+                                Purchase Now
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })
+                    : ""}
                 </div>
-
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {
-        auth && (
-          <>
-            <div className="credits_box" style={{ padding: "10px 0px" }}>
-              {notification && (
-                <div className="notification_main">
-                  <div className="notification_pop">
-                    <div className="payment_bg_notification">
-                      <div className="notification_heading">
-                        <h2>Notifications</h2>
-                      </div>
-                      {
-                        notifications?.length > 0 ? notifications?.map((item) => {
+      {auth && (
+        <>
+          <div className="credits_box" style={{ padding: "10px 0px" }}>
+            {notification && (
+              <div className="notification_main">
+                <div className="notification_pop">
+                  <div className="payment_bg_notification">
+                    <div className="notification_heading">
+                      <h2>Notifications</h2>
+                    </div>
+                    {notifications?.length > 0
+                      ? notifications?.map((item) => {
                           return (
                             <>
-
                               {/* {item?.user ? (
                                 <Link to={"/single-profile/" + item?.user?.id}>
                                   <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
@@ -390,62 +389,86 @@ const Navbar = () => {
 
                               {item?.user ? (
                                 <Link to={"/single-profile/" + item?.user?.id}>
-                                  <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                  <div
+                                    className="mainnotification_text"
+                                    onClick={() => handleNotification(item.id)}
+                                  >
                                     <div className="ntificationone">
-                                      <img src={item?.user ? item?.user?.profile_path : profile1} />
+                                      <img
+                                        src={
+                                          item?.user
+                                            ? item?.user?.profile_path
+                                            : ProfileAvatar
+                                        }
+                                        alt="notification_image"
+                                      />
                                     </div>
                                     <div className="notification_text">
-                                      <p>
-                                        {item?.body}
-                                      </p>
+                                      <p>{item?.body}</p>
 
-                                      <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
+                                      <h2>
+                                        {item?.created_at
+                                          ? moment(item?.created_at).format(
+                                              "LT"
+                                            )
+                                          : " "}
+                                      </h2>
                                     </div>
                                   </div>
                                 </Link>
                               ) : (
-                                <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
+                                <div
+                                  className="mainnotification_text"
+                                  onClick={() => handleNotification(item.id)}
+                                >
                                   <div className="ntificationone">
-                                    <img src={profile1} />
+                                    <img
+                                      src={item?.image ? item?.image?.url : ProfileAvatar}
+                                      alt="notification_image"
+                                    />
                                   </div>
                                   <div className="notification_text">
-                                    <p>
-                                      {item?.body}
-                                    </p>
-                                    <h2>{item?.created_at ? moment(item?.created_at).format('LT') : " "}</h2>
+                                    <p>{item?.body}</p>
+                                    <h2>
+                                      {item?.created_at
+                                        ? moment(item?.created_at).format("LT")
+                                        : " "}
+                                    </h2>
                                   </div>
                                 </div>
                               )}
-
                             </>
-                          )
-                        }) : ""
-                      }
-                    </div>
+                          );
+                        })
+                      : ""}
                   </div>
                 </div>
-              )}
-              <div className="notification_area">
-                <i onClick={() => setShowNotification(!notification)} class="fas fa-bell"></i>
-                <div className="notification_count">
-                  <h1>{notificationLength}</h1>
-                </div>
               </div>
-              <div className="span_credits">
-                <h1>Account Balance</h1>
-                <p><b style={{ marginRight: "10px" }}>{profile?.credits}</b> Credits</p>
-              </div>
-              <div className="buy_nowbtn">
-              <Link to="/packages">
-                <button className="main_buttonTwo credits" >
-                  Buy now
-                </button>
-                </Link>
+            )}
+            <div className="notification_area">
+              <i
+                onClick={() => setShowNotification(!notification)}
+                class="fas fa-bell"
+              ></i>
+              <div className="notification_count">
+                <h1>{notificationLength}</h1>
               </div>
             </div>
-          </>
-        )
-      }
+            <div className="span_credits">
+              <h1>Account Balance</h1>
+              <p>
+                <b style={{ marginRight: "10px" }}>{profile?.credits}</b>{" "}
+                Credits
+              </p>
+            </div>
+            <div className="buy_nowbtn">
+              <Link to="/packages">
+                <button className="main_buttonTwo credits">Buy now</button>
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="main_navbar">
         <div className="navbar_flex">
@@ -455,7 +478,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="navbarR">
-            {auth ?
+            {auth ? (
               <>
                 {/* <div className="span_credits">
                 <h1>Account Balance</h1>
@@ -464,22 +487,29 @@ const Navbar = () => {
                 {/* <button className="main_buttonTwo credits" >
                Buy now
                 </button> */}
-                <button className="main_buttonTwo" onClick={() => navigate("/profile")}>
+                <button
+                  className="main_buttonTwo"
+                  onClick={() => navigate("/profile")}
+                >
                   My Profile<i class="fas fa-user"></i>
                 </button>
                 <button className="main_button" onClick={logout}>
                   Logout<i class="fas fa-sign-in-alt"></i>
                 </button>
               </>
-              :
-              <><button className="main_buttonTwo" onClick={() => setLogin(true)}>
-                Login<i class="fas fa-sign-in-alt"></i>
-              </button>
+            ) : (
+              <>
+                <button
+                  className="main_buttonTwo"
+                  onClick={() => setLogin(true)}
+                >
+                  Login<i class="fas fa-sign-in-alt"></i>
+                </button>
                 {/* <button className="main_button" onClick={() => window.location.href = "/#signup"}>
               Signup<i class="fas fa-user"></i>
             </button> */}
               </>
-            }
+            )}
           </div>
 
           {login && (
@@ -490,9 +520,7 @@ const Navbar = () => {
                 </button>
                 <div className="signup_inner ">
                   <h2>Login</h2>
-                  <p>
-                    Enter your details to login
-                  </p>
+                  <p>Enter your details to login</p>
                   <div className="signup_formSec">
                     <form>
                       {showError && (
@@ -522,7 +550,9 @@ const Navbar = () => {
                       </div>
                       <p className="forgot_pass">Forgot Password</p>
                       <div className="form_field">
-                        <button className="main_button" onClick={handleLogin}>Submit</button>
+                        <button className="main_button" onClick={handleLogin}>
+                          Submit
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -574,19 +604,34 @@ const Navbar = () => {
                           <td>$12</td>
                         </tr>
                         <tr>
-                          <td><strong>Discount:</strong></td><td>$0</td>
+                          <td>
+                            <strong>Discount:</strong>
+                          </td>
+                          <td>$0</td>
                         </tr>
                         <tr>
-                          <td><strong>Shipping:</strong></td><td>$0</td>
+                          <td>
+                            <strong>Shipping:</strong>
+                          </td>
+                          <td>$0</td>
                         </tr>
                         <tr>
-                          <td><strong>Tax:</strong></td><td>$12</td>
+                          <td>
+                            <strong>Tax:</strong>
+                          </td>
+                          <td>$12</td>
                         </tr>
                         <tr>
-                          <td><strong>Order Total:</strong></td><td>$71</td>
+                          <td>
+                            <strong>Order Total:</strong>
+                          </td>
+                          <td>$71</td>
                         </tr>
                         <tr>
-                          <td style={{ color: 'tomato' }}><strong>Refunded:</strong></td><td style={{ color: 'tomato' }}>-$0</td>
+                          <td style={{ color: "tomato" }}>
+                            <strong>Refunded:</strong>
+                          </td>
+                          <td style={{ color: "tomato" }}>-$0</td>
                         </tr>
                       </tbody>
                     </table>
@@ -684,7 +729,6 @@ const Navbar = () => {
                         </button>
                       </div>
                     </>
-
                   </div>
                 </div>
               </div>
