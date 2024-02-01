@@ -9,7 +9,8 @@ import LoadingBar from "react-top-loading-bar";
 import NavbarProfile from "../common/NavbarProfile";
 import ProfileAvatar from "../images/profile-avatar.png";
 // import { useHistory } from 'react-router-dom';
-// import EmojiPicker from 'emoji-picker-react';
+// import EmojiPicker  from 'emoji-picker-react';
+// import Picker from 'emoji-picker-react';
 
 const Chats = () => {
   const params = useParams();
@@ -32,6 +33,16 @@ const Chats = () => {
   const [payments, setPayments] = useState(false);
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
+
+
+  // const [chosenEmoji, setChosenEmoji] = useState(null);
+
+  // const onEmojiClick = (event, emojiObject) => {
+  //   console.log(emojiObject)
+  //   setChosenEmoji(emojiObject);
+
+  // };
+
 
   useEffect(() => {
     chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -89,7 +100,7 @@ const Chats = () => {
     socket.send(JSON.stringify(data));
     await getExpandedChat();
     document.getElementById("main_input").value = "";
-    
+
   };
 
   const setUser = () => {
@@ -240,7 +251,7 @@ const Chats = () => {
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-        <div className="show_edit_bgarea">
+      <div className="show_edit_bgarea_message">
           <div className="chat_sec">
             <div className="chat_flex">
               <div className="chat_flexL  hide_meY">
@@ -390,35 +401,43 @@ const Chats = () => {
                       <p>Select a Chat to proceed</p>
                     </>
                   )}
-                
+
                   <div ref={chatBoxRef}></div>
                 </div>
                 <div className="chat_footer">
-                    <form onSubmit={sendMessage}>
-                      <div className="chat_footer_flex">
-                        {/* <EmojiPicker /> */}
-                        <input
-                          type="text"
-                          placeholder="Type Your Message ..."
-                          className="form-control"
-                          autoFocus={true}
-                          ref={inputRef}
-                          // disabled={fDisabled}
-                          // value={message}
-                          id="main_input"
-                          // onChange={(e) => setMessage(e.target.value)}
-                        />
-                        <button
-                          className="main_button"
-                          // disabled={fDisabled}
-                          onClick={sendMessage}
-                        >
-                          <i class="fas fa-paper-plane"></i>
-                        </button>
+                  <form onSubmit={sendMessage}>
+                    <div className="chat_footer_flex">
+                      {/* <EmojiPicker /> */}
+                      <input
+                        type="text"
+                        placeholder="Type Your Message ..."
+                        className="form-control"
+                        autoFocus={true}
+                        ref={inputRef}
+                        // disabled={fDisabled}
+                        // value={message}
+                        id="main_input"
+                      // onChange={(e) => setMessage(e.target.value)}
+                      />
+                      <div>
+                        {/* <Picker onEmojiClick={onEmojiClick} />
+                        {chosenEmoji && (
+                          <div>
+                            <h2>You selected: {chosenEmoji.emoji}</h2>
+                          </div>
+                        )} */}
                       </div>
-                    </form>
-                    {/* <div ref={chatBoxRef} style={{height: '3px',width: '50%',backgroundColor:'red'}}></div> */}
-                  </div>
+                      <button
+                        className="main_button"
+                        // disabled={fDisabled}
+                        onClick={sendMessage}
+                      >
+                        <i class="fas fa-paper-plane"></i>
+                      </button>
+                    </div>
+                  </form>
+                  {/* <div ref={chatBoxRef} style={{height: '3px',width: '50%',backgroundColor:'red'}}></div> */}
+                </div>
               </div>
             </div>
           </div>

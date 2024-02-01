@@ -1302,6 +1302,7 @@ ul.location_new {
 
     .active_secFlex {
         flex-direction: column;
+        align-items: center;
     }
 
     .activeL {

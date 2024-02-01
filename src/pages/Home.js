@@ -822,7 +822,7 @@ const Home = () => {
 
                           <div className="col-sm-12">
                             <div class="select_singup">
-                            <label for="floatingInput">Marital Status</label>
+                              <label for="floatingInput">Marital Status</label>
 
                               <select value={maritalstatus}
                                 onChange={(e) =>
@@ -1054,14 +1054,15 @@ const Home = () => {
             <div className="about_flexL">
               {middleBanner?.images?.length > 0 ? (
                 <img
+                  onError={handleBottom}
                   src={
                     "http://api.digitalmarketingcoursesinchandigarh.in/" + middleBanner?.images[0]?.path
                   }
                   alt=""
                 />
-              ) : (
-                <img src={DatingCouple} alt="" />
-              )}
+              ) :
+                ""
+              }
             </div>
             <div className="about_flexR">
               <h2>{middleBanner?.heading}</h2>
@@ -1189,7 +1190,7 @@ const Home = () => {
 
 
               </div>
-       
+
 
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
@@ -1205,7 +1206,7 @@ const Home = () => {
                               <div className="active_mainL">
                                 {/* ProfileOne */}
                                 <Link to={"/single-profile/" + item.id}>
-                                <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImage} />
+                                  <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImage} />
                                 </Link>
                               </div>
                               <div className="active_mainR">
@@ -1306,20 +1307,20 @@ const Home = () => {
                 }}
               ></p>
               {
-              !auth && (
-                <button
-                className="main_button"
-                onClick={() => (window.location.href = "/#signup")}
-              >
-                Join For Free Here Right Now
-              </button>
-              )}
-             
+                !auth && (
+                  <button
+                    className="main_button"
+                    onClick={() => (window.location.href = "/#signup")}
+                  >
+                    Join For Free Here Right Now
+                  </button>
+                )}
+
             </div>
             <div className="about_flexL">
               {secondLastBanner?.images?.length > 0 ? (
                 <img
-                onError={handleBottom}
+                  onError={handleBottom}
                   src={
                     "http://api.digitalmarketingcoursesinchandigarh.in/" +
                     secondLastBanner?.images[0]?.path

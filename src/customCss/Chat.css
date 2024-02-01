@@ -1,7 +1,13 @@
 .ntificationone {
     width: 20%;
 }
-
+.show_edit_bgarea_message{
+    width: 95%;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
 .payment_bg_notification {
     max-height: 35vh;
     overflow-y: scroll;
