@@ -70,7 +70,7 @@ const MyFriends = () => {
         toast.success("Friend Removed Successfully!!", {
           position: toast.POSITION.TOP_RIGHT,
         });
-
+        window.location.reload()
         getUserProfile();
       },
       (error) => {

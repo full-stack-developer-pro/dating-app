@@ -254,7 +254,7 @@ const Chats = () => {
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-        <div className="show_edit_bgarea">
+        <div className="show_edit_bgarea_message">
           {payments && (
             <div className="payments_popup">
               <div className="payments_inner">

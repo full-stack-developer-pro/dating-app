@@ -17,9 +17,9 @@
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
+    width: 55px;
+    height: 28px;
+}
 
   .edit_profile_area {
     width: 55% !important;
@@ -41,18 +41,16 @@
     -webkit-transition: .4s;
     transition: .4s;
   }
-  
   .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
+    height: 20px;
+    width: 20px;
+    left: 5px;
     bottom: 4px;
     background-color: white;
-    -webkit-transition: .4s;
     transition: .4s;
-  }
+}
   
   input:checked + .slider {
     background-color: #ef48b5;
@@ -497,7 +495,7 @@ background: none;
         width: 100%;
     }
     .notification_turn h2 {
-        font-size: 14px;
+        font-size: 16px;
         margin: 0px;
     }
     .enable_notification {
@@ -561,7 +559,7 @@ background: none;
         top: 0;
         background: #fff;
         right: 0;
-        width: 60%;
+        width: 30%;
         height: 15%;
         display: flex;
         align-items: center;

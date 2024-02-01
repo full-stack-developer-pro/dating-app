@@ -106,7 +106,11 @@ const EditProfile = () => {
       setEmail(data?.data?.data?.user?.email)
       setPassword(data?.data?.data?.user?.password)
       setProfileImage(data?.data?.data?.user?.profile_path)
-      setNotificationValue(data?.data?.data?.user?.send_notifications)
+      const sendNotificationsValue = data?.data?.data?.user?.send_notifications;
+
+      setNotificationValue(sendNotificationsValue);
+
+      setNotificationStatus(sendNotificationsValue === 1 ? "on" : "off");
 
       ref.current.complete();
     });
@@ -587,10 +591,12 @@ const EditProfile = () => {
                     <div className="enable_notification">
                       <h2>Enable all email notifications</h2>
                       <label class="switch">
-                        <input type="checkbox"
+                        <input
+                          type="checkbox"
                           value={notificationValue}
                           checked={notificationStatus === "on"}
-                          onChange={(e) => setNotificationStatus(e.target.checked ? "on" : "off")} />
+                          onChange={(e) => setNotificationStatus(e.target.checked ? "on" : "off")}
+                        />
                         <span class="slider round" ></span>
                       </label>
                     </div>
