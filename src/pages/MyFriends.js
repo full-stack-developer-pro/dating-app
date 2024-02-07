@@ -124,7 +124,7 @@ const MyFriends = () => {
     <>
       <NavbarProfile />
       <div className="container">
-        <div className="show_edit_bgarea">
+        <div className="show_edit_bgareatwo">
           {addFriend?.friends?.length > 0 ? <h2 className="text-center mt-5 mb-4">My Friends</h2> : ""}
           <div className="allFriend-column">
             {addFriend && addFriend?.friends?.length > 0 ? (
