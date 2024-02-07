@@ -97,15 +97,7 @@ const ProfileMain = () => {
                                     <p>:</p>
                                     <p>{moment(profile?.birthdate).format("LL")}</p>
                                 </div>
-                                <div className="profileEntry">
-                                    <p>
-                                        <i class="fas fa-map-marker-alt"></i> Country
-                                    </p>
-                                    <p>:</p>
-                                    <p>
-                                        {profile?.country}
-                                    </p>
-                                </div>
+                             
                                 {/* <div className="profileEntry">
                   <p>
                     <i class="fas fa-clock"></i> Timezone
@@ -122,6 +114,15 @@ const ProfileMain = () => {
                 </div> */}
                             </div>
                             <div className="profile_dFlexR">
+                            <div className="profileEntry">
+                                    <p>
+                                        <i class="fas fa-map-marker-alt"></i> Country
+                                    </p>
+                                    <p>:</p>
+                                    <p>
+                                        {profile?.country}
+                                    </p>
+                                </div>
                                 {/* <div className="profileEntry">
                   <p>
                     <i class="fas fa-weight"></i> Weight
@@ -129,7 +130,7 @@ const ProfileMain = () => {
                   <p>:</p>
                   <p>{profile?.weight}Kg</p>
                 </div> */}
-                                <div className="profileEntry">
+                                {/* <div className="profileEntry">
                                     <p>
                                         <i class="fas fa-eye"></i> Eye Color
                                     </p>
@@ -142,7 +143,7 @@ const ProfileMain = () => {
                                     </p>
                                     <p>:</p>
                                     <p>{profile?.hair_color}</p>
-                                </div>
+                                </div> */}
                                 {/* <div className="profileEntry">
                   <p>
                     <i class="fab fa-servicestack"></i> Hair Length

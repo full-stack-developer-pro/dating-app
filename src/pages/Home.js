@@ -802,7 +802,7 @@ const Home = () => {
                           <span className="four">4</span>
                         </div>
 
-                        <div className="form-field row mb-3">
+                        {/* <div className="form-field row mb-3">
                           <div className="col-sm-6">
                             <div class="select_singup">
                               <label for="floatingInput">Eye Color</label>
@@ -811,15 +811,7 @@ const Home = () => {
                                 <option value="Black">Black</option>
                                 <option value="Brown">Brown</option>
                               </select>
-                              {/* <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder=""
-                                required
-                             
-                              />
-                             */}
+                            
                             </div>
                           </div>
                           <div className="col-sm-6">
@@ -830,18 +822,10 @@ const Home = () => {
                                 <option value="Black">Black</option>
                                 <option value="Brown">Brown</option>
                               </select>
-                              {/* <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder=""
-                                required
-                                value={haircolor}
-                                onChange={(e) => setHairColor(e.target.value)}
-                              /> */}
+                           
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="form-field row mb-3">
 
                           <div className="col-sm-12">
