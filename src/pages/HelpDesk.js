@@ -71,7 +71,7 @@ const HelpDesk = () => {
                                     <textarea onChange={(e) => setDescription(e.target.value)} name="question" placeholder="Please write here..." class="textarea" rows={6}></textarea>
                                 </div>
                                 <div className='help_desk_btn'>
-                                    <button className='main_buttonTwo credits'>Save</button>
+                                    <button className='main_buttonTwo credits'>Submit</button>
                                 </div>
                             </form>
                         ) : (
