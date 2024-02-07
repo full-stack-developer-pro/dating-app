@@ -490,11 +490,7 @@ span.bonus {
         padding: 40px 0px;
     }
 
-    .notification_main {
-        width: 86%;
-        right: 6%;
-        top: 67px;
-    }
+  
 
     .chat_flex {
         flex-direction: column;

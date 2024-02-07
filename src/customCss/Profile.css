@@ -87,7 +87,17 @@
     font-size: 18px;
     padding: 20px 0px;
 }
-.show_edit_bgarea {
+.show_edit_bgareaone {
+    background: #fff;
+    padding: 16px 15px;
+    margin: 10px 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    width: 55%;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.show_edit_bgareatwo {
     background: #fff;
     padding: 16px 15px;
     margin: 10px 10px;
@@ -451,6 +461,7 @@ background: none;
     display: none;
 }
 @media screen and (max-width: 767px) {
+  
     .mobile_hide_credits {
         display: block;
     }
@@ -643,7 +654,105 @@ background: none;
         height: 48vh;
     }
 }
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+    .notification_main {
+        width: 45% !important;
+        right: 42% !important;
+        top: 67px !important;
+    }
+    .searchBar input {
+        font-size: 12px !important;
+    }
+    .chat_outerName h5 {
+        font-size: 12px !important;
+    }
+    .chat_outerImg {
+        width: 10% !important;
+        margin-right: 35px !important;
+    }
+    .chat_outerName {
+        width: 90% !important;
+    }
+    .main_button {
+        font-size: 14px;
+    }
+    .show_edit_bgareaone {
+        width: 90%;
+    }
+    .profileFlexR {
+        width: 60%;
+    }
+    .profileFlexL {
+        width: 40%;
+    }
+    .verified_badge {
+        position: absolute;
+        right: 0;
+        top: -30%;
+        width: 18%;
+    }
 
+    .profile_dFlexL {
+        width: 45%;
+        margin-right: 10%;
+        position: relative;
+    }
+    .profile_dFlexR {
+        width: 45%;
+    }
+  .Mobile_profile {
+        width: 50%;
+    }
+    .single_Pflex .single_pM {
+        width: 45% !important;
+    }
+    .single_pL_main {
+        width: 25% !important;
+    }
+    .single_pR_main {
+        width: 31% !important;
+    }
+    .send_m {
+        font-size: 12px;
+    }
+    .new_gender {
+        flex-wrap: wrap;
+    }
+    .content_sec h1 {
+        font-size: 38px;
+        line-height: 58px;
+    }
+    .profile_title h2 {
+        font-size: 14px;
+    }
+    .profile_title p:first-of-type {
+        font-size: 14px;
+    }
+    .gallery_innerNew {
+        width: 46%;
+    }
+    .upload-box {
+        width: 60%;
+    }
+    .profile_bannerSec h1 {
+        font-size: 45px;
+    }
+    .credits_box {
+        margin: 0px 10px;
+    }
+    .navbar_flex {
+        margin: 0px 5px;
+    }
+    .search_formSec .search_submit {
+        font-size: 14px;
+    }
+    .gallery_inner {
+        width: 46% !important;
+    }
+    .signup_popup {
+        min-width: 70%;
+    }
+}
 @media screen and (min-width: 1000px) and (max-width: 1400px) {
     .edit_image {
         width: 45%;

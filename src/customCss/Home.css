@@ -1457,6 +1457,30 @@ ul.location_new {
         word-break: break-word;
     }
 }
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+    .active_mainProfile{
+        width: 48%;
+    }
+    .active_actionSec button {
+        font-size: 8px;
+    }
+    .search_gender_inner {
+        width: 30%;
+        padding-left: 0px;
+    }
+    .allFriend-column .active_mainProfile {
+        width: 46% !important;
+    }
+    .content_sec {
+        width: 60%;
+        padding: 0px 40px;
+        padding-left: 8%;
+    }
+    .signup_sec {
+        width: 40%;
+    }
+   
+}
 @keyframes random {
     0% {
         width: 60px

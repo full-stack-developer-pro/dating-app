@@ -32,7 +32,7 @@ const ProfileMain = () => {
         <>
             <NavbarProfile />
             <div className='container'>
-                <div className="show_edit_bgarea">
+                <div className="show_edit_bgareatwo">
                     <div className="profileFlex">
                         <div className="profileFlexL">
                             <img onError={handleImage} src={profile?.profile_path} />

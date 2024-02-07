@@ -184,13 +184,20 @@ const SingleLProfile = () => {
   }
   return (
     <>
-      <NavbarProfile />
+      {
+        auth ? <NavbarProfile />
+          : (
+            <>
+              <Navbar />
+              <section className="profile_bannerSec" style={{ padding: "60px 0px", minHeight: "40vh" }}>
+                <div className="container">
+                  <h1>User Profile</h1>
+                </div>
+              </section>
+            </>
+          )
+      }
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
-      {/* <section className="profile_bannerSec" style={{ padding: "60px 0px", minHeight: "40vh" }}>
-        <div className="container">
-          <h1>User Profile</h1>
-        </div>
-      </section> */}
       <section className="single_profileArea">
         <div className="container">
           <div className="single_Pflex">

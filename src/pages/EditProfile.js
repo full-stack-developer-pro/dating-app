@@ -307,7 +307,7 @@ const EditProfile = () => {
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-        <div className="show_edit_bgarea edit_profile_area">
+        <div className="show_edit_bgareaone">
 
           <div className="edit_profile_function" >
             <button className={showEditProfile ? 'active' : ''} onClick={() => handleButtonClick('edit')} style={{ color: "#000", fontSize: "18px", fontWeight: "600" }}>Edit my profile</button>
