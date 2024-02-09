@@ -17,7 +17,7 @@ const Resetlink = () => {
         }
         DataService.ForgotEmail(data).then(
             () => {
-                toast.success("Link sent to yuor email");
+                toast.success("Link sent to your email");
             },
             (error) => {
                 const resMessage =
