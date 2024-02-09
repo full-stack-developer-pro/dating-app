@@ -13,6 +13,7 @@
 }
 .yellow_area i { 
   margin-right: 20px;
+  cursor: pointer;
 }
 .packages_box_area {
     min-height: 50vh;

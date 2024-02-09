@@ -278,7 +278,7 @@ const Profile = () => {
                         onChange={handleGenderChange}
                       />
                       <label class="form-check-label" for="gender_other">
-                        Other
+                        Both
                       </label>
                     </div>
                   </div>

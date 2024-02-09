@@ -89,7 +89,7 @@
 }
 .footer_FFlex {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     padding-top: 20px;
 }
 .logo_footer {

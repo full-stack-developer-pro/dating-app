@@ -6,6 +6,8 @@ import moment from "moment";
 import Verified from "../images/verified.jpg";
 import NoImage from "../images/noImage.png"
 import { Link } from 'react-router-dom';
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const ProfileMain = () => {
 
@@ -24,7 +26,7 @@ const ProfileMain = () => {
         window.scrollTo(0, 0);
         getUserProfile();
     }, []);
-    
+
     const handleImage = (e) => {
         e.target.src = NoImage
     }
@@ -35,7 +37,9 @@ const ProfileMain = () => {
                 <div className="show_edit_bgareatwo">
                     <div className="profileFlex">
                         <div className="profileFlexL">
-                            <img onError={handleImage} src={profile?.profile_path} />
+                            <Zoom>
+                                <img onError={handleImage} src={profile?.profile_path} />
+                            </Zoom>
                             {/* <div className="gender_iop">
                         <i class="fas fa-venus"></i>
                       </div> */}
@@ -97,7 +101,7 @@ const ProfileMain = () => {
                                     <p>:</p>
                                     <p>{moment(profile?.birthdate).format("LL")}</p>
                                 </div>
-                             
+
                                 {/* <div className="profileEntry">
                   <p>
                     <i class="fas fa-clock"></i> Timezone
@@ -114,7 +118,7 @@ const ProfileMain = () => {
                 </div> */}
                             </div>
                             <div className="profile_dFlexR">
-                            <div className="profileEntry">
+                                <div className="profileEntry">
                                     <p>
                                         <i class="fas fa-map-marker-alt"></i> Country
                                     </p>

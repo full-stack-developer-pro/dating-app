@@ -80,7 +80,7 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
-  const [gender, setGender] = useState("male");
+  const [gender, setGender] = useState("female");
   const [age, setAge] = useState("male");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
@@ -104,7 +104,7 @@ const Home = () => {
   const [secondLastBanner, setSecondLastBanner] = useState([]);
   // const [lastBanner, setlLastBanner] = useState([]);
   const [selectedGender, setSelectGender] = useState("All");
-  const [selectedGenderSearch, setSelectedGenderSearch] = useState("");
+  const [selectedGenderSearch, setSelectedGenderSearch] = useState("female");
   const [members, setMembers] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
@@ -868,7 +868,7 @@ const Home = () => {
                               type="text"
                               class="form-control"
                               id="floatingInput"
-                              placeholder="name@example.com"
+                              placeholder="Interests"
                               value={inputValue}
                               onChange={handleInputChange}
                               onKeyPress={handleKeyPress}
