@@ -4,12 +4,16 @@ import Footer from '../common/Footer'
 import "../customCss/Helpdesk.css"
 import { ToastContainer, toast } from "react-toastify";
 import DataService from '../services/data.service';
+import AuthService from '../services/auth.service';
+import Navbar from '../common/Navbar';
 
 const HelpDesk = () => {
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
     const [formSubmitted, setFormSubmitted] = useState(false);
+
+    const auth = AuthService.getCurrentUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -50,7 +54,19 @@ const HelpDesk = () => {
 
     return (
         <>
-            <NavbarProfile />
+    {
+        auth ? <NavbarProfile />
+          : (
+            <>
+              <Navbar />
+              <section className="profile_bannerSec" style={{ padding: "60px 0px", minHeight: "40vh" }}>
+                <div className="container">
+                  <h1>Help Desk</h1>
+                </div>
+              </section>
+            </>
+          )
+      }
             <div className='help_desk_main'>
                 <div className='container'>
                     <div className='help_Desk_inner'>

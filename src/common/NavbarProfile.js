@@ -12,7 +12,8 @@ import NoImage from "../images/noImage.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import ProfileAvatar from "../images/profile-avatar.png";
 // import LanguageSelector from "./LanguageSelector";
-
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 const NavbarProfile = () => {
   const [loading, setLoading] = useState(false);
   const [packages, setPackages] = useState("");
@@ -178,7 +179,7 @@ const NavbarProfile = () => {
   };
 
 
-  
+
 
   return (
     <>
@@ -243,7 +244,7 @@ const NavbarProfile = () => {
                 style={{ padding: "10px 0px" }}
               >
                 <div className="translater_main">
-                <div id="google_translate_element"></div>
+                  <div id="google_translate_element"></div>
                   {/* <LanguageSelector /> */}
                 </div>
                 {/* <div id="google_translate_element"></div> */}
@@ -511,7 +512,9 @@ const NavbarProfile = () => {
           <div className="profile_navbar hide_mobile_screen">
             <div className="container">
               <div className="user_profile_page">
-                <img onError={handleImage} src={profile?.profile_path} />
+                <Zoom>
+                  <img onError={handleImage} src={profile?.profile_path} />
+                </Zoom>
                 <h2>{profile?.name}</h2>
               </div>
               <div className="profile_main">
@@ -558,7 +561,10 @@ const NavbarProfile = () => {
             <div className="profile_navbar ">
               <div className="container">
                 <div className="user_profile_page">
-                  <img onError={handleImage} src={profile?.profile_path} />
+                  <Zoom>
+
+                    <img onError={handleImage} src={profile?.profile_path} />
+                  </Zoom>
                   <h2>{profile?.name}</h2>
                 </div>
                 <div className="profile_main">

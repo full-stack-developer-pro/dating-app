@@ -3,10 +3,12 @@ import Logo from "../images/dating-app-logo.png";
 import { Link } from "react-router-dom";
 import "../customCss/Footer.css";
 import DataService from "../services/data.service";
+import AuthService from "../services/auth.service";
 
 const Footer = () => {
   const [contactData, setContactData] = useState([]);
   const [socialLinks, setSocialLinks] = useState([]);
+  const auth = AuthService.getCurrentUser();
 
   const currentYear = new Date().getFullYear();
   // const getContactData = async () => {
@@ -33,40 +35,45 @@ const Footer = () => {
 
           <div className="logo_footer">
             <Link to="/"><img src={Logo} alt="" /></Link>
-              
+
           </div>
           <div className="footer_FFlex">
-            <div className="footer_FL">
-              <ul>
-                <li>
-                  <Link to="/profile">
-                    <i class="fas fa-circle"></i>Browse profiles
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/chats">
-                    <i class="fas fa-circle"></i>Messages
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/my-profile">
-                    <i class="fas fa-circle"></i>My profile
-                  </Link>
-                </li>
-                {/*
+            {
+              auth && (
+                <div className="footer_FL">
+                  <ul>
+                    <li>
+                      <Link to="/profile">
+                        <i class="fas fa-circle"></i>Browse profiles
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/chats">
+                        <i class="fas fa-circle"></i>Messages
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/my-profile">
+                        <i class="fas fa-circle"></i>My profile
+                      </Link>
+                    </li>
+                    {/*
                <li>
                   <Link to="/profile">
                     <i class="fas fa-circle"></i>My visitors
                   </Link>
                 </li>*/}
-                <li>
-                  <Link to="/edit-profile">
-                    <i class="fas fa-circle"></i>Account settings
-                  </Link>
-                </li>
-              
-              </ul>
-            </div>
+                    <li>
+                      <Link to="/edit-profile">
+                        <i class="fas fa-circle"></i>Account settings
+                      </Link>
+                    </li>
+
+                  </ul>
+                </div>
+              )
+            }
+
             <div className="footer_FM">
               <h5>About Us</h5>
               <ul>
@@ -109,13 +116,13 @@ const Footer = () => {
             </div>
           </div>
           <div className="footer_bottomBar">
-          <div className="new_line">
-            <p style={{ color: "white", marginTop: "10px", marginBottom: "10px" }}>Persons appearing in photographs and videos may not be actual members. Other data for illustrative purposes only. <br/>MilfHub.co.uk does not conduct criminal background screening of its members.</p>
-          </div>
+            <div className="new_line">
+              <p style={{ color: "white", marginTop: "10px", marginBottom: "10px" }}>Persons appearing in photographs and videos may not be actual members. Other data for illustrative purposes only. <br />MilfHub.co.uk does not conduct criminal background screening of its members.</p>
+            </div>
             <p>
               Disclaimer: This website contains adult material, all members and
               persons appearing on this site have contractually represented to
-              us that they are 18 years of age or older.<br/> Copyright © 1996-{currentYear} Ind Z Gib Ltd. All rights reserved.{" "}
+              us that they are 18 years of age or older.<br /> Copyright © 1996-{currentYear} Ind Z Gib Ltd. All rights reserved.{" "}
             </p>
           </div>
         </div>

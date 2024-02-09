@@ -562,7 +562,7 @@ const EditProfile = () => {
                             type="text"
                             class="form-control"
                             id="floatingInput"
-                            placeholder="name@example.com"
+                            placeholder="Interests"
                             value={inputValue}
                             onChange={handleInputChange}
                             onKeyPress={handleKeyPress}

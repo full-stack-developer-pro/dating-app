@@ -49,6 +49,7 @@ export default function App() {
         <Route path="/faq-page" element={<Faq />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<Resetlink />} />
+        <Route path="/help-desk" element={<HelpDesk />} />
 
 
         <Route element={<RestrictedAccess />}>
@@ -61,7 +62,6 @@ export default function App() {
           <Route path="/upload-gallery" element={<UploadGallery />} />
           <Route path="/my-friends" element={<MyFriends />} />
           <Route path="/my-profile" element={<ProfileMain />} />
-          <Route path="/help-desk" element={<HelpDesk />} />
         </Route>
       </Routes>
     </BrowserRouter>

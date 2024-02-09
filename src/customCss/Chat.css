@@ -471,7 +471,13 @@ span.bonus {
     position: relative;
 }
 
+@media screen and (max-width: 767px) {
+    .notification_main {
+        width: 84%;
+        right: 8%;
 
+    }
+}
 @media screen and (max-width: 950px) {
     .chat_outerImg {
         margin-right: 5px;
