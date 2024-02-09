@@ -25,6 +25,8 @@ import ProfileMain from "./pages/ProfileMain";
 import GDPR from "./pages/GDPR";
 import HelpDesk from "./pages/HelpDesk";
 import Faq from "./pages/Faq";
+import ResetPassword from "./pages/ResetPassword";
+import Resetlink from "./pages/Resetlink";
 
 export default function App() {
 
@@ -45,6 +47,8 @@ export default function App() {
         {/* <Route path="/search-results/:gender" element={<SearchResults />} /> */}
         {/* <Route path="/search-results/:location" element={<SearchResults />} /> */}
         <Route path="/faq-page" element={<Faq />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<Resetlink />} />
 
 
         <Route element={<RestrictedAccess />}>

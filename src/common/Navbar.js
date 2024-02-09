@@ -548,7 +548,8 @@ const Navbar = () => {
                         />
                         <label for="floatingPassword">Password</label>
                       </div>
-                      <p className="forgot_pass">Forgot Password</p>
+                      <Link to="/forgot-password"><p className="forgot_pass">Forgot Password</p></Link>
+                      
                       <div className="form_field">
                         <button className="main_button" onClick={handleLogin}>
                           Submit
