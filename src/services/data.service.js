@@ -142,7 +142,12 @@ const UploadProfileImage = (data) => {
 const PostFlirt = (id) => {
   return axios.post(API_URL + "api/user/wink/" + id);
 };
-
+const ForgotEmail = (data) => {
+  return axios.post(API_URL + "api/user/forgot-password" ,data);
+};
+const NewPassword = (data) => {
+  return axios.post(API_URL + "api/user/reset-password" ,data);
+};
 // const getCities = () => {
 //   return axios.get(API_URL + "api/getCountryCities/GB");
 // }
@@ -150,6 +155,8 @@ const getCities = (location) => {
   return axios.get(API_URL + "api/getCountryCities/GB?q=" + location);
 };
 const DataService = {
+  NewPassword,
+  ForgotEmail,
   PostFlirt,
   helpdesk,
   TrackProfile,
