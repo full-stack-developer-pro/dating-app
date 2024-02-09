@@ -1,12 +1,14 @@
-import React,{useState}from 'react'
+import React, { useState } from 'react'
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
 import "../customCss/ForgotPassword.css"
 import { ToastContainer, toast } from "react-toastify";
 import DataService from '../services/data.service';
+import { useNavigate } from 'react-router-dom/dist';
 
 
 const ResetPassword = () => {
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState("")
     const [password, setPassword] = useState("")
@@ -18,25 +20,26 @@ const ResetPassword = () => {
         e.preventDefault();
         const data = {}
         data.token = token
-            data.password = password
-            data.password_confirmation = confirmPassword
-            DataService.NewPassword(data).then(
-                () => {
-                    toast.success("Password Changed SuccessFully");
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-                    toast.error(resMessage, {
-                        position: toast.POSITION.TOP_RIGHT,
-                    });
-                    setLoading(false);
-                }
-            );
+        data.password = password
+        data.password_confirmation = confirmPassword
+        DataService.NewPassword(data).then(
+            () => {
+                toast.success("Password Changed SuccessFully");
+                navigate("/")
+            },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                toast.error(resMessage, {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+                setLoading(false);
+            }
+        );
     };
 
 
@@ -60,7 +63,7 @@ const ResetPassword = () => {
                                 <input type='password' onChange={(e) => setConfirmPassword(e.target.value)} />
                             </div>
                             <div className="submit-btn">
-                                <button type='submit' onSubmit={ChangePass}>Submit</button>
+                                <button type='submit' onClick={ChangePass}>Submit</button>
                             </div>
                         </div>
                     </from>
