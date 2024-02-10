@@ -57,12 +57,7 @@ const Footer = () => {
                         <i class="fas fa-circle"></i>My profile
                       </Link>
                     </li>
-                    {/*
-               <li>
-                  <Link to="/profile">
-                    <i class="fas fa-circle"></i>My visitors
-                  </Link>
-                </li>*/}
+                   
                     <li>
                       <Link to="/edit-profile">
                         <i class="fas fa-circle"></i>Account settings

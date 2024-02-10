@@ -109,6 +109,7 @@ const Home = () => {
   const [displayCount, setDisplayCount] = useState(6);
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
   const [error, setError] = useState('');
+  const [FlirtPopUP, setFlirtPopUP] = useState(false);
 
 
 
@@ -276,7 +277,7 @@ const Home = () => {
     data.password = password;
     data.gender = gender;
     data.birthdate = dob;
-    data.description = "dsd";
+    data.description = description;
     data.country = searchKeyword;
     data.city = searchKeyword;
     data.age = age;
@@ -477,6 +478,7 @@ const Home = () => {
     DataService.PostFlirt(id).then(
       () => {
         toast.success("Wink Sent");
+        setFlirtPopUP(false)
         setTimeout(() => {
         }, 2000)
       },
@@ -766,16 +768,7 @@ const Home = () => {
                           )}
                         </div>
 
-                        {/* <div class="form-floating mb-3">
-                          <textarea
-                            class="form-control"
-                            placeholder=""
-                            id="floatingTextarea2"
-                            style={{ height: "100px" }}
-                            onChange={(e) => setDescription(e.target.value)}
-                          ></textarea>
-                          <label for="floatingTextarea2">Description</label>
-                        </div> */}
+                        
 
                         <div className="signup_buttons">
                           <button
@@ -826,6 +819,7 @@ const Home = () => {
                             </div>
                           </div>
                         </div> */}
+                       
                         <div className="form-field row mb-3">
 
                           <div className="col-sm-12">
@@ -876,6 +870,16 @@ const Home = () => {
                             />
                             <label for="floatingInput">Interests</label>
                           </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                          <textarea
+                            class="form-control"
+                            placeholder=""
+                            id="floatingTextarea2"
+                            style={{ height: "100px" }}
+                            onChange={(e) => setDescription(e.target.value)}
+                          ></textarea>
+                          <label for="floatingTextarea2">Description</label>
                         </div>
                         {/* <div class="form-floating mb-3">
                           <input
@@ -1266,10 +1270,13 @@ const Home = () => {
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button> */}
                               {auth && (
-                                <button onClick={() => sendFlirt(item.id)}>
+                                <button onClick={()=>setFlirtPopUP(!FlirtPopUP)}>
                                   Send Flirt<i className="fas fa-heart"></i>
                                 </button>
+
+
                               )}
+                            
                               {auth && (
                                 <button>
                                   <Link to={"/chats/" + item.id}>
@@ -1278,6 +1285,20 @@ const Home = () => {
                                 </button>
                               )}
                             </div>
+                            {FlirtPopUP && (
+                                <div className="main_sendFlirt">
+                                  <div className="sendFlirt">
+                                    <button className="new_flirt_cross" onClick={() => setFlirtPopUP(false)}>
+                                      <i class="fas fa-times"></i>
+                                    </button>
+                                    <div className="sendFlirt_inner ">
+                                      <h2></h2>
+                                      <p style={{fontSize:"18px"}}>Flirt your way to fun for just <b>100 credits</b> <br/> try it now!</p>
+                                        <button className="send_ok_flirt" onClick={() => sendFlirt(item.id)}>Send</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                           </div>
 
                         </>
