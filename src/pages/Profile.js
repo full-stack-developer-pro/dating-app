@@ -31,17 +31,28 @@ const Profile = () => {
   const [gender, setGender] = useState("");
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [FlirtPopUP, setFlirtPopUP] = useState(false);
 
   // search filters 
   const [profile, setProfile] = useState([]);
   const userId = JSON.parse(localStorage.getItem("d_user"));
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = usersData.slice(indexOfFirstUser, indexOfLastUser);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
 
   const sendFlirt = (id) => {
     DataService.PostFlirt(id).then(
       () => {
         toast.success("Wink Sent");
+        setFlirtPopUP(false)
         setTimeout(() => {
         }, 2000)
       },
@@ -325,8 +336,8 @@ const Profile = () => {
               </div>
 
               <div className="active_mainArea">
-                {usersData && usersData.length > 0 ? (
-                  usersData.map((item, i) => {
+                {currentUsers && currentUsers.length > 0 ? (
+                  currentUsers.map((item, i) => {
                     if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
                         (op) => op?.id === item?.id
@@ -387,7 +398,7 @@ const Profile = () => {
                                 </Link>
                               </button>
 
-                              <button onClick={() => sendFlirt(item.id)}>
+                              <button onClick={() => setFlirtPopUP(!FlirtPopUP)}>
                                 Send Flirt<i className="fas fa-heart"></i>
                               </button>
 
@@ -397,6 +408,20 @@ const Profile = () => {
                                 </Link>
                               </button>
                             </div>
+                            {FlirtPopUP && (
+                              <div className="main_sendFlirt">
+                                <div className="sendFlirt">
+                                  <button className="new_flirt_cross" onClick={() => setFlirtPopUP(false)}>
+                                    <i class="fas fa-times"></i>
+                                  </button>
+                                  <div className="sendFlirt_inner ">
+                                    <h2></h2>
+                                    <p style={{ fontSize: "18px" }}>Flirt your way to fun for just <b>100 credits</b> <br /> try it now!</p>
+                                    <button className="send_ok_flirt" onClick={() => sendFlirt(item.id)}>Send</button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </>
                       );
@@ -407,6 +432,20 @@ const Profile = () => {
                   <p>No Data Found</p>
                 )}
               </div>
+                {/* Pagination buttons */}
+                <div className="pagination">
+                  <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+                    Previous
+                  </button>
+                  {Array.from({ length: Math.ceil(usersData.length / usersPerPage) }, (_, i) => (
+                    <button  key={i} onClick={() => paginate(i + 1)} className={currentPage === i + 1 ? 'page-btn-active' : "button_page"}>
+                      {i + 1}
+                    </button>
+                  ))}
+                  <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(usersData.length / usersPerPage)}>
+                    Next
+                  </button>
+                </div>
               {!auth &&
                 <button
                   className="main_button my-4"

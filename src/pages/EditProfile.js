@@ -196,7 +196,7 @@ const EditProfile = () => {
     data.password = password;
     data.gender = gender;
     data.birthdate = birthdate;
-    // data.description = description;
+    data.description = description;
     data.country = searchKeyword;
     data.city = city;
     data.age = age;
@@ -547,6 +547,17 @@ const EditProfile = () => {
                         </div>
 
                       </div>
+                      <div class="form-floating mb-3">
+                          <textarea
+                            class="form-control"
+                            placeholder=""
+                            id="floatingTextarea2"
+                            style={{ height: "100px" }}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                          ></textarea>
+                          <label for="floatingTextarea2">Description</label>
+                        </div>
                       <div className="form_field mb-3">
                         <div className="hobbies-list">
                           {hobbies.map((hobby, index) => (

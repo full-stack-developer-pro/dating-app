@@ -461,6 +461,9 @@ background: none;
     display: none;
 }
 @media screen and (max-width: 767px) {
+    .show_edit_bgareaone {
+        width: 90%;
+    }
   
     .mobile_hide_credits {
         display: block;

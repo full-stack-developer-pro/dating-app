@@ -10,6 +10,64 @@
     align-items: center;
     justify-content: center;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+}
+button.button_page {
+    border: 2px solid #ef48b5;
+    border-radius: 50px;
+    margin: 3px 5px;
+    width: 28px;
+    height: 28px;
+}
+button.page-btn-active {
+    background: #15021b;
+    border-radius: 50px;
+    margin: 3px 5px;
+    width: 28px;
+    height: 28px;
+    color: #fff;
+}
+button.send_ok_flirt {
+    background: linear-gradient(to right, #ef48b5, #F209E1);
+    border-radius: 4px;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 13px;
+}
+button.new_flirt_cross {
+    position: absolute;
+    top: 4px;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+}
+.main_sendFlirt {
+    background: rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sendFlirt{
+    background: #fff;
+    margin: auto;
+    text-align: center;
+    padding: 25px;
+    border-radius: 20px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 .select_singup select {
     display: block;
     width: 100%;
@@ -761,15 +819,14 @@ ul.location_new {
     border-radius: 5px;
     color: #fff;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 20px;
 }
-
 .search_formSec .search_submit i {
-    font-size: 14px;
+    font-size: 12px;
+    margin-left: 8px;
 }
-
 .stats_flex {
     display: flex;
     align-items: center;

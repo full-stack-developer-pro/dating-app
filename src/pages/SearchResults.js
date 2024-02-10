@@ -41,6 +41,7 @@ const SearchResults = () => {
   const auth = AuthService.getCurrentUser();
   const [gender, setGender] = useState("male");
   const [members, setMembers] = useState([])
+  const [FlirtPopUP, setFlirtPopUP] = useState(false);
 
   const [cities, setCities] = useState([]);
   const location = useLocation();
@@ -49,10 +50,14 @@ const SearchResults = () => {
   const [isListVisible, setIsListVisible] = useState(true);
   const queryParams = new URLSearchParams(location.search);
 
+
+  
+
   const sendFlirt = (id) => {
     DataService.PostFlirt(id).then(
       () => {
         toast.success("Wink Sent");
+        setFlirtPopUP(false)
         setTimeout(() => {
         }, 2000)
       },
@@ -105,13 +110,11 @@ const SearchResults = () => {
 
 
   useEffect(() => {
-    setGender(param1)
-    setCountry(param2)
-    setAgeGroup({ minValue: param3 })
-    setAgeGroup({ maxValue: param4 })
-    // searchData();
-
-  }, [])
+    setGender(param1);
+    setCountry(param2);
+    setAgeGroup({ minValue: Number(param3) || 18, maxValue: Number(param4) || 100 });
+  }, []);
+  
 
   const getTotalMembers = async () => {
     await DataService.getMembers().then((data) => {
@@ -427,7 +430,7 @@ const SearchResults = () => {
                               Send Flirt<i className="fas fa-heart"></i>
                             </button> */}
                               {auth && (
-                                <button onClick={() => sendFlirt(item.id)}>
+                                <button onClick={()=>setFlirtPopUP(!FlirtPopUP)}>
                                   Send Flirt<i className="fas fa-heart"></i>
                                 </button>
                               )}
@@ -437,6 +440,20 @@ const SearchResults = () => {
                               </Link>
                             </button>
                           </div>
+                          {FlirtPopUP && (
+                                <div className="main_sendFlirt">
+                                  <div className="sendFlirt">
+                                    <button className="new_flirt_cross" onClick={() => setFlirtPopUP(false)}>
+                                      <i class="fas fa-times"></i>
+                                    </button>
+                                    <div className="sendFlirt_inner ">
+                                      <h2></h2>
+                                      <p style={{fontSize:"18px"}}>Flirt your way to fun for just <b>100 credits</b> <br/> try it now!</p>
+                                        <button className="send_ok_flirt" onClick={() => sendFlirt(item.id)}>Send</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                         </div>
                       );
                     }
