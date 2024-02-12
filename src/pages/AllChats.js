@@ -8,6 +8,13 @@ import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
 import NavbarProfile from "../common/NavbarProfile";
 import ProfileAvatar from "../images/profile-avatar.png";
+
+let user_id = JSON.parse(localStorage.getItem("d_user"));
+
+const socket = new WebSocket(
+  `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
+);
+
 const Chats = () => {
   const params = useParams();
   const ref = useRef(null);
@@ -28,11 +35,6 @@ const Chats = () => {
   const [loading, setLoading] = useState(false);
 
   // const history = useHistory();
-  let user_id = JSON.parse(localStorage.getItem("d_user"));
-
-  const socket = new WebSocket(
-    `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
-  );
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
