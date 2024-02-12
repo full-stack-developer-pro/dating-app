@@ -8,9 +8,13 @@ import Footer from "../common/Footer";
 import LoadingBar from "react-top-loading-bar";
 import NavbarProfile from "../common/NavbarProfile";
 import ProfileAvatar from "../images/profile-avatar.png";
-// import { useHistory } from 'react-router-dom';
-// import EmojiPicker  from 'emoji-picker-react';
-// import Picker from 'emoji-picker-react';
+
+
+let user_id = JSON.parse(localStorage.getItem("d_user"));
+
+const socket = new WebSocket(
+  `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
+);
 
 const Chats = () => {
   const params = useParams();
@@ -26,7 +30,7 @@ const Chats = () => {
   const [showExpandedChat, setShowExpandedChat] = useState(true);
   const [fDisabled, setFDisabled] = useState(false);
   const [noticeCount, setNoticeCount] = useState("");
-  const [chatLoader, setChatLoader] = useState(true);
+  const [chatLoader, setChatLoader] = useState(false);
   const [message, setMessage] = useState();
   const [profile, setProfile] = useState([]);
   const [personalProfile, setPersonalProfile] = useState([]);
@@ -35,29 +39,14 @@ const Chats = () => {
   const [loading, setLoading] = useState(false);
 
 
-  // const [chosenEmoji, setChosenEmoji] = useState(null);
-
-  // const onEmojiClick = (event, emojiObject) => {
-  //   console.log(emojiObject)
-  //   setChosenEmoji(emojiObject);
-
-  // };
-
-
   useEffect(() => {
     chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [expandedChatMessages]);
-  setTimeout(() => {
-    setChatLoader(false);
-  }, 9000);
+  // setTimeout(() => {
+  //   setChatLoader(false);
+  // }, 9000);
 
-  let user_id = JSON.parse(localStorage.getItem("d_user"));
-  let connectionEstablished = false;
-  let socket;
-
-  socket = new WebSocket(
-    `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
-  );
+  let connectionEstablished = false; 
 
   socket.addEventListener("open", (event) => {
     setUser();
@@ -90,7 +79,6 @@ const Chats = () => {
       console.error("WebSocket is not open. Message not sent.");
       return;
     }
-
     let msdg = document.getElementById("main_input").value;
     const data = {
       user_id: user_id,
@@ -204,7 +192,6 @@ const Chats = () => {
   useEffect(() => {
     getUserProfile();
     getChatList();
-    // setUser();
   }, []);
 
   const getChatList = async () => {
