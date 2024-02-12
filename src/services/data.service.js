@@ -142,11 +142,14 @@ const UploadProfileImage = (data) => {
 const PostFlirt = (id) => {
   return axios.post(API_URL + "api/user/wink/" + id);
 };
+const setProfile = (id, data) => {
+  return axios.post(API_URL + "api/user/set-profile-image/" + id, data);
+};
 const ForgotEmail = (data) => {
-  return axios.post(API_URL + "api/user/forgot-password" ,data);
+  return axios.post(API_URL + "api/user/forgot-password", data);
 };
 const NewPassword = (data) => {
-  return axios.post(API_URL + "api/user/reset-password" ,data);
+  return axios.post(API_URL + "api/user/reset-password", data);
 };
 // const getCities = () => {
 //   return axios.get(API_URL + "api/getCountryCities/GB");
@@ -154,7 +157,10 @@ const NewPassword = (data) => {
 const getCities = (location) => {
   return axios.get(API_URL + "api/getCountryCities/GB?q=" + location);
 };
+
+
 const DataService = {
+  setProfile,
   NewPassword,
   ForgotEmail,
   PostFlirt,

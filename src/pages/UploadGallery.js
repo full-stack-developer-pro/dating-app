@@ -209,32 +209,7 @@ const UploadGallery = () => {
     setLoading(true);
     const data = {};
     data.photo = image.url;
-    data.is_fake = profile?.is_fake
-    data.name = profile?.name;
-    data.username = profile?.username;
-    data.email = profile?.email;
-    data.password = profile?.password;
-    data.gender = profile?.gender;
-    data.birthdate = profile?.birthdate;
-    data.description = profile?.description;
-    data.country = profile?.country;
-    data.city = profile?.city;
-    data.age = profile?.age;
-    data.postcode = profile?.postcode;
-    data.timezone = profile?.timezone;
-    data.height = profile?.height;
-    data.weight = profile?.weight;
-    data.eye_color = profile?.eye_color;
-    data.hair_color = profile?.hair_color;
-    data.hair_length = profile?.hair_length;
-    data.marital_status = profile?.marital_status;
-    data.interests = profile?.interests;
-    data.free_message = profile?.free_message;
-    data.is_verified = profile?.is_verified;
-    data.is_flagged = profile?.is_flagged;
-    data.credits = profile?.credits;
-    data.status = profile?.status
-    DataService.UpdateProfile(userId, data).then(
+    DataService.setProfile(image.id, data).then(
       () => {
         toast.success('Profile updated successfully!', {
           position: toast.POSITION.TOP_RIGHT
