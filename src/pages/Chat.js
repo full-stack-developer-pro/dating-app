@@ -11,10 +11,8 @@ import ProfileAvatar from "../images/profile-avatar.png";
 
 
 let user_id = JSON.parse(localStorage.getItem("d_user"));
-
-const socket = new WebSocket(
-  `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
-);
+let connectionEstablished = false; 
+let socket;
 
 const Chats = () => {
   const params = useParams();
@@ -30,7 +28,7 @@ const Chats = () => {
   const [showExpandedChat, setShowExpandedChat] = useState(true);
   const [fDisabled, setFDisabled] = useState(false);
   const [noticeCount, setNoticeCount] = useState("");
-  const [chatLoader, setChatLoader] = useState(false);
+  const [chatLoader, setChatLoader] = useState(true);
   const [message, setMessage] = useState();
   const [profile, setProfile] = useState([]);
   const [personalProfile, setPersonalProfile] = useState([]);
@@ -42,35 +40,39 @@ const Chats = () => {
   useEffect(() => {
     chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [expandedChatMessages]);
-  // setTimeout(() => {
-  //   setChatLoader(false);
-  // }, 9000);
+ 
+  useEffect(() => {
 
-  let connectionEstablished = false; 
-
-  socket.addEventListener("open", (event) => {
-    setUser();
-    connectionEstablished = true;
-  });
-
-  socket.addEventListener("message", (event) => {
-    const data = JSON.parse(event.data);
-    console.log("Received message:", data);
-    getExpandedChat();
-    if (credits === 0) {
-      toast.error(data.message);
-      navigate("/packages");
-
-      socket.close();
-    } else if (data.type === "new_message") {
-      getExpandedChat();
-      console.log(data);
+    if(!connectionEstablished){
+      socket = new WebSocket(
+        `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
+      );
+  
+      socket.addEventListener("open", (event) => {
+        connectionEstablished = true;
+        setChatLoader(false);
+      });
+  
+      socket.addEventListener("message", (event) => {
+        const data = JSON.parse(event.data);
+        console.log("Received message:", data);
+        getExpandedChat();
+        if (credits === 0) {
+          toast.error(data.message);
+          navigate("/packages");
+  
+          socket.close();
+        } else if (data.type === "new_message") {
+          getExpandedChat();
+          console.log(data);
+        }
+      });
+  
+      socket.addEventListener("close", (event) => {
+        console.log("WebSocket connection closed:", event);
+      });
     }
-  });
-
-  socket.addEventListener("close", (event) => {
-    console.log("WebSocket connection closed:", event);
-  });
+  }, []);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -90,20 +92,7 @@ const Chats = () => {
     document.getElementById("main_input").value = "";
 
   };
-
-  const setUser = () => {
-    if (!connectionEstablished) {
-      console.error("WebSocket connection not yet established.");
-      return;
-    }
-
-    if (socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(user_id));
-    } else {
-      console.error("WebSocket is not open. Unable to send user ID.");
-    }
-  };
-
+ 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
       setPersonalProfile(data?.data?.data?.user);
