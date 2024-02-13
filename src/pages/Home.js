@@ -546,7 +546,7 @@ const Home = () => {
       <Navbar />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div
-        className="top_banner"
+        className={auth ? "top_banner_two" : "top_banner"}
         id="signup"
         style={{
           background: `linear-gradient(#30024346, #15021b69), url(${DatingCouple})`,
@@ -768,7 +768,7 @@ const Home = () => {
                           )}
                         </div>
 
-                        
+
 
                         <div className="signup_buttons">
                           <button
@@ -819,7 +819,7 @@ const Home = () => {
                             </div>
                           </div>
                         </div> */}
-                       
+
                         <div className="form-field row mb-3">
 
                           <div className="col-sm-12">
@@ -1270,13 +1270,13 @@ const Home = () => {
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button> */}
                               {auth && (
-                                <button onClick={()=>setFlirtPopUP(!FlirtPopUP)}>
+                                <button onClick={() => setFlirtPopUP(!FlirtPopUP)}>
                                   Send Flirt<i className="fas fa-heart"></i>
                                 </button>
 
 
                               )}
-                            
+
                               {auth && (
                                 <button>
                                   <Link to={"/chats/" + item.id}>
@@ -1286,19 +1286,19 @@ const Home = () => {
                               )}
                             </div>
                             {FlirtPopUP && (
-                                <div className="main_sendFlirt">
-                                  <div className="sendFlirt">
-                                    <button className="new_flirt_cross" onClick={() => setFlirtPopUP(false)}>
-                                      <i class="fas fa-times"></i>
-                                    </button>
-                                    <div className="sendFlirt_inner ">
-                                      <h2></h2>
-                                      <p style={{fontSize:"18px"}}>Flirt your way to fun for just <b>100 credits</b> <br/> try it now!</p>
-                                        <button className="send_ok_flirt" onClick={() => sendFlirt(item.id)}>Send</button>
-                                    </div>
+                              <div className="main_sendFlirt">
+                                <div className="sendFlirt">
+                                  <button className="new_flirt_cross" onClick={() => setFlirtPopUP(false)}>
+                                    <i class="fas fa-times"></i>
+                                  </button>
+                                  <div className="sendFlirt_inner ">
+                                    <h2></h2>
+                                    <p style={{ fontSize: "18px" }}>Flirt your way to fun for just <b>100 credits</b> <br /> try it now!</p>
+                                    <button className="send_ok_flirt" onClick={() => sendFlirt(item.id)}>Send</button>
                                   </div>
                                 </div>
-                              )}
+                              </div>
+                            )}
                           </div>
 
                         </>

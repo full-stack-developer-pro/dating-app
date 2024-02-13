@@ -33,6 +33,7 @@ const Chats = () => {
   const [loading, setLoading] = useState(false);
 
   // const history = useHistory();
+  let user_id = JSON.parse(localStorage.getItem("d_user"));
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
@@ -152,9 +153,8 @@ const Chats = () => {
         const data = JSON.parse(event.data);
         console.log("Received message:", data);
         console.log(data.msg);
-        if (credits === 0) {
-          toast.error(data.message);
-          setPayments(true);
+        toast.error(data.msg);
+        if (data.success === false) {
           setTimeout(() => {}, 2000);
         } else if (data.type === "new_message") {
           setTimeout(() => {
@@ -220,7 +220,7 @@ const Chats = () => {
     getUserProfile();
     getChatList();
     setUser();
-  }, []);
+  }, [user_id]);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
