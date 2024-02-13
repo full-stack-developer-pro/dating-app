@@ -384,9 +384,7 @@ button {
     position: relative;
 }
 
-.profile_dFlexL::after {
-    display: none;
-}
+
 
 .profile_dFlexL::after {
     content: '';
@@ -740,6 +738,10 @@ button {
 }
 
 @media screen and (min-width: 767px) and (max-width: 1024px) {
+    .profile_dFlexL::after{
+        display: none;
+    }
+
     .top_bannerInner {
         padding: 340px 20px 20px 20px;
     }

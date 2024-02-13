@@ -122,7 +122,7 @@ img.plus_img {
 .packages_gift_two{
     width: 20%;
 }
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 767px) {
     .step_package_inner h2 {
         width: 18%;        
         font-size: 16px;
@@ -169,4 +169,16 @@ img.plus_img {
         font-size: 16px;
     }
 
+}
+
+@media screen and (min-width: 767px)and (max-width:1024px) {
+    .packages_gift {
+        width: 28%;
+    }
+    .step_package_inner h2 {
+        width: 15%;
+    }
+    img.plus_img {
+        left: -15px !important;
+    }
 }
