@@ -42,7 +42,6 @@ const Chats = () => {
   }, [expandedChatMessages]);
  
   useEffect(() => {
-
     if(!connectionEstablished){
       socket = new WebSocket(
         `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
