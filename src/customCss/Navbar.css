@@ -1,3 +1,4 @@
+
 .main_signUp {
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -301,5 +302,10 @@ table,thead,tbody,tr,td,th{
     }
     .forgot_pass{
         position: static;
+    }
+}
+@media (max-width: 1024px) and (min-width: 767px){
+    .signup_topBar{
+      margin: 10px auto;
     }
 }

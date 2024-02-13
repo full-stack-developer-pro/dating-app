@@ -7,15 +7,17 @@
     width: 100%;
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
 }
+
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0px;
 }
+
 button.button_page {
     border: 2px solid #ef48b5;
     border-radius: 50px;
@@ -23,6 +25,7 @@ button.button_page {
     width: 28px;
     height: 28px;
 }
+
 button.page-btn-active {
     background: #15021b;
     border-radius: 50px;
@@ -31,6 +34,7 @@ button.page-btn-active {
     height: 28px;
     color: #fff;
 }
+
 button.send_ok_flirt {
     background: linear-gradient(to right, #ef48b5, #F209E1);
     border-radius: 4px;
@@ -38,6 +42,7 @@ button.send_ok_flirt {
     color: #fff;
     font-size: 13px;
 }
+
 button.new_flirt_cross {
     position: absolute;
     top: 4px;
@@ -45,6 +50,7 @@ button.new_flirt_cross {
     width: 16px;
     height: 16px;
 }
+
 .main_sendFlirt {
     background: rgba(0, 0, 0, 0.1);
     position: fixed;
@@ -57,7 +63,8 @@ button.new_flirt_cross {
     align-items: center;
     justify-content: center;
 }
-.sendFlirt{
+
+.sendFlirt {
     background: #fff;
     margin: auto;
     text-align: center;
@@ -68,6 +75,7 @@ button.new_flirt_cross {
     background-position: center;
     background-repeat: no-repeat;
 }
+
 .select_singup select {
     display: block;
     width: 100%;
@@ -80,35 +88,41 @@ button.new_flirt_cross {
     background-clip: padding-box;
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+
 .select_singup label {
     text-align: start;
     font-size: 13px;
     padding: 2px 10px;
     font-weight: 500;
 }
+
 .save_btnnotification {
     display: flex;
     justify-content: end;
-    width:65%;
+    width: 65%;
     margin: auto;
     align-items: center;
 }
+
 button.save_btn {
-    background: linear-gradient(90deg,#ffbb03,#fedf4f);
+    background: linear-gradient(90deg, #ffbb03, #fedf4f);
     padding: 5px 12px;
     margin: 20px 0px;
     font-size: 16px;
 }
+
 .cross_btn {
     position: absolute;
     right: 0px;
     top: -2px;
 }
-.cross_btn i{
+
+.cross_btn i {
     font-size: 24px;
 }
+
 .credits_box {
     display: flex;
     justify-content: end;
@@ -117,11 +131,13 @@ button.save_btn {
     margin: auto;
     position: relative;
 }
+
 .notification_area {
     margin-right: 16px;
     position: relative;
     cursor: pointer;
 }
+
 .notification_count {
     position: absolute;
     top: -3px;
@@ -135,11 +151,13 @@ button.save_btn {
     justify-content: center;
     border-radius: 20px;
 }
+
 .notification_count h1 {
     font-size: 12px;
     margin: 0px;
     color: #fff;
 }
+
 .notification_area i {
     font-size: 30px;
     color: #EF48B5;
@@ -156,33 +174,39 @@ button.save_btn {
     padding: 5px 10px;
     margin: 0px 10px;
 }
+
 .span_credits h1 {
     margin: 0px;
     font-size: 16px;
     color: #300243;
 }
-.span_credits p{
+
+.span_credits p {
     margin: 0px;
     color: #300243;
     display: flex;
     justify-content: start;
     width: 100%;
 }
+
 .new_gender {
     display: flex;
     align-items: center;
     justify-content: start;
     width: 100%;
 }
+
 .new_genderinner {
     display: flex !important;
     justify-content: space-between !important;
 }
+
 .sku_btn {
     display: flex;
     justify-content: end;
     align-items: center;
 }
+
 button.Skip_btn {
     color: #ef48b5;
     font-size: 16px;
@@ -199,6 +223,7 @@ button.Skip_btn {
     border-radius: var(--bs-border-radius);
     padding: 1rem 0.75rem;
 }
+
 ul.location_new {
     position: absolute;
     background: #fff;
@@ -211,24 +236,30 @@ ul.location_new {
     overflow-y: scroll;
     z-index: 1;
 }
+
 .about_flexR ul {
     padding-left: 18px;
 }
+
 .location_new li {
     padding: 5px 4px;
     cursor: pointer;
     text-align: start;
 }
+
 .location_new li:hover {
     background-color: #dfdfdf;
 }
+
 .back_button {
     margin: 1% 1%;
 }
+
 .login_popup {
     width: 45%;
     padding: 50px 20px;
 }
+
 .back_button button {
     background: #fff;
     border: none;
@@ -236,25 +267,32 @@ ul.location_new {
     border-radius: 20px;
     padding: 5px 12px;
 }
+
 .height_search {
     min-height: 100vh;
 }
+
 .multi-range-slider .ruler {
-    display: none!important;
+    display: none !important;
 }
+
 .range_Age {
-    width: 16%;
+    width: 21%;
+    margin: 10px 2%;
 }
+
 .multi-range-slider {
     border: none !important;
     border-radius: 6px !important;
     padding: 17px 10px !important;
     box-shadow: none !important;
 }
+
 .multi-range-slider .bar-inner {
     background: linear-gradient(to right, #ef48b5, #F209E1) !important;
     box-shadow: none !important;
 }
+
 .new_city {
     display: flex;
     flex-direction: column;
@@ -273,31 +311,35 @@ ul.location_new {
     background-clip: padding-box;
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     height: 50px;
     min-height: 50px;
 }
+
 .search_gender_inner {
-    width: 30%;
-    padding-left: 30px;
+    width: 35%;
+    padding-left: 0px;
 
 }
+
 .search_gender_inner p {
     margin-bottom: 0px;
     margin-right: 10px;
 }
+
 .search_m .ReactFlagsSelect-module_flagsSelect__2pfa2 {
     width: 70%;
 }
 
 .search_m {
-    width: 28%;
+    width: 20%;
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
 }
-.search_m  input {
+
+.search_m input {
     height: 50px;
     min-height: 50px;
     font-size: 14px;
@@ -308,6 +350,7 @@ ul.location_new {
     padding: 1rem 0.75rem;
     width: 100%;
 }
+
 .search_m select#citySelect {
     padding: 15px 10px;
     width: 100%;
@@ -317,21 +360,27 @@ ul.location_new {
     justify-content: space-between;
     align-items: center;
 }
+
 .search_m label {
     margin-right: 18px;
 }
+
 .button_search {
-    width: 19%;
+    width: 20%;
 }
+
 .search_main {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
+
 .locations_area {
     display: flex;
     flex-wrap: wrap;
 }
+
 .locations_area p {
     background: #ddd;
     margin-right: 10px;
@@ -340,18 +389,21 @@ ul.location_new {
     margin-bottom: 10px;
     cursor: pointer;
 }
-.active_mainArea{
+
+.active_mainArea {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 }
+
 .top_bannerInner {
     display: flex;
     align-items: flex-end;
     justify-content: center;
     max-width: 1270px;
-    margin: auto;
+    /* margin: auto; */
     padding: 250px 20px 20px 20px;
+    width: 100%;
 }
 
 .signup_sec {
@@ -363,7 +415,8 @@ ul.location_new {
     padding: 0px 40px;
     padding-left: 10%;
 }
-.content_sec button{
+
+.content_sec button {
     margin: 0;
 }
 
@@ -514,6 +567,7 @@ ul.location_new {
     width: 20%;
     box-shadow: 0px 0px 3px -5px rgba(0, 0, 0, 0.5);
 }
+
 .activeL_bg {
     background: #fff;
     padding: 20px;
@@ -544,7 +598,8 @@ ul.location_new {
     padding-bottom: 25px;
     border-bottom: 1px solid #dfdfdf;
 }
-.active_recent a{
+
+.active_recent a {
     color: inherit;
     width: 23%;
     margin: 1%;
@@ -579,7 +634,8 @@ ul.location_new {
     position: relative;
     width: 31%;
 }
-.active_mainProfile .add_friend{
+
+.active_mainProfile .add_friend {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -589,7 +645,8 @@ ul.location_new {
     color: #fff;
     font-size: 13px;
 }
-.active_mainProfile .already_friend{
+
+.active_mainProfile .already_friend {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -600,7 +657,8 @@ ul.location_new {
     font-size: 13px;
     border-color: #300243;
 }
-.active_mainProfile .add_friend i{
+
+.active_mainProfile .add_friend i {
     margin-left: 5px;
     color: #fff;
     font-size: 12px;
@@ -641,6 +699,7 @@ ul.location_new {
     color: #ef48b5;
     font-size: 12px;
 }
+
 .active_mainR p {
     margin: 0;
     border-top: 1px dashed #dfdfdf;
@@ -650,6 +709,7 @@ ul.location_new {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .active_mainL img {
     width: 100%;
     border-radius: 5px;
@@ -680,7 +740,8 @@ ul.location_new {
     align-items: center;
     justify-content: space-between;
 }
-.active_actionSec button a{
+
+.active_actionSec button a {
     display: block;
     width: auto;
     color: inherit;
@@ -735,13 +796,15 @@ ul.location_new {
     align-items: center;
     justify-content: space-between;
 }
-.onlineInner a{
+
+.onlineInner a {
     width: 31%;
     margin-right: 2%;
     text-align: center;
     position: relative;
     margin-bottom: 20px;
 }
+
 .onlineInner {
     width: 100%;
     margin-right: 0%;
@@ -823,10 +886,12 @@ ul.location_new {
     align-items: center;
     margin-top: 20px;
 }
+
 .search_formSec .search_submit i {
     font-size: 12px;
     margin-left: 8px;
 }
+
 .stats_flex {
     display: flex;
     align-items: center;
@@ -1122,10 +1187,12 @@ ul.location_new {
     width: 50%;
     padding: 30px;
 }
-.about_flexR h2{
+
+.about_flexR h2 {
     color: #fff;
 }
-.about_flexR p{
+
+.about_flexR p {
     color: #fff;
 }
 
@@ -1218,9 +1285,11 @@ ul.location_new {
     font-size: 14px;
     margin: 15px auto;
 }
+
 .new_searchview {
     width: 100%;
 }
+
 .single_lockOpen .single_actionFlex {
     display: flex;
     align-items: center;
@@ -1242,22 +1311,28 @@ ul.location_new {
     .search_gender_inner {
         padding-left: 0px;
     }
+
     .range_Age {
         width: 100%;
     }
+
     .search_main {
         flex-direction: column;
     }
+
     .search_gender_inner {
         width: 100%;
         justify-content: center;
     }
-    .button_search{
+
+    .button_search {
         width: 100%;
     }
+
     .search_m .ReactFlagsSelect-module_flagsSelect__2pfa2 {
         width: 60%;
     }
+
     .search_m {
         width: 100%;
         display: flex;
@@ -1265,15 +1340,19 @@ ul.location_new {
         justify-content: center;
         /* flex-direction: column; */
     }
+
     .active_mainArea {
         flex-direction: column;
     }
+
     .active_mainProfile {
         width: 100%;
     }
-    .content_sec button{
+
+    .content_sec button {
         margin: auto;
     }
+
     .about_section {
         padding: 20px 10px;
     }
@@ -1321,10 +1400,12 @@ ul.location_new {
         font-size: 14px;
         padding: 6px 10px !important;
     }
+
     .profile_title h2 {
         color: #333333;
         font-size: 16px;
     }
+
     .main_button i {
         font-size: 10px;
         position: relative;
@@ -1349,10 +1430,12 @@ ul.location_new {
     .navbar_flex {
         padding: 15px 15px;
     }
+
     .credits_box {
         padding: 15px 15px !important;
 
     }
+
     .active_profilesSec {
         padding: 20px 10px;
         height: auto;
@@ -1377,7 +1460,7 @@ ul.location_new {
         flex-wrap: wrap;
     }
 
-    .active_rInner a{
+    .active_rInner a {
         width: 48%;
     }
 
@@ -1504,40 +1587,61 @@ ul.location_new {
     .profile_inner {
         width: 48%;
     }
+
     .single_lockOpen h5 {
         word-break: break-word;
     }
 }
+
 @media screen and (min-width: 1000px) and (max-width: 1200px) {
 
     .single_lockOpen h5 {
         word-break: break-word;
     }
 }
+
 @media screen and (min-width: 767px) and (max-width: 1024px) {
-    .active_mainProfile{
+    .active_mainProfile {
         width: 48%;
     }
+
     .active_actionSec button {
         font-size: 8px;
     }
+
     .search_gender_inner {
-        width: 30%;
+        width: 50%;
         padding-left: 0px;
     }
+
+    .range_Age {
+        width: 50%;
+    }
+
+    .active_profilesSec .search_m {
+        width: 50%;
+    }
+
+    .button_search {
+        width: 40%;
+    }
+
     .allFriend-column .active_mainProfile {
         width: 46% !important;
     }
+
     .content_sec {
         width: 60%;
         padding: 0px 40px;
         padding-left: 8%;
     }
+
     .signup_sec {
         width: 40%;
     }
-   
+
 }
+
 @keyframes random {
     0% {
         width: 60px
