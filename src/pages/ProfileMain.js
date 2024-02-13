@@ -70,9 +70,6 @@ const ProfileMain = () => {
                     </div>
                     <div className="profile_descriptionSec">
                         <div className="profile_dflex">
-                            <div className="verified_badge">
-                                <img src={Verified} alt="" />
-                            </div>
                             <div className="profile_dFlexL">
                                 <div className="profileEntry">
                                     <p>

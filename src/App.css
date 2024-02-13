@@ -1,3 +1,12 @@
+@media (max-width: 1024px) and (min-width: 767px) {
+    .signup_sec .form-check {
+        padding-left: 1em !important;
+    }
+    .signup_sec .form-check .form-check-input{
+        margin-left: -1.2em !important;
+    }
+}
+
 .not_found {
     padding: 50px;
     min-height: 100vh;
@@ -20,6 +29,7 @@
 .not_found button {
     margin-top: 25px;
 }
+
 .upload-box {
     align-items: center;
     border-radius: 15px;
@@ -31,9 +41,11 @@
     margin: auto;
     flex-direction: column;
 }
+
 .upload-box i {
     margin-bottom: 20px;
 }
+
 .upload-btn-wrapper input[type=file] {
     font-size: 100px;
     left: 0;
@@ -43,6 +55,7 @@
     height: 60%;
     cursor: pointer;
 }
+
 .btn-file {
     background-color: #fff;
     border: 1px solid #ef48b5;
@@ -51,10 +64,12 @@
     font-size: 16px;
     padding: 8px 20px;
 }
+
 .thumbs-img {
     margin: 0;
     padding: 0;
 }
+
 .thumbs-img li {
     border: 1px dotted #00000075;
     border-radius: 15px;
@@ -63,6 +78,7 @@
     margin-right: 20px;
     padding: 10px;
 }
+
 .Delete-image {
     background: tomato;
     border-radius: 50%;
@@ -72,6 +88,7 @@
     right: -6px;
     top: -12px;
 }
+
 @media screen and (max-width: 1092px) {
     .not_found img {
         width: 100%;
@@ -81,9 +98,10 @@
         width: 180px;
     }
 }
+
 @media screen and (max-width: 767px) {
     .upload-box {
         width: 100%;
-     
+
     }
 }
