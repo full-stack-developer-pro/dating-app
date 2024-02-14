@@ -1045,7 +1045,7 @@ const Home = () => {
             {/* <img src={Heart} alt="" className="heartTwo" /> */}
             <h1>{topBanner?.heading}</h1>
             <p dangerouslySetInnerHTML={{ __html: topBanner?.description }}></p>
-            {
+            {/* {
               !auth && (
                 <button
                   className="main_button"
@@ -1054,7 +1054,7 @@ const Home = () => {
                   Join Free Now!<i class="fas fa-chevron-right"></i>
                 </button>
               )
-            }
+            } */}
 
             {/* <img src={HeartTwo} alt="" className="heartOne" /> */}
           </div>
