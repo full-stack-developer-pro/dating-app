@@ -28,7 +28,6 @@ const Chats = () => {
   const [showExpandedChat, setShowExpandedChat] = useState(true);
   const [fDisabled, setFDisabled] = useState(false);
   const [noticeCount, setNoticeCount] = useState("");
-  const [chatLoader, setChatLoader] = useState(true);
   const [message, setMessage] = useState();
   const [profile, setProfile] = useState([]);
   const [personalProfile, setPersonalProfile] = useState([]);
@@ -36,13 +35,18 @@ const Chats = () => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-
+  let user_id = JSON.parse(localStorage.getItem("d_user"));
   useEffect(() => {
     chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    
   }, [expandedChatMessages]);
- 
-  useEffect(() => {
 
+
+
+
+
+
+  useEffect(() => {
     if(!connectionEstablished){
       socket = new WebSocket(
         `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
@@ -50,17 +54,15 @@ const Chats = () => {
   
       socket.addEventListener("open", (event) => {
         connectionEstablished = true;
-        setChatLoader(false);
       });
   
       socket.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
         console.log("Received message:", data);
         getExpandedChat();
-        if (credits === 0) {
-          toast.error(data.message);
+        toast.error(data.msg);
+        if (data.success === false) {
           navigate("/packages");
-  
           socket.close();
         } else if (data.type === "new_message") {
           getExpandedChat();
@@ -98,8 +100,11 @@ const Chats = () => {
       setPersonalProfile(data?.data?.data?.user);
     });
   };
+
   let credits = personalProfile?.credits;
+
   useEffect(() => {
+    
     UserProfile();
   }, []);
 
@@ -280,13 +285,7 @@ const Chats = () => {
               </div>
 
               <div className="chat_flexR">
-                {chatLoader && (
-                  <div className="chat_loader">
-                    <div class="spinner-border" role="status">
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                )}
+            
                 {showExpandedChat ? (
                   <>
                     <div className="chat_expHead">

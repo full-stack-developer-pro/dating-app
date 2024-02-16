@@ -224,3 +224,21 @@ button.send_m a {
     }
 
 }
+@media (min-width: 767px) and (max-width: 1024px){
+    .single_Pflex{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .single_pL_main{
+        width: 33%;
+        margin-right: 2%;
+    }
+    .single_Pflex .single_pM{
+        width: 63%;
+    }
+    .single_pR_main{
+        width: 50%;
+        margin-top: 20px;
+    }
+
+}

@@ -122,7 +122,7 @@ img.plus_img {
 .packages_gift_two{
     width: 20%;
 }
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 767px) {
     .step_package_inner h2 {
         width: 18%;        
         font-size: 16px;
@@ -138,13 +138,31 @@ img.plus_img {
         font-size: 20px;
         color: #Fff;
     }
-    .promo_item h2 {
+    img.plus_img {
+        position: absolute;
+        width: 28% !important;
+        left: -15px !important;
+        top: 19px !important;
+    }
+    .promo_item {
+        flex-direction: column;
+    }
+    .packages_first {
+        padding: 25px 20px;
+        width: 25%;
 
-        display: none;
+    }
+    .packages_gift {
+        width: 25%;
+    }
+    .packages_middle {
+        width: 35%;
+    }
+    .promo_item h2 {
+        font-size: 14px;
     }
     .promo_item img {
-
-        display: none;
+        width: 15%;
     }
     .packages_first h2 {
         font-size: 14px;
@@ -159,7 +177,7 @@ img.plus_img {
         text-align: center;
         display: flex;
         justify-content: center;
-        padding: 15px 35px;
+        padding: 30px 35px;
 
     }
     .promo_item {
@@ -169,4 +187,16 @@ img.plus_img {
         font-size: 16px;
     }
 
+}
+
+@media screen and (min-width: 767px)and (max-width:1024px) {
+    .packages_gift {
+        width: 28%;
+    }
+    .step_package_inner h2 {
+        width: 15%;
+    }
+    img.plus_img {
+        left: -15px !important;
+    }
 }

@@ -10,10 +10,8 @@ import NavbarProfile from "../common/NavbarProfile";
 import ProfileAvatar from "../images/profile-avatar.png";
 
 let user_id = JSON.parse(localStorage.getItem("d_user"));
-
-const socket = new WebSocket(
-  `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
-);
+let connectionEstablished = false; 
+let socket;
 
 const Chats = () => {
   const params = useParams();
@@ -35,6 +33,7 @@ const Chats = () => {
   const [loading, setLoading] = useState(false);
 
   // const history = useHistory();
+  let user_id = JSON.parse(localStorage.getItem("d_user"));
 
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
@@ -139,24 +138,55 @@ const Chats = () => {
   };
   // payment
 
-  socket.addEventListener("open", (event) => {
-    setUser();
-  });
-  socket.addEventListener("message", (event) => {
-    const data = JSON.parse(event.data);
-    console.log("Received message:", data);
-    console.log(data.msg);
-    if (credits === 0) {
-      toast.error(data.message);
-      setPayments(true);
-      setTimeout(() => {}, 2000);
-    } else if (data.type === "new_message") {
-      setTimeout(() => {
-        getExpandedChat();
-      }, 1000);
-      console.log(data);
+
+  useEffect(() => {
+    if(!connectionEstablished){
+      socket = new WebSocket(
+        `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
+      );
+  
+      socket.addEventListener("open", (event) => {
+        connectionEstablished = true;
+      });
+  
+      socket.addEventListener("message", (event) => {
+        const data = JSON.parse(event.data);
+        console.log("Received message:", data);
+        console.log(data.msg);
+        toast.error(data.msg);
+        if (data.success === false) {
+          setTimeout(() => {}, 2000);
+        } else if (data.type === "new_message") {
+          setTimeout(() => {
+            getExpandedChat();
+          }, 1000);
+          console.log(data);
+        }
+      });
+  
+      socket.addEventListener("close", (event) => {
+        console.log("WebSocket connection closed:", event);
+      });
     }
-  });
+  }, []);
+  // socket.addEventListener("open", (event) => {
+  //   setUser();
+  // });
+  // socket.addEventListener("message", (event) => {
+  //   const data = JSON.parse(event.data);
+  //   console.log("Received message:", data);
+  //   console.log(data.msg);
+  //   if (credits === 0) {
+  //     toast.error(data.message);
+  //     setPayments(true);
+  //     setTimeout(() => {}, 2000);
+  //   } else if (data.type === "new_message") {
+  //     setTimeout(() => {
+  //       getExpandedChat();
+  //     }, 1000);
+  //     console.log(data);
+  //   }
+  // });
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -190,7 +220,7 @@ const Chats = () => {
     getUserProfile();
     getChatList();
     setUser();
-  }, []);
+  }, [user_id]);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
