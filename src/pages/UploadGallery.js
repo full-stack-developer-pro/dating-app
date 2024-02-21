@@ -306,7 +306,7 @@ const UploadGallery = () => {
                     return (
                       <>
                         <div className="inner_images">
-                          <img src={`http://api.digitalmarketingcoursesinchandigarh.in/${image.path}`} alt="Image" />
+                          <img src={`https://api.milfhub.co.uk/${image.path}`} alt="Image" />
                           <div className="edit_image">
                             <button onClick={() => handleAvatar(image)}><i class="fas fa-pencil-alt"></i> </button>
                           </div>

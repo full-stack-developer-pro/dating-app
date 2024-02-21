@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-const API_URL = (process.env.NODE_ENV != 'production' ? "http://api.digitalmarketingcoursesinchandigarh.in/" : "http://api.digitalmarketingcoursesinchandigarh.in/");
+const API_URL = (process.env.NODE_ENV != 'production' ? "https://api.milfhub.co.uk/" : "https://api.milfhub.co.uk/");
 
 const register = (data) => {
   return axios.post(API_URL + "api/user/signup", data);
