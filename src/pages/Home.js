@@ -25,14 +25,14 @@ import DatingGirl from "../images/datingAppGirl.png";
 import HowIt from "../images/how_it.jpg";
 import DataService from "../services/data.service";
 import LoadingBar from "react-top-loading-bar";
-import SelectSearch from 'react-select-search';
+import SelectSearch from "react-select-search";
 // import { io } from "socket.io-client";
 import axios from "axios";
 import MultiRangeSlider from "multi-range-slider-react";
-import ProfileAvatar from "../images/profile-avatar.png"
+import ProfileAvatar from "../images/profile-avatar.png";
 
 const Home = () => {
-  // const socket = new WebSocket("ws://api.digitalmarketingcoursesinchandigarh.in:9091");
+  // const socket = new WebSocket("ws://api.milfhub.co.uk:9091");
 
   const ref = useRef(null);
   const auth = AuthService.getCurrentUser();
@@ -57,11 +57,12 @@ const Home = () => {
   const [stepThree, setStepThree] = useState(false);
   const [stepFour, setStepFour] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [showAgeError, setShowAgeError] = useState(false);
   const [hide, setHide] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState();
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [apiError, setApiError] = useState("");
 
   const [isListVisible, setIsListVisible] = useState(true);
@@ -108,10 +109,8 @@ const Home = () => {
   const [members, setMembers] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [FlirtPopUP, setFlirtPopUP] = useState(false);
-
-
 
   const calculateAge = (birthdate) => {
     const today = new Date();
@@ -119,10 +118,12 @@ const Home = () => {
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
 
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
       age--;
     }
-
     return age;
   };
 
@@ -135,10 +136,9 @@ const Home = () => {
 
   const eighteenYearsAgo = new Date();
   eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
-  const maxDate = eighteenYearsAgo.toISOString().split('T')[0];
+  const maxDate = eighteenYearsAgo.toISOString().split("T")[0];
 
-
-  // errors 
+  // errors
   const minLength = 6;
   const handleChange = (e) => {
     const enteredPassword = e.target.value;
@@ -149,13 +149,13 @@ const Home = () => {
   const handleEmailChange = (e) => {
     const enteredEmail = e.target.value;
     setEmail(enteredEmail);
-    if (!enteredEmail.includes('@')) {
-      setError('Email address must contain the @ symbol.');
+    if (!enteredEmail.includes("@")) {
+      setError("Email address must contain the @ symbol.");
     } else {
-      setError('');
+      setError("");
     }
   };
-  // errors 
+  // errors
 
   const handleSliderChange = ({ minValue, maxValue }) => {
     setAgeGroup({ minValue, maxValue });
@@ -223,10 +223,19 @@ const Home = () => {
     setStepThree(true);
   };
   const handleShowTwo = () => {
-    if (gender === "" || dob === "" || searchKeyword === "" || isChecked === false) {
+    if (
+      gender === "" ||
+      dob === "" ||
+      searchKeyword === "" ||
+      isChecked === false
+    ) {
       setShowError(true);
+    } else if (dob > maxDate) {
+      setShowError(false);
+      setShowAgeError(true);
     } else {
       setShowError(false);
+      setShowAgeError(false);
       setStepOne(false);
       setStepThree(false);
       setStepFour(false);
@@ -251,13 +260,11 @@ const Home = () => {
     }
   };
   const handleShowFour = () => {
-
     setShowError(false);
     setStepTwo(false);
     setStepOne(false);
     setStepThree(false);
     setStepFour(true);
-
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -347,7 +354,9 @@ const Home = () => {
       },
       (error) => {
         const resMessage =
-          (error.response && error.response.data && error.response.data.message) ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
           error.message ||
           error.toString();
         setLoading(false);
@@ -372,7 +381,9 @@ const Home = () => {
       },
       (error) => {
         const resMessage =
-          (error.response && error.response.data && error.response.data.message) ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
           error.message ||
           error.toString();
         setLoading(false);
@@ -425,8 +436,6 @@ const Home = () => {
   //   });
   // };
 
-
-
   const getCity = async () => {
     await DataService.getCities(searchKeyword).then((data) => {
       setCities(data?.data?.data);
@@ -454,8 +463,7 @@ const Home = () => {
   const handleNotification = (id) => {
     DataService.TrackProfile(id).then(
       () => {
-        setTimeout(() => {
-        }, 2000)
+        setTimeout(() => {}, 2000);
       },
       (error) => {
         const resMessage =
@@ -472,15 +480,13 @@ const Home = () => {
       }
     );
   };
-
 
   const sendFlirt = (id) => {
     DataService.PostFlirt(id).then(
       () => {
         toast.success("Wink Sent");
-        setFlirtPopUP(false)
-        setTimeout(() => {
-        }, 2000)
+        setFlirtPopUP(false);
+        setTimeout(() => {}, 2000);
       },
       (error) => {
         const resMessage =
@@ -497,7 +503,6 @@ const Home = () => {
       }
     );
   };
-
 
   // let userid = JSON.parse(localStorage.getItem("d_user"));
   // const sendFlirt = (e, id) => {
@@ -534,12 +539,11 @@ const Home = () => {
   // };
 
   const handleImage = (e) => {
-    e.target.src = ProfileAvatar
-  }
+    e.target.src = ProfileAvatar;
+  };
   const handleBottom = (e) => {
-    e.target.src = ProfileAvatar
-  }
-
+    e.target.src = ProfileAvatar;
+  };
 
   return (
     <>
@@ -555,7 +559,6 @@ const Home = () => {
           backgroundPosition: "50%",
         }}
       >
-
         <div className="top_bannerInner">
           {auth ? (
             ""
@@ -565,10 +568,27 @@ const Home = () => {
                 <div className="signup_inner">
                   <h2>Sign Up Free!</h2>
                   <div className="signup_formSec">
-                    {apiError && <h1 style={{ color: "red", fontSize: "15px", textAlign: "center", background: "#ffd8d8", padding: "10px 8px" }}>{apiError}</h1>}
+                    {apiError && (
+                      <h1
+                        style={{
+                          color: "red",
+                          fontSize: "15px",
+                          textAlign: "center",
+                          background: "#ffd8d8",
+                          padding: "10px 8px",
+                        }}
+                      >
+                        {apiError}
+                      </h1>
+                    )}
                     {showError && (
                       <div className="error_bar">
                         <p>Please Fill out All fields !!</p>
+                      </div>
+                    )}
+                    {showAgeError && (
+                      <div className="error_bar">
+                        <p>Age should not be less than 18</p>
                       </div>
                     )}
                     {stepOne && (
@@ -659,7 +679,10 @@ const Home = () => {
                           {isListVisible && searchKeyword && (
                             <ul className="location_new">
                               {cities.map((city) => (
-                                <li onClick={() => handleHideCity(city)} key={city.id}>
+                                <li
+                                  onClick={() => handleHideCity(city)}
+                                  key={city.id}
+                                >
                                   {city.city}
                                 </li>
                               ))}
@@ -749,7 +772,17 @@ const Home = () => {
                             onChange={handleEmailChange}
                           />
                           <label for="floatingInput">Email</label>
-                          {error && <div style={{ color: 'red', fontSize: "14px", paddingTop: "10px" }}>{error}</div>}
+                          {error && (
+                            <div
+                              style={{
+                                color: "red",
+                                fontSize: "14px",
+                                paddingTop: "10px",
+                              }}
+                            >
+                              {error}
+                            </div>
+                          )}
                         </div>
 
                         <div class="form-floating mb-3">
@@ -764,11 +797,17 @@ const Home = () => {
                           />
                           <label for="floatingInput">Password</label>
                           {!isPasswordValid && (
-                            <div style={{ color: 'red', fontSize: "14px", paddingTop: "10px" }}>Password must be at least 6 characters long</div>
+                            <div
+                              style={{
+                                color: "red",
+                                fontSize: "14px",
+                                paddingTop: "10px",
+                              }}
+                            >
+                              Password must be at least 6 characters long
+                            </div>
                           )}
                         </div>
-
-
 
                         <div className="signup_buttons">
                           <button
@@ -821,15 +860,16 @@ const Home = () => {
                         </div> */}
 
                         <div className="form-field row mb-3">
-
                           <div className="col-sm-12">
                             <div class="select_singup">
                               <label for="floatingInput">Marital Status</label>
 
-                              <select value={maritalstatus}
+                              <select
+                                value={maritalstatus}
                                 onChange={(e) =>
                                   setMaritalStatus(e.target.value)
-                                }>
+                                }
+                              >
                                 <option value="Married">Married</option>
                                 <option value="Unmarried">Unmarried</option>
                               </select>
@@ -961,7 +1001,9 @@ const Home = () => {
                           />
                         </div> */}
                         <div className="sku_btn">
-                          <button className="Skip_btn" onClick={handleShowFour}>Skip this</button>
+                          <button className="Skip_btn" onClick={handleShowFour}>
+                            Skip this
+                          </button>
                         </div>
                         <div className="signup_buttons">
                           <button
@@ -987,8 +1029,20 @@ const Home = () => {
                           <span className="three active">3</span>
                           <span className="four active">4</span>
                         </div>
-                        <div className="new_skiptext" style={{ textAlign: "center", padding: "15px 0px" }} >
-                          <label for="floatingInput" style={{ color: " #ef48b5", fontSize: "18px", fontWeight: "600" }}>Continue with these <br /> sigup details !</label>
+                        <div
+                          className="new_skiptext"
+                          style={{ textAlign: "center", padding: "15px 0px" }}
+                        >
+                          <label
+                            for="floatingInput"
+                            style={{
+                              color: " #ef48b5",
+                              fontSize: "18px",
+                              fontWeight: "600",
+                            }}
+                          >
+                            Continue with these <br /> sigup details !
+                          </label>
                         </div>
                         {/* <div className="form-field row mb-3">
                           <div className="col-sm-6">
@@ -1068,13 +1122,14 @@ const Home = () => {
                 <img
                   onError={handleBottom}
                   src={
-                    "http://api.digitalmarketingcoursesinchandigarh.in/" + middleBanner?.images[0]?.path
+                    "https://api.milfhub.co.uk/" +
+                    middleBanner?.images[0]?.path
                   }
                   alt=""
                 />
-              ) :
+              ) : (
                 ""
-              }
+              )}
             </div>
             <div className="about_flexR">
               <h2>{middleBanner?.heading}</h2>
@@ -1095,7 +1150,6 @@ const Home = () => {
 
                 <div className="search_main">
                   <div className="search_gender_inner">
-
                     <p>
                       <strong>Gender</strong>
                     </p>
@@ -1137,11 +1191,13 @@ const Home = () => {
                         checked={selectedGenderSearch === "female"}
                         onChange={SearchHandleSelection}
                       />
-                      <label class="form-check-label" for="gender_female_search">
+                      <label
+                        class="form-check-label"
+                        for="gender_female_search"
+                      >
                         Female
                       </label>
                     </div>
-
                   </div>
                   <div className="form_field country mb-3 search_m ">
                     <label>
@@ -1156,7 +1212,10 @@ const Home = () => {
                     {isListVisible && searchKeyword && (
                       <ul className="location_new">
                         {cities.map((city) => (
-                          <li onClick={() => handleHideCity(city)} key={city.id}>
+                          <li
+                            onClick={() => handleHideCity(city)}
+                            key={city.id}
+                          >
                             {city.city}
                           </li>
                         ))}
@@ -1188,7 +1247,6 @@ const Home = () => {
                       maxValue={ageGroup.maxValue}
                       onChange={handleSliderChange}
                     />
-
                   </div>
                   <div className="button_search">
                     <Link
@@ -1199,10 +1257,7 @@ const Home = () => {
                     </Link>
                   </div>
                 </div>
-
-
               </div>
-
 
               <div className="active_mainArea">
                 {users && users.length > 0 ? (
@@ -1218,7 +1273,15 @@ const Home = () => {
                               <div className="active_mainL">
                                 {/* ProfileOne */}
                                 <Link to={"/single-profile/" + item.id}>
-                                  <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImage} />
+                                  <img
+                                    src={
+                                      item?.profile_path
+                                        ? item?.profile_path
+                                        : ProfileOne
+                                    }
+                                    alt=""
+                                    onError={handleImage}
+                                  />
                                 </Link>
                               </div>
                               <div className="active_mainR">
@@ -1228,8 +1291,8 @@ const Home = () => {
                                   {item?.gender === "male"
                                     ? "M"
                                     : item?.gender === "female"
-                                      ? "F"
-                                      : "Other"}
+                                    ? "F"
+                                    : "Other"}
                                 </span>
                                 <span>
                                   <i className="fas fa-map-marker-alt"></i>
@@ -1261,7 +1324,9 @@ const Home = () => {
                               </div>
                             </div>
                             <div className="active_actionSec">
-                              <button onClick={() => handleNotification(item.id)}>
+                              <button
+                                onClick={() => handleNotification(item.id)}
+                              >
                                 <Link to={"/single-profile/" + item.id}>
                                   View<i className="fas fa-eye"></i>
                                 </Link>
@@ -1270,11 +1335,11 @@ const Home = () => {
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button> */}
                               {auth && (
-                                <button onClick={() => setFlirtPopUP(!FlirtPopUP)}>
-                                  Send Flirt<i className="fas fa-heart"></i>
+                                <button
+                                  onClick={() => setFlirtPopUP(!FlirtPopUP)}
+                                >
+                                  Send Wink<i className="fas fa-heart"></i>
                                 </button>
-
-
                               )}
 
                               {auth && (
@@ -1288,21 +1353,30 @@ const Home = () => {
                             {FlirtPopUP && (
                               <div className="main_sendFlirt">
                                 <div className="sendFlirt">
-                                  <button className="new_flirt_cross" onClick={() => setFlirtPopUP(false)}>
+                                  <button
+                                    className="new_flirt_cross"
+                                    onClick={() => setFlirtPopUP(false)}
+                                  >
                                     <i class="fas fa-times"></i>
                                   </button>
                                   <div className="sendFlirt_inner ">
                                     <h2></h2>
-                                    <p style={{ fontSize: "18px" }}>Flirt your way to fun for just <b>100 credits</b> <br /> try it now!</p>
-                                    <button className="send_ok_flirt" onClick={() => sendFlirt(item.id)}>Send</button>
+                                    <p style={{ fontSize: "18px" }}>
+                                      Flirt your way to fun for just{" "}
+                                      <b>100 credits</b> <br /> try it now!
+                                    </p>
+                                    <button
+                                      className="send_ok_flirt"
+                                      onClick={() => sendFlirt(item.id)}
+                                    >
+                                      Send
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             )}
                           </div>
-
                         </>
-
                       );
                     }
                     return null; // Skip rendering for the user's own profile
@@ -1320,9 +1394,13 @@ const Home = () => {
               </button> */}
 
               {users && users.length > displayCount && (
-                <button className="main_button my-4" onClick={handleViewAllClick}>View All</button>
-              )
-              }
+                <button
+                  className="main_button my-4"
+                  onClick={handleViewAllClick}
+                >
+                  View All
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -1332,40 +1410,38 @@ const Home = () => {
           <div className="about_flex">
             <div className="about_flexR">
               <h2>{secondLastBanner?.heading}</h2>
-              <p style={{ fontSize: "14px", fontFamily: "'Outfit', sans-serif" }}
+              <p
+                style={{ fontSize: "14px", fontFamily: "'Outfit', sans-serif" }}
                 dangerouslySetInnerHTML={{
                   __html: secondLastBanner?.description,
                 }}
               ></p>
-              {
-                !auth && (
-                  <button
-                    className="main_button"
-                    onClick={() => (window.location.href = "/#signup")}
-                  >
-                    Join For Free Here Right Now
-                  </button>
-                )}
-
+              {!auth && (
+                <button
+                  className="main_button"
+                  onClick={() => (window.location.href = "/#signup")}
+                >
+                  Join For Free Here Right Now
+                </button>
+              )}
             </div>
             <div className="about_flexL">
               {secondLastBanner?.images?.length > 0 ? (
                 <img
                   onError={handleBottom}
                   src={
-                    "http://api.digitalmarketingcoursesinchandigarh.in/" +
+                    "https://api.milfhub.co.uk/" +
                     secondLastBanner?.images[0]?.path
                   }
                   alt=""
                 />
-              ) : ""}
+              ) : (
+                ""
+              )}
             </div>
           </div>
-
         </div>
       </section>
-
-
 
       <Footer />
     </>

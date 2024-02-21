@@ -427,11 +427,11 @@ const SearchResults = () => {
                               Like<i className="fas fa-thumbs-up"></i>
                             </button>
                             <button>
-                              Send Flirt<i className="fas fa-heart"></i>
+                              Send Wink<i className="fas fa-heart"></i>
                             </button> */}
                               {auth && (
                                 <button onClick={()=>setFlirtPopUP(!FlirtPopUP)}>
-                                  Send Flirt<i className="fas fa-heart"></i>
+                                  Send Wink<i className="fas fa-heart"></i>
                                 </button>
                               )}
                             <button>

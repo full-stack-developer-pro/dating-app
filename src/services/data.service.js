@@ -3,8 +3,8 @@ import AuthService from "./auth.service";
 
 const API_URL =
   process.env.NODE_ENV !== "production"
-    ? "http://api.digitalmarketingcoursesinchandigarh.in/"
-    : "http://api.digitalmarketingcoursesinchandigarh.in/";
+    ? "https://api.milfhub.co.uk/"
+    : "https://api.milfhub.co.uk/";
 
 axios.interceptors.request.use(function (config) {
   const token = AuthService.getCurrentUserTokken();

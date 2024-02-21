@@ -142,7 +142,7 @@ const Chats = () => {
   useEffect(() => {
     if(!connectionEstablished){
       socket = new WebSocket(
-        `ws://api.digitalmarketingcoursesinchandigarh.in:9091/?user_id=${user_id}`
+        `ws://api.milfhub.co.uk:9091/?user_id=${user_id}`
       );
   
       socket.addEventListener("open", (event) => {

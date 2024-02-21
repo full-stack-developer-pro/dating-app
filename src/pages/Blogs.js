@@ -41,7 +41,7 @@ const Blogs = () => {
                             {item?.images ? (
                               <img
                               src={
-                                "http://api.digitalmarketingcoursesinchandigarh.in/" +
+                                "https://api.milfhub.co.uk/" +
                                 item?.images[0]?.path
                               }
                                 alt=""
