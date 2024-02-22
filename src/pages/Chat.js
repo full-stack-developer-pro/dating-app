@@ -9,9 +9,8 @@ import LoadingBar from "react-top-loading-bar";
 import NavbarProfile from "../common/NavbarProfile";
 import ProfileAvatar from "../images/profile-avatar.png";
 
-
 let user_id = JSON.parse(localStorage.getItem("d_user"));
-let connectionEstablished = false; 
+let connectionEstablished = false;
 let socket;
 
 const Chats = () => {
@@ -38,24 +37,18 @@ const Chats = () => {
   let user_id = JSON.parse(localStorage.getItem("d_user"));
   useEffect(() => {
     chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-    
   }, [expandedChatMessages]);
 
-
-
-
-
-
   useEffect(() => {
-    if(!connectionEstablished){
+    if (!connectionEstablished) {
       socket = new WebSocket(
-        `ws://api.milfhub.co.uk:9091/?user_id=${user_id}`
+        `wss://api.milfhub.co.uk:9091/?user_id=${user_id}`
       );
-  
+
       socket.addEventListener("open", (event) => {
         connectionEstablished = true;
       });
-  
+
       socket.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
         console.log("Received message:", data);
@@ -69,7 +62,7 @@ const Chats = () => {
           console.log(data);
         }
       });
-  
+
       socket.addEventListener("close", (event) => {
         console.log("WebSocket connection closed:", event);
       });
@@ -92,9 +85,8 @@ const Chats = () => {
     socket.send(JSON.stringify(data));
     await getExpandedChat();
     document.getElementById("main_input").value = "";
-
   };
- 
+
   const UserProfile = async () => {
     await DataService.getSingleProfile(user_id).then((data) => {
       setPersonalProfile(data?.data?.data?.user);
@@ -104,7 +96,6 @@ const Chats = () => {
   let credits = personalProfile?.credits;
 
   useEffect(() => {
-    
     UserProfile();
   }, []);
 
@@ -232,7 +223,7 @@ const Chats = () => {
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-      <div className="show_edit_bgarea_message">
+        <div className="show_edit_bgarea_message">
           <div className="chat_sec">
             <div className="chat_flex">
               <div className="chat_flexL  hide_meY">
@@ -285,7 +276,6 @@ const Chats = () => {
               </div>
 
               <div className="chat_flexR">
-            
                 {showExpandedChat ? (
                   <>
                     <div className="chat_expHead">
@@ -346,7 +336,9 @@ const Chats = () => {
                             <>
                               <div className="chat_right">
                                 <p className="text_message">
-                                  {item.type === "wink" ?  "😉" : item.message_text}
+                                  {item.type === "wink"
+                                    ? "😉"
+                                    : item.message_text}
                                   {/* {item.message_text} */}
                                   <i className="fas fa-check"></i>
                                 </p>
@@ -360,7 +352,9 @@ const Chats = () => {
                             <>
                               <div className="chat_left">
                                 <p className="text_message">
-                                {item.type === "wink" ?  "😉" : item.message_text}
+                                  {item.type === "wink"
+                                    ? "😉"
+                                    : item.message_text}
                                 </p>
                                 <span>
                                   <i className="far fa-clock"></i>
@@ -393,7 +387,7 @@ const Chats = () => {
                         // disabled={fDisabled}
                         // value={message}
                         id="main_input"
-                      // onChange={(e) => setMessage(e.target.value)}
+                        // onChange={(e) => setMessage(e.target.value)}
                       />
                       <div>
                         {/* <Picker onEmojiClick={onEmojiClick} />
