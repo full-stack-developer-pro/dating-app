@@ -32,7 +32,7 @@ import MultiRangeSlider from "multi-range-slider-react";
 import ProfileAvatar from "../images/profile-avatar.png";
 
 const Home = () => {
-  // const socket = new WebSocket("ws://api.milfhub.co.uk:9091");
+  // const socket = new WebSocket("wss://api.milfhub.co.uk:9091");
 
   const ref = useRef(null);
   const auth = AuthService.getCurrentUser();
