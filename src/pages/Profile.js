@@ -37,15 +37,17 @@ const Profile = () => {
   const [profile, setProfile] = useState([]);
   const userId = JSON.parse(localStorage.getItem("d_user"));
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [usersPerPage] = useState(5);
+  // const indexOfLastUser = currentPage * usersPerPage;
+  // const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  // const currentUsers = usersData.slice(indexOfFirstUser, indexOfLastUser);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(5);
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = usersData.slice(indexOfFirstUser, indexOfLastUser);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const [totalPages, setTotalPages] = useState(1);
+  const [filteredData, setfilteredData] = useState([]);
+  // const paginate = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  // };
 
 
   const sendFlirt = (id) => {
@@ -129,10 +131,14 @@ const Profile = () => {
   };
 
 
-  const searchData = async () => {
+  const searchData = async (limit, page) => {
     try {
-      const response = await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue);
+      const response = await DataService.searchUsers(limit, page, gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue);
+      const totalUsers = response?.data?.data?.total_users;
+      const totalPages = Math.ceil(totalUsers / limit);
       setUsers(response?.data?.data.users);
+      setfilteredData(response?.data?.data?.users);
+      setTotalPages(totalPages);
       ref.current.complete();
       // toast.success("Data Searched");
     } catch (error) {
@@ -147,7 +153,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    searchData();
+    searchData(20, 1);
   }, [gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue]);
 
   useEffect(() => {
@@ -234,6 +240,59 @@ const Profile = () => {
   const handleImagenew = (e) => {
     e.target.src = ProfileAvatar
   }
+
+  const handlePageChange = async (page) => {
+    setCurrentPage(page);
+    await searchData(20, page);
+  };
+
+  const renderPaginationButtons = () => {
+    console.log(totalPages);
+    const maxVisibleButtons = 5;
+    const startPage = Math.max(
+      1,
+      currentPage - Math.floor(maxVisibleButtons / 2)
+    );
+    const endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
+
+    const buttons = [];
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={currentPage === i ? "activated" : ""}
+          disabled={loading}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return (
+      <div className="user_pagination">
+        {currentPage > 1 && (
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={loading}
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        )}
+        {buttons}
+        {currentPage < totalPages && (
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={loading}
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        )}
+      </div>
+    );
+  };
+
+
   return (
     <>
       {/* <Navbar /> */}
@@ -336,8 +395,8 @@ const Profile = () => {
               </div>
 
               <div className="active_mainArea">
-                {currentUsers && currentUsers.length > 0 ? (
-                  currentUsers.map((item, i) => {
+                {filteredData && filteredData.length > 0 ? (
+                  filteredData.map((item, i) => {
                     if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
                         (op) => op?.id === item?.id
@@ -432,8 +491,10 @@ const Profile = () => {
                   <p>No Data Found</p>
                 )}
               </div>
-                {/* Pagination buttons */}
-                <div className="pagination">
+              {/* Pagination buttons */}
+              {renderPaginationButtons()}
+
+              {/* <div className="pagination">
                   <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
                     Previous
                   </button>
@@ -445,7 +506,7 @@ const Profile = () => {
                   <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(usersData.length / usersPerPage)}>
                     Next
                   </button>
-                </div>
+                </div> */}
               {!auth &&
                 <button
                   className="main_button my-4"

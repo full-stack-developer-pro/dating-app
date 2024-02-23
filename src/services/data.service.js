@@ -79,8 +79,8 @@ const getSingleProfile = (id) => {
 const UpdateProfile = (id, data) => {
   return axios.put(API_URL + "api/user/update/" + id, data);
 };
-const getAllUsers = () => {
-  return axios.get(API_URL + "api/user/getAllUser");
+const getAllUsers = (limit, page) => {
+  return axios.get(API_URL + "api/user/getAllUser?limit=" + limit + "&page=" + page);
 };
 const addMyFriend = (id, data) => {
   return axios.post(API_URL + "api/addFriend/" + id, data);
@@ -91,10 +91,11 @@ const removeMyFriend = (id, data) => {
 const getAllFriend = (id) => {
   return axios.get(API_URL + "api/user/getAllFriends/" + id);
 };
-const searchUsers = (gender, country, minValue, maxValue) => {
+const searchUsers = (limit, page,gender, country, minValue, maxValue) => {
   return axios.get(
     API_URL +
-    "api/user/getList?gender=" +
+    "api/user/getList?limit=" + limit + "&page=" + page +
+    "&gender=" +
     gender +
     "&country=" +
     country +
