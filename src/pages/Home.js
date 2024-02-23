@@ -40,7 +40,7 @@ const Home = () => {
     document.title = "Home";
     window.scrollTo(0, 0);
     ref.current.continuousStart();
-    getAllUsers();
+    getAllUsers(20, 1);
   }, []);
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
@@ -111,6 +111,9 @@ const Home = () => {
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
   const [error, setError] = useState("");
   const [FlirtPopUP, setFlirtPopUP] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [filteredData, setfilteredData] = useState([]);
 
   const calculateAge = (birthdate) => {
     const today = new Date();
@@ -331,11 +334,19 @@ const Home = () => {
     // }
   };
 
-  const getAllUsers = async () => {
-    await DataService.getAllUsers().then((data) => {
+  const getAllUsers = async (limit, page) => {
+    await DataService.getAllUsers(limit, page).then((data) => {
+      const totalUsers = data?.data?.data?.total_users;
+      const totalPages = Math.ceil(totalUsers / limit);
       setUsers(data?.data?.data?.users);
+      setfilteredData(data?.data?.data?.users);
+      setTotalPages(totalPages);
       ref.current.complete();
     });
+  };
+  const handlePageChange = async (page) => {
+    setCurrentPage(page);
+    await getAllUsers(20, page);
   };
   // console.log(users)
 
@@ -544,6 +555,55 @@ const Home = () => {
   const handleBottom = (e) => {
     e.target.src = ProfileAvatar;
   };
+
+
+
+  const renderPaginationButtons = () => {
+    console.log(totalPages);
+    const maxVisibleButtons = 5;
+    const startPage = Math.max(
+      1,
+      currentPage - Math.floor(maxVisibleButtons / 2)
+    );
+    const endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
+
+    const buttons = [];
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={currentPage === i ? "activated" : ""}
+          disabled={loading}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return (
+      <div className="user_pagination">
+        {currentPage > 1 && (
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={loading}
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        )}
+        {buttons}
+        {currentPage < totalPages && (
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={loading}
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        )}
+      </div>
+    );
+  };
+
 
   return (
     <>
@@ -872,6 +932,8 @@ const Home = () => {
                               >
                                 <option value="Married">Married</option>
                                 <option value="Unmarried">Unmarried</option>
+                                <option value="Single">Single</option>
+                                <option value="Divorced">Divorced</option>
                               </select>
                               {/* <input
                                 type="text"
@@ -1260,8 +1322,8 @@ const Home = () => {
               </div>
 
               <div className="active_mainArea">
-                {users && users.length > 0 ? (
-                  users.slice(0, displayCount).map((item, i) => {
+                {filteredData && filteredData.length > 0 ? (
+                  filteredData?.map((item, i) => {
                     if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
                         (op) => op?.id === item?.id
@@ -1392,15 +1454,16 @@ const Home = () => {
               >
                 Sign Up Free!<i class="fas fa-long-arrow-alt-right"></i>
               </button> */}
+              {renderPaginationButtons()}
 
-              {users && users.length > displayCount && (
+              {/* {users && users.length > displayCount && (
                 <button
                   className="main_button my-4"
                   onClick={handleViewAllClick}
                 >
                   View All
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         </div>

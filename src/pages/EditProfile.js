@@ -541,6 +541,8 @@ const EditProfile = () => {
                               >
                                 <option value="Married">Married</option>
                                 <option value="Unmarried">Unmarried</option>
+                                <option value="Single">Single</option>
+                                <option value="Divorced">Divorced</option>
                               </select>
                             </div>
                           </div>
