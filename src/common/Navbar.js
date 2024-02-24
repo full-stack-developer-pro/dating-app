@@ -388,7 +388,7 @@ const Navbar = () => {
                               ) : null} */}
 
                               {item?.user ? (
-                                <Link to={"/single-profile/" + item?.user?.id}>
+                                  <Link to={item.type === 'message' ? "/chats/" + item?.user?.id : "/single-profile/" + item?.user?.id}>
                                   <div
                                     className="mainnotification_text"
                                     onClick={() => handleNotification(item.id)}
