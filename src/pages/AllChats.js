@@ -256,6 +256,7 @@ const Chats = () => {
           error.toString();
       });
   };
+  
   const sendTo = (id) => {
     navigate("/chats/" + id);
     window.location.reload();
