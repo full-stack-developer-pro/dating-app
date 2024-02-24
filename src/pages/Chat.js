@@ -42,7 +42,7 @@ const Chats = () => {
   useEffect(() => {
     if (!connectionEstablished) {
       socket = new WebSocket(
-        `wss://api.milfhub.co.uk:9091/?user_id=${user_id}`
+        `wss://api.milfhub.co.uk:9091/wss2/?user_id=${user_id}`
       );
 
       socket.addEventListener("open", (event) => {
