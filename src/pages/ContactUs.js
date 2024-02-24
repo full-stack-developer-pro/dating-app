@@ -30,6 +30,7 @@ const mapUrl = `https://maps.google.com/maps?q=${contactData.lat},${contactData.
         getContactData();
         getSocialLinks();
       },[])
+      
   return (
     <>
       <Navbar />
