@@ -368,6 +368,10 @@ const Chats = () => {
                               {item?.name ? item?.name : "Random Company"}
                             </h5>
                           </div>
+                          <div className="chat_read_btn">
+                            <button>Read</button>
+                            {/* <button>Unread</button> */}
+                            </div>
                         </div>
                       </>
                     );
