@@ -336,7 +336,7 @@ const SingleLProfile = () => {
                 </div>
                 <div className="row">
                   <div className="col-lg-6 Mobile_profile">
-                    <h3 className="text_about_me">Country</h3>
+                    <h3 className="text_about_me">Location</h3>
                   </div>
                   <div className="col-lg-6 Mobile_profile">
                     <p>{profile?.country}</p>

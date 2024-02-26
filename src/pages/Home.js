@@ -81,7 +81,7 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
-  const [gender, setGender] = useState("female");
+  const [gender, setGender] = useState("male");
   const [age, setAge] = useState("male");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
