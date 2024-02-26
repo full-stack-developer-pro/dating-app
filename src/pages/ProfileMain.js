@@ -117,7 +117,7 @@ const ProfileMain = () => {
                             <div className="profile_dFlexR">
                                 <div className="profileEntry">
                                     <p>
-                                        <i class="fas fa-map-marker-alt"></i> Country
+                                        <i class="fas fa-map-marker-alt"></i> Location
                                     </p>
                                     <p>:</p>
                                     <p>
