@@ -35,6 +35,10 @@ const Chats = () => {
   const [loading, setLoading] = useState(false);
 
   let user_id = JSON.parse(localStorage.getItem("d_user"));
+
+  useEffect(() => {
+        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+  }, [expandedChatMessages]);
   useEffect(() => {
     // chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [expandedChatMessages]);
@@ -327,7 +331,7 @@ const Chats = () => {
                     </div>
                   </>
                 )}
-                <div className="chat_expBody" style={{ position: "relative" }}>
+                <div className="chat_expBody" style={{ position: "relative" }} ref={chatBoxRef}>
                   {showExpandedChat ? (
                     expandedChatMessages?.map((item, i) => {
                       return (
@@ -372,7 +376,6 @@ const Chats = () => {
                     </>
                   )}
 
-                  {/* <div ref={chatBoxRef}></div> */}
                 </div>
                 <div className="chat_footer">
                   <form onSubmit={sendMessage}>
