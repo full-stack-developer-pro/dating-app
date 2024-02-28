@@ -10,7 +10,7 @@ import NavbarProfile from "../common/NavbarProfile";
 import ProfileAvatar from "../images/profile-avatar.png";
 
 let user_id = JSON.parse(localStorage.getItem("d_user"));
-let connectionEstablished = false; 
+let connectionEstablished = false;
 let socket;
 
 const Chats = () => {
@@ -140,22 +140,22 @@ const Chats = () => {
 
 
   useEffect(() => {
-    if(!connectionEstablished){
+    if (!connectionEstablished) {
       socket = new WebSocket(
         `wss://api.milfhub.co.uk/wss2/?user_id=${user_id}`
       );
-  
+
       socket.addEventListener("open", (event) => {
         connectionEstablished = true;
       });
-  
+
       socket.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
         console.log("Received message:", data);
         console.log(data.msg);
         toast.error(data.msg);
         if (data.success === false) {
-          setTimeout(() => {}, 2000);
+          setTimeout(() => { }, 2000);
         } else if (data.type === "new_message") {
           setTimeout(() => {
             getExpandedChat();
@@ -163,7 +163,7 @@ const Chats = () => {
           console.log(data);
         }
       });
-  
+
       socket.addEventListener("close", (event) => {
         console.log("WebSocket connection closed:", event);
       });
@@ -256,7 +256,7 @@ const Chats = () => {
           error.toString();
       });
   };
-  
+
   const sendTo = (id) => {
     navigate("/chats/" + id);
     window.location.reload();
@@ -287,7 +287,7 @@ const Chats = () => {
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-        <div className="show_edit_bgarea_message">
+        <div className="show_edit_bgarea_message-new">
           {payments && (
             <div className="payments_popup">
               <div className="payments_inner">
@@ -296,30 +296,30 @@ const Chats = () => {
                     <div className="payment_bg">
                       {packages?.length > 0
                         ? packages?.map((item) => {
-                            return (
-                              <>
-                                <div className="payments_plan">
-                                  <h2>{item.credits}</h2>
-                                  <span className="bonus">{item.bonus}</span>
-                                  <h4>credits</h4>
-                                  <hr />
-                                  <h3>Just For</h3>
-                                  <p>
-                                    <span>
-                                      {item.currency} {item.price}
-                                    </span>
-                                  </p>
-                                  <hr />
-                                  <button
-                                    className="main_button"
-                                    onClick={() => handlePayment(item.price)}
-                                  >
-                                    Purchase Now
-                                  </button>
-                                </div>
-                              </>
-                            );
-                          })
+                          return (
+                            <>
+                              <div className="payments_plan">
+                                <h2>{item.credits}</h2>
+                                <span className="bonus">{item.bonus}</span>
+                                <h4>credits</h4>
+                                <hr />
+                                <h3>Just For</h3>
+                                <p>
+                                  <span>
+                                    {item.currency} {item.price}
+                                  </span>
+                                </p>
+                                <hr />
+                                <button
+                                  className="main_button"
+                                  onClick={() => handlePayment(item.price)}
+                                >
+                                  Purchase Now
+                                </button>
+                              </div>
+                            </>
+                          );
+                        })
                         : ""}
                     </div>
                   </div>
@@ -367,8 +367,19 @@ const Chats = () => {
                             <h5>
                               {item?.name ? item?.name : "Random Company"}
                             </h5>
+                            <p> {item?.city_name}</p>
                           </div>
-                         
+                          <div className="chat_last_message">
+                            <p>{item?.last_message.split(" ").slice(0,15).join(" ")}</p>
+                          </div>
+                          <div className="read_btn">
+                            {
+                              item?.read == 0 ?
+                                <button className="read_button">Read</button> :
+                                <button className="unread_button">Unread</button>
+                            }
+                          </div>
+
                         </div>
                       </>
                     );

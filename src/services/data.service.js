@@ -91,18 +91,20 @@ const removeMyFriend = (id, data) => {
 const getAllFriend = (id) => {
   return axios.get(API_URL + "api/user/getAllFriends/" + id);
 };
-const searchUsers = (limit, page,gender, country, minValue, maxValue) => {
+const searchUsers = (limit, page,gender, country, minValue, maxValue,miles) => {
   return axios.get(
     API_URL +
     "api/user/getList?limit=" + limit + "&page=" + page +
     "&gender=" +
     gender +
-    "&country=" +
+    "&city=" +
     country +
     "&min_age=" +
     minValue +
     "&max_age=" +
-    maxValue
+    maxValue +
+    "&miles=" +
+    miles
   );
 };
 const getChatBox = (myId, yourId) => {

@@ -71,6 +71,8 @@ const EditProfile = () => {
   const [isListVisible, setIsListVisible] = useState(false);
   const [notificationStatus, setNotificationStatus] = useState("off");
   const [notificationValue, setNotificationValue] = useState("");
+  const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
+  const [cityId, setCityId] = useState("");
 
 
   const handleSearchChange = (e) => {
@@ -81,14 +83,15 @@ const EditProfile = () => {
     await DataService.getSingleProfile(userId).then((data) => {
       getProfile(data?.data?.data?.user);
       setGender(data?.data?.data?.user?.gender)
-      setSearchKeyword(data?.data?.data?.user?.country)
+      setCountry(data?.data?.data?.user?.country)
       setCredits(data?.data?.data?.user?.credits)
       setUsername(data?.data?.data?.user?.username)
       setDescription(data?.data?.data?.user?.description)
       let sDate = data?.data?.data?.user?.birthdate.split("T");
       setBirthdate(sDate[0])
       setName(data?.data?.data?.user?.name)
-      setCity(data?.data?.data?.user?.city)
+      setCity(data?.data?.data?.user?.city_name)
+      setCityId(data?.data?.data?.user?.city)
       setPostcode(data?.data?.data?.user?.postcode)
       setHeight(data?.data?.data?.user?.height)
       setWeight(data?.data?.data?.user?.weight)
@@ -168,12 +171,14 @@ const EditProfile = () => {
     });
   };
 
-  const handleHideCity = (selectedCity) => {
-    setSearchKeyword(selectedCity.city);
-    setCities([]);
-    setIsListVisible(false); // Hide the list when a city is selected
-  };
 
+  const handleHideCity = (selectedCity) => {
+    setSelectedCity(selectedCity);
+    setCity(selectedCity.city);
+    setCities([]);
+    setIsListVisible(false);
+  };
+  
   useEffect(() => {
     getCity();
   }, [searchKeyword]);
@@ -197,8 +202,9 @@ const EditProfile = () => {
     data.gender = gender;
     data.birthdate = birthdate;
     data.description = description;
-    data.country = searchKeyword;
-    data.city = city;
+    data.country = country;
+    data.city_name = selectedCity.city;
+    data.city = selectedCity.uniqueId;
     data.age = age;
     data.postcode = postcode;
     // data.timezone = timezone;
@@ -382,7 +388,7 @@ const EditProfile = () => {
                             <input
                               type="search"
                               placeholder="Enter city name"
-                              value={searchKeyword}
+                              value={city}
                               onChange={handleSearchChange}
                             />
                             {isListVisible && searchKeyword && (
@@ -499,7 +505,7 @@ const EditProfile = () => {
                         </div>
                       </div>
 
-                    
+
                       {/* <div className="form-field row mb-3">
                         <div className="col-sm-6">
                           <div class="edit_profile mb-3">
@@ -531,7 +537,7 @@ const EditProfile = () => {
                       <div className="form-field row mb-3">
                         <div className="col-sm-12">
                           <div class="edit_profile mb-3">
-                     
+
                             <div class="select_singup">
                               <label for="floatingInput">Marital Status</label>
                               <select
@@ -550,16 +556,16 @@ const EditProfile = () => {
 
                       </div>
                       <div class="form-floating mb-3">
-                          <textarea
-                            class="form-control"
-                            placeholder=""
-                            id="floatingTextarea2"
-                            style={{ height: "100px" }}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                          ></textarea>
-                          <label for="floatingTextarea2">Description</label>
-                        </div>
+                        <textarea
+                          class="form-control"
+                          placeholder=""
+                          id="floatingTextarea2"
+                          style={{ height: "100px" }}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                        ></textarea>
+                        <label for="floatingTextarea2">Description</label>
+                      </div>
                       <div className="form_field mb-3">
                         <div className="hobbies-list">
                           {hobbies.map((hobby, index) => (

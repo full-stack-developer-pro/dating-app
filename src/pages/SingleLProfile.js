@@ -32,13 +32,14 @@ const SingleLProfile = () => {
   const [profile, getProfile] = useState([]);
   const [selectedGender, setSelectGender] = useState("All")
   const [isChecked, setIsChecked] = useState(false);
-  const [searchCountry, setSearchCountry] = useState("");
+  const [searchcity_name, setSearchcity_name] = useState("");
   const [cities, setCities] = useState([]);
   const [login, setLogin] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const userId = JSON.parse(localStorage.getItem("d_user"));
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
 
   const [isListVisible, setIsListVisible] = useState(true);
 
@@ -50,8 +51,10 @@ const SingleLProfile = () => {
     setSelectGender(e.target.value)
   }
   const myStateData = {
-    key1: selectedGender,
-    key2: searchKeyword,
+    key1:"20",
+    key2:"1",
+    key3: selectedGender,
+    key4: selectedCity.uniqueId,
   };
 
   const handleSendMessageClick = () => {
@@ -163,9 +166,10 @@ const SingleLProfile = () => {
   };
 
   const handleHideCity = (selectedCity) => {
+    setSelectedCity(selectedCity);
     setSearchKeyword(selectedCity.city);
     setCities([]);
-    setIsListVisible(false); // Hide the list when a city is selected
+    setIsListVisible(false);
   };
 
   useEffect(() => {
@@ -209,7 +213,7 @@ const SingleLProfile = () => {
                   <h5>{profile?.name}</h5>
                   <span className="single_age" style={{ textTransform: 'capitalize' }}>{profile?.age} ~ {profile?.gender}</span>
                   <span>
-                    <i class="fas fa-map-marker-alt"></i>  {profile?.country}
+                    <i class="fas fa-map-marker-alt"></i>  {profile?.city_name}
                   </span>
                   {/* <button className="view_full">View Full Profile</button> */}
                   <div className="single_actionFlex">
@@ -339,7 +343,7 @@ const SingleLProfile = () => {
                     <h3 className="text_about_me">Location</h3>
                   </div>
                   <div className="col-lg-6 Mobile_profile">
-                    <p>{profile?.country}</p>
+                    <p>{profile?.city_name}</p>
 
                   </div>
                 </div>
@@ -476,7 +480,7 @@ const SingleLProfile = () => {
 
                     </div>
                   </div>
-                  <div className="form_field country mb-3 search_m new_searchview">
+                  <div className="form_field city_name mb-3 search_m new_searchview">
                     <label>
                       <strong>Select Location</strong>
                     </label>
@@ -497,7 +501,7 @@ const SingleLProfile = () => {
                     )}
 
                   </div>
-                  <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}`}>
+                  <Link className="search_submit" to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}&param3=${myStateData.key3}&param4=${myStateData.key4}`}>
                     Search<i class="fas fa-search"></i>
                   </Link>
                 </div>

@@ -49,7 +49,11 @@ const SearchResults = () => {
 
   const [isListVisible, setIsListVisible] = useState(true);
   const queryParams = new URLSearchParams(location.search);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [filteredData, setfilteredData] = useState([]);
+  const [miles, setMiles] = useState(50);
+  const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
 
   
 
@@ -85,7 +89,9 @@ const SearchResults = () => {
   const param2 = queryParams.get('param2');
   const param3 = queryParams.get('param3')
   const param4 = queryParams.get('param4')
-
+  const param5 = queryParams.get('param5')
+  const param6 = queryParams.get('param6')
+  const param7 = queryParams.get('param7')
 
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
 
@@ -99,9 +105,10 @@ const SearchResults = () => {
   };
 
   const handleHideCity = (selectedCity) => {
+    setSelectedCity(selectedCity);
     setSearchKeyword(selectedCity.city);
     setCities([]);
-    setIsListVisible(false); // Hide the list when a city is selected
+    setIsListVisible(false);
   };
 
   useEffect(() => {
@@ -127,11 +134,14 @@ const SearchResults = () => {
   }, []);
 
   const getsearchData = async () => {
-    await DataService.searchUsers(param1, param2, param3, param4).then(
-      (data) => {
-        setUsers(data?.data?.data?.users);
+    await DataService.searchUsers(param1, param2, param3,param4,param5,param6,param7).then(
+      (response) => {
+        const totalUsers = response?.data?.data?.total_users;
+        const totalPages = Math.ceil(totalUsers / 20);
+        setUsers(response?.data?.data.users);
+        setfilteredData(response?.data?.data?.users);
+        setTotalPages(totalPages);
         ref.current.complete();
-        toast.success("Data Searched");
       },
       (error) => {
         const resMessage =
@@ -145,8 +155,8 @@ const SearchResults = () => {
     );
   };
   useEffect(() => {
-    getsearchData()
-  }, []);
+    getsearchData(20, 1);
+  }, [param1, param2, param3, param4, param5, param6,param7]);
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -158,24 +168,85 @@ const SearchResults = () => {
       ref.current.complete();
     });
   };
-  const searchData = async () => {
-    await DataService.searchUsers(gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue).then(
-      (data) => {
-        setUsers(data?.data?.data.users);
-        ref.current.complete();
-        toast.success("Data Searched");
-      },
-      (error) => {
-        const resMessage =
-          (error.response && error.response.data && error.response.data.msg) ||
-          error.message ||
-          error.toString();
-        setLoading(false);
-        toast.error("No Results Found with Selected Country & Gender!");
-        setUsers([]);
-      }
+
+  const searchData = async (limit,page) => {
+    try {
+      const response = await DataService.searchUsers(limit,page,gender, selectedCity.uniqueId, ageGroup.minValue, ageGroup.maxValue,miles);
+      const totalUsers = response?.data?.data?.total_users;
+      const totalPages = Math.ceil(totalUsers / 20);
+      setUsers(response?.data?.data.users);
+      setfilteredData(response?.data?.data?.users);
+      setTotalPages(totalPages);
+      ref.current.complete();
+      // toast.success("Data Searched");
+    } catch (error) {
+      const resMessage =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.message ||
+        error.toString();
+      setLoading(false);
+      toast.error("No Results Found with Selected Country & Gender!");
+      setUsers([]);
+    }
+  };
+
+
+
+  const handlePageChange = async (page) => {
+    setCurrentPage(page);
+    await getsearchData(20, page);
+  };
+  
+
+  const renderPaginationButtons = () => {
+    console.log(totalPages);
+    const maxVisibleButtons = 5;
+    const startPage = Math.max(
+      1,
+      currentPage - Math.floor(maxVisibleButtons / 2)
+    );
+    const endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
+
+    const buttons = [];
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={currentPage === i ? "activated" : ""}
+          disabled={loading}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return (
+      <div className="user_pagination">
+        {currentPage > 1 && (
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={loading}
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        )}
+        {buttons}
+        {currentPage < totalPages && (
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={loading}
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        )}
+      </div>
     );
   };
+
+
+  
+
   useEffect(() => {
     ref.current.continuousStart();
     if (userId) {
@@ -297,12 +368,12 @@ const SearchResults = () => {
                         class="form-check-input"
                         type="radio"
                         name="gender"
-                        id="gender_female"
-                        value="female"
-                        checked={gender === "female"}
+                        id="gender_Female"
+                        value="Female"
+                        checked={gender === "Female"}
                         onChange={handleGenderChange}
                       />
-                      <label class="form-check-label" for="gender_female">
+                      <label class="form-check-label" for="gender_Female">
                         Female
                       </label>
                     </div>
@@ -345,6 +416,19 @@ const SearchResults = () => {
                   </div>
                   <div className="range_Age">
                     <label>
+                      <strong>Within {miles} miles</strong>
+                    </label>
+                    <input
+                      type="range"
+                      min={1}
+                      max={100}
+                      value={miles}
+                      id="custom-range"
+                      onChange={(e) => setMiles(parseInt(e.target.value, 10))}
+                    />
+                  </div>
+                  <div className="range_Age">
+                    <label>
                       <strong>Select Age</strong>
                     </label>
                     <MultiRangeSlider
@@ -356,7 +440,7 @@ const SearchResults = () => {
                     />
                   </div>
                   <div className="button_search">
-                    <button className="search_submit" onClick={searchData}>
+                    <button className="search_submit" onClick={()=>searchData(20, 1)}>
                       Search<i class="fas fa-search"></i>
                     </button>
                   </div>
@@ -364,8 +448,8 @@ const SearchResults = () => {
               </div>
 
               <div className="active_mainArea">
-                {users && users.length > 0 ? (
-                  users.map((item, i) => {
+                {filteredData && filteredData.length > 0 ? (
+                  filteredData.map((item, i) => {
                     if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
                         (op) => op?.id === item?.id
@@ -384,13 +468,13 @@ const SearchResults = () => {
                                 {item?.age}~
                                 {item?.gender === "male"
                                   ? "M"
-                                  : item?.gender === "female"
+                                  : item?.gender === "Female"
                                     ? "F"
                                     : "Other"}
                               </span>
                               <span>
                                 <i className="fas fa-map-marker-alt"></i>
-                               {item?.country}
+                               {item?.city_name}
                               </span>
                               <br />
                               {auth ? (
@@ -463,6 +547,8 @@ const SearchResults = () => {
                   <p>No Data Found</p>
                 )}
               </div>
+              {renderPaginationButtons()}
+
               {!auth &&
                 <button
                   className="main_button my-4"

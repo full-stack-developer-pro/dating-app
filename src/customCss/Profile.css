@@ -760,14 +760,6 @@ button {
         font-size: 12px !important;
     }
 
-    .chat_outerImg {
-        width: 10% !important;
-        margin-right: 35px !important;
-    }
-
-    .chat_outerName {
-        width: 90% !important;
-    }
 
     .main_button {
         font-size: 14px;
