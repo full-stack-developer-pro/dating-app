@@ -31,7 +31,9 @@ const NavbarProfile = () => {
   const location = useLocation();
   const [selectedLanguage, setSelectedLanguage] = useState("");
 
-
+  const handleNotific = (e) => {
+    e.target.src = ProfileAvatar
+  }
 
 
   const handleImage = (e) => {
@@ -270,13 +272,13 @@ const NavbarProfile = () => {
                                       }
                                     >
                                       <div className="ntificationone">
-                                        <img
+                                        <img onError={handleNotific}
                                           src={
                                             item?.user
-                                              ? item?.user?.profile_path
+                                              ? item?.user?.avatar
                                               : ProfileAvatar
                                           }
-                                          alt="notification_image"
+                                          
                                         />
                                       </div>
                                       <div className="notification_text">
@@ -387,7 +389,7 @@ const NavbarProfile = () => {
                                           <img
                                             src={
                                               item?.user
-                                                ? item?.user?.profile_path
+                                                ? item?.user?.avatar
                                                 : ProfileAvatar
                                             }
                                             alt=""
@@ -512,7 +514,7 @@ const NavbarProfile = () => {
             <div className="container">
               <div className="user_profile_page">
                 <Zoom>
-                  <img onError={handleImage} src={profile?.profile_path} />
+                  <img onError={handleImage} src={profile?.avatar} />
                 </Zoom>
                 <h2>{profile?.name}</h2>
               </div>

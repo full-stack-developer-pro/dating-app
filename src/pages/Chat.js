@@ -227,7 +227,7 @@ const Chats = () => {
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
-        <div className="show_edit_bgarea_message">
+        <div className="show_edit_bgarea_message-new">
           <div className="chat_sec">
             <div className="chat_flex">
               <div className="chat_flexL  hide_meY">

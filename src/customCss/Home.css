@@ -1,10 +1,84 @@
+/* For Webkit browsers (Chrome, Safari) */
+input[type="range"] {
+    --thumb-color: #ef48b5 !important; /* Custom property to hold thumb color */
+  }
+/* For Webkit browsers (Chrome, Safari) */
+input[type="range"] {
+    --thumb-color: #ef48b5 !important; /* Custom property to hold thumb color */
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    background-color: var(--thumb-color) !important;
+    border: 1px solid var(--thumb-color) !important;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -5px;
+  }
+  
+  input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #ef48b5, #f209e1);
+    height: 8px;
+    border-radius: 2px;
+  }
+  
+  /* For Firefox */
+  input[type="range"]::-moz-range-thumb {
+    background-color: var(--thumb-color) !important;
+    border: 1px solid var(--thumb-color) !important;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  input[type="range"]::-moz-range-track {
+    background: linear-gradient(to right, #ef48b5, #f209e1);
+    height: 8px;
+    border-radius: 2px;
+  }
+  
+  /* Optional: Style the track (the bar) */
+  input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+    background-color: transparent;
+  }
+  input#custom-range {
+    accent-color: rgba(92, 88, 88, 0.145);
+    box-shadow: 0 0 4px 0 #4f4f4f;
+}
+  
 .user_pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 50px auto 80px auto;
 }
-
+.range-slider.single-thumb {
+    margin: 17px 0px;
+}
+.range-slider .range-slider__range {
+    position: absolute;
+    z-index: 1;
+    transform: translate(0, -50%);
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #ef48b5, #F209E1) !important;
+}
+.range-slider .range-slider__thumb {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: linear-gradient(to right, #ef48b5, #F209E1) !important;
+}
 .user_pagination button {
     background: #fff;
     height: 50px;
@@ -313,7 +387,7 @@ ul.location_new {
 }
 
 .range_Age {
-    width: 21%;
+    width: 15%;
     margin: 10px 2%;
 }
 
@@ -353,9 +427,8 @@ ul.location_new {
 }
 
 .search_gender_inner {
-    width: 35%;
+    width: 30%;
     padding-left: 0px;
-
 }
 
 .search_gender_inner p {
@@ -402,7 +475,7 @@ ul.location_new {
 }
 
 .button_search {
-    width: 20%;
+    width: 10%;
 }
 
 .search_main {
@@ -1291,8 +1364,9 @@ ul.location_new {
     width: 100%;
     border-radius: 5px;
     margin-bottom: 15px;
+    min-height: 50%;
+    object-fit: cover;
 }
-
 .single_lockOpen h5 {
     margin-bottom: 5px;
     text-transform: capitalize;

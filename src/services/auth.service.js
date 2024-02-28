@@ -1,6 +1,31 @@
 import axios from "axios";
 import { useEffect } from "react";
-const API_URL = (process.env.NODE_ENV != 'production' ? "https://api.milfhub.co.uk/" : "https://api.milfhub.co.uk/");
+
+const API_URL =
+  process.env.NODE_ENV !== "production"
+    ? "https://api.milfhub.co.uk/"
+    : "https://api.milfhub.co.uk/";
+
+axios.interceptors.request.use(function (config) {
+  const token = AuthService.getCurrentUserTokken();
+  config.headers.Authorization = "Bearer " + token;
+  config.headers["API-TOKEN"] = `c1462debeb1e53644f768cbbc6a9562b73009-56a1e28ea706dc0bc38ba5ae990`;
+  return config;
+});
+
+axios.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error.response.status === 401) {
+      localStorage.removeItem("user");
+      // window.location.href = '/#/login';
+      // Make the token refresh request here
+    }
+    return Promise.reject(error);
+  }
+);
 
 const register = (data) => {
   return axios.post(API_URL + "api/user/signup", data);

@@ -1,3 +1,36 @@
+.chat_outerName p {
+    color: #ef48b5;
+    font-size: 16px;
+}
+
+button.read_button {
+    background-color: #ccc3c3;
+    color: #000;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chat_last_message p {
+    margin: 0px;
+    font-size: 15px;
+}
+button.unread_button {
+    background-color: #ef48b5;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .ntificationone {
     width: 20%;
 }
@@ -7,6 +40,16 @@
     margin-top: 40px;
     margin-bottom: 40px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.show_edit_bgarea_message-new{
+    width: 80%;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.hide_meY{
+    display: none;
 }
 .payment_bg_notification {
     max-height: 35vh;
@@ -103,7 +146,7 @@ span.bonus {
 }
 
 .chat_flexL {
-    width: 30%;
+    width: 100%;
     background: #fff;
     min-height: 100vh;
     overflow-y: scroll;
@@ -171,7 +214,7 @@ span.bonus {
 }
 
 .chat_flexR {
-    width: 70%;
+    width: 100%;
     position: relative;
 }
 
@@ -204,7 +247,7 @@ span.bonus {
 }
 
 .chat_outerImg {
-    width: 20%;
+    width: 10%;
     margin-right: 15px;
 }
 
@@ -217,9 +260,16 @@ span.bonus {
 }
 
 .chat_outerName {
-    width: 80%;
+    width: 30%;
 }
-
+.chat_last_message {
+    width: 43%;
+}
+.read_btn {
+    width: 20%;
+    display: flex;
+    justify-content: end;
+}
 .chat_outerName span {
     display: inline-block;
     position: absolute;
@@ -408,9 +458,7 @@ span.bonus {
     font-size: 11px;
 }
 
-.back_buttonT {
-    display: none;
-}
+
 
 .profile_notification {
     width: 100% !important;
@@ -476,6 +524,12 @@ span.bonus {
         width: 84%;
         right: 8%;
 
+    }
+    .chat_last_message {
+        display: none;
+    }
+    .show_edit_bgarea_message-new{
+        width: 100%;
     }
 }
 @media screen and (max-width: 950px) {
@@ -586,5 +640,11 @@ span.bonus {
 
     .searchBar i {
         bottom: 30%;
+    }
+}
+
+@media screen and (min-width: 767px)and (max-width: 1024px) {
+    .show_edit_bgarea_message-new{
+        width: 100%;
     }
 }

@@ -62,7 +62,7 @@ const ProfileMain = () => {
                                     </Link>
                                 </div>
                                 <p>
-                                    <i class="fas fa-map-marker-alt"></i> {profile?.country}
+                                    <i class="fas fa-map-marker-alt"></i> {profile?.city_name}
                                 </p>
                                 <p>{profile?.description}</p>
                             </div>
@@ -121,7 +121,7 @@ const ProfileMain = () => {
                                     </p>
                                     <p>:</p>
                                     <p>
-                                        {profile?.country}
+                                        {profile?.city_name}
                                     </p>
                                 </div>
                                 {/* <div className="profileEntry">

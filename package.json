@@ -21,6 +21,7 @@
     "react-flags-select": "^2.2.3",
     "react-i18next": "^14.0.1",
     "react-medium-image-zoom": "^5.1.10",
+    "react-range-slider-input": "^3.0.7",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.4",

@@ -48,7 +48,8 @@ const Profile = () => {
   // const paginate = (pageNumber) => {
   //   setCurrentPage(pageNumber);
   // };
-
+  const [miles, setMiles] = useState(50);
+  const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
 
   const sendFlirt = (id) => {
     DataService.PostFlirt(id).then(
@@ -109,9 +110,10 @@ const Profile = () => {
   };
 
   const handleHideCity = (selectedCity) => {
+    setSelectedCity(selectedCity);
     setSearchKeyword(selectedCity.city);
     setCities([]);
-    setIsListVisible(false); // Hide the list when a city is selected
+    setIsListVisible(false);
   };
 
   useEffect(() => {
@@ -133,7 +135,7 @@ const Profile = () => {
 
   const searchData = async (limit, page) => {
     try {
-      const response = await DataService.searchUsers(limit, page, gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue);
+      const response = await DataService.searchUsers(limit, page, gender, selectedCity.uniqueId, ageGroup.minValue, ageGroup.maxValue, miles);
       const totalUsers = response?.data?.data?.total_users;
       const totalPages = Math.ceil(totalUsers / limit);
       setUsers(response?.data?.data.users);
@@ -147,14 +149,13 @@ const Profile = () => {
         error.message ||
         error.toString();
       setLoading(false);
-      toast.error("No Results Found with Selected Country & Gender!");
       setUsers([]);
     }
   };
 
   useEffect(() => {
     searchData(20, 1);
-  }, [gender, searchKeyword, ageGroup.minValue, ageGroup.maxValue]);
+  }, []);
 
   useEffect(() => {
     ref.current.continuousStart();
@@ -328,12 +329,12 @@ const Profile = () => {
                         class="form-check-input"
                         type="radio"
                         name="gender"
-                        id="gender_female"
-                        value="female"
-                        checked={gender === "female"}
+                        id="gender_Female"
+                        value="Female"
+                        checked={gender === "Female"}
                         onChange={handleGenderChange}
                       />
-                      <label class="form-check-label" for="gender_female">
+                      <label class="form-check-label" for="gender_Female">
                         Female
                       </label>
                     </div>
@@ -366,13 +367,26 @@ const Profile = () => {
                     {isListVisible && searchKeyword && (
                       <ul className="location_new">
                         {cities.map((city) => (
-                          <li onClick={() => handleHideCity(city)} key={city.id}>
+                          <li onClick={() => handleHideCity(city)} key={city.uniqueId}>
                             {city.city}
                           </li>
                         ))}
                       </ul>
                     )}
 
+                  </div>
+                  <div className="range_Age">
+                    <label>
+                      <strong>Within {miles} miles</strong>
+                    </label>
+                    <input
+                      type="range"
+                      min={1}
+                      max={100}
+                      value={miles}
+                      id="custom-range"
+                      onChange={(e) => setMiles(parseInt(e.target.value, 10))}
+                    />
                   </div>
                   <div className="range_Age">
                     <label>
@@ -387,7 +401,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="button_search">
-                    <button className="search_submit" onClick={searchData}>
+                    <button className="search_submit" onClick={() => searchData(20, currentPage)}>
                       Search<i class="fas fa-search"></i>
                     </button>
                   </div>
@@ -417,13 +431,13 @@ const Profile = () => {
                                   {item?.age}~
                                   {item?.gender === "male"
                                     ? "M"
-                                    : item?.gender === "female"
+                                    : item?.gender === "Female"
                                       ? "F"
                                       : "Other"}
                                 </span>
                                 <span>
                                   <i className="fas fa-map-marker-alt"></i>
-                                  {item?.country}
+                                  {item?.city_name}
                                 </span>
                                 <br />
                                 {auth ? (
@@ -494,19 +508,7 @@ const Profile = () => {
               {/* Pagination buttons */}
               {renderPaginationButtons()}
 
-              {/* <div className="pagination">
-                  <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
-                    Previous
-                  </button>
-                  {Array.from({ length: Math.ceil(usersData.length / usersPerPage) }, (_, i) => (
-                    <button  key={i} onClick={() => paginate(i + 1)} className={currentPage === i + 1 ? 'page-btn-active' : "button_page"}>
-                      {i + 1}
-                    </button>
-                  ))}
-                  <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(usersData.length / usersPerPage)}>
-                    Next
-                  </button>
-                </div> */}
+
               {!auth &&
                 <button
                   className="main_button my-4"

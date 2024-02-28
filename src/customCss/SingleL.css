@@ -1,8 +1,9 @@
 .single_pL_main {
-    width: 20%;
+    width: 30%;
 }
 .single_pR_main {
     width: 25%;
+    display: none;
 }
 h3.text_about_me {
     font-size: 16px;
@@ -52,7 +53,7 @@ button.send_m a {
 }
 
 .single_Pflex .single_pM {
-    width: 53%;
+    width: 70%;
     margin: 0% 1%;
     background: #fff;
     padding: 20px;

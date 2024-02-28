@@ -40,7 +40,6 @@ const Home = () => {
     document.title = "Home";
     window.scrollTo(0, 0);
     ref.current.continuousStart();
-    getAllUsers(20, 1);
   }, []);
   const userId = JSON.parse(localStorage.getItem("d_user"));
 
@@ -64,6 +63,7 @@ const Home = () => {
   const [message, setMessage] = useState();
   const [searchKeyword, setSearchKeyword] = useState("");
   const [apiError, setApiError] = useState("");
+  const [miles, setMiles] = useState(50);
 
   const [isListVisible, setIsListVisible] = useState(true);
 
@@ -105,7 +105,7 @@ const Home = () => {
   const [secondLastBanner, setSecondLastBanner] = useState([]);
   // const [lastBanner, setlLastBanner] = useState([]);
   const [selectedGender, setSelectGender] = useState("All");
-  const [selectedGenderSearch, setSelectedGenderSearch] = useState("female");
+  const [selectedGenderSearch, setSelectedGenderSearch] = useState("Female");
   const [members, setMembers] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
   const [ageGroup, setAgeGroup] = useState({ minValue: 18, maxValue: 100 });
@@ -114,6 +114,8 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filteredData, setfilteredData] = useState([]);
+  const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
+
 
   const calculateAge = (birthdate) => {
     const today = new Date();
@@ -177,10 +179,13 @@ const Home = () => {
   //  const ageGroupString = `${ageGroup.minValue}-${ageGroup.maxValue}`;
 
   const myStateData = {
-    key1: selectedGenderSearch,
-    key2: searchKeyword,
-    key3: ageGroup.minValue,
-    key4: ageGroup.maxValue,
+    key1: "20",
+    key2: "1",
+    key3: selectedGenderSearch,
+    key4: selectedCity.uniqueId,
+    key5: ageGroup.minValue,
+    key6: ageGroup.maxValue,
+    key7: miles
   };
 
   const handleInputChange = (e) => {
@@ -288,8 +293,9 @@ const Home = () => {
     data.gender = gender;
     data.birthdate = dob;
     data.description = description;
-    data.country = searchKeyword;
-    data.city = searchKeyword;
+    data.country = "United Kingdom";
+    data.city_name = selectedCity.city;
+    data.city = selectedCity.uniqueId;
     data.age = age;
     data.postcode = "16601";
     data.timezone = ["ds"];
@@ -312,9 +318,9 @@ const Home = () => {
         toast.success("Profile create successfully! Please Login Now", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
       },
       (error) => {
         const resMessage =
@@ -334,19 +340,46 @@ const Home = () => {
     // }
   };
 
-  const getAllUsers = async (limit, page) => {
-    await DataService.getAllUsers(limit, page).then((data) => {
-      const totalUsers = data?.data?.data?.total_users;
+
+
+  const searchData = async (limit, page) => {
+    try {
+      const response = await DataService.searchUsers(limit, page, selectedGenderSearch, selectedCity.uniqueId, ageGroup.minValue, ageGroup.maxValue, miles);
+      const totalUsers = response?.data?.data?.total_users;
       const totalPages = Math.ceil(totalUsers / limit);
-      setUsers(data?.data?.data?.users);
-      setfilteredData(data?.data?.data?.users);
+      setUsers(response?.data?.data.users);
+      setfilteredData(response?.data?.data?.users);
       setTotalPages(totalPages);
       ref.current.complete();
-    });
+      // toast.success("Data Searched");
+    } catch (error) {
+      const resMessage =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.message ||
+        error.toString();
+      setLoading(false);
+      setUsers([]);
+    }
   };
+
+  useEffect(() => {
+    searchData(20, 1);
+  }, []);
+
+
+  // const getAllUsers = async (limit, page) => {
+  //   await DataService.getAllUsers(limit, page).then((data) => {
+  //     const totalUsers = data?.data?.data?.total_users;
+  //     const totalPages = Math.ceil(totalUsers / limit);
+  //     setUsers(data?.data?.data?.users);
+  //     setfilteredData(data?.data?.data?.users);
+  //     setTotalPages(totalPages);
+  //     ref.current.complete();
+  //   });
+  // };
   const handlePageChange = async (page) => {
     setCurrentPage(page);
-    await getAllUsers(20, page);
+    await searchData(20, page);
   };
   // console.log(users)
 
@@ -360,7 +393,7 @@ const Home = () => {
         toast.success("Friend Added Successfully!!", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        getAllUsers();
+        searchData();
         getUserProfile();
       },
       (error) => {
@@ -387,7 +420,7 @@ const Home = () => {
         toast.success("Friend Removed Successfully!!", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        getAllUsers();
+        searchData();
         getUserProfile();
       },
       (error) => {
@@ -454,9 +487,10 @@ const Home = () => {
   };
 
   const handleHideCity = (selectedCity) => {
+    setSelectedCity(selectedCity);
     setSearchKeyword(selectedCity.city);
     setCities([]);
-    setIsListVisible(false); // Hide the list when a city is selected
+    setIsListVisible(false);
   };
 
   useEffect(() => {
@@ -474,7 +508,7 @@ const Home = () => {
   const handleNotification = (id) => {
     DataService.TrackProfile(id).then(
       () => {
-        setTimeout(() => {}, 2000);
+        setTimeout(() => { }, 2000);
       },
       (error) => {
         const resMessage =
@@ -497,7 +531,7 @@ const Home = () => {
       () => {
         toast.success("Wink Sent");
         setFlirtPopUP(false);
-        setTimeout(() => {}, 2000);
+        setTimeout(() => { }, 2000);
       },
       (error) => {
         const resMessage =
@@ -681,11 +715,11 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                              value="female"
-                              checked={gender === "female"}
+                              value="Female"
+                              checked={gender === "Female"}
                               onChange={handleGenderChange}
                             />
-                            <label class="form-check-label" for="gender_female">
+                            <label class="form-check-label" for="gender_Female">
                               Female
                             </label>
                           </div>
@@ -739,10 +773,7 @@ const Home = () => {
                           {isListVisible && searchKeyword && (
                             <ul className="location_new">
                               {cities.map((city) => (
-                                <li
-                                  onClick={() => handleHideCity(city)}
-                                  key={city.id}
-                                >
+                                <li onClick={() => handleHideCity(city)} key={city.uniqueId}>
                                   {city.city}
                                 </li>
                               ))}
@@ -1248,9 +1279,9 @@ const Home = () => {
                         class="form-check-input"
                         type="radio"
                         name="searchgender"
-                        id="gender_female_search"
-                        value="female"
-                        checked={selectedGenderSearch === "female"}
+                        id="gender_Female_search"
+                        value="Female"
+                        checked={selectedGenderSearch === "Female"}
                         onChange={SearchHandleSelection}
                       />
                       <label
@@ -1274,10 +1305,7 @@ const Home = () => {
                     {isListVisible && searchKeyword && (
                       <ul className="location_new">
                         {cities.map((city) => (
-                          <li
-                            onClick={() => handleHideCity(city)}
-                            key={city.id}
-                          >
+                          <li onClick={() => handleHideCity(city)} key={city.uniqueId}>
                             {city.city}
                           </li>
                         ))}
@@ -1300,6 +1328,19 @@ const Home = () => {
                   </div>
                   <div className="range_Age">
                     <label>
+                      <strong>Within {miles} miles</strong>
+                    </label>
+                    <input
+                      type="range"
+                      min={1}
+                      max={100}
+                      value={miles}
+                      id="custom-range"
+                      onChange={(e) => setMiles(parseInt(e.target.value, 10))}
+                    />
+                  </div>
+                  <div className="range_Age">
+                    <label>
                       <strong>Select Age</strong>
                     </label>
                     <MultiRangeSlider
@@ -1311,13 +1352,18 @@ const Home = () => {
                     />
                   </div>
                   <div className="button_search">
+                    <button className="search_submit" onClick={() => searchData(20, 1)}>
+                      Search<i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                  {/* <div className="button_search">
                     <Link
                       className="search_submit"
-                      to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}&param3=${myStateData.key3}&param4=${myStateData.key4}`}
+                      to={`/search-results?param1=${myStateData.key1}&param2=${myStateData.key2}&param3=${myStateData.key3}&param4=${myStateData.key4}&param5=${myStateData.key5}&param6=${myStateData.key6}&param7=${myStateData.key7}`}
                     >
                       Search<i class="fas fa-search"></i>
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -1352,13 +1398,13 @@ const Home = () => {
                                   {item?.age}~
                                   {item?.gender === "male"
                                     ? "M"
-                                    : item?.gender === "female"
-                                    ? "F"
-                                    : "Other"}
+                                    : item?.gender === "Female"
+                                      ? "F"
+                                      : "Other"}
                                 </span>
                                 <span>
                                   <i className="fas fa-map-marker-alt"></i>
-                                  {item?.country}
+                                  {item?.city_name}
                                 </span>
                                 <br />
                                 {auth ? (
