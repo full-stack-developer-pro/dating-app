@@ -236,7 +236,7 @@ const NavbarProfile = () => {
           <div className="cradits_bg">
             <div className="maincreadits">
               <div className="main_craedits_one">
-                <Link to="/profile">
+                <Link to="/">
                   <img src={Logo} alt="" />
                 </Link>
               </div>

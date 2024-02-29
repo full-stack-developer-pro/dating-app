@@ -115,6 +115,7 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [filteredData, setfilteredData] = useState([]);
   const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
+  const [flirtId, setFlirtId] = useState(null);
 
 
   const calculateAge = (birthdate) => {
@@ -344,13 +345,16 @@ const Home = () => {
 
   const searchData = async (limit, page) => {
     try {
+      setLoading(true)
       const response = await DataService.searchUsers(limit, page, selectedGenderSearch, selectedCity.uniqueId, ageGroup.minValue, ageGroup.maxValue, miles);
       const totalUsers = response?.data?.data?.total_users;
       const totalPages = Math.ceil(totalUsers / limit);
       setUsers(response?.data?.data.users);
       setfilteredData(response?.data?.data?.users);
+      setLoading(false)
       setTotalPages(totalPages);
       ref.current.complete();
+
       // toast.success("Data Searched");
     } catch (error) {
       const resMessage =
@@ -526,12 +530,16 @@ const Home = () => {
     );
   };
 
+  const openFlirtPopup = (id) => {
+    setFlirtId(id);
+    setFlirtPopUP(true);
+  };
+
   const sendFlirt = (id) => {
     DataService.PostFlirt(id).then(
       () => {
         toast.success("Wink Sent");
         setFlirtPopUP(false);
-        setTimeout(() => { }, 2000);
       },
       (error) => {
         const resMessage =
@@ -1368,7 +1376,14 @@ const Home = () => {
               </div>
 
               <div className="active_mainArea">
-                {filteredData && filteredData.length > 0 ? (
+                {loading && (
+                  <div className="main_spinner">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                )}
+                {!loading && filteredData && filteredData.length > 0 ? (
                   filteredData?.map((item, i) => {
                     if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
@@ -1442,13 +1457,11 @@ const Home = () => {
                               {/* <button>
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button> */}
-                              {auth && (
-                                <button
-                                  onClick={() => setFlirtPopUP(!FlirtPopUP)}
-                                >
+                              {auth && 
+                                <button key={item.id} onClick={() => openFlirtPopup(item.id)}>
                                   Send Wink<i className="fas fa-heart"></i>
                                 </button>
-                              )}
+                              }
 
                               {auth && (
                                 <button>
@@ -1461,22 +1474,15 @@ const Home = () => {
                             {FlirtPopUP && (
                               <div className="main_sendFlirt">
                                 <div className="sendFlirt">
-                                  <button
-                                    className="new_flirt_cross"
-                                    onClick={() => setFlirtPopUP(false)}
-                                  >
+                                  <button className="new_flirt_cross" onClick={() => setFlirtPopUP(false)}>
                                     <i class="fas fa-times"></i>
                                   </button>
                                   <div className="sendFlirt_inner ">
                                     <h2></h2>
                                     <p style={{ fontSize: "18px" }}>
-                                      Flirt your way to fun for just{" "}
-                                      <b>100 credits</b> <br /> try it now!
+                                      Flirt your way to fun for just <b>100 credits</b> <br /> try it now!
                                     </p>
-                                    <button
-                                      className="send_ok_flirt"
-                                      onClick={() => sendFlirt(item.id)}
-                                    >
+                                    <button className="send_ok_flirt" onClick={() => sendFlirt(flirtId)}>
                                       Send
                                     </button>
                                   </div>
@@ -1490,7 +1496,7 @@ const Home = () => {
                     return null; // Skip rendering for the user's own profile
                   })
                 ) : (
-                  <p>No Data Found</p>
+                  <p>No results found.</p>
                 )}
               </div>
               {/*              

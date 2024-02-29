@@ -374,7 +374,7 @@ const Navbar = () => {
                                 <Link to={"/single-profile/" + item?.user?.id}>
                                   <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
                                     <div className="ntificationone">
-                                      <img src={item?.user ? item?.user?.profile_path : profile1} />
+                                      <img src={item?.user ? item?.user?.avatar : profile1} />
                                     </div>
                                     <div className="notification_text">
                                       <p>
@@ -397,10 +397,9 @@ const Navbar = () => {
                                       <img
                                         src={
                                           item?.user
-                                            ? item?.user?.profile_path
+                                            ? item?.user?.avatar
                                             : ProfileAvatar
                                         }
-                                        alt="notification_image"
                                       />
                                     </div>
                                     <div className="notification_text">

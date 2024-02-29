@@ -8,7 +8,7 @@ import DataService from "../services/data.service";
 import moment from "moment";
 import LoadingBar from "react-top-loading-bar";
 import { ToastContainer, toast } from "react-toastify";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useHistory } from 'react-router-dom';
 // import { useParams } from "react-router-dom";
 import MultiRangeSlider from "multi-range-slider-react";
 import { Link } from "react-router-dom";
@@ -23,7 +23,6 @@ const MAX_COUNT = 5;
 const Profile = () => {
   const ref = useRef(null);
   // const params = useParams();
-
   // search filters 
   const navigate = useNavigate()
   const [usersData, setUsers] = useState([]);
@@ -50,6 +49,15 @@ const Profile = () => {
   // };
   const [miles, setMiles] = useState(50);
   const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
+
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [flirtId, setFlirtId] = useState(null);
+
+
+  const openFlirtPopup = (id) => {
+    setFlirtId(id);
+    setFlirtPopUP(true);
+  };
 
   const sendFlirt = (id) => {
     DataService.PostFlirt(id).then(
@@ -94,10 +102,36 @@ const Profile = () => {
   const [isListVisible, setIsListVisible] = useState(true);
   const queryParams = new URLSearchParams(location.search);
 
+  // ... (other useEffect hooks)
+
+  const isInitialRender = useRef(true);
+
+  // ... (other useEffect hooks)
+
+  useEffect(() => {
+    if (!isInitialRender.current) {
+      const cityIdParam = queryParams.get("cityId");
+      const cityNameParam = queryParams.get("cityName");
+
+      if (cityIdParam && cityNameParam) {
+        setSelectedCity({
+          uniqueId: cityIdParam,
+          city: cityNameParam,
+        });
+      }
+    } else {
+      isInitialRender.current = false;
+    }
+  }, [location.search]);
+
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
     setIsListVisible(true); // Show the list when the input changes
+    if (e.target.value === '') {
+      setSelectedCity({ uniqueId: "", city: "" });
+    }
   };
+
 
 
   const handleSliderChange = ({ minValue, maxValue }) => {
@@ -130,16 +164,22 @@ const Profile = () => {
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
+    setSelectedCity({ uniqueId: "", city: "" });
+
   };
 
 
   const searchData = async (limit, page) => {
     try {
-      const response = await DataService.searchUsers(limit, page, gender, selectedCity.uniqueId, ageGroup.minValue, ageGroup.maxValue, miles);
+      setLoading(true)
+      const cityId = selectedCity.uniqueId || '';
+      const cityName = selectedCity.city || '';
+      const response = await DataService.searchUsers(limit, page, gender, cityId, ageGroup.minValue, ageGroup.maxValue, miles);
       const totalUsers = response?.data?.data?.total_users;
       const totalPages = Math.ceil(totalUsers / limit);
       setUsers(response?.data?.data.users);
       setfilteredData(response?.data?.data?.users);
+      setLoading(false)
       setTotalPages(totalPages);
       ref.current.complete();
       // toast.success("Data Searched");
@@ -152,10 +192,42 @@ const Profile = () => {
       setUsers([]);
     }
   };
+  useEffect(() => {
+    const urlSearchParams = new URLSearchParams(location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+
+    setGender(params.gender || "");
+    setMiles(parseInt(params.miles, 10) || 50);
+    setSelectedCity({
+      uniqueId: params.cityId || "",
+      city: params.cityName || "",
+    });
+    setAgeGroup({
+      minValue: parseInt(params.minAge, 10) || 18,
+      maxValue: parseInt(params.maxAge, 10) || 100,
+    });
+
+    if (!isFirstRender) {
+      searchData(20, 1);
+    } else {
+      setIsFirstRender(false);
+    }
+  }, [location.search, isFirstRender]);
 
   useEffect(() => {
-    searchData(20, 1);
-  }, []);
+    if (!isFirstRender) {
+      const urlSearchParams = new URLSearchParams();
+      urlSearchParams.append("gender", gender);
+      urlSearchParams.append("miles", miles);
+      urlSearchParams.append("cityId", selectedCity.uniqueId);
+      urlSearchParams.append("cityName", selectedCity.city);
+      urlSearchParams.append("minAge", ageGroup.minValue);
+      urlSearchParams.append("maxAge", ageGroup.maxValue);
+
+      navigate({ search: urlSearchParams.toString() });
+    }
+  }, [gender, miles, selectedCity, ageGroup, navigate, isFirstRender]);
+
 
   useEffect(() => {
     ref.current.continuousStart();
@@ -409,7 +481,14 @@ const Profile = () => {
               </div>
 
               <div className="active_mainArea">
-                {filteredData && filteredData.length > 0 ? (
+                {loading && (
+                  <div className="main_spinner">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                )}
+                {!loading && filteredData && filteredData.length > 0 ? (
                   filteredData.map((item, i) => {
                     if (item?.id !== userId) {
                       const isFriend = profile?.friends?.some(
@@ -471,9 +550,12 @@ const Profile = () => {
                                 </Link>
                               </button>
 
-                              <button onClick={() => setFlirtPopUP(!FlirtPopUP)}>
-                                Send Wink<i className="fas fa-heart"></i>
-                              </button>
+                              {auth && 
+                                <button key={item.id} onClick={() => openFlirtPopup(item.id)}>
+                                  Send Wink<i className="fas fa-heart"></i>
+                                </button>
+                              }
+
 
                               <button>
                                 <Link to={"/chats/" + item.id}>
@@ -489,8 +571,12 @@ const Profile = () => {
                                   </button>
                                   <div className="sendFlirt_inner ">
                                     <h2></h2>
-                                    <p style={{ fontSize: "18px" }}>Flirt your way to fun for just <b>100 credits</b> <br /> try it now!</p>
-                                    <button className="send_ok_flirt" onClick={() => sendFlirt(item.id)}>Send</button>
+                                    <p style={{ fontSize: "18px" }}>
+                                      Flirt your way to fun for just <b>100 credits</b> <br /> try it now!
+                                    </p>
+                                    <button className="send_ok_flirt" onClick={() => sendFlirt(flirtId)}>
+                                      Send
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -502,7 +588,7 @@ const Profile = () => {
                     return null;
                   })
                 ) : (
-                  <p>No Data Found</p>
+                  <p>No results found.</p>
                 )}
               </div>
               {/* Pagination buttons */}
