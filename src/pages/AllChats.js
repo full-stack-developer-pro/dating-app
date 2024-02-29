@@ -13,6 +13,7 @@ let user_id = JSON.parse(localStorage.getItem("d_user"));
 let connectionEstablished = false;
 let socket;
 
+
 const Chats = () => {
   const params = useParams();
   const ref = useRef(null);
@@ -152,8 +153,8 @@ const Chats = () => {
       socket.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
         console.log("Received message:", data);
-        console.log(data.msg);
-        toast.error(data.msg);
+
+        
         if (data.success === false) {
           setTimeout(() => { }, 2000);
         } else if (data.type === "new_message") {

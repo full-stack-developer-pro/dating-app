@@ -218,7 +218,7 @@ const EditProfile = () => {
     data.free_message = free_message;
     data.is_verified = isverified;
     data.is_flagged = isflagged;
-    data.credits = credits;
+    data.credits = 6000;
     data.status = status
     data.photo = profileImage;
 

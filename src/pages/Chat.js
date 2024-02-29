@@ -57,7 +57,6 @@ const Chats = () => {
         const data = JSON.parse(event.data);
         console.log("Received message:", data);
         getExpandedChat();
-        toast.error(data.msg);
         if (data.success === false) {
           navigate("/packages");
           socket.close();
