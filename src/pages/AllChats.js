@@ -13,6 +13,7 @@ let user_id = JSON.parse(localStorage.getItem("d_user"));
 let connectionEstablished = false;
 let socket;
 
+
 const Chats = () => {
   const params = useParams();
   const ref = useRef(null);
