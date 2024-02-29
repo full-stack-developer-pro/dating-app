@@ -6,6 +6,14 @@ input[type="range"] {
 input[type="range"] {
     --thumb-color: #ef48b5 !important; /* Custom property to hold thumb color */
   }
+
+
+  .main_spinner{
+    display: flex ;
+    justify-content: center ;
+    align-items: center;
+    width: 100%;
+  }
   
   input[type="range"]::-webkit-slider-thumb {
     background-color: var(--thumb-color) !important;
@@ -344,7 +352,7 @@ ul.location_new {
     padding: 10px 10px;
     max-height: 250px;
     overflow-y: scroll;
-    z-index: 1;
+    z-index: 999;
 }
 
 .about_flexR ul {
@@ -824,6 +832,7 @@ ul.location_new {
     border-radius: 5px;
     object-fit: cover;
     height: 25vh;
+    object-position: top;
 }
 
 .active_actionSec {
