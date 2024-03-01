@@ -221,6 +221,36 @@ const Chats = () => {
     getPlans();
   }, []);
 
+
+
+  useEffect(() => {
+    // Track focus state and scroll behavior
+    const handleInputFocus = () => {
+      inputRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      });
+    };
+
+    const handleInputBlur = () => {
+      if (chatBoxRef.current) {
+        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+      }
+    };
+
+    if (inputRef.current) {
+      inputRef.current.addEventListener('focus', handleInputFocus);
+      inputRef.current.addEventListener('blur', handleInputBlur);
+    }
+
+    return () => {
+      if (inputRef.current) {
+        inputRef.current.removeEventListener('focus', handleInputFocus);
+        inputRef.current.removeEventListener('blur', handleInputBlur);
+      }
+    };
+  }, []);
+
   return (
     <>
       <NavbarProfile />
