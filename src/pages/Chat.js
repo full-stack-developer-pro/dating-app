@@ -33,15 +33,28 @@ const Chats = () => {
   const [payments, setPayments] = useState(false);
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showFooter, setShowFooter] = useState(false);
 
   let user_id = JSON.parse(localStorage.getItem("d_user"));
 
-  // useEffect(() => {
-  //       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-  // }, [expandedChatMessages]);
-  // useEffect(() => {
-  //   // chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-  // }, [expandedChatMessages]);
+  const handleInputFocus = () => {
+    if (window.innerWidth <= 767) {
+      setShowFooter(false);
+    }
+  };
+
+  const handleInputBlur = () => {
+    if (window.innerWidth <= 767) {
+      setShowFooter(true);
+    }
+  };
+
+  useEffect(() => {
+    chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+  }, [expandedChatMessages]);
+  useEffect(() => {
+    // chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [expandedChatMessages]);
 
   useEffect(() => {
     if (!connectionEstablished) {
@@ -223,34 +236,7 @@ const Chats = () => {
 
 
 
-  useEffect(() => {
-    const handleInputFocus = () => {
-    };
 
-    const handleInputBlur = () => {
-    };
-
-    if (inputRef.current) {
-      inputRef.current.addEventListener('focus', handleInputFocus);
-      inputRef.current.addEventListener('blur', handleInputBlur);
-    }
-
-    return () => {
-      if (inputRef.current) {
-        inputRef.current.removeEventListener('focus', handleInputFocus);
-        inputRef.current.removeEventListener('blur', handleInputBlur);
-      }
-    };
-  }, [inputRef]);
-
-  useEffect(() => {
-    // Scroll to the bottom only if the input is not manually focused
-    if (!inputRef.current || !inputRef.current.matches(':focus')) {
-      if (chatBoxRef.current) {
-        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-      }
-    }
-  }, [expandedChatMessages]);
 
   return (
     <>
@@ -419,8 +405,10 @@ const Chats = () => {
                         ref={inputRef}
                         // disabled={fDisabled}
                         // value={message}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
                         id="main_input"
-                        // onChange={(e) => setMessage(e.target.value)}
+                      // onChange={(e) => setMessage(e.target.value)}
                       />
                       <div>
                         {/* <Picker onEmojiClick={onEmojiClick} />
@@ -446,7 +434,12 @@ const Chats = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {
+        showFooter && (
+          <Footer />
+
+        )
+      }
     </>
   );
 };
