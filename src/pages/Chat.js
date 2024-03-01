@@ -36,12 +36,12 @@ const Chats = () => {
 
   let user_id = JSON.parse(localStorage.getItem("d_user"));
 
-  useEffect(() => {
-        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-  }, [expandedChatMessages]);
-  useEffect(() => {
-    // chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [expandedChatMessages]);
+  // useEffect(() => {
+  //       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+  // }, [expandedChatMessages]);
+  // useEffect(() => {
+  //   // chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  // }, [expandedChatMessages]);
 
   useEffect(() => {
     if (!connectionEstablished) {
@@ -224,18 +224,10 @@ const Chats = () => {
 
 
   useEffect(() => {
-    // Track focus state and scroll behavior
     const handleInputFocus = () => {
-      inputRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-      });
     };
 
     const handleInputBlur = () => {
-      if (chatBoxRef.current) {
-        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-      }
     };
 
     if (inputRef.current) {
@@ -249,7 +241,16 @@ const Chats = () => {
         inputRef.current.removeEventListener('blur', handleInputBlur);
       }
     };
-  }, []);
+  }, [inputRef]);
+
+  useEffect(() => {
+    // Scroll to the bottom only if the input is not manually focused
+    if (!inputRef.current || !inputRef.current.matches(':focus')) {
+      if (chatBoxRef.current) {
+        chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+      }
+    }
+  }, [expandedChatMessages]);
 
   return (
     <>
