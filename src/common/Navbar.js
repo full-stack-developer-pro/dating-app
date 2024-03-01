@@ -32,6 +32,8 @@ const Navbar = () => {
   // const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
   const [gender, setGender] = useState("male");
+
+
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
@@ -196,32 +198,35 @@ const Navbar = () => {
   const [notifications, setNotifications] = useState("");
   const [notificationLength, setNotificationLength] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
-    AuthService.login(username, password).then(
-      () => {
-        toast.success("Login Successfull!!");
-        setTimeout(() => {
-          navigate("/profile");
-        }, 2000);
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        toast.error(resMessage, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        setLoading(false);
-        setMessage(resMessage);
-      }
-    );
+  
+    try {
+      await AuthService.login(username, password);
+  
+      toast.success("Login Successful!!");
+        navigate("/profile");
+      
+    } catch (error) {
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+  
+      toast.error(resMessage, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+  
+      setMessage(resMessage);
+    } finally {
+      setLoading(false);
+    }
   };
+  
   const logout = (e) => {
     localStorage.removeItem("d_user");
     localStorage.removeItem("d_userToken");
@@ -287,7 +292,7 @@ const Navbar = () => {
     data.ids = [id];
     DataService.UpdateNotification(data).then(
       () => {
-        setTimeout(() => {}, 2000);
+        setTimeout(() => { }, 2000);
       },
       (error) => {
         const resMessage =
@@ -326,30 +331,30 @@ const Navbar = () => {
                   </div>
                   {packages?.length > 0
                     ? packages?.map((item) => {
-                        return (
-                          <>
-                            <div className="payments_plan">
-                              <h2>{item.credits}</h2>
-                              <span className="bonus">{item.bonus}</span>
-                              <h4>credits</h4>
-                              <hr />
-                              <h3>Just For</h3>
-                              <p>
-                                <span>
-                                  {item.currency} {item.price}
-                                </span>
-                              </p>
-                              <hr />
-                              <button
-                                className="main_button"
-                                onClick={() => handlePayment(item.price)}
-                              >
-                                Purchase Now
-                              </button>
-                            </div>
-                          </>
-                        );
-                      })
+                      return (
+                        <>
+                          <div className="payments_plan">
+                            <h2>{item.credits}</h2>
+                            <span className="bonus">{item.bonus}</span>
+                            <h4>credits</h4>
+                            <hr />
+                            <h3>Just For</h3>
+                            <p>
+                              <span>
+                                {item.currency} {item.price}
+                              </span>
+                            </p>
+                            <hr />
+                            <button
+                              className="main_button"
+                              onClick={() => handlePayment(item.price)}
+                            >
+                              Purchase Now
+                            </button>
+                          </div>
+                        </>
+                      );
+                    })
                     : ""}
                 </div>
               </div>
@@ -370,9 +375,9 @@ const Navbar = () => {
                     </div>
                     {notifications?.length > 0
                       ? notifications?.map((item) => {
-                          return (
-                            <>
-                              {/* {item?.user ? (
+                        return (
+                          <>
+                            {/* {item?.user ? (
                                 <Link to={"/single-profile/" + item?.user?.id}>
                                   <div className="mainnotification_text" onClick={() => handleNotification(item.id)}>
                                     <div className="ntificationone">
@@ -389,62 +394,62 @@ const Navbar = () => {
 
                               ) : null} */}
 
-                              {item?.user ? (
-                                  <Link to={item.type === 'message' ? "/chats/" + item?.user?.id : "/single-profile/" + item?.user?.id}>
-                                  <div
-                                    className="mainnotification_text"
-                                    onClick={() => handleNotification(item.id)}
-                                  >
-                                    <div className="ntificationone">
-                                      <img
-                                        src={
-                                          item?.user
-                                            ? item?.user?.avatar
-                                            : ProfileAvatar
-                                        }
-                                      />
-                                                                                <img className="notiEye" src={NotificationEye}/>
-
-                                    </div>
-                                    <div className="notification_text">
-                                      <p>{item?.body}</p>
-
-                                      <h2>
-                                        {item?.created_at
-                                          ? moment(item?.created_at).format(
-                                              "LT"
-                                            )
-                                          : " "}
-                                      </h2>
-                                    </div>
-                                  </div>
-                                </Link>
-                              ) : (
+                            {item?.user ? (
+                              <Link to={item.type === 'message' ? "/chats/" + item?.user?.id : "/single-profile/" + item?.user?.id}>
                                 <div
                                   className="mainnotification_text"
                                   onClick={() => handleNotification(item.id)}
                                 >
                                   <div className="ntificationone">
                                     <img
-                                      src={item?.image ? item?.image?.url : ProfileAvatar}
-                                      alt="notification_image"
+                                      src={
+                                        item?.user
+                                          ? item?.user?.avatar
+                                          : ProfileAvatar
+                                      }
                                     />
-                                                                              <img className="notiEye" src={NotificationEye}/>
+                                    <img className="notiEye" src={NotificationEye} />
 
                                   </div>
                                   <div className="notification_text">
                                     <p>{item?.body}</p>
+
                                     <h2>
                                       {item?.created_at
-                                        ? moment(item?.created_at).format("LT")
+                                        ? moment(item?.created_at).format(
+                                          "LT"
+                                        )
                                         : " "}
                                     </h2>
                                   </div>
                                 </div>
-                              )}
-                            </>
-                          );
-                        })
+                              </Link>
+                            ) : (
+                              <div
+                                className="mainnotification_text"
+                                onClick={() => handleNotification(item.id)}
+                              >
+                                <div className="ntificationone">
+                                  <img
+                                    src={item?.image ? item?.image?.url : ProfileAvatar}
+                                    alt="notification_image"
+                                  />
+                                  <img className="notiEye" src={NotificationEye} />
+
+                                </div>
+                                <div className="notification_text">
+                                  <p>{item?.body}</p>
+                                  <h2>
+                                    {item?.created_at
+                                      ? moment(item?.created_at).format("LT")
+                                      : " "}
+                                  </h2>
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        );
+                      })
                       : ""}
                   </div>
                 </div>
@@ -554,10 +559,10 @@ const Navbar = () => {
                         <label for="floatingPassword">Password</label>
                       </div>
                       <Link to="/forgot-password"><p className="forgot_pass">Forgot Password</p></Link>
-                      
+
                       <div className="form_field">
-                        <button className="main_button" onClick={handleLogin}>
-                          Submit
+                        <button className="main_button" onClick={handleLogin} disabled={loading}>
+                          {loading ? "Logging in..." : "Submit"}
                         </button>
                       </div>
                     </form>
@@ -739,7 +744,7 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            
+
           )}
         </div>
       </div>
