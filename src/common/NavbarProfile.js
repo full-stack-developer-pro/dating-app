@@ -14,6 +14,8 @@ import ProfileAvatar from "../images/profile-avatar.png";
 // import LanguageSelector from "./LanguageSelector";
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
+import NotificationEye from "../images/NotifcationEye.png"
+
 const NavbarProfile = () => {
   const [loading, setLoading] = useState(false);
   const [packages, setPackages] = useState("");
@@ -278,8 +280,9 @@ const NavbarProfile = () => {
                                               ? item?.user?.avatar
                                               : ProfileAvatar
                                           }
-                                          
+
                                         />
+                                        <img className="notiEye" src={NotificationEye}/>
                                       </div>
                                       <div className="notification_text">
                                         <p>{item?.body}</p>
@@ -376,9 +379,8 @@ const NavbarProfile = () => {
                               return (
                                 <>
                                   {item?.user ? (
-                                    <Link
-                                      to={"/single-profile/" + item?.user?.id}
-                                    >
+                                    <Link to={item.type === 'message' ? "/chats/" + item?.user?.id : "/single-profile/" + item?.user?.id}>
+
                                       <div
                                         className="mainnotification_text"
                                         onClick={() =>
@@ -394,6 +396,7 @@ const NavbarProfile = () => {
                                             }
                                             alt=""
                                           />
+                                          <img className="notiEye" src={NotificationEye}/>
                                         </div>
                                         <div className="notification_text">
                                           <p>{item?.body}</p>

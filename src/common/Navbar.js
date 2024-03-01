@@ -10,6 +10,8 @@ import DataService from "../services/data.service";
 import profile1 from "../images/profile1.jpg";
 import moment from "moment";
 import ProfileAvatar from "../images/profile-avatar.png";
+import NotificationEye from "../images/NotifcationEye.png"
+
 const Navbar = () => {
   const auth = AuthService.getCurrentUserTokken();
   const navigate = useNavigate();
@@ -401,6 +403,8 @@ const Navbar = () => {
                                             : ProfileAvatar
                                         }
                                       />
+                                                                                <img className="notiEye" src={NotificationEye}/>
+
                                     </div>
                                     <div className="notification_text">
                                       <p>{item?.body}</p>
@@ -425,6 +429,8 @@ const Navbar = () => {
                                       src={item?.image ? item?.image?.url : ProfileAvatar}
                                       alt="notification_image"
                                     />
+                                                                              <img className="notiEye" src={NotificationEye}/>
+
                                   </div>
                                   <div className="notification_text">
                                     <p>{item?.body}</p>

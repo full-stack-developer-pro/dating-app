@@ -2,7 +2,15 @@
     color: #ef48b5;
     font-size: 16px;
 }
-
+img.notiEye {
+    position: absolute;
+    width: 20px !important;
+    height: 20px !important;
+    right: 10px !important;
+    background: #dfdfdf !important;
+    border-radius: 50px !important;
+    padding: 3px !important;
+}
 button.read_button {
     background-color: #ccc3c3;
     color: #000;
@@ -33,6 +41,7 @@ button.unread_button {
 }
 .ntificationone {
     width: 20%;
+    position: relative;
 }
 .show_edit_bgarea_message{
     width: 95%;
@@ -150,6 +159,7 @@ span.bonus {
     background: #fff;
     min-height: 100vh;
     overflow-y: scroll;
+    height: 80vh;
 }
 
 .chat_topFlex {
@@ -531,6 +541,9 @@ span.bonus {
     .show_edit_bgarea_message-new{
         width: 100%;
     }
+    .text_message {
+        border-radius: 10px;
+    }
 }
 @media screen and (max-width: 950px) {
     .chat_outerImg {
@@ -646,5 +659,8 @@ span.bonus {
 @media screen and (min-width: 767px)and (max-width: 1024px) {
     .show_edit_bgarea_message-new{
         width: 100%;
+    }
+    .text_message {
+        border-radius: 20px;
     }
 }
