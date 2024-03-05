@@ -43,6 +43,7 @@ button.send_m a {
     height: 120px;
     object-fit: cover;
     pointer-events: none;
+    object-position: top;
 }
 .single_Pflex .single_pL {
     width: 100%;
@@ -240,6 +241,9 @@ button.send_m a {
     .single_pR_main{
         width: 50%;
         margin-top: 20px;
+    }
+    .single_lockOpen img {
+        height: 22vh;
     }
 
 }
