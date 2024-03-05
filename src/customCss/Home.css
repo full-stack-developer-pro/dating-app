@@ -225,10 +225,11 @@ button.new_flirt_cross {
 }
 
 button.save_btn {
-    background: linear-gradient(90deg, #ffbb03, #fedf4f);
+    background: #ef48b5;
     padding: 5px 12px;
     margin: 20px 0px;
     font-size: 16px;
+    color: #fff;
 }
 
 .cross_btn {
@@ -1374,8 +1375,9 @@ ul.location_new {
     width: 100%;
     border-radius: 5px;
     margin-bottom: 15px;
-    min-height: 50%;
+    height: 35vh;
     object-fit: cover;
+    object-position: top;
 }
 .single_lockOpen h5 {
     margin-bottom: 5px;
