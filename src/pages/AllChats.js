@@ -99,6 +99,29 @@ const Chats = () => {
   //   socket.on('chat_message', (data) => {expandChat(data.id)});
   // payment
 
+const handleChatRead =(id)=>{
+  DataService.updateChat(id).then(
+    () => {
+      setTimeout(() => {
+      }, 2000)
+    },
+    (error) => {
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      toast.error(resMessage, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setLoading(false);
+      setMessage(resMessage);
+    }
+  );
+}
+
+
   const handlePayment = (price) => {
     setMessage("");
     const data = {};
@@ -154,7 +177,7 @@ const Chats = () => {
         const data = JSON.parse(event.data);
         console.log("Received message:", data);
 
-        
+
         if (data.success === false) {
           setTimeout(() => { }, 2000);
         } else if (data.type === "new_message") {
@@ -371,13 +394,13 @@ const Chats = () => {
                             <p> {item?.city_name}</p>
                           </div>
                           <div className="chat_last_message">
-                            <p>{item?.last_message.split(" ").slice(0,15).join(" ")}</p>
+                            <p>{item?.last_message.split(" ").slice(0, 15).join(" ")}</p>
                           </div>
                           <div className="read_btn">
                             {
                               item?.read == 0 ?
-                                <button className="read_button">Read</button> :
-                                <button className="unread_button">Unread</button>
+                                <button className="unread_button" onClick={()=>handleChatRead(item?.chat_id)}>Unread</button>
+                                : <button className="read_button">Read</button>
                             }
                           </div>
 
