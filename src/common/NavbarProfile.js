@@ -282,7 +282,7 @@ const NavbarProfile = () => {
                                           }
 
                                         />
-                                        <img className="notiEye" src={NotificationEye}/>
+                                        <img className="notiEye" src={NotificationEye} />
                                       </div>
                                       <div className="notification_text">
                                         <p>{item?.body}</p>
@@ -364,7 +364,9 @@ const NavbarProfile = () => {
               {/* toggle section */}
               <div className="toggle_area">
                 <div className="logo_mobile_nav">
-                  <img src={Logo} alt="" />
+                  <Link to="/">
+                    <img src={Logo} alt="" />
+                  </Link>
                 </div>
                 <div className="toggle_buttons">
                   {notification && (
@@ -396,7 +398,7 @@ const NavbarProfile = () => {
                                             }
                                             alt=""
                                           />
-                                          <img className="notiEye" src={NotificationEye}/>
+                                          <img className="notiEye" src={NotificationEye} />
                                         </div>
                                         <div className="notification_text">
                                           <p>{item?.body}</p>

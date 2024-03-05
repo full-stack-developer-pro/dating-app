@@ -35,7 +35,9 @@ const Chats = () => {
   const [loading, setLoading] = useState(false);
   const [showFooter, setShowFooter] = useState(false);
 
+
   let user_id = JSON.parse(localStorage.getItem("d_user"));
+
 
   const handleInputFocus = () => {
     if (window.innerWidth <= 767) {
@@ -194,6 +196,12 @@ const Chats = () => {
     getUserProfile();
     getChatList();
   }, []);
+
+
+
+
+
+
 
   const getChatList = async () => {
     await DataService.getAllChats(user_id)

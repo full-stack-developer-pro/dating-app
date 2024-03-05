@@ -36,7 +36,10 @@ const getOldPayments = () => {
 const statusNotification = (status, data) => {
   return axios.put(API_URL + "api/user/notifications/" + status, data);
 };
+const updateChat = (id) => {
+  return axios.get(API_URL + "api/user/readChat/" + id);
 
+}
 const getNotification = () => {
   return axios.get(API_URL + "api/user/notifications");
 };
@@ -91,7 +94,7 @@ const removeMyFriend = (id, data) => {
 const getAllFriend = (id) => {
   return axios.get(API_URL + "api/user/getAllFriends/" + id);
 };
-const searchUsers = (limit, page,gender, country, minValue, maxValue,miles) => {
+const searchUsers = (limit, page, gender, country, minValue, maxValue, miles) => {
   return axios.get(
     API_URL +
     "api/user/getList?limit=" + limit + "&page=" + page +
@@ -163,6 +166,7 @@ const getCities = (location) => {
 
 
 const DataService = {
+  updateChat,
   setProfile,
   NewPassword,
   ForgotEmail,
