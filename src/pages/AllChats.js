@@ -378,6 +378,9 @@ const handleChatRead =(id)=>{
                       <>
                         <div
                           className="chat_outer"
+                          style={{
+                            background: item?.read === 0 ? '#f4f0fd' : '#fff',
+                          }}
                           onClick={() => navigate("/chats/" + item?._id)}
                         >
                           <div className="chat_outerImg">
