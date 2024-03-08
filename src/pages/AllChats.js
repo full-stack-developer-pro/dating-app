@@ -99,27 +99,27 @@ const Chats = () => {
   //   socket.on('chat_message', (data) => {expandChat(data.id)});
   // payment
 
-const handleChatRead =(id)=>{
-  DataService.updateChat(id).then(
-    () => {
-      setTimeout(() => {
-      }, 2000)
-    },
-    (error) => {
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      toast.error(resMessage, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      setLoading(false);
-      setMessage(resMessage);
-    }
-  );
-}
+  const handleChatRead = (id) => {
+    DataService.updateChat(id).then(
+      () => {
+        setTimeout(() => {
+        }, 2000)
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
+  }
 
 
   const handlePayment = (price) => {
@@ -381,7 +381,10 @@ const handleChatRead =(id)=>{
                           style={{
                             background: item?.read === 0 ? '#f4f0fd' : '#fff',
                           }}
-                          onClick={() => navigate("/chats/" + item?._id)}
+                          onClick={() => {
+                            handleChatRead(item?.chat_id)
+                            navigate("/chats/" + item?._id)
+                          }}
                         >
                           <div className="chat_outerImg">
                             <img
@@ -401,8 +404,8 @@ const handleChatRead =(id)=>{
                           </div>
                           <div className="read_btn">
                             {
-                              item?.read == 0 ?
-                                <button className="unread_button" onClick={()=>handleChatRead(item?.chat_id)}>Unread</button>
+                              item?.read == 0 && item._id !== user_id  ?
+                                <button className="unread_button" onClick={() => handleChatRead(item?.chat_id)}>Unread</button>
                                 : <button className="read_button">Read</button>
                             }
                           </div>

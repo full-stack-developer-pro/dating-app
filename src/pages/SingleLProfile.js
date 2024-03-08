@@ -209,7 +209,7 @@ const SingleLProfile = () => {
             <div className="single_pL_main">
               <div className="single_pL">
                 <div className="single_lockOpen">
-                  <img src={profile?.profile_path} onError={handleMe} alt="" />
+                  <img src={profile?.avatar} onError={handleMe} alt="" />
                   <h5>{profile?.name}</h5>
                   <span className="single_age" style={{ textTransform: 'capitalize' }}>{profile?.age} ~ {profile?.gender}</span>
                   <span>

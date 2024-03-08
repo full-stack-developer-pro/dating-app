@@ -518,9 +518,9 @@ const NavbarProfile = () => {
           <div className="profile_navbar hide_mobile_screen">
             <div className="container">
               <div className="user_profile_page">
-                <Zoom>
+                <Link to="/my-profile">
                   <img onError={handleImage} src={profile?.avatar} />
-                </Zoom>
+                </Link>
                 <h2>{profile?.name}</h2>
               </div>
               <div className="profile_main">
