@@ -149,25 +149,52 @@ const UploadGallery = () => {
   };
 
 
+  // const deleteImage = (e, index, api = true) => {
+  //   if (uploadedFiles && uploadedFiles.length > 0) {
+  //     const updatedUploadedFiles = uploadedFiles.filter((file, i) => i !== index);
+  //     const updatedImageSrc = [];
+  //     updatedUploadedFiles.forEach((file) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(file);
+
+  //       reader.onloadend = function (theFile) {
+  //         var image = new Image();
+  //         image.src = theFile.target.result;
+  //         updatedImageSrc.push(image.src);
+  //       };
+  //     });
+  //     setUploadedFiles(updatedUploadedFiles);
+  //     setImages(updatedImageSrc);
+  //   }
+  // };
   const deleteImage = (e, index, api = true) => {
     if (uploadedFiles && uploadedFiles.length > 0) {
-      const updatedUploadedFiles = uploadedFiles.filter((file, i) => i !== index);
-      const updatedImageSrc = [];
+      const updatedUploadedFiles = uploadedFiles.filter(
+        (file, i) => i !== index
+      );
+      const promises = [];
       updatedUploadedFiles.forEach((file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-
-        reader.onloadend = function (theFile) {
-          var image = new Image();
-          image.src = theFile.target.result;
-          updatedImageSrc.push(image.src);
-        };
+        const promise = new Promise((resolve, reject) => {
+          reader.onloadend = function (theFile) {
+            var image = new Image();
+            image.src = theFile.target.result;
+            resolve(image.src);
+          };
+        });
+        promises.push(promise);
       });
-      setUploadedFiles(updatedUploadedFiles);
-      setImages(updatedImageSrc);
+      Promise.all(promises)
+        .then((updatedImageSrc) => {
+          setUploadedFiles(updatedUploadedFiles);
+          setImages(updatedImageSrc);
+        })
+        .catch((error) => {
+          console.error("Error loading images:", error);
+        });
     }
   };
-
 
 
   const UploadProfile = (e) => {

@@ -47,7 +47,7 @@ const Profile = () => {
   // const paginate = (pageNumber) => {
   //   setCurrentPage(pageNumber);
   // };
-  const [miles, setMiles] = useState(50);
+  const [miles, setMiles] = useState(1);
   const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
 
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -126,17 +126,30 @@ const Profile = () => {
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
-    setIsListVisible(true); // Show the list when the input changes
+    setIsListVisible(true);
     if (e.target.value === '') {
       setSelectedCity({ uniqueId: "", city: "" });
     }
   };
-
-
+  const updateFilters = (newMiles, newAgeGroup) => {
+    setMiles(newMiles);
+    setAgeGroup(newAgeGroup);
+  };
 
   const handleSliderChange = ({ minValue, maxValue }) => {
-    setAgeGroup({ minValue, maxValue });
+    updateFilters(miles, { minValue, maxValue });
   };
+
+  const handleMilesChange = (e) => {
+    updateFilters(parseInt(e.target.value, 10), ageGroup);
+  };
+
+  const handleFilterChange = () => {
+    if (isListVisible) {
+      searchData(20, currentPage);
+    }
+  };
+
   const getCity = async () => {
     await DataService.getCities(searchKeyword).then((data) => {
       setCities(data?.data?.data);
@@ -192,12 +205,12 @@ const Profile = () => {
       setUsers([]);
     }
   };
+
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
 
     setGender(params.gender || "");
-    setMiles(parseInt(params.miles, 10) || 50);
     setSelectedCity({
       uniqueId: params.cityId || "",
       city: params.cityName || "",
@@ -457,7 +470,7 @@ const Profile = () => {
                       max={100}
                       value={miles}
                       id="custom-range"
-                      onChange={(e) => setMiles(parseInt(e.target.value, 10))}
+                      onChange={handleMilesChange}
                     />
                   </div>
                   <div className="range_Age">
@@ -473,7 +486,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="button_search">
-                    <button className="search_submit" onClick={() => searchData(20, currentPage)}>
+                    <button className="search_submit" onClick={handleFilterChange}>
                       Search<i class="fas fa-search"></i>
                     </button>
                   </div>
@@ -508,9 +521,9 @@ const Profile = () => {
                                 <h4>{item?.name}</h4>
                                 <span className="active_age">
                                   {item?.age}~
-                                  {item?.gender === "male"
+                                  {item?.gender == "male"
                                     ? "M"
-                                    : item?.gender === "Female"
+                                    : item?.gender == "Female"
                                       ? "F"
                                       : "Other"}
                                 </span>

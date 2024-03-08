@@ -20,8 +20,7 @@ axios.interceptors.response.use(
   function (error) {
     if (error.response.status === 401) {
       localStorage.removeItem("user");
-      // window.location.href = '/#/login';
-      // Make the token refresh request here
+  
     }
     return Promise.reject(error);
   }

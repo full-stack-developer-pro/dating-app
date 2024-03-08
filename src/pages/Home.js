@@ -116,6 +116,7 @@ const Home = () => {
   const [filteredData, setfilteredData] = useState([]);
   const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
   const [flirtId, setFlirtId] = useState(null);
+  const [ageError, setAgeError] = useState("");
 
 
   const calculateAge = (birthdate) => {
@@ -133,11 +134,21 @@ const Home = () => {
     return age;
   };
 
+
+
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
     setDob(selectedDate);
+
     const calculatedAge = calculateAge(selectedDate);
+
     setAge(calculatedAge);
+
+    if (calculatedAge < 18) {
+      setAgeError("Age must be 18 or older.");
+    } else {
+      setAgeError("");
+    }
   };
 
   const eighteenYearsAgo = new Date();
@@ -285,6 +296,10 @@ const Home = () => {
     // ) {
     //   setShowError(true);
     // } else {
+    if (ageError) {
+      toast.error("Form submission prevented due to age error.");
+      return;
+    }
     const data = {};
     data.is_fake = false;
     data.name = name;
@@ -314,11 +329,18 @@ const Home = () => {
     data.photo = "https://example.com/path/to/photo.jpg";
     setLoading(true);
     await AuthService.register(data).then(
-      () => {
+      (response) => {
         setLoading(false);
         toast.success("Profile create successfully! Please Login Now", {
           position: toast.POSITION.TOP_RIGHT,
         });
+        if (response.data.data.token) {
+          localStorage.setItem("d_user", JSON.stringify(response.data.data.user.id));
+          localStorage.setItem("d_userToken", JSON.stringify(response.data.data.token));
+          navigate("/profile")
+        }
+
+
         // setTimeout(() => {
         //   window.location.reload();
         // }, 2000);
@@ -723,8 +745,8 @@ const Home = () => {
                               class="form-check-input"
                               type="radio"
                               name="gender"
-                              value="Female"
-                              checked={gender === "Female"}
+                              value="female"
+                              checked={gender === "female"}
                               onChange={handleGenderChange}
                             />
                             <label class="form-check-label" for="gender_Female">
@@ -1260,8 +1282,8 @@ const Home = () => {
                         type="radio"
                         name="searchgender"
                         id="gender_all_search"
-                        value="all"
-                        checked={selectedGenderSearch === "all"}
+                        value="All"
+                        checked={selectedGenderSearch === "All"}
                         onChange={SearchHandleSelection}
                       />
                       <label class="form-check-label" for="gender_all_search">
@@ -1398,8 +1420,8 @@ const Home = () => {
                                 <Link to={"/single-profile/" + item.id}>
                                   <img
                                     src={
-                                      item?.profile_path
-                                        ? item?.profile_path
+                                      item?.avatar
+                                        ? item?.avatar
                                         : ProfileOne
                                     }
                                     alt=""
@@ -1457,7 +1479,7 @@ const Home = () => {
                               {/* <button>
                                 Like<i className="fas fa-thumbs-up"></i>
                               </button> */}
-                              {auth && 
+                              {auth &&
                                 <button key={item.id} onClick={() => openFlirtPopup(item.id)}>
                                   Send Wink<i className="fas fa-heart"></i>
                                 </button>

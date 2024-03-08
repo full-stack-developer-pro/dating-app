@@ -73,10 +73,12 @@ const EditProfile = () => {
   const [notificationValue, setNotificationValue] = useState("");
   const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
   const [cityId, setCityId] = useState("");
+  const [ageError, setAgeError] = useState("");
 
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
+    setCity(e.target.value);
     setIsListVisible(true); // Show the list when the input changes
   };
   const getUserProfile = async () => {
@@ -154,11 +156,21 @@ const EditProfile = () => {
     return age;
   };
 
+
+
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
     setBirthdate(selectedDate);
+
     const calculatedAge = calculateAge(selectedDate);
+
     setAge(calculatedAge);
+
+    if (calculatedAge < 18) {
+      setAgeError("Age must be 18 or older.");
+    } else {
+      setAgeError("");
+    }
   };
 
   const eighteenYearsAgo = new Date();
@@ -175,10 +187,12 @@ const EditProfile = () => {
   const handleHideCity = (selectedCity) => {
     setSelectedCity(selectedCity);
     setCity(selectedCity.city);
+    setCityId(selectedCity.uniqueId);
     setCities([]);
     setIsListVisible(false);
+    setSearchKeyword(''); // Clear the search keyword
   };
-  
+
   useEffect(() => {
     getCity();
   }, [searchKeyword]);
@@ -192,7 +206,12 @@ const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     setLoading(true);
+    if (ageError) {
+      toast.error("Form submission prevented due to age error.");
+      return;
+    }
     const data = {};
     data.is_fake = false;
     data.name = name;
@@ -203,8 +222,8 @@ const EditProfile = () => {
     data.birthdate = birthdate;
     data.description = description;
     data.country = country;
-    data.city_name = selectedCity.city;
-    data.city = selectedCity.uniqueId;
+    data.city_name = city ? city : selectedCity.city
+    data.city = cityId ? cityId : selectedCity.uniqueId
     data.age = age;
     data.postcode = postcode;
     // data.timezone = timezone;
@@ -310,6 +329,7 @@ const EditProfile = () => {
 
   return (
     <>
+
       <NavbarProfile />
       <LoadingBar color="#C952A0" ref={ref} height={5} shadow={true} />
       <div className="container">
@@ -390,6 +410,7 @@ const EditProfile = () => {
                               placeholder="Enter city name"
                               value={city}
                               onChange={handleSearchChange}
+                              key={selectedCity.uniqueId}
                             />
                             {isListVisible && searchKeyword && (
                               <ul className="location_new">
