@@ -27,6 +27,7 @@ import HelpDesk from "./pages/HelpDesk";
 import Faq from "./pages/Faq";
 import ResetPassword from "./pages/ResetPassword";
 import Resetlink from "./pages/Resetlink";
+import ResendEmail from "./pages/ResendEmail";
 
 export default function App() {
 
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/upload-gallery" element={<UploadGallery />} />
           <Route path="/my-friends" element={<MyFriends />} />
           <Route path="/my-profile" element={<ProfileMain />} />
+          <Route path="/resend-email" element={<ResendEmail />} />
         </Route>
       </Routes>
     </BrowserRouter>

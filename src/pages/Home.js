@@ -81,8 +81,8 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
-  const [gender, setGender] = useState("male");
-  const [age, setAge] = useState("male");
+  const [gender, setGender] = useState("Male");
+  const [age, setAge] = useState("Male");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
   const [searchCountry, setSearchCountry] = useState("");
@@ -337,6 +337,7 @@ const Home = () => {
         if (response.data.data.token) {
           localStorage.setItem("d_user", JSON.stringify(response.data.data.user.id));
           localStorage.setItem("d_userToken", JSON.stringify(response.data.data.token));
+          localStorage.setItem("city_id", JSON.stringify(response.data.data.user.city));
           navigate("/profile")
         }
 
@@ -1296,8 +1297,8 @@ const Home = () => {
                         type="radio"
                         name="searchgender"
                         id="gender_male_search"
-                        value="male"
-                        checked={selectedGenderSearch === "male"}
+                        value="Male"
+                        checked={selectedGenderSearch === "Male"}
                         onChange={SearchHandleSelection}
                       />
                       <label class="form-check-label" for="gender_male_search">
@@ -1433,9 +1434,9 @@ const Home = () => {
                                 <h4>{item?.name}</h4>
                                 <span className="active_age">
                                   {item?.age}~
-                                  {item?.gender === "male"
+                                  {item?.gender == "male"  || item?.gender == "Male"
                                     ? "M"
-                                    : item?.gender === "Female"
+                                    : item?.gender == "Female" || item?.gender == "female"
                                       ? "F"
                                       : "Other"}
                                 </span>

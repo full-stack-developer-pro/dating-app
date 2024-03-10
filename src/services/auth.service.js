@@ -40,6 +40,7 @@ const login = (username, password) => {
       if (response.data.data.token) {
         localStorage.setItem("d_user", JSON.stringify(response.data.data.user.id));
         localStorage.setItem("d_userToken", JSON.stringify(response.data.data.token));
+        localStorage.setItem("city_id", JSON.stringify(response.data.data.user.city));
       }
       return response.data;
     });

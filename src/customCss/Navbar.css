@@ -1,4 +1,32 @@
-
+.send_email_area {
+    padding: 20px 0px;
+}
+.level-left {
+    display: flex;
+    align-items: center;
+}
+p.level-item {
+    margin: 0px;
+    font-size: 16px;
+    margin-right: 5px;
+}
+p.free-creds {
+    color: #222;
+    font-size: 16px;
+    border: 3px solid #ef48b5;
+    padding: 3px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background-color: #dff5e5;
+}
+.button_send_email button {
+    background: linear-gradient(to right, #ef48b5, #F209E1);
+    border-radius: 4px;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 13px;
+    margin-right: 10px;
+}
 .main_signUp {
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -307,5 +335,11 @@ table,thead,tbody,tr,td,th{
 @media (max-width: 1024px) and (min-width: 767px){
     .signup_topBar{
       margin: 10px auto;
+    }
+    .level-left {
+        flex-direction: column;
+    }
+    .button_send_email {
+        padding: 20px 0px;
     }
 }
