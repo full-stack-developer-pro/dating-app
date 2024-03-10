@@ -21,6 +21,7 @@ import LanguageSelector from "../common/LanguageSelector";
 const MAX_COUNT = 5;
 
 const Profile = () => {
+  const city_iid = JSON.parse(localStorage.getItem("city_id"))
   const ref = useRef(null);
   // const params = useParams();
   // search filters 
@@ -48,7 +49,7 @@ const Profile = () => {
   //   setCurrentPage(pageNumber);
   // };
   const [miles, setMiles] = useState(1);
-  const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
+  const [selectedCity, setSelectedCity] = useState({ uniqueId: city_iid ? city_iid : "", city: "" });
 
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [flirtId, setFlirtId] = useState(null);
@@ -212,7 +213,7 @@ const Profile = () => {
 
     setGender(params.gender || "");
     setSelectedCity({
-      uniqueId: params.cityId || "",
+      uniqueId: params.cityId || city_iid,
       city: params.cityName || "",
     });
     setAgeGroup({
@@ -232,14 +233,14 @@ const Profile = () => {
       const urlSearchParams = new URLSearchParams();
       urlSearchParams.append("gender", gender);
       urlSearchParams.append("miles", miles);
-      urlSearchParams.append("cityId", selectedCity.uniqueId);
+      urlSearchParams.append("cityId", selectedCity.uniqueId ? selectedCity.uniqueId : city_iid);
       urlSearchParams.append("cityName", selectedCity.city);
       urlSearchParams.append("minAge", ageGroup.minValue);
       urlSearchParams.append("maxAge", ageGroup.maxValue);
 
       navigate({ search: urlSearchParams.toString() });
     }
-  }, [gender, miles, selectedCity, ageGroup, navigate, isFirstRender]);
+  }, [gender, miles, selectedCity, ageGroup, navigate, isFirstRender, city_iid]);
 
 
   useEffect(() => {
@@ -514,16 +515,16 @@ const Profile = () => {
                               <div className="active_mainL">
                                 <Link to={"/single-profile/" + item.id}>
 
-                                  <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
+                                  <img src={item?.avatar ? item?.avatar : ProfileOne} alt="" onError={handleImagenew} />
                                 </Link>
                               </div>
                               <div className="active_mainR">
                                 <h4>{item?.name}</h4>
                                 <span className="active_age">
                                   {item?.age}~
-                                  {item?.gender == "male"
+                                  {item?.gender == "male"  || item?.gender == "Male"
                                     ? "M"
-                                    : item?.gender == "Female"
+                                    : item?.gender == "Female" || item?.gender == "female"
                                       ? "F"
                                       : "Other"}
                                 </span>
@@ -563,7 +564,7 @@ const Profile = () => {
                                 </Link>
                               </button>
 
-                              {auth && 
+                              {auth &&
                                 <button key={item.id} onClick={() => openFlirtPopup(item.id)}>
                                   Send Wink<i className="fas fa-heart"></i>
                                 </button>

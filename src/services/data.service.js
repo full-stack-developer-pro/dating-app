@@ -163,9 +163,17 @@ const NewPassword = (data) => {
 const getCities = (location) => {
   return axios.get(API_URL + "api/getCountryCities/GB?q=" + location);
 };
+const sendVerification = () => {
+  return axios.post(API_URL + "api/user/resend-verification");
+};
+const ChangeEmail = (data) => {
+  return axios.post(API_URL + "api/user/update-email",data);
+};
 
 
 const DataService = {
+  ChangeEmail,
+sendVerification,
   updateChat,
   setProfile,
   NewPassword,

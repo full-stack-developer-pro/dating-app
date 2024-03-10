@@ -209,7 +209,7 @@ const EditProfile = () => {
 
     setLoading(true);
     if (ageError) {
-      toast.error("Form submission prevented due to age error.");
+      toast.error("Age should not be less than 18");
       return;
     }
     const data = {};

@@ -404,7 +404,7 @@ const Chats = () => {
                           </div>
                           <div className="read_btn">
                             {
-                              item?.read == 0 && item._id !== user_id  ?
+                              item.last_send_by !== user_id && item?.read === 0   ?
                                 <button className="unread_button" onClick={() => handleChatRead(item?.chat_id)}>Unread</button>
                                 : <button className="read_button">Read</button>
                             }
