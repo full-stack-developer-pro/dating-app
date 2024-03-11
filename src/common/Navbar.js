@@ -230,6 +230,8 @@ const Navbar = () => {
   const logout = (e) => {
     localStorage.removeItem("d_user");
     localStorage.removeItem("d_userToken");
+    localStorage.removeItem("city_id");
+
     navigate("/");
     window.location.reload();
   };
