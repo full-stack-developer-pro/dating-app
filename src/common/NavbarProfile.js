@@ -187,23 +187,23 @@ const NavbarProfile = () => {
   const SendEmail = (e) => {
     e.preventDefault();
     DataService.sendVerification().then(
-        () => {
-            toast.success('Email resent Successfully');
-        },
-        (error) => {
-            const resMessage =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            toast.error(resMessage, {
-                position: toast.POSITION.TOP_RIGHT,
-            });
-            setLoading(false);
-        }
+      () => {
+        toast.success('Email resent Successfully');
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        toast.error(resMessage, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setLoading(false);
+      }
     );
-};
+  };
 
 
   return (
@@ -534,7 +534,7 @@ const NavbarProfile = () => {
               </div>
             </div>
 
-            
+
           </div>
           {/* toggle section */}
 
@@ -586,38 +586,38 @@ const NavbarProfile = () => {
               </div>
 
               {
-                profile.is_verified === 0 ? 
-                <div className="send_email_area">
-                <div
-                  className="container"
-                  style={{
-                    backgroundColor: "#fff",
-                    borderRadius: 10,
-                    padding: 15,
-                    border: "4px solid #ef48b5"
-                  }}
-                >
-                  <p className="free-creds">
-                    <b>Good news!</b> To get you started we've loaded your account with 200
-                    free <nobr>messaging credits</nobr>
-                  </p>
-                  <p style={{ color: "#222", fontSize: 16 }}>
-                    Please verify your email address which you entered as: {profile?.email
-}
-                  </p>
-                  <div className="level-left">
-                    <p className="level-item" style={{ color: "#222", fontSize: 16 }}>
-                      <b>Can't find the email?</b>
-                    </p>
-                    <div className="button_send_email">
-                      <button onClick={SendEmail}>Resend</button>
-                      <Link to="/resend-email"><button>Change Email</button></Link>
+                profile.is_verified === 0 ?
+                  <div className="send_email_area">
+                    <div
+                      className="container"
+                      style={{
+                        backgroundColor: "#fff",
+                        borderRadius: 10,
+                        padding: 15,
+                        border: "4px solid #ef48b5"
+                      }}
+                    >
+                      <p className="free-creds">
+                        <b>Good news!</b> To get you started we've loaded your account with 200
+                        free <nobr>messaging credits</nobr>
+                      </p>
+                      <p style={{ color: "#222", fontSize: 16 }}>
+                        Please verify your email address which you entered as: {profile?.email
+                        }
+                      </p>
+                      <div className="level-left">
+                        <p className="level-item" style={{ color: "#222", fontSize: 16 }}>
+                          <b>Can't find the email?</b>
+                        </p>
+                        <div className="button_send_email">
+                          <button onClick={SendEmail}>Resend</button>
+                          <Link to="/resend-email"><button>Change Email</button></Link>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>:""
+                  </div> : ""
               }
-             
+
 
             </div>
           </div>
@@ -625,10 +625,9 @@ const NavbarProfile = () => {
             <div className="profile_navbar ">
               <div className="container">
                 <div className="user_profile_page">
-                  <Zoom>
-
-                    <img onError={handleImage} src={profile?.profile_path} />
-                  </Zoom>
+                  <Link to="/my-profile">
+                    <img onError={handleImage} src={profile?.avatar} />
+                  </Link>
                   <h2>{profile?.name}</h2>
                 </div>
                 <div className="profile_main">
@@ -669,38 +668,38 @@ const NavbarProfile = () => {
                     <button onClick={logout}>Logout</button>
                   </div>
                   {
-                profile.is_verified === 0 ? 
-                <div className="send_email_area">
-                <div
-                  className="container"
-                  style={{
-                    backgroundColor: "#fff",
-                    borderRadius: 10,
-                    padding: 15,
-                    border: "4px solid #ef48b5"
-                  }}
-                >
-                  <p className="free-creds">
-                    <b>Good news!</b> To get you started we've loaded your account with 200
-                    free <nobr>messaging credits</nobr>
-                  </p>
-                  <p style={{ color: "#222", fontSize: 16 }}>
-                    Please verify your email address which you entered as: {profile?.email
-}
-                  </p>
-                  <div className="level-left">
-                    <p className="level-item" style={{ color: "#222", fontSize: 16 }}>
-                      <b>Can't find the email?</b>
-                    </p>
-                    <div className="button_send_email">
-                      <button onClick={SendEmail}>Resend</button>
-                      <Link to="/resend-email"><button>Change Email</button></Link>
-                    </div>
-                  </div>
-                </div>
-              </div>:""
-              }
-             
+                    profile.is_verified === 0 ?
+                      <div className="send_email_area">
+                        <div
+                          className="container"
+                          style={{
+                            backgroundColor: "#fff",
+                            borderRadius: 10,
+                            padding: 15,
+                            border: "4px solid #ef48b5"
+                          }}
+                        >
+                          <p className="free-creds">
+                            <b>Good news!</b> To get you started we've loaded your account with 200
+                            free <nobr>messaging credits</nobr>
+                          </p>
+                          <p style={{ color: "#222", fontSize: 16 }}>
+                            Please verify your email address which you entered as: {profile?.email
+                            }
+                          </p>
+                          <div className="level-left">
+                            <p className="level-item" style={{ color: "#222", fontSize: 16 }}>
+                              <b>Can't find the email?</b>
+                            </p>
+                            <div className="button_send_email">
+                              <button onClick={SendEmail}>Resend</button>
+                              <Link to="/resend-email"><button>Change Email</button></Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div> : ""
+                  }
+
                 </div>
               </div>
             </div>
