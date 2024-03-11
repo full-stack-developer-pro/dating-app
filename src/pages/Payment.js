@@ -24,7 +24,7 @@ const Payments = () => {
     data.saleId = saleId
     DataService.verifyPayment(data).then(
       (response) => {
-        if (response.data.success) {
+        if (response.status === "Success") {
           toast.success("Verify successfully!");
           navigate("/")
 
