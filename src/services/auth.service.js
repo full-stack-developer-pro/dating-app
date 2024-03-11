@@ -49,7 +49,7 @@ const login = (username, password) => {
 
 const logout = () => {
   localStorage.removeItem("d_user");
-  localStorage.setItem("city_id");
+  localStorage.removeItem("city_id");
   return axios.post(API_URL + "signout").then((response) => {
     return response.data;
   });
