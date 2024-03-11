@@ -26,8 +26,10 @@ const Payments = () => {
       (response) => {
         if (response.data.status === "Success" || response.data.status === "success") {
           toast("Payment Verify successfully!");
-          window.location.reload();
-          navigate("/");
+          setTimeout(()=>{
+            window.location.reload();
+            navigate("/");
+          },3000)
         } else {
           toast.error("Failed to verify payment");
         }
