@@ -379,7 +379,7 @@ const Chats = () => {
                         <div
                           className="chat_outer"
                           style={{
-                            background: item?.read === 0 ? '#f4f0fd' : '#fff',
+                            background: item.last_send_by !== user_id && item?.read === 0 ? '#f4f0fd' : '#fff',
                           }}
                           onClick={() => {
                             handleChatRead(item?.chat_id)
