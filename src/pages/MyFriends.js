@@ -137,7 +137,7 @@ const MyFriends = () => {
                       <div className="active_mainFlex">
                         <div className="active_mainL">
                           <Link to={"/single-profile/" + item.id}>
-                            <img src={item?.profile_path ? item?.profile_path : ProfileOne} alt="" onError={handleImagenew} />
+                            <img src={item?.avatar ? item?.avatar : ProfileOne} alt="" onError={handleImagenew} />
                           </Link>
                         </div>
                         <div className="active_mainR">
