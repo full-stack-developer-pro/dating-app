@@ -24,8 +24,9 @@ const Payments = () => {
     data.saleId = saleId
     DataService.verifyPayment(data).then(
       (response) => {
-        if (response.status === "Success" || response.status === "success") {
-          toast("Verify successfully!");
+        console.log("Response:", response); 
+        if (response.data && response.data.saleResult === "APPROVED") {
+          toast.success("Verify successfully!");
           navigate("/");
         } else {
           toast.error("Failed to verify");
@@ -49,7 +50,7 @@ const Payments = () => {
 
   return (
     <>
-   <div className="not_found">
+      <div className="not_found">
         <Link to="/">
           <img src={Logo} className="not_logo" alt="" />
         </Link>
@@ -57,12 +58,12 @@ const Payments = () => {
 
         <Link to="/">
           {" "}
-          <button className="main_button" onClick={()=>handlePayment()}>
-           Verify 
+          <button className="main_button" onClick={() => handlePayment()}>
+            Verify
           </button>
         </Link>
       </div>
-    
+
     </>
   );
 };
