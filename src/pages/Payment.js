@@ -25,10 +25,11 @@ const Payments = () => {
     DataService.verifyPayment(data).then(
       (response) => {
         if (response.data.status === "Success" || response.data.status === "success") {
-          toast("Verify successfully!");
+          toast("Payment Verify successfully!");
+          window.location.reload();
           navigate("/");
         } else {
-          toast.error("Failed to verify");
+          toast.error("Failed to verify payment");
         }
       },
       (error) => {
