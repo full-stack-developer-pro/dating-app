@@ -24,16 +24,12 @@ const Payments = () => {
     data.saleId = saleId
     DataService.verifyPayment(data).then(
       (response) => {
-        if (response.status === "Success") {
-          toast.success("Verify successfully!");
-          navigate("/")
-
+        if (response.status === "Success" || response.status === "success") {
+          toast("Verify successfully!");
+          navigate("/");
         } else {
           toast.error("Failed to verify");
         }
-       
-          
-      
       },
       (error) => {
         const resMessage =
