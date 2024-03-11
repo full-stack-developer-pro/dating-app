@@ -16,7 +16,8 @@ import AuthService from "../services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import ProfileAvatar from "../images/profile-avatar.png"
 import NavbarProfile from "../common/NavbarProfile";
-
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const SingleLProfile = () => {
 
@@ -51,8 +52,8 @@ const SingleLProfile = () => {
     setSelectGender(e.target.value)
   }
   const myStateData = {
-    key1:"20",
-    key2:"1",
+    key1: "20",
+    key2: "1",
     key3: selectedGender,
     key4: selectedCity.uniqueId,
   };
@@ -209,7 +210,9 @@ const SingleLProfile = () => {
             <div className="single_pL_main">
               <div className="single_pL">
                 <div className="single_lockOpen">
-                  <img src={profile?.avatar} onError={handleMe} alt="" />
+                  <Zoom>
+                    <img src={profile?.avatar} onError={handleMe} alt="" />
+                  </Zoom>
                   <h5>{profile?.name}</h5>
                   <span className="single_age" style={{ textTransform: 'capitalize' }}>{profile?.age} ~ {profile?.gender}</span>
                   <span>
