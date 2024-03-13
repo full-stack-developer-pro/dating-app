@@ -337,7 +337,7 @@ span.bonus {
     top: 2px;
 }
 
-.chat_expBody {
+/* .chat_expBody {
     padding: 20px 50px;
     max-height: 90vh;
     min-height: 90vh;
@@ -346,6 +346,15 @@ span.bonus {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+} */
+.chat_expBody {
+    padding: 20px 50px;
+    overflow-y: scroll;
+    background-image: url(../images/abstractTwo.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 38vh;
 }
 
 .chat_expBody::-webkit-scrollbar {
@@ -598,18 +607,16 @@ span.bonus {
         border: none;
         padding: 8px 13px;
     }
-
     .chat_expBody {
         padding: 20px;
-        min-height: 55vh;
+        min-height: 32vh;
         max-height: 350px;
+        height: 30vh;
     }
-
     .chat_sec {
-        min-height: 80vh;
+        min-height: 48vh;
         margin-top: 10px;
     }
-
     .chat_flexL {
         min-height: 80vh;
     }

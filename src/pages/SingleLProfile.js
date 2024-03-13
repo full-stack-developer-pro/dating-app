@@ -335,14 +335,6 @@ const SingleLProfile = () => {
                 </div>
                 <div className="row">
                   <div className="col-lg-6 Mobile_profile">
-                    <h3 className="text_about_me">Interests</h3>
-                  </div>
-                  <div className="col-lg-6 Mobile_profile">
-                    <p>{profile?.interests ? profile.interests.join(', ') : ''}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-6 Mobile_profile">
                     <h3 className="text_about_me">Location</h3>
                   </div>
                   <div className="col-lg-6 Mobile_profile">
@@ -350,6 +342,19 @@ const SingleLProfile = () => {
 
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-lg-6 Mobile_profile">
+                    <h3 className="text_about_me">Description</h3>
+                  </div>
+                  <div className="col-lg-6 Mobile_profile">
+                  <p>{profile?.description}</p>
+                  </div>
+
+                  {/* <div className="col-lg-6 Mobile_profile">
+                    <p>{profile?.interests ? profile.interests.join(', ') : ''}</p>
+                  </div> */}
+                </div>
+               
               </div>
 
               {!auth && (
