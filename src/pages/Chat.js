@@ -409,7 +409,6 @@ const Chats = () => {
                         type="text"
                         placeholder="Type Your Message ..."
                         className="form-control"
-                        autoFocus={true}
                         ref={inputRef}
                         // disabled={fDisabled}
                         // value={message}

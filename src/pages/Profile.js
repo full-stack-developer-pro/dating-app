@@ -48,7 +48,7 @@ const Profile = () => {
   // const paginate = (pageNumber) => {
   //   setCurrentPage(pageNumber);
   // };
-  const [miles, setMiles] = useState(1);
+  const [miles, setMiles] = useState(150);
   const [selectedCity, setSelectedCity] = useState({ uniqueId: city_iid ? city_iid : "", city: "" });
 
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -468,7 +468,7 @@ const Profile = () => {
                     <input
                       type="range"
                       min={1}
-                      max={100}
+                      max={300}
                       value={miles}
                       id="custom-range"
                       onChange={handleMilesChange}
