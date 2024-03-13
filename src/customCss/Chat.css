@@ -609,7 +609,7 @@ span.bonus {
     }
     .chat_expBody {
         padding: 20px;
-        min-height: 32vh;
+        min-height: 60vh;
         max-height: 350px;
         height: 30vh;
     }
