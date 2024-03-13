@@ -33,27 +33,37 @@ const Chats = () => {
   const [payments, setPayments] = useState(false);
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showFooter, setShowFooter] = useState(false);
-
+  const [showFooter, setShowFooter] = useState(true);
+  const [showNa, setShowNa] = useState("chat_expBody");
+  const [addNa, setAddNa] = useState("");
 
   let user_id = JSON.parse(localStorage.getItem("d_user"));
-
 
   const handleInputFocus = () => {
     if (window.innerWidth <= 767) {
       setShowFooter(false);
+      setShowNa("chat_expBodySmall");
+      setAddNa("fixme");
     }
+    
   };
 
   const handleInputBlur = () => {
     if (window.innerWidth <= 767) {
       setShowFooter(true);
+      setShowNa("chat_expBody");
+      setAddNa("");
     }
+    var inputField = document.getElementById("main_input");
+
+    inputField.addEventListener("blur", function () {
+      inputField.removeAttribute("autofocus");
+    });
   };
 
   useEffect(() => {
     chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-  }, [expandedChatMessages]);
+  }, [expandedChatMessages,showNa]);
   useEffect(() => {
     // chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [expandedChatMessages]);
@@ -94,7 +104,9 @@ const Chats = () => {
       console.error("WebSocket is not open. Message not sent.");
       return;
     }
+    var inputField = document.getElementById("main_input");
     let msdg = document.getElementById("main_input").value;
+    if (msdg !== ""){
     const data = {
       user_id: user_id,
       to_user_id: params.id,
@@ -102,7 +114,9 @@ const Chats = () => {
     };
     socket.send(JSON.stringify(data));
     await getExpandedChat();
+    inputField.blur()
     document.getElementById("main_input").value = "";
+  }
   };
 
   const UserProfile = async () => {
@@ -197,12 +211,6 @@ const Chats = () => {
     getChatList();
   }, []);
 
-
-
-
-
-
-
   const getChatList = async () => {
     await DataService.getAllChats(user_id)
       .then(async (data) => {
@@ -241,10 +249,6 @@ const Chats = () => {
   useEffect(() => {
     getPlans();
   }, []);
-
-
-
-
 
   return (
     <>
@@ -303,7 +307,7 @@ const Chats = () => {
                 )}
               </div>
 
-              <div className="chat_flexR">
+              <div className={"chat_flexR " + addNa}>
                 {showExpandedChat ? (
                   <>
                     <div className="chat_expHead">
@@ -355,7 +359,11 @@ const Chats = () => {
                     </div>
                   </>
                 )}
-                <div className="chat_expBody" style={{ position: "relative" }} ref={chatBoxRef}>
+                <div
+                  className={showNa}
+                  style={{ position: "relative" }}
+                  ref={chatBoxRef}
+                >
                   {showExpandedChat ? (
                     expandedChatMessages?.map((item, i) => {
                       return (
@@ -399,7 +407,6 @@ const Chats = () => {
                       <p>Select a Chat to proceed</p>
                     </>
                   )}
-
                 </div>
                 <div className="chat_footer">
                   <form onSubmit={sendMessage}>
@@ -415,7 +422,7 @@ const Chats = () => {
                         onFocus={handleInputFocus}
                         onBlur={handleInputBlur}
                         id="main_input"
-                      // onChange={(e) => setMessage(e.target.value)}
+                        // onChange={(e) => setMessage(e.target.value)}
                       />
                       <div>
                         {/* <Picker onEmojiClick={onEmojiClick} />
@@ -441,12 +448,7 @@ const Chats = () => {
           </div>
         </div>
       </div>
-      {
-        showFooter && (
-          <Footer />
-
-        )
-      }
+      {showFooter && <Footer />}
     </>
   );
 };
