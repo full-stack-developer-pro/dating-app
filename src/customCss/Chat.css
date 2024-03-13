@@ -540,6 +540,9 @@ span.bonus {
 }
 
 @media screen and (max-width: 767px) {
+    .chat_expBody {
+        min-height: 56vh !important;
+    }
     .notification_main {
         width: 84%;
         right: 8%;
@@ -609,7 +612,7 @@ span.bonus {
     }
     .chat_expBody {
         padding: 20px;
-        min-height: 60vh;
+        min-height: 50vh;
         max-height: 350px;
         height: 30vh;
     }
