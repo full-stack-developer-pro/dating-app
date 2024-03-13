@@ -32,6 +32,7 @@ import MultiRangeSlider from "multi-range-slider-react";
 import ProfileAvatar from "../images/profile-avatar.png";
 
 const Home = () => {
+  const city_iid = JSON.parse(localStorage.getItem("city_id"))
   // const socket = new WebSocket("wss://api.milfhub.co.uk:9091");
 
   const ref = useRef(null);
@@ -63,7 +64,7 @@ const Home = () => {
   const [message, setMessage] = useState();
   const [searchKeyword, setSearchKeyword] = useState("");
   const [apiError, setApiError] = useState("");
-  const [miles, setMiles] = useState(50);
+  const [miles, setMiles] = useState(150);
 
   const [isListVisible, setIsListVisible] = useState(true);
 
@@ -114,7 +115,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filteredData, setfilteredData] = useState([]);
-  const [selectedCity, setSelectedCity] = useState({ uniqueId: "", city: "" });
+  const [selectedCity, setSelectedCity] = useState({ uniqueId: city_iid ? city_iid : "", city: "" });
   const [flirtId, setFlirtId] = useState(null);
   const [ageError, setAgeError] = useState("");
 
@@ -1364,7 +1365,7 @@ const Home = () => {
                     <input
                       type="range"
                       min={1}
-                      max={100}
+                      max={300}
                       value={miles}
                       id="custom-range"
                       onChange={(e) => setMiles(parseInt(e.target.value, 10))}
