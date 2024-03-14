@@ -41,18 +41,18 @@ const Chats = () => {
 
   const handleInputFocus = () => {
     if (window.innerWidth <= 767) {
-      setShowFooter(false);
-      setShowNa("chat_expBodySmall");
-      setAddNa("fixme");
+      // setShowFooter(false);
+      // setShowNa("chat_expBodySmall");
+      // setAddNa("fixme");
     }
     
   };
 
   const handleInputBlur = () => {
     if (window.innerWidth <= 767) {
-      setShowFooter(true);
-      setShowNa("chat_expBody");
-      setAddNa("");
+      // setShowFooter(true);
+      // setShowNa("chat_expBody");
+      // setAddNa("");
     }
     var inputField = document.getElementById("main_input");
 
@@ -61,12 +61,10 @@ const Chats = () => {
     });
   };
 
-  useEffect(() => {
-    chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-  }, [expandedChatMessages,showNa]);
-  useEffect(() => {
-    // chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [expandedChatMessages]);
+  // useEffect(() => {
+  //   chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+  // }, [expandedChatMessages,showNa]);
+
 
   useEffect(() => {
     if (!connectionEstablished) {
@@ -153,7 +151,7 @@ const Chats = () => {
       .then(async (data) => {
         setMobileAdjust(true);
         setExpandedChat(data?.data?.data);
-        setExpandedChatMessages(data?.data?.data?.Messages.reverse());
+        setExpandedChatMessages(data?.data?.data?.Messages);
         setShowExpandedChat(true);
         setFDisabled(false);
       })
@@ -178,7 +176,7 @@ const Chats = () => {
       const response = await DataService.getChatBox(user_id, params.id);
       const chatData = response?.data?.data?.chat;
       const messages = chatData?.messages || [];
-      setExpandedChatMessages(messages);
+      setExpandedChatMessages(messages.reverse());
 
       if (ref.current) {
         ref.current.complete();
@@ -307,9 +305,10 @@ const Chats = () => {
                 )}
               </div>
 
-              <div className={"chat_flexR " + addNa}>
+              <div className="chat_flexR">
                 {showExpandedChat ? (
                   <>
+                  
                     <div className="chat_expHead">
                       <div className="back_buttonT">
                         <button className="back" onClick={goBack}>
@@ -359,8 +358,43 @@ const Chats = () => {
                     </div>
                   </>
                 )}
+                <div className="chat_footer">
+                  <form onSubmit={sendMessage}>
+                    <div className="chat_footer_flex">
+                      {/* <EmojiPicker /> */}
+                      <input
+                        type="text"
+                        placeholder="Type Your Message ..."
+                        className="form-control"
+                        ref={inputRef}
+                        // disabled={fDisabled}
+                        // value={message}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
+                        id="main_input"
+                        // onChange={(e) => setMessage(e.target.value)}
+                      />
+                      <div>
+                        {/* <Picker onEmojiClick={onEmojiClick} />
+                        {chosenEmoji && (
+                          <div>
+                            <h2>You selected: {chosenEmoji.emoji}</h2>
+                          </div>
+                        )} */}
+                      </div>
+                      <button
+                        className="main_button"
+                        // disabled={fDisabled}
+                        onClick={sendMessage}
+                      >
+                        <i class="fas fa-paper-plane"></i>
+                      </button>
+                    </div>
+                  </form>
+                  {/* <div ref={chatBoxRef} style={{height: '3px',width: '50%',backgroundColor:'red'}}></div> */}
+                </div>
                 <div
-                  className={showNa}
+                  className="chat_expBody"
                   style={{ position: "relative" }}
                   ref={chatBoxRef}
                 >
@@ -408,41 +442,7 @@ const Chats = () => {
                     </>
                   )}
                 </div>
-                <div className="chat_footer">
-                  <form onSubmit={sendMessage}>
-                    <div className="chat_footer_flex">
-                      {/* <EmojiPicker /> */}
-                      <input
-                        type="text"
-                        placeholder="Type Your Message ..."
-                        className="form-control"
-                        ref={inputRef}
-                        // disabled={fDisabled}
-                        // value={message}
-                        onFocus={handleInputFocus}
-                        onBlur={handleInputBlur}
-                        id="main_input"
-                        // onChange={(e) => setMessage(e.target.value)}
-                      />
-                      <div>
-                        {/* <Picker onEmojiClick={onEmojiClick} />
-                        {chosenEmoji && (
-                          <div>
-                            <h2>You selected: {chosenEmoji.emoji}</h2>
-                          </div>
-                        )} */}
-                      </div>
-                      <button
-                        className="main_button"
-                        // disabled={fDisabled}
-                        onClick={sendMessage}
-                      >
-                        <i class="fas fa-paper-plane"></i>
-                      </button>
-                    </div>
-                  </form>
-                  {/* <div ref={chatBoxRef} style={{height: '3px',width: '50%',backgroundColor:'red'}}></div> */}
-                </div>
+               
               </div>
             </div>
           </div>
