@@ -430,6 +430,7 @@ span.bonus {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
+    word-break: break-all;
 }
 
 .text_message i {
@@ -587,6 +588,17 @@ span.bonus {
     .text_message {
         border-radius: 10px;
     }
+    .show_edit_bgarea_message-new{
+        margin-top: 0px !important;
+    }
+}
+@media screen and (max-width: 1050px){
+    .chat_expBody {
+        padding: 20px;
+        min-height: 45vh;
+        max-height: 350px;
+        height: 30vh;
+    }
 }
 @media screen and (max-width: 950px) {
     .chat_outerImg {
@@ -648,17 +660,9 @@ span.bonus {
         border: none;
         padding: 8px 13px;
     }
-    .chat_expBody {
-        padding: 20px;
-        min-height: 50vh;
-        max-height: 350px;
-        height: 30vh;
-    }
+
     .chat_expBodySmall {
         padding: 20px;
-    }
-    .show_edit_bgarea_message-new{
-        margin-bottom: 0 !important;
     }
     .chat_sec {
         min-height: auto;
@@ -683,6 +687,9 @@ span.bonus {
     .chat_outer img {
         height: 40px;
         width: 40px;
+    }
+    .chat_footer_flex .main_button{
+        padding: 15px !important;
     }
 
     .chat_outerName h5 {
