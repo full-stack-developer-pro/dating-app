@@ -115,12 +115,17 @@ const NavbarProfile = () => {
     getNotifications();
   }, []);
 
-  const handleNotification = (id) => {
+  const handleNotification = (id, item) => {
     const data = {};
     data.ids = [id];
     DataService.UpdateNotification(data).then(
       () => {
-        setTimeout(() => { }, 2000);
+        if (item && item.type === 'message' && item.user) {
+          navigate(`/chats/${item.user.id}`);
+        }
+        window.location.reload();
+
+        // setTimeout(() => { }, 2000);
       },
       (error) => {
         const resMessage =
