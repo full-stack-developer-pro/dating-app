@@ -45,7 +45,7 @@ const Chats = () => {
       // setShowNa("chat_expBodySmall");
       // setAddNa("fixme");
     }
-    
+
   };
 
   const handleInputBlur = () => {
@@ -104,17 +104,17 @@ const Chats = () => {
     }
     var inputField = document.getElementById("main_input");
     let msdg = document.getElementById("main_input").value;
-    if (msdg !== ""){
-    const data = {
-      user_id: user_id,
-      to_user_id: params.id,
-      msg: msdg,
-    };
-    socket.send(JSON.stringify(data));
-    await getExpandedChat();
-    inputField.blur()
-    document.getElementById("main_input").value = "";
-  }
+    if (msdg !== "") {
+      const data = {
+        user_id: user_id,
+        to_user_id: params.id,
+        msg: msdg,
+      };
+      socket.send(JSON.stringify(data));
+      await getExpandedChat();
+      inputField.blur()
+      document.getElementById("main_input").value = "";
+    }
   };
 
   const UserProfile = async () => {
@@ -308,7 +308,7 @@ const Chats = () => {
               <div className="chat_flexR">
                 {showExpandedChat ? (
                   <>
-                  
+
                     <div className="chat_expHead">
                       <div className="back_buttonT">
                         <button className="back" onClick={goBack}>
@@ -316,15 +316,18 @@ const Chats = () => {
                         </button>
                       </div>
                       <div className="chat_expHeadL">
-                        <img
-                          onError={(e) => (e.target.src = ProfileAvatar)}
-                          src={
-                            profile?.profile_path
-                              ? profile?.profile_path
-                              : ProfileAvatar
-                          }
-                          alt=""
-                        />
+                      <Link to={"/single-profile/" + profile?.id}>
+                          <img
+                            onError={(e) => (e.target.src = ProfileAvatar)}
+                            src={
+                              profile?.profile_path
+                                ? profile?.profile_path
+                                : ProfileAvatar
+                            }
+                            alt=""
+                          />
+                        </Link>
+
                         {/* <img src="https://i.pravatar.cc/300" alt="" /> */}
                       </div>
                       <div className="chat_expHeadR">
@@ -372,7 +375,7 @@ const Chats = () => {
                         onFocus={handleInputFocus}
                         onBlur={handleInputBlur}
                         id="main_input"
-                        // onChange={(e) => setMessage(e.target.value)}
+                      // onChange={(e) => setMessage(e.target.value)}
                       />
                       <div>
                         {/* <Picker onEmojiClick={onEmojiClick} />
@@ -442,7 +445,7 @@ const Chats = () => {
                     </>
                   )}
                 </div>
-               
+
               </div>
             </div>
           </div>
