@@ -430,7 +430,7 @@ span.bonus {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
-    word-break: break-all;
+    text-align: left;
 }
 
 .text_message i {
